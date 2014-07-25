@@ -19,8 +19,12 @@ class ClassesTest extends FunSuite {
     def sound(): String = "grrrr"
   }
 
+  object ZooKeeper {
+    def openCages(): Set[Animal] = Set(new Tiger, new Shark, new Bear)
+  }
+
   test("animals") {
-    val animals = Set(new Tiger, new Shark, new Bear)
+    val animals = ZooKeeper.openCages()
     for (animal <- animals) {
       assert(animal.sound().length > 0)
     }
