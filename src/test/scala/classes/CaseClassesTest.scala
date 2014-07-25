@@ -25,8 +25,13 @@ class CaseClassesTest extends FunSuite {
 
   test("animals") {
     val animals = ZooKeeper.openCages()
-    for(animal <- animals ) {
+    for(animal <- animals) {
       assert(animal.sound().length > 0)
+      animal match {
+        case Tiger(s) => println(s"Tiger: $s")
+        case Shark(s) => println(s"Shark: $s")
+        case Bear(s) => println(s"Bear: $s")
+      }
     }
   }
 }
