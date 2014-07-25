@@ -39,7 +39,14 @@ case class Ten(suit: Suit) extends Card
 case class Deck(cards: Set[Card])
 
 // Money
-case class Money(value: Double)
+trait Currency
+trait USD extends Currency
+abstract class Money(currency: Currency, value: Double)
+case class OneDollar(currency: Currency, value: Double) extends Money(currency, value)
+case class FiveDollars(currency: Currency, value: Double) extends Money(currency, value)
+case class TenDollars(currency: Currency, value: Double) extends Money(currency, value)
+case class FiftyDollars(currency: Currency, value: Double) extends Money(currency, value)
+case class OneHundredDollars(currency: Currency, value: Double) extends Money(currency, value)
 
 // Chips
 trait Chip
