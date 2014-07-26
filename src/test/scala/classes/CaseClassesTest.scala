@@ -34,4 +34,16 @@ class CaseClassesTest extends FunSuite {
       }
     }
   }
+
+  test("equality") {
+    val t1 = Tiger("prrrr")
+    val t2 = Tiger("prrrr")
+    val t3 = Tiger("meow")
+    assert(t1 == t2)
+    assert(t1 != t3)
+    assert(t1.hashCode == t2.hashCode)
+    assert(t1.hashCode != t3.hashCode)
+    assert(Tiger.unapply(t1).get == "prrrr")
+    assert(t1 == Tiger.apply(t1.sound()))
+  }
 }
