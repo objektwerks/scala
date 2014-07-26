@@ -57,10 +57,8 @@ class OptionTest extends FunSuite {
 
   test("try recover") {
     val n = for {
-      p <- Try(Integer.parseInt("one")).recover {
-        case e => 0
-      }
-    } yield p
+      i <- Try(Integer.parseInt("one")).recover { case e => 0 }
+    } yield i
     assert(n == Success(0))
   }
 }
