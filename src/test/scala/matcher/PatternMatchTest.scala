@@ -13,7 +13,7 @@ class PatternMatchTest extends FunSuite {
   }
 
   test("string match") {
-    def isEqual(x: Int): String = x match {
+    def isEqual(s: Int): String = s match {
       case 1 => "one"
       case 2 => "two"
       case _ => "many"
