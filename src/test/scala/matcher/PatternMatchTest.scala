@@ -21,4 +21,15 @@ class PatternMatchTest extends FunSuite {
     assert(isEqual(1) == "one")
     assert(isEqual(3) == "many")
   }
+
+  test("case class match") {
+    case class Person(name: String)
+    def isPerson(p: Person): String = p match {
+      case Person("John") => "Mr. " + p.name
+      case Person("Jane") => "Ms. " + p.name
+      case _ => "Mr. Nobody"
+    }
+    assert(isPerson(Person("John")) == "Mr. John")
+    assert(isPerson(Person("Jake")) == "Mr. Nobody")
+  }
 }
