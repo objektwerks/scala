@@ -9,7 +9,6 @@ class ImplicitTest extends FunSuite {
     }
     implicit val item = "beers"
     assert(order(2) == "2 beers")
-
   }
 
   test("implicit class") {
