@@ -32,4 +32,14 @@ class PatternMatchTest extends FunSuite {
     assert(isPerson(Person("John")) == "Mr. John")
     assert(isPerson(Person("Jake")) == "Mr. Nobody")
   }
+
+  test("wild card match") {
+    case class Order(number: Int, item: String)
+    def order(o: Order): String = o match {
+      case Order(_, "chicken soup") => o.number + " " + o.item
+      case Order(_, _) => "we're out of that"
+    }
+    assert(order(Order(10, "chicken soup")) == "10 chicken soup")
+    assert(order(Order(0, "")) == "we're out of that")
+  }
 }
