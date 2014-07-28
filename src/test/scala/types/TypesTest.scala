@@ -3,7 +3,8 @@ package types
 import org.scalatest.FunSuite
 
 class TypesTest extends FunSuite {
-  test("types") {
-
+  test("generic function") {
+    def getMiddle[A](a: Array[A]) = a(a.length / 2)
+    assert(getMiddle(Array("a", "b", "c")) == "b")
   }
 }
