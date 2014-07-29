@@ -1,6 +1,7 @@
 package function
 
 import org.scalatest.FunSuite
+
 import scala.annotation.tailrec
 import scala.language.reflectiveCalls
 import scala.util.Random
@@ -95,15 +96,5 @@ class FunctionTest extends FunSuite {
       case _ => factorial(n - 1, acc * n)
     }
     assert(factorial(9) == 362880)
-  }
-
-  test("duck typing") {
-    class Greeter {
-      def greet = "Hi!"
-    }
-    def greet(greeter: {def greet: String}): String = {
-      greeter.greet
-    }
-    assert(greet(new Greeter()) == "Hi!")
   }
 }
