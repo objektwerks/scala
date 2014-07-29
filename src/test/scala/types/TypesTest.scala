@@ -3,9 +3,9 @@ package types
 import org.scalatest.FunSuite
 
 class TypesTest extends FunSuite {
-  trait Animal { def speak(): String }
-  case class Cat(sound: String) extends Animal { def speak(): String = sound }
-  case class Dog(sound: String) extends Animal { def speak(): String = sound }
+  class Animal()
+  class Dinosaur(sound: String) extends Animal { override def toString = sound }
+  class Bird(sound: String) extends Dinosaur(sound) { override def toString = sound }
 
   test("generic function") {
     def getMiddle[A](a: Array[A]): A = a(a.length / 2)
@@ -13,23 +13,24 @@ class TypesTest extends FunSuite {
   }
 
   test("covariance") {
-    class Container[+A] (val item: A)
-    val cat = Cat("meow")
-    val dog = Dog("woof")
-    val cats = new Container(cat)
-    val dogs = new Container(dog)
-    println(cats.item.speak())
-    println(dogs.item.speak())
+    class Ping[+A] () {
+      def test[B >: A] (b: B): String = b.toString
+    }
+    val ping = new Ping()
+    val dinosaur = new Dinosaur("screech")
+    val bird = new Bird("chirp chirp")
+    assert(ping.test(dinosaur) == dinosaur.toString)
+    assert(ping.test(bird) == bird.toString)
   }
 
   test("contravariance") {
-    class Container[A] (val item: A) {
+    class Ping[-A] () {
 
     }
   }
 
   test("invariance") {
-    class Container[A] (val item: A) {
+    class Ping[A] () {
 
     }
   }
