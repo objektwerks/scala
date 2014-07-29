@@ -27,15 +27,47 @@ class TypesTest extends FunSuite {
   }
 
   test("contravariance") {
+    trait Food
+    class Cake(style: String) extends Food { override def toString = style }
+    class Chocolate(style: String) extends Cake(style) { override def toString = style }
     class Ping[-A] () {
-
+      def test[B <: A] (b: B): String = b.toString
     }
+    val ping = new Ping()
+    val cake:Cake = new Cake("cake")
+    val chocolate: Chocolate = new Chocolate("chocolate")
+    var food: Food = new Cake("cake")
+    food = new Chocolate("chocolate")
+    assert(ping.test(cake) == cake.toString)
+    assert(ping.test(chocolate) == chocolate.toString)
+    assert(ping.test(food) == food.toString)
+    assert(ping.test(food) == food.toString)
   }
 
   test("invariance") {
+    trait Company
+    class Multinational(business: String) extends Company { override def toString = business }
+    class National(business: String) extends Multinational(business) { override def toString = business }
     class Ping[A] () {
-
+      def test[A] (a: A): String = a.toString
     }
+    val ping = new Ping()
+    val multinational: Multinational = new Multinational("IBM")
+    val national: National = new National("Pier Imports")
+    var company: Company = new Multinational("Cisco")
+    company = new National("Marble Slab")
+    assert(ping.test(multinational) == multinational.toString)
+    assert(ping.test(national) == national.toString)
+    assert(ping.test(company) == company.toString)
+    assert(ping.test(company) == company.toString)
+  }
+
+  test("type alias") {
+    type User = String
+    type Age = Int
+    val users:  Map[User, Age] =  Map("john" -> 21, "jane" -> 19)
+    assert(users.get("john").get == 21)
+    assert(users.get("jane").get == 19)
   }
 
   test("duck typing") {
