@@ -19,8 +19,12 @@ class TypesTest extends FunSuite {
     val ping = new Ping()
     val dinosaur = new Dinosaur("screech")
     val bird = new Bird("chirp chirp")
+    var animal = new Dinosaur("screech")
+    animal = new Bird("chirp chirp")
     assert(ping.test(dinosaur) == dinosaur.toString)
     assert(ping.test(bird) == bird.toString)
+    assert(ping.test(animal) == animal.toString)
+    assert(ping.test(animal) == animal.toString)
   }
 
   test("contravariance") {
