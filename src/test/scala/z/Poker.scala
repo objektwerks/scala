@@ -41,6 +41,7 @@ case class Deck(cards: Set[Card])
 // Currency
 abstract class Currency(value: Double)
 class USD(value: Double) extends Currency(value)
+
 case class OneDollar(currency: Currency)
 case class FiveDollars(currency: Currency)
 case class TenDollars(currency: Currency)
