@@ -13,7 +13,7 @@ class TypesTest extends FunSuite {
     class Dinosaur(sound: String) extends Animal { override def toString = sound }
     class Bird(sound: String) extends Dinosaur(sound) { override def toString = sound }
     class Ping[+A] () {
-      def id[A](a: A): A = identity(a)
+      def id[A] (a: A): A = identity(a)
       def test[B >: A] (b: B): String = b.toString
     }
     val ping = new Ping()
@@ -36,7 +36,7 @@ class TypesTest extends FunSuite {
     class Cake(style: String) extends Food { override def toString = style }
     class Chocolate(style: String) extends Cake(style) { override def toString = style }
     class Ping[-A] () {
-      def id[A](a: A): A = identity(a)
+      def id[A] (a: A): A = identity(a)
       def test[B <: A] (b: B): String = b.toString
     }
     val ping = new Ping()
@@ -59,7 +59,7 @@ class TypesTest extends FunSuite {
     class Multinational(business: String) extends Company { override def toString = business }
     class National(business: String) extends Multinational(business) { override def toString = business }
     class Ping[A] () {
-      def id[A](a: A): A = identity(a)
+      def id[A] (a: A): A = identity(a)
       def test[A] (a: A): String = a.toString
     }
     val ping = new Ping()
