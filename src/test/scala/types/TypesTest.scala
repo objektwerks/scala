@@ -103,6 +103,7 @@ class TypesTest extends FunSuite {
       private var email: Option[Email] = None
 
       def build(addresses: Addresses, message: Message): this.type = {
+        email = null // This entire example is poor form; just a test to prove a feature.
         email = Some(Email(addresses, message))
         this
       }
