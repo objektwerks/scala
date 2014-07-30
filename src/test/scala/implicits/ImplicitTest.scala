@@ -22,4 +22,9 @@ class ImplicitTest extends FunSuite {
     assert("json".toJson == "{json}")
     assert("xml".toXml == "<xml>")
   }
+
+  test("package object") {
+    val message = "test"
+    assert(packMessage(message) == s"Message packed: $message")
+  }
 }
