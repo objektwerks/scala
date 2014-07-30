@@ -3,6 +3,12 @@ package implicits
 import org.scalatest.FunSuite
 
 class ImplicitTest extends FunSuite {
+  test("implicit conversion") {
+    implicit def intToString(i: Int) = i.toString
+    val three: String = 3
+    assert(three == "3")
+  }
+
   test("implicit parameter") {
     def order(number: Int) (implicit item: String): String = {
       s"$number $item"
