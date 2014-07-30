@@ -9,7 +9,7 @@ class TypesTest extends FunSuite {
   }
 
   test("covariance") {
-    trait Animal
+    class Animal
     class Dinosaur(sound: String) extends Animal { override def toString = sound }
     class Bird(sound: String) extends Dinosaur(sound) { override def toString = sound }
     class Ping[+A] () {
@@ -29,7 +29,7 @@ class TypesTest extends FunSuite {
   }
 
   test("contravariance") {
-    trait Food
+    class Food
     class Cake(style: String) extends Food { override def toString = style }
     class Chocolate(style: String) extends Cake(style) { override def toString = style }
     class Ping[-A] () {
@@ -49,7 +49,7 @@ class TypesTest extends FunSuite {
   }
 
   test("invariance") {
-    trait Company
+    class Company
     class Multinational(business: String) extends Company { override def toString = business }
     class National(business: String) extends Multinational(business) { override def toString = business }
     class Ping[A] () {
