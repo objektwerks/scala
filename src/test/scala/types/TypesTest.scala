@@ -25,6 +25,9 @@ class TypesTest extends FunSuite {
     assert(ping.test(bird) == bird.toString)
     assert(ping.test(animal) == animal.toString)
     assert(ping.test(animal) == animal.toString)
+    assert(ping.id(bird) == bird)
+    assert(ping.id(dinosaur) == dinosaur)
+    animal = new Animal
     assert(ping.id(animal) == animal)
   }
 
@@ -45,6 +48,9 @@ class TypesTest extends FunSuite {
     assert(ping.test(chocolate) == chocolate.toString)
     assert(ping.test(food) == food.toString)
     assert(ping.test(food) == food.toString)
+    assert(ping.id(chocolate) == chocolate)
+    assert(ping.id(cake) == cake)
+    food = new Food
     assert(ping.id(food) == food)
   }
 
@@ -65,6 +71,9 @@ class TypesTest extends FunSuite {
     assert(ping.test(national) == national.toString)
     assert(ping.test(company) == company.toString)
     assert(ping.test(company) == company.toString)
+    assert(ping.id(national) == national)
+    assert(ping.id(multinational) == multinational)
+    company = new Company
     assert(ping.id(company) == company)
   }
 
