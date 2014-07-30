@@ -11,18 +11,18 @@ import scala.util.{Failure, Success}
 
 class FutureTest extends FunSuite {
   test("anonymous blocking future with implicit promise") {
-    val f: Future[String] = Future {
+    val future: Future[String] = Future {
       "Hello world!"
     }
-    val r = Await.result(f, Duration(1, TimeUnit.SECONDS))
-    assert(r.equals("Hello world!"))
+    val result = Await.result(future, Duration(1, TimeUnit.SECONDS))
+    assert(result.equals("Hello world!"))
   }
 
   test("anonymous non-blocking future with implicit promise") {
-    val f: Future[String] = Future {
+    val future: Future[String] = Future {
       "Hello world!"
     }
-    f onComplete {
+    future onComplete {
       case Success(r) => assert(r.equals("Hello world!"))
       case Failure(e) => throw e
     }
@@ -34,58 +34,58 @@ class FutureTest extends FunSuite {
       promise.success(message)
       promise.future
     }
-    val f: Future[Message] = send(Promise[Message](), Message("Hello world!"))
-    f onComplete {
+    val future: Future[Message] = send(Promise[Message](), Message("Hello world!"))
+    future onComplete {
       case Success(m) => assert(m.text == "Hello world!")
       case Failure(e) => throw e
     }
   }
 
   test("anonymous non-blocking future with monadic map") {
-    val fPartOne: Future[String] = Future {
+    val futureOne: Future[String] = Future {
       "Hello"
     }
-    val fPartTwo: Future[String] = fPartOne map {
+    val futureTwo: Future[String] = futureOne map {
       s => s + " world!"
     }
-    fPartTwo onComplete {
+    futureTwo onComplete {
       case Success(s) => assert(s == "Hello world!")
       case Failure(e) => throw e
     }
   }
 
   test("anonymous non-blocking future with monadic flat map") {
-    val fPartOne: Future[String] = Future {
+    val futureOne: Future[String] = Future {
       "Hello"
     }
-    val fPartTwo: Future[String] = Future {
+    val futureTwo: Future[String] = Future {
       " world"
     }
-    val fPartThree: Future[String] = fPartOne flatMap {
+    val futureThree: Future[String] = futureOne flatMap {
       partOne =>
-        fPartTwo map {
+        futureTwo map {
           partTwo => partOne + partTwo + "!"
         }
     }
-    fPartThree onComplete {
+    futureThree onComplete {
       case Success(s) => assert(s == "Hello world!")
       case Failure(e) => throw e
     }
   }
 
   test("anonymous non-blocking future with for comprehension") {
-    val fPartOne: Future[String] = Future {
+    val futureOne: Future[String] = Future {
       "Hello"
     }
-    val fPartTwo: Future[String] = Future {
+    val futureTwo: Future[String] = Future {
       " world"
     }
-    val fPartThree: Future[String] = for {
-      partOne <- fPartOne
-      partTwo <- fPartTwo
+    val futureThree: Future[String] = for {
+      partOne <- futureOne
+      partTwo <- futureTwo
     } yield partOne + partTwo + "!"
 
-    fPartThree onComplete {
+    futureThree onComplete {
       case Success(s) => assert(s == "Hello world!")
       case Failure(e) => throw e
     }
