@@ -23,8 +23,8 @@ class FutureTest extends FunSuite {
       "Hello world!"
     }
     future onComplete {
-      case Success(r) => assert(r.equals("Hello world!"))
-      case Failure(e) => throw e
+      case Success(result) => assert(result.equals("Hello world!"))
+      case Failure(failure) => throw failure
     }
   }
 
@@ -36,8 +36,8 @@ class FutureTest extends FunSuite {
     }
     val future: Future[Message] = send(Promise[Message](), Message("Hello world!"))
     future onComplete {
-      case Success(m) => assert(m.text == "Hello world!")
-      case Failure(e) => throw e
+      case Success(message) => assert(message.text == "Hello world!")
+      case Failure(failure) => throw failure
     }
   }
 
@@ -49,8 +49,8 @@ class FutureTest extends FunSuite {
       s => s + " world!"
     }
     futureTwo onComplete {
-      case Success(s) => assert(s == "Hello world!")
-      case Failure(e) => throw e
+      case Success(success) => assert(success == "Hello world!")
+      case Failure(failure) => throw failure
     }
   }
 
@@ -68,8 +68,8 @@ class FutureTest extends FunSuite {
         }
     }
     futureThree onComplete {
-      case Success(s) => assert(s == "Hello world!")
-      case Failure(e) => throw e
+      case Success(success) => assert(success == "Hello world!")
+      case Failure(failure) => throw failure
     }
   }
 
@@ -86,8 +86,8 @@ class FutureTest extends FunSuite {
     } yield partOne + partTwo + "!"
 
     futureThree onComplete {
-      case Success(s) => assert(s == "Hello world!")
-      case Failure(e) => throw e
+      case Success(success) => assert(success == "Hello world!")
+      case Failure(failure) => throw failure
     }
   }
 }
