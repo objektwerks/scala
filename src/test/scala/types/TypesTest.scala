@@ -94,4 +94,33 @@ class TypesTest extends FunSuite {
     }
     assert(greet(new Greeter()) == "Hi!")
   }
+
+  test("singleton types") {
+    case class Addresses(from: String, to: String, cc: String)
+    case class Message(subject: String, text: String)
+    case class Email(addresses: Option[Addresses], message: Option[Message])
+    class EmailBuilder() {
+      private var addresses: Option[Addresses] = None
+      private var message: Option[Message] = None
+
+      def addresses(from: String, to:String, cc: String = ""): this.type = {
+        this.addresses = Some(Addresses(from, to, cc))
+        this
+      }
+
+      def subject(subject: String, text: String): this.type = {
+        this.message = Some(Message(subject, text))
+        this
+      }
+
+      def build(): Option[Email] = {
+        require(addresses != None)
+        require(message != None)
+        Some(Email(addresses, message))
+      }
+    }
+    val builder = new EmailBuilder()
+    val email = builder.addresses("me", "you", "them").subject("us", "Meet as the pub for beer!").build()
+    assert(email != None)
+  }
 }
