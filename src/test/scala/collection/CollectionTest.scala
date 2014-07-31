@@ -82,6 +82,9 @@ class CollectionTest extends FunSuite {
     val vector = Vector("abc")
     assert(vector.flatMap(_.toUpperCase) == Vector('A', 'B', 'C'))
 
+    val map = Map(1 -> "one", 2 -> "two", 3 -> "three")
+    assert((1 to map.size flatMap map.get) == Vector("one", "two", "three"))
+
     def g(v:Int) = List(v-1, v, v+1)
     val list = List(1, 2, 3)
     assert(list.map(i => g(i)) == List(List(0, 1, 2), List(1, 2, 3), List(2, 3, 4)))
