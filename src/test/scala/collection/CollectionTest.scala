@@ -1,6 +1,7 @@
 package collection
 
 import org.scalatest.FunSuite
+
 import scala.collection.mutable.ArrayBuffer
 import scala.language.postfixOps
 
@@ -26,14 +27,12 @@ class CollectionTest extends FunSuite {
 
   test("list") {
     val range = List.range(1, 10)
-    val evens = range.filter(_ % 2 == 0)
-    assert(evens == List(2, 4, 6, 8))
+    assert(range.filter(_ % 2 == 0) == List(2, 4, 6, 8))
   }
 
   test("k-v map") {
     val map = Map(1 -> "a", 2 -> "b")
-    val value = map.getOrElse(1, "z")
-    assert(value == "a")
+    assert(map.getOrElse(1, "z") == "a")
   }
 
   test("set") {
@@ -63,6 +62,7 @@ class CollectionTest extends FunSuite {
     val vector = Vector(1, 2, 3)
     assert(vector.filter(_ > 1) == Vector(2, 3))
     assert(vector.filter(_ > 1).map(_ * 2) == Vector(4, 6))
+
     val list = List("abc", 123)
     assert(list.filter {
       case s: String => true
@@ -73,6 +73,7 @@ class CollectionTest extends FunSuite {
   test("flatten") {
     val list = List(List(1, 2), List(3, 4))
     assert(list.flatten == List(1, 2, 3, 4))
+
     val vector = Vector(Some(1), None, Some(3), None)
     assert(vector.flatten == Vector(1, 3))
   }
@@ -80,6 +81,11 @@ class CollectionTest extends FunSuite {
   test("flatmap") {
     val vector = Vector("abc")
     assert(vector.flatMap(_.toUpperCase) == Vector('A', 'B', 'C'))
+
+    def g(v:Int) = List(v-1, v, v+1)
+    val list = List(1, 2, 3)
+    assert(list.map(i => g(i)) == List(List(0, 1, 2), List(1, 2, 3), List(2, 3, 4)))
+    assert(list.flatMap(i => g(i)) == List(0, 1, 2, 1, 2, 3, 2, 3, 4))
   }
 
   test("fold") {
@@ -130,17 +136,18 @@ class CollectionTest extends FunSuite {
 
   test("span") {
     val vector = Vector(1, 2, 3, 4)
-    assert(vector.span(_ < 3) ==(Vector(1, 2), Vector(3, 4)))
+    assert(vector.span(_ < 3) == (Vector(1, 2), Vector(3, 4)))
   }
 
   test("splitAt") {
     val vector = Vector(1, 2, 3, 4)
-    assert(vector.splitAt(2) ==(Vector(1, 2), Vector(3, 4)))
+    assert(vector.splitAt(2) == (Vector(1, 2), Vector(3, 4)))
   }
 
   test("tuple") {
     val (first, last) = ("john", "doe")
     assert(first == "john" && last == "doe")
+
     val (city, state) = "Tampa" -> "Florida"
     assert(city == "Tampa" && state == "Florida")
   }
@@ -159,6 +166,7 @@ class CollectionTest extends FunSuite {
   test("for each") {
     val vector = Vector(1, 2, 3)
     vector.foreach(i => assert(i > 0))
+
     val map = Map("a" -> 1, "b" -> 2, "c" -> 3)
     map.foreach((t) => assert(t._1.length > 0 && t._2 > 0))
   }
@@ -167,13 +175,16 @@ class CollectionTest extends FunSuite {
     for (i <- 1 to 3) {
       assert(i > 0)
     }
+
     val map = Map("a" -> 1, "b" -> 2, "c" -> 3)
     for (t <- map) {
       assert(t._1.length > 0 && t._2 > 0)
     }
+
     val vector = Vector(1, 2, 3)
     var range = for (e <- vector if e > 0) yield e * 2
     assert(range == Vector(2, 4, 6))
+
     range = for {
       e <- vector
       if e > 0
