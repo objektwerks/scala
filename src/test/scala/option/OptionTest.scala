@@ -25,6 +25,20 @@ class OptionTest extends FunSuite {
     assert(toInt("3").get == 3)
     assert(toInt("c") == None)
     assert(toInt("c").getOrElse(0) == 0)
+    assert(List("1", "A", "B").map(toInt) == List(Some(1), None, None))
+  }
+
+  test("option flatmap") {
+    def toInt(s: String): Option[Int] = {
+      try {
+        Some(Integer.parseInt(s.trim))
+      } catch {
+        case e: Exception => None
+      }
+    }
+    val strings = Seq("1", "2", "foo", "3", "bar")
+    assert(strings.flatMap(toInt) == List(1, 2, 3))
+    assert(strings.flatMap(toInt).sum == 6)
   }
 
   test("try success failure") {
