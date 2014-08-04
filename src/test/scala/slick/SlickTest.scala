@@ -26,20 +26,16 @@ class SlickTest extends FunSuite with BeforeAndAfter {
   def insert() = {
     session.withTransaction {
       val userId = (users returning users.map(_.id)) += User(None, "Fred")
-      assert(userId == 1)
-      val taskId = (tasks returning tasks.map(_.id)) += Task(None, userId, "Take a nap!")
-      assert(taskId == 1)
+      tasks += Task(None, userId, " take a nap!")
       println(users.list)
       println(tasks.list)
     }
   }
 
   def query() = {
-    session.withTransaction {
-      val userTasks = for {
-        (u, t) <- users innerJoin tasks
-      } yield (u.name, t.task)
-      println(userTasks.list)
-    }
+    val userTasks = for {
+      (u, t) <- users innerJoin tasks
+    } yield (u.name, t.task)
+    println(userTasks.list)
   }
 }
