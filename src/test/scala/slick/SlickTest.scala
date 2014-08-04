@@ -1,21 +1,20 @@
 package slick
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.FunSuite
 
 import scala.slick.driver.H2Driver.simple._
 
-class SlickTest extends FunSuite with BeforeAndAfter {
-  implicit var session: Session = _
-
-  before {
-    session = Database.forURL("jdbc:h2:mem:test", driver = "org.h2.Driver").createSession()
-  }
-
-  after {
-    session.close()
-  }
-
+class SlickTest extends FunSuite {
   test("test") {
+    val users = TableQuery[Users]
+    val tasks = TableQuery[Tasks]
 
+    Database.forURL("jdbc:h2:mem:test", driver = "org.h2.Driver") withSession { implicit session =>
+      (users.ddl ++ tasks.ddl).create
+      val userId = (users returning users.map(_.id)) += User(None, "Fred")
+      assert(userId == 1)
+      val taskId = (tasks returning tasks.map(_.id)) += Task(None, userId, "Take nap!")
+      assert(taskId == 1)
+    }
   }
 }
