@@ -13,8 +13,10 @@ class SlickTest extends FunSuite {
       (users.ddl ++ tasks.ddl).create
       val userId = (users returning users.map(_.id)) += User(None, "Fred")
       assert(userId == 1)
-      val taskId = (tasks returning tasks.map(_.id)) += Task(None, userId, "Take nap!")
+      val taskId = (tasks returning tasks.map(_.id)) += Task(None, userId, "Take a nap!")
       assert(taskId == 1)
+      println(users.list)
+      println(tasks.list)
     }
   }
 }
