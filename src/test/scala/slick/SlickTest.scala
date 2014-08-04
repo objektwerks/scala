@@ -17,6 +17,10 @@ class SlickTest extends FunSuite {
       assert(taskId == 1)
       println(users.list)
       println(tasks.list)
+      val userTasks = for {
+        (u, t) <- users innerJoin tasks
+      } yield (u.name, t.task)
+      println(userTasks.list)
     }
   }
 }
