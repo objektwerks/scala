@@ -112,7 +112,7 @@ class CollectionTest extends FunSuite {
 
   test("partition") {
     val vector = Vector(1, 2, 3, 4)
-    assert(vector.partition(_ % 2 == 0) ==(Vector(2, 4), Vector(1, 3)))
+    assert(vector.partition(_ % 2 == 0) == (Vector(2, 4), Vector(1, 3)))
   }
 
   test("reduce") {
