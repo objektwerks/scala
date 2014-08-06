@@ -3,18 +3,16 @@ package slick
 import scala.slick.driver.H2Driver.simple._
 
 object Schema {
-  def create() (implicit session: Session) = {
-    (Store.users.ddl ++ Store.tasks.ddl).create
+  def create() (implicit session: Session, users: TableQuery[Users], tasks: TableQuery[Tasks]) = {
+    (users.ddl ++ tasks.ddl).create
     load()
   }
 
-  def drop() (implicit session: Session) = {
-    (Store.users.ddl ++ Store.tasks.ddl).drop
+  def drop() (implicit session: Session, users: TableQuery[Users], tasks: TableQuery[Tasks]) = {
+    (users.ddl ++ tasks.ddl).drop
   }
 
-  private def load() (implicit session: Session) = {
-    val users = Store.users
-    val tasks = Store.tasks
+  private def load() (implicit session: Session, users: TableQuery[Users], tasks: TableQuery[Tasks]) = {
     session.withTransaction {
       val userId = (users returning users.map(_.id)) += User(None, "Fred")
       tasks += Task(None, userId, "Mow yard.")
