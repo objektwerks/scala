@@ -47,7 +47,6 @@ class ActorTest extends FunSuite with BeforeAndAfter {
       master ! PoisonPill
       println("Master killed by poison pill.")
       Thread.sleep(1000)
-
     }
   }
 }
