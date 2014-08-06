@@ -22,29 +22,11 @@ object Store {
 
   def open() = {
     session = db.createSession()
-    createSchema()
-    loadEntities()
+    Schema.create()
   }
 
   def close() = {
-    dropSchema()
+    Schema.drop()
     session.close()
-  }
-
-  private def createSchema() = {
-    (users.ddl ++ tasks.ddl).create
-  }
-
-  private def dropSchema() = {
-    (users.ddl ++ tasks.ddl).drop
-  }
-
-  private def loadEntities() = {
-    session.withTransaction {
-      val userId = (users returning users.map(_.id)) += User(None, "Fred")
-      tasks += Task(None, userId, "Mow yard.")
-      tasks += Task(None, userId, "Clean garage.")
-      tasks += Task(None, userId, "Paint tool shed.")
-    }
   }
 }
