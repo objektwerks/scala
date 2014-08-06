@@ -13,17 +13,17 @@ import scala.util.{Failure, Success}
 class ActorTest extends FunSuite {
   test("async one way") {
     val system = ActorSystem.create("system")
-    val actress = system.actorOf(Props(new Actress("Async One Way")), name = "actress")
-    actress ! Message(0, "an async one way message!")
-    actress ! Message(2, "a message for a starlet.")
+    val actress = system.actorOf(Props(new Actress("Actress")), name = "actress")
+    actress ! Message(0, "an async one way message.")
+    actress ! Message(2, "an async one way message from actress.")
     system.shutdown()
   }
 
   test("blocking two way") {
     implicit val timeout = new Timeout(3, TimeUnit.SECONDS)
     val system = ActorSystem.create("system")
-    val actress = system.actorOf(Props(new Actress("Blocking Two Way")), name = "actress")
-    val future = actress ? Message(1, "a blocking two way message!")
+    val actress = system.actorOf(Props(new Actress("Actress")), name = "actress")
+    val future = actress ? Message(1, "a blocking two way message.")
     val result = Await.result(future, timeout.duration).asInstanceOf[String]
     println(result)
     system.shutdown()
@@ -33,8 +33,8 @@ class ActorTest extends FunSuite {
     implicit val ec = ExecutionContext.Implicits.global
     implicit val timeout = new Timeout(3, TimeUnit.SECONDS)
     val system = ActorSystem.create("system")
-    val actress = system.actorOf(Props(new Actress("Async Two Way")), name = "actress")
-    val future = actress ? Message(1, "an async two way message!")
+    val actress = system.actorOf(Props(new Actress("Actress")), name = "actress")
+    val future = actress ? Message(1, "an async two way message.")
     try {
       future onComplete {
         case Success(result) => println(result)
@@ -47,10 +47,9 @@ class ActorTest extends FunSuite {
 
   test("poison pill") {
     val system = ActorSystem.create("system")
-    val actress = system.actorOf(Props(new Actress("Async One Way")), name = "actress")
-    actress ! Message(0, "an async one way message!")
-    val starlet = system.actorSelection(actress.path./("starlet"))
-    starlet ! PoisonPill
+    val actress = system.actorOf(Props(new Actress("Actress")), name = "actress")
+    actress ! PoisonPill
+    println("Actress killed by poison pill.")
     Thread.sleep(3000)
     system.shutdown()
   }
