@@ -3,8 +3,6 @@ package slick
 import scala.slick.driver.H2Driver.simple._
 
 object Schema {
-  implicit var session: Session = Store.session
-
   def create() (implicit session: Session) = {
     (Store.users.ddl ++ Store.tasks.ddl).create
     load()
