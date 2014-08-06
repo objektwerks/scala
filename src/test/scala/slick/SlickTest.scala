@@ -15,15 +15,18 @@ class SlickTest extends FunSuite with BeforeAndAfter {
     val users: List[User] = Store.listUsers()
     assert(users.size == 1)
     for (u <- users) {
-      assert(u.id.get > 0)
+      assert(u.id > 0)
       assert(u.name.length > 0)
     }
   }
 
   test("find user by id") {
     val users: List[User] = Store.listUsers()
+    var usersWithTasks: Map[User, List[Task]] = Map.empty
     for (u <- users) {
-      assert(Store.findUserById(u.id.get).size == 3)
+      usersWithTasks = Store.findUserById(u.id)
+      assert(usersWithTasks.size == 1)
+      println(usersWithTasks)
     }
   }
 }

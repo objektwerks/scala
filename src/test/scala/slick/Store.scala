@@ -22,10 +22,13 @@ object Store {
     users.list
   }
 
-  def findUserById(id: Int): List[(String, String)] = {
+  def findUserById(id: Int): Map[User, List[Task]] = {
     val query = for {
       (u, t) <- users leftJoin tasks on(_.id === _.userId)
-    } yield (u.name, t.task)
-    query.list
+    } yield (u, t)
+    val list = query.list
+    val key = list.head._1
+    val values = list.map(_._2).toList
+    Map(key -> values)
   }
 }

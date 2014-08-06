@@ -14,10 +14,10 @@ object Schema {
 
   private def load() (implicit session: Session, users: TableQuery[Users], tasks: TableQuery[Tasks]) = {
     session.withTransaction {
-      val userId = (users returning users.map(_.id)) += User(None, "Fred")
-      tasks += Task(None, userId, "Mow yard.")
-      tasks += Task(None, userId, "Clean garage.")
-      tasks += Task(None, userId, "Paint tool shed.")
+      val userId = (users returning users.map(_.id)) += User(0, "Fred")
+      tasks += Task(0, userId, "Mow yard.")
+      tasks += Task(0, userId, "Clean garage.")
+      tasks += Task(0, userId, "Paint tool shed.")
     }
   }
 }
