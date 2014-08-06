@@ -1,4 +1,4 @@
-package z
+package classes
 
 // Player
 case class Player(name : String)
