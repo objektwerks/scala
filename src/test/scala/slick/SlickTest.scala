@@ -5,12 +5,13 @@ import org.scalatest.{BeforeAndAfter, FunSuite}
 import scala.slick.driver.H2Driver.simple._
 
 class SlickTest extends FunSuite with BeforeAndAfter {
+  val db: Database = Database.forURL("jdbc:h2:mem:test", driver = "org.h2.Driver")
   implicit var session: Session = _
   implicit val users: TableQuery[Users] = TableQuery[Users]
   implicit val tasks: TableQuery[Tasks] = TableQuery[Tasks]
 
   before {
-    session = Database.forURL("jdbc:h2:mem:test", driver = "org.h2.Driver").createSession()
+    session = db.createSession()
   }
 
   after {
