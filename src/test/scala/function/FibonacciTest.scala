@@ -1,4 +1,4 @@
-package z
+package function
 
 import org.scalatest.FunSuite
 

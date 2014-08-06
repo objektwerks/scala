@@ -97,4 +97,20 @@ class FunctionTest extends FunSuite {
     }
     assert(factorial(9) == 362880)
   }
+
+  test("impure function") {
+    def add(x: Int, y: Int): Int = {
+      val sum = x + y
+      println(sum) // Simulating side-effecting IO
+      sum
+    }
+    add(1, 2)
+  }
+
+  test("pure function") {
+    def add(x: Int, y: Int): Int = {
+      x + y // No side-effecting IO.
+    }
+    add(1, 2)
+  }
 }
