@@ -8,6 +8,16 @@ object Store {
   implicit val users: TableQuery[Users] = TableQuery[Users]
   implicit val tasks: TableQuery[Tasks] = TableQuery[Tasks]
 
+  def open() = {
+    session = db.createSession()
+    Schema.create()
+  }
+
+  def close() = {
+    Schema.drop()
+    session.close()
+  }
+
   def listUsers(): List[User] = {
     users.list
   }
@@ -17,16 +27,5 @@ object Store {
       (u, t) <- users leftJoin tasks on(_.id === _.userId)
     } yield (u.name, t.task)
     query.list
-  }
-
-
-  def open() = {
-    session = db.createSession()
-    Schema.create()
-  }
-
-  def close() = {
-    Schema.drop()
-    session.close()
   }
 }
