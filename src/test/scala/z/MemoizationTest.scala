@@ -18,7 +18,7 @@ class MemoizationTest extends FunSuite {
     val memo = Memo.immutableHashMapMemo {
       n: Long => computeFibonacciNumber(n)
     }
-    memo(fibonacciNumber)   // Computed and cached.
-    memo(fibonacciNumber)  // Cached value returned.
+    assert(memo(fibonacciNumber) == BigInt(63245986))  // Computed and cached.
+    assert(memo(fibonacciNumber) == BigInt(63245986)) // Cached value returned.
   }
 }
