@@ -2,8 +2,6 @@ package function
 
 import org.scalatest.FunSuite
 
-import scala.annotation.tailrec
-
 class FibonacciTest extends FunSuite {
   test("naive recursive fibonacci") {
     def fibbonacci(n : Long) : BigInt = n match {
@@ -28,23 +26,14 @@ class FibonacciTest extends FunSuite {
   }
 
   test("@tailrec fibonacci") {
-    def fibonacci(n: Long): BigInt = {
-      @tailrec
-      def loop(n: Long, a: Long, b: Long): BigInt = n match {
-        case 0 => a
-        case _ => loop(n - 1, b, a + b)
-      }
-      loop(n, 0, 1)
-    }
     val n = 39
-    val f = fibonacci(n)
+    val f = Fibonacci.number(n)
     assert(f.equals(BigInt(63245986)))
     println(s"@tailrec performance is constant using any number >= $n == $f")
   }
 
   test("fibonacci sequece generator") {
-    def fibonacciSequence(a: Int = 0, b: Int = 1): Stream[Int] = Stream.cons(a, fibonacciSequence(b, a + b))
-    val sequence = fibonacciSequence().takeWhile(_>= 0).toList
+    val sequence = Fibonacci.sequence().takeWhile(_>= 0).toList
     assert(sequence.size == 47)
     println("Fibonacci sequence: " + sequence)
   }
