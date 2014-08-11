@@ -3,7 +3,7 @@ package slick
 object Store {
   import scala.slick.driver.H2Driver.simple._
 
-  val db: Database = Database.forURL("jdbc:h2:mem:test", driver = "org.h2.Driver")
+  val db: Database = Database.forURL("jdbc:h2:mem:slick", driver = "org.h2.Driver")
   implicit var session: Session = _
   implicit val users: TableQuery[Users] = TableQuery[Users]
   implicit val tasks: TableQuery[Tasks] = TableQuery[Tasks]
