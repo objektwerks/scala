@@ -35,10 +35,20 @@ class ForMonad extends FunSuite {
   test("imperative for > foreach > map") {
     val xs = List(1, 2)
     var forList: ListBuffer[Int] = ListBuffer()
-    for (x <- xs) { forList += (x * 2) }
+    for (x <- xs) {
+      forList += (x * 2)
+    }
     val mapList: ListBuffer[Int] = ListBuffer()
     xs map (x => x * 2) foreach (x => mapList += x)
     assert(forList == ListBuffer(2, 4))
     assert(mapList == ListBuffer(2, 4))
+  }
+
+  test("for > if guard > filter") {
+    val letters = List("A", "B", "C", "D", "F")
+    val forLetters: List[Option[String]] = for (l <- letters if l == "A") yield Some(l)
+    val filterLetters = letters filter (l => l == "A") map (l => Some(l))
+    assert(forLetters(0).getOrElse("Z") == "A")
+    assert(filterLetters(0).getOrElse("Z") == "A")
   }
 }
