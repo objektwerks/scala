@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 
 import scala.collection.mutable.ListBuffer
 
-class ForMonad extends FunSuite {
+class ForMonadTest extends FunSuite {
   test("for > map") {
     val xs = List(1, 2)
     val forList = for (x <- xs) yield x * 2
