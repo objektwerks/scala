@@ -21,32 +21,35 @@ object Profile {
       Profile(_, _)
     }
   }
+
+  def validate(validation: ValidationNel[String, Profile]): Unit = {
+    validation match {
+      case Success(s) =>
+        assert(validation.isSuccess)
+        persist(s)
+      case Failure(f) =>
+        assert(validation.isFailure)
+        assert(f.toList.size == 2)
+        println(s"Profile invalid $f")
+        println("Invalid profile as list: " + f.toList)
+    }
+  }
+
+  def persist(profile: Profile): Unit = {
+    println(s"Profile persisted $profile")
+  }
 }
 
 class ValidationTest extends FunSuite {
-  test("invalid profile") {
-    val profile = Profile("", "")
-    val validation = Profile.validate(profile)
-    val results: List[String] = validation match {
-      case Success(s) => List(s.toString)
-      case Failure(f) => f.toList
-    }
-    assert(validation.isFailure)
-    assert(results.size == 2)
-    println(validation)
-    println(results)
-  }
-
   test("valid profile") {
     val profile = Profile("Barney Rebel", "barney.rebel@gmail.com")
-    val validation = Profile.validate(profile)
-    val results: List[String] = validation match {
-      case Success(s) => List(s.toString)
-      case Failure(f) => f.toList
-    }
-    assert(validation.isSuccess)
-    assert(results.size == 1)
-    println(validation)
-    println(results)
+    val isProfileValid = Profile.validate(profile)
+    Profile.validate(isProfileValid)
+  }
+
+  test("invalid profile") {
+    val profile = Profile("", "")
+    val isProfileValid = Profile.validate(profile)
+    Profile.validate(isProfileValid)
   }
 }
