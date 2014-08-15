@@ -45,7 +45,7 @@ class ValidationTest extends FunSuite {
       case Failure(f) => f.toList
     }
     assert(validation.isSuccess)
-    assert(results.nonEmpty)
+    assert(results.size == 1)
     println(validation)
     println(results)
   }
