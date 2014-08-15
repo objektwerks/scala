@@ -30,7 +30,7 @@ object Profile {
       case Failure(f) =>
         assert(validation.isFailure)
         assert(f.toList.size == 2)
-        println(s"Profile invalid $f")
+        println(s"Profile is invalid $f")
         println("Invalid profile as list: " + f.toList)
     }
   }
