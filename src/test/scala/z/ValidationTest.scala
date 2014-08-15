@@ -30,13 +30,13 @@ object Profile {
       case Failure(f) =>
         assert(validation.isFailure)
         assert(f.toList.size == 2)
-        println(s"Profile is invalid $f")
+        println(s"Profile is invalid: $f")
         println("Invalid profile as list: " + f.toList)
     }
   }
 
   def persist(profile: Profile): Unit = {
-    println(s"Profile persisted $profile")
+    println(s"Profile persisted: $profile")
   }
 }
 
