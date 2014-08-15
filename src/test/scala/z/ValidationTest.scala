@@ -27,11 +27,12 @@ class ValidationTest extends FunSuite {
   test("invalid profile") {
     val profile = Profile("", "")
     val validation = Profile.validateProfile(profile)
-    val errors = validation match {
-      case Success(s) => println(s)
+    val errors: List[String] = validation match {
+      case Success(s) => List(s.toString)
       case Failure(f) => f.toList
     }
     assert(validation.isFailure)
+    assert(errors.size == 2)
     println(validation)
     println(errors)
   }
@@ -39,7 +40,13 @@ class ValidationTest extends FunSuite {
   test("valid profile") {
     val profile = Profile("Barney Rebel", "barney.rebel@gmail.com")
     val validation = Profile.validateProfile(profile)
+    val success = validation match {
+      case Success(s) => s.toString
+      case Failure(f) => f.toString()
+    }
     assert(validation.isSuccess)
+    assert(!success.isEmpty)
     println(validation)
+    println(success)
   }
 }
