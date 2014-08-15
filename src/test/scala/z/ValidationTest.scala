@@ -27,9 +27,13 @@ class ValidationTest extends FunSuite {
   test("invalid profile") {
     val profile = Profile("", "")
     val validation = Profile.validateProfile(profile)
+    val errors = validation match {
+      case Success(s) => println(s)
+      case Failure(f) => f.toList
+    }
     assert(validation.isFailure)
     println(validation)
-
+    println(errors)
   }
 
   test("valid profile") {
