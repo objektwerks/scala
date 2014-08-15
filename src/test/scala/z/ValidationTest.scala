@@ -16,7 +16,7 @@ object Profile {
     if (email.isEmpty) "Please, enter your email.".failure else email.success
   }
 
-  def validateProfile(profile: Profile) : ValidationNel[String, Profile] = {
+  def validate(profile: Profile) : ValidationNel[String, Profile] = {
     (validateName(profile.name).toValidationNel |@| validateEmail(profile.email).toValidationNel) {
       Profile(_, _)
     }
@@ -26,7 +26,7 @@ object Profile {
 class ValidationTest extends FunSuite {
   test("invalid profile") {
     val profile = Profile("", "")
-    val validation = Profile.validateProfile(profile)
+    val validation = Profile.validate(profile)
     val results: List[String] = validation match {
       case Success(s) => List(s.toString)
       case Failure(f) => f.toList
@@ -39,7 +39,7 @@ class ValidationTest extends FunSuite {
 
   test("valid profile") {
     val profile = Profile("Barney Rebel", "barney.rebel@gmail.com")
-    val validation = Profile.validateProfile(profile)
+    val validation = Profile.validate(profile)
     val results: List[String] = validation match {
       case Success(s) => List(s.toString)
       case Failure(f) => f.toList
