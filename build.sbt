@@ -11,6 +11,7 @@ libraryDependencies ++= Seq(
   "com.h2database" % "h2" % "1.4.180",
   "com.typesafe.slick" % "slick_2.11" % "2.1.0-M2",
   "org.scalaz" %% "scalaz-core" % "7.0.6",
+  "org.scalafx" % "scalafx_2.11" % "8.0.5-R5",
   "org.slf4j" % "slf4j-nop" % "1.6.4")
 
 logLevel := Level.Info
