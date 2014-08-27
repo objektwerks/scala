@@ -2,8 +2,10 @@ package parallel
 
 import org.scalatest.FunSuite
 
+import scala.collection.parallel.immutable.ParRange
+
 class ParallelTest extends FunSuite {
-  test("split sum") {
+  test("split recursive sum") {
     def sum(ints: IndexedSeq[Int]): Int = {
       if (ints.size <= 1)
         ints.headOption getOrElse 0
@@ -12,7 +14,14 @@ class ParallelTest extends FunSuite {
         sum(l) + sum(r)
       }
     }
-    val total = sum(Range.apply(1, 1000000))
+    val range = Range(1, 1000000)
+    val total = sum(range)
+    assert(total == 1783293664)
+  }
+
+  test("parallel sum") {
+    val range = new ParRange(Range(1, 1000000))
+    val total = range.sum
     assert(total == 1783293664)
   }
 }
