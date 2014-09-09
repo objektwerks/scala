@@ -4,25 +4,12 @@ import java.util.concurrent.TimeUnit
 
 import org.scalatest.FunSuite
 
-import scala.async.Async.{async, await}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
 import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
 class FutureTest extends FunSuite {
-  test("async") {
-    val future: Future[Int] = async {
-      val futureOne: Future[Int] = async { 1 }
-      val futureTwo: Future[Int] = async { 2 }
-      await(futureOne) + await(futureTwo)
-    }
-    future onComplete {
-      case Success(result) => assert(result == 3)
-      case Failure(failure) => throw failure
-    }
-  }
-
   test("anonymous blocking future with implicit promise") {
     val future: Future[String] = Future {
       "Hello world!"
