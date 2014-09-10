@@ -22,11 +22,6 @@ object AsyncRest {
     await(parseJson(json))
   }
 
-  def forJoke: Future[String] = for {
-    json <- getJson
-    joke <- parseJson(json)
-  } yield joke
-
   private def getJson = Future {
     try {
       Source.fromURL(url, utf8).mkString

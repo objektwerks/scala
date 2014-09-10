@@ -19,4 +19,9 @@ class AsyncTest extends FunSuite {
       case Failure(failure) => throw failure
     }
   }
+
+  test("async rest") {
+    val joke = AsyncRest.asyncJoke
+    assert(joke != null)
+  }
 }
