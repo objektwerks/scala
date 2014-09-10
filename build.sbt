@@ -11,6 +11,7 @@ libraryDependencies ++= Seq (
   "com.typesafe.slick" % "slick_2.11" % "2.1.0-M2",
   "org.scalaz" %% "scalaz-core" % "7.1.0",
   "org.scalafx" % "scalafx_2.11" % "8.0.5-R5",
+  "org.json4s" % "json4s-jackson_2.11" % "3.2.10",
   "org.scalatest" % "scalatest_2.11" % "2.2.0" % "test"
 )
 
