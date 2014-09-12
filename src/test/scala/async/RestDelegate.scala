@@ -10,7 +10,7 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 
 trait RestDelegate {
-  protected implicit val ec: ExecutionContext = ExecutionContext.global
+  protected implicit val ec = ExecutionContext.Implicits.global
   private implicit lazy val formats = DefaultFormats
   private val url = new URL("http://api.icndb.com/jokes/random/")
   private val utf8 = StandardCharsets.UTF_8.name()
