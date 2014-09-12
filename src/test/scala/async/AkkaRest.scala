@@ -3,7 +3,7 @@ package async
 import scala.async.Async.{async, await}
 import scala.concurrent.Future
 
-object AsyncRest extends RestDelegate {
+object AkkaRest extends RestDelegate {
   def asyncJoke: Future[String] = async {
     val jsonFuture = getJson
     val json = await(jsonFuture)

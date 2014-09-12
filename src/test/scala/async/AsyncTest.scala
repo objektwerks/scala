@@ -23,6 +23,15 @@ class AsyncTest extends FunSuite {
 
   test("async rest") {
     val joke = Await.result(AsyncRest.asyncJoke, 3 seconds)
+    assertJoke(joke)
+  }
+
+  test("akka rest") {
+    val joke = Await.result(AkkaRest.asyncJoke, 3 seconds)
+    assertJoke(joke)
+  }
+
+  private def assertJoke(joke: String) = {
     assert(!joke.isEmpty)
     println(joke)
   }
