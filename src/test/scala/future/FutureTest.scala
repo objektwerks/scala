@@ -19,10 +19,10 @@ class FutureTest extends FunSuite {
   }
 
   test("anonymous non-blocking future with implicit promise") {
-    val future: Future[String] = Future {
+    val helloWorldFuture: Future[String] = Future {
       "Hello world!"
     }
-    future onComplete {
+    helloWorldFuture onComplete {
       case Success(result) => assert(result.equals("Hello world!"))
       case Failure(failure) => throw failure
     }
@@ -42,51 +42,59 @@ class FutureTest extends FunSuite {
   }
 
   test("anonymous non-blocking future with monadic map") {
-    val futureOne: Future[String] = Future {
+    val helloFuture: Future[String] = Future {
       "Hello"
     }
-    val futureTwo: Future[String] = futureOne map {
+    val worldFuture: Future[String] = helloFuture map {
       s => s + " world!"
     }
-    futureTwo onComplete {
-      case Success(success) => assert(success == "Hello world!")
+    def assertHelloWorldFuture(text: String) = {
+      assert(text == "Hello world!")
+    }
+    worldFuture onComplete {
+      case Success(success) => assertHelloWorldFuture(success)
       case Failure(failure) => throw failure
     }
   }
 
   test("anonymous non-blocking future with monadic flat map") {
-    val futureOne: Future[String] = Future {
+    val helloFuture: Future[String] = Future {
       "Hello"
     }
-    val futureTwo: Future[String] = Future {
+    val worldFuture: Future[String] = Future {
       " world"
     }
-    val futureThree: Future[String] = futureOne flatMap {
-      partOne =>
-        futureTwo map {
-          partTwo => partOne + partTwo + "!"
+    val helloWorldFuture: Future[String] = helloFuture flatMap {
+      hello =>
+        worldFuture map {
+          world => hello + world + "!"
         }
     }
-    futureThree onComplete {
-      case Success(success) => assert(success == "Hello world!")
+    def checkHelloWorldFutures(text: String) = {
+      assert(text == "Hello world!")
+    }
+    helloWorldFuture onComplete {
+      case Success(success) => checkHelloWorldFutures(success)
       case Failure(failure) => throw failure
     }
   }
 
   test("anonymous non-blocking future with for comprehension") {
-    val futureOne: Future[String] = Future {
+    val helloFuture: Future[String] = Future {
       "Hello"
     }
-    val futureTwo: Future[String] = Future {
+    val worldFuture: Future[String] = Future {
       " world"
     }
-    val futureThree: Future[String] = for {
-      partOne <- futureOne
-      partTwo <- futureTwo
-    } yield partOne + partTwo + "!"
-
-    futureThree onComplete {
-      case Success(success) => assert(success == "Hello world!")
+    val helloWorldFuture: Future[String] = for {
+      hello <- helloFuture
+      world <- worldFuture
+    } yield hello + world + "!"
+    def checkHelloWorldFutures(text: String) = {
+      assert(text == "Hello world!")
+    }
+    helloWorldFuture onComplete {
+      case Success(success) => checkHelloWorldFutures(success)
       case Failure(failure) => throw failure
     }
   }
