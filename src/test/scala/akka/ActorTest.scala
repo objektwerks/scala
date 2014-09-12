@@ -5,25 +5,17 @@ import java.util.concurrent.TimeUnit
 import akka.actor.{ActorRef, ActorSystem, PoisonPill, Props}
 import akka.pattern.ask
 import akka.util.Timeout
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.FunSuite
 
 import scala.concurrent.{Await, ExecutionContext}
 import scala.util.{Failure, Success}
 
-class ActorTest extends FunSuite with BeforeAndAfter {
+class ActorTest extends FunSuite {
   implicit val ec = ExecutionContext.Implicits.global
   implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
-  var system: ActorSystem = _
-  var master: ActorRef = _
-
-  before {
-    system = ActorSystem.create("system")
-    master = system.actorOf(Props(new Master("Master")), name = "master")
-  }
-
-  after {
-    system.shutdown()
-  }
+  var system: ActorSystem = ActorSystem.create("system")
+  var master: ActorRef = system.actorOf(Props(new Master()), name = "master")
+  println("Actor system started.")
 
   test("async one way") {
     master ! Message(0, "an async one way message.")
@@ -47,6 +39,8 @@ class ActorTest extends FunSuite with BeforeAndAfter {
       master ! PoisonPill
       println("Master killed by poison pill.")
       Thread.sleep(1000)
+      system.shutdown()
+      println("Actor system shutdown.")
     }
   }
 }
