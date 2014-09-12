@@ -21,14 +21,7 @@ class AsyncTest extends FunSuite {
   }
 
   test("async rest") {
-    assertJoke(AsyncRest.asyncJoke)
-  }
-
-  test("akka rest") {
-    assertJoke(AkkaRest.asyncJoke)
-  }
-
-  private def assertJoke(future: Future[String]) = {
+    val future = AsyncRest.asyncJoke
     future onComplete {
       case Success(joke) => assert(!joke.isEmpty)
       case Failure(failure) => throw failure
