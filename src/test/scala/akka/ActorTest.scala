@@ -7,14 +7,14 @@ import akka.pattern.ask
 import akka.util.Timeout
 import org.scalatest.FunSuite
 
-import scala.concurrent.{Await, ExecutionContext}
+import scala.concurrent.Await
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 
 class ActorTest extends FunSuite {
-  implicit val ec = ExecutionContext.Implicits.global
-  implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
-  var system: ActorSystem = ActorSystem.create("system")
-  var master: ActorRef = system.actorOf(Props(new Master()), name = "master")
+  private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
+  private val system: ActorSystem = ActorSystem.create("system")
+  private val master: ActorRef = system.actorOf(Props(new Master()), name = "master")
   println("Actor system started.")
 
   test("async one way") {
