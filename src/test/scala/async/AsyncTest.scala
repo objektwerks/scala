@@ -4,8 +4,7 @@ import org.scalatest.FunSuite
 
 import scala.async.Async._
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
 class AsyncTest extends FunSuite {
@@ -22,17 +21,17 @@ class AsyncTest extends FunSuite {
   }
 
   test("async rest") {
-    val joke = Await.result(AsyncRest.asyncJoke, 3 seconds)
-    assertJoke(joke)
+    assertJoke(AsyncRest.asyncJoke)
   }
 
   test("akka rest") {
-    val joke = Await.result(AkkaRest.asyncJoke, 3 seconds)
-    assertJoke(joke)
+    assertJoke(AkkaRest.asyncJoke)
   }
 
-  private def assertJoke(joke: String) = {
-    assert(!joke.isEmpty)
-    println(joke)
+  private def assertJoke(future: Future[String]) = {
+    future onComplete {
+      case Success(joke) => assert(!joke.isEmpty)
+      case Failure(failure) => throw failure
+    }
   }
 }
