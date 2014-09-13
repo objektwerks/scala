@@ -1,12 +1,10 @@
 package future
 
-import java.util.concurrent.TimeUnit
-
 import org.scalatest.FunSuite
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
-import scala.concurrent.duration.Duration
+import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
 class FutureTest extends FunSuite {
@@ -14,7 +12,7 @@ class FutureTest extends FunSuite {
     val future: Future[String] = Future {
       "Hello world!"
     }
-    val result = Await.result(future, Duration(1, TimeUnit.SECONDS))
+    val result = Await.result(future, 1 second)
     assert(result.equals("Hello world!"))
   }
 
