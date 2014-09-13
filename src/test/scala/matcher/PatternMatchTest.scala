@@ -3,16 +3,28 @@ package matcher
 import org.scalatest.FunSuite
 
 class PatternMatchTest extends FunSuite {
-  test("any match") {
+  test("type match") {
+    def byType(t: Any): String = t match {
+      case i:Int => s"integer: $i"
+      case d:Double => s"double: $d"
+      case s:String => s"string: $s"
+    }
+    assert(byType(1) == "integer: 1")
+    assert(byType(1.0) == "double: 1.0")
+    assert(byType("10") == "string: 10")
+  }
+
+  test("or match") {
     def isTrue(a: Any) = a match {
       case 0 | "" => false
       case _ => true
     }
     assert(isTrue(1))
     assert(!isTrue(0))
+    assert(!isTrue(""))
   }
 
-  test("string match") {
+  test("int to string match") {
     def isEqual(s: Int): String = s match {
       case 1 => "one"
       case 2 => "two"
@@ -33,7 +45,7 @@ class PatternMatchTest extends FunSuite {
     assert(isPerson(Person("Jake")) == "Mr. Nobody")
   }
 
-  test("wild card match") {
+  test("wild card case class match") {
     case class Order(number: Int, item: String)
     def order(o: Order): String = o match {
       case Order(_, "chicken soup") => o.number + " " + o.item
