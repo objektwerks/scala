@@ -14,6 +14,7 @@ libraryDependencies ++= Seq (
   "org.scalaz" %% "scalaz-core" % "7.1.0",
   "org.scalafx" % "scalafx_2.11" % "8.0.5-R5",
   "org.json4s" % "json4s-jackson_2.11" % "3.2.10",
+  "org.scalacheck" % "scalacheck_2.11" % "1.11.5" % "test",
   "org.scalatest" % "scalatest_2.11" % "2.2.2" % "test"
 )
 
