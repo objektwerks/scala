@@ -68,6 +68,15 @@ class FunctionTest extends FunSuite {
     assert(multiplyByFive(20) == 100)
   }
 
+  test("partial function") {
+    val fraction = new PartialFunction[Int, Int] {
+      def apply(d: Int) = 2 / d
+      def isDefinedAt(d: Int): Boolean = d <= 0
+    }
+    assert(fraction(2) == 1)
+    assert(fraction.isDefinedAt(-42))
+  }
+
   test("returning a function") {
     def greeting(greeting: String) = (name: String) => {
       greeting + ", " + name + "!"
