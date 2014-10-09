@@ -17,18 +17,18 @@ class ActorTest extends FunSuite {
   private val master: ActorRef = system.actorOf(Props(new Master()), name = "master")
   println("Actor system started.")
 
-  test("async one way tell") {
+  test("async one way tell !") {
     master ! Message(0, "an async one way message.")
     master ! Message(2, "an async one way message from master.")
   }
 
-  test("blocking two way ask") {
+  test("blocking two way ask ?") {
     val future = master ? Message(1, "a blocking two way message.")
     val result = Await.result(future, timeout.duration).asInstanceOf[String]
     println(result)
   }
 
-  test("async two way ask") {
+  test("async two way ask ?") {
     val future = master ? Message(1, "an async two way message.")
     try {
       future onComplete {
