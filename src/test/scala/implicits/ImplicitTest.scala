@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 
 class ImplicitTest extends FunSuite {
   test("implicit conversion") {
-    implicit def intToString(i: Int) = i.toString
+    implicit def intToString(i: Int): String = i.toString
     val three: String = 3
     assert(three == "3")
   }
