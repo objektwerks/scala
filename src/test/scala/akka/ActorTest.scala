@@ -1,18 +1,15 @@
 package akka
 
-import java.util.concurrent.TimeUnit
-
 import akka.actor.{ActorRef, ActorSystem, PoisonPill, Props}
 import akka.pattern.ask
-import akka.util.Timeout
 import org.scalatest.FunSuite
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
 class ActorTest extends FunSuite {
-  private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
   private val system: ActorSystem = ActorSystem.create("system")
   private val master: ActorRef = system.actorOf(Props(new Master()), name = "master")
   println(s"Actor system created: $system")
@@ -24,7 +21,7 @@ class ActorTest extends FunSuite {
 
   test("blocking two way ask ?") {
     val future = master ? Message(Ask, "System", "an async two way ? -> ask message")
-    val result = Await.result(future, timeout.duration).asInstanceOf[String]
+    val result = Await.result(future, 1 second).asInstanceOf[String]
     println(result)
   }
 
@@ -37,7 +34,7 @@ class ActorTest extends FunSuite {
       }
     } finally {
       master ! PoisonPill
-      println("Master killed by poison pill.")
+      println("Master killed by poison pill sent from System.")
       Thread.sleep(1000)
       system.shutdown()
       println("Actor system shutdown.")
