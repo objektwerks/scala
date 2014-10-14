@@ -3,13 +3,13 @@ package akka
 import akka.actor.{Actor, ActorRef, Props}
 
 class Master() extends Actor {
+  println(s"Master created: $self")
   val worker: ActorRef = context.actorOf(Props(new Worker()), name = "worker")
-  println("Master created.")
 
   def receive = {
-    case Message(0, message) => println(s"\nMaster received $message")
-    case Message(1, message) => sender ! s"Master received $message"
-    case Message(2, message) => worker ! new Message(0, message)
-    case _ => println(Message(-1, "Master received invalid message."))
+    case Message(0, who, message) => println(s"\nMaster received $message from $who.")
+    case Message(1, who, message) => sender ! s"Master received $message from $who."
+    case Message(2, who, message) => worker ! new Message(0, "Master", message)
+    case _ => println("Master received invalid message.")
   }
 }
