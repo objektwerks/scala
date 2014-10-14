@@ -1,13 +1,15 @@
 package slick
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
-class SlickTest extends FunSuite with BeforeAndAfter {
-  before {
+class SlickTest extends FunSuite with BeforeAndAfterAll {
+  override protected def beforeAll(): Unit = {
+    super.beforeAll()
     Store.open()
   }
 
-  after {
+  override protected def afterAll(): Unit = {
+    super.afterAll()
     Store.close()
   }
 
@@ -22,9 +24,9 @@ class SlickTest extends FunSuite with BeforeAndAfter {
 
   test("find user by id") {
     val users: List[User] = Store.listUsers()
-    var usersWithTasks: Map[User, List[Task]] = Map.empty
+    assert(users.size == 1)
     for (u <- users) {
-      usersWithTasks = Store.findUserById(u.id)
+      val usersWithTasks: Map[User, List[Task]] = Store.findUserById(u.id)
       assert(usersWithTasks.size == 1)
       println(usersWithTasks)
     }
