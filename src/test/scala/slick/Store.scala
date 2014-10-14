@@ -10,13 +10,6 @@ object Store {
 
   def open() = {
     (users.ddl ++ tasks.ddl).create
-    session.withTransaction {
-      val userName = "Fred"
-      users += User(userName)
-      tasks += Task(0, userName, "Mow yard.")
-      tasks += Task(0, userName, "Clean garage.")
-      tasks += Task(0, userName, "Paint tool shed.")
-    }
   }
 
   def close() = {
@@ -29,6 +22,14 @@ object Store {
       users.insert(user)
     }
     user
+  }
+
+  def createTask(user: User, task: String): Task = {
+    val created = Task(0, user.name, task)
+    session.withTransaction {
+      tasks.insert(created)
+    }
+    created
   }
 
   def updateUser(user: User): Boolean = {
