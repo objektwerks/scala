@@ -11,10 +11,11 @@ object Store {
   def open() = {
     (users.ddl ++ tasks.ddl).create
     session.withTransaction {
-      val userId = (users returning users.map(_.id)) += User(0, "Fred")
-      tasks += Task(0, userId, "Mow yard.")
-      tasks += Task(0, userId, "Clean garage.")
-      tasks += Task(0, userId, "Paint tool shed.")
+      val userName = "Fred"
+      users += User(userName)
+      tasks += Task(0, userName, "Mow yard.")
+      tasks += Task(0, userName, "Clean garage.")
+      tasks += Task(0, userName, "Paint tool shed.")
     }
   }
 
@@ -23,13 +24,38 @@ object Store {
     session.close()
   }
 
-  def listUsers(): List[User] = {
+  def createUser(user: User): User = {
+    session.withTransaction {
+      users.insert(user)
+    }
+    user
+  }
+
+  def updateUser(user: User): Boolean = {
+    session.withTransaction {
+      val updated: Int = users.filter(_.name === user.name).update(user)
+      if (updated == 1) true else false
+    }
+  }
+
+  def deleteUserByName(name: String): Boolean = {
+    session.withTransaction {
+      val deleted: Int = users.filter(_.name === name).delete
+      if (deleted == 1) true else false
+    }
+  }
+
+  def getUsers: List[User] = {
     users.list
   }
 
-  def findUserById(id: Int): Map[User, List[Task]] = {
+  def getUserByName(name: String): Option[User] = {
+    users.filter(_.name === name).firstOption
+  }
+
+  def getUserTasksByName(name: String): Map[User, List[Task]] = {
     val query = for {
-      (u, t) <- users leftJoin tasks on(_.id === _.userId)
+      (u, t) <- users leftJoin tasks on(_.name === _.userName)
     } yield (u, t)
     val list: List[(User, Task)] = query.list
     val key: User = list.head._1
