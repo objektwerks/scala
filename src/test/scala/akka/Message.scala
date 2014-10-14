@@ -1,6 +1,6 @@
 package akka
 
-trait Mode
+sealed trait Mode
 
 case object Tell extends Mode
 case object TellDelegate extends Mode
