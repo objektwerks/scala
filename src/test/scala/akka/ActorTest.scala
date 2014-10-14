@@ -1,7 +1,10 @@
 package akka
 
+import java.util.concurrent.TimeUnit
+
 import akka.actor.{ActorRef, ActorSystem, PoisonPill, Props}
 import akka.pattern.ask
+import akka.util.Timeout
 import org.scalatest.FunSuite
 
 import scala.concurrent.Await
@@ -10,6 +13,7 @@ import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
 class ActorTest extends FunSuite {
+  private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
   private val system: ActorSystem = ActorSystem.create("system")
   private val master: ActorRef = system.actorOf(Props(new Master()), name = "master")
   println(s"Actor system created: $system")
