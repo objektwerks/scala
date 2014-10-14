@@ -7,9 +7,9 @@ class Master() extends Actor {
   val worker: ActorRef = context.actorOf(Props(new Worker()), name = "worker")
 
   def receive = {
-    case Message(0, who, message) => println(s"\nMaster received $message from $who.")
-    case Message(1, who, message) => sender ! s"Master received $message from $who."
-    case Message(2, who, message) => worker ! new Message(0, "Master", message)
+    case Message(Tell, who, message) => println(s"\nMaster received $message from $who.")
+    case Message(Ask, who, message) => sender ! s"Master received $message from $who."
+    case Message(TellDelegate, who, message) => worker ! new Message(Tell, "Master", message)
     case _ => println("Master received invalid message.")
   }
 }

@@ -1,3 +1,9 @@
 package akka
 
-case class Message(mode: Int, who: String, message: String)
+trait Mode
+
+case object Tell extends Mode
+case object TellDelegate extends Mode
+case object Ask extends Mode
+
+case class Message(mode: Mode, who: String, message: String)
