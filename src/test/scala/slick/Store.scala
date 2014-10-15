@@ -32,13 +32,6 @@ object Store {
     created
   }
 
-  def updateUser(user: User): Boolean = {
-    session.withTransaction {
-      val updated: Int = users.filter(_.name === user.name).update(user)
-      if (updated == 1) true else false
-    }
-  }
-
   def deleteUserByName(name: String): Boolean = {
     session.withTransaction {
       val deleted: Int = users.filter(_.name === name).delete

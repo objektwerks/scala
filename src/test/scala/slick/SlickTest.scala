@@ -3,12 +3,13 @@ package slick
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
 class SlickTest extends FunSuite with BeforeAndAfterAll {
-  val name = "Fred"
+  val fred = "Fred"
+  val barney = "Barney"
 
   override protected def beforeAll(): Unit = {
     super.beforeAll()
     Store.open()
-    val user = Store.createUser(User(name))
+    val user = Store.createUser(User(fred))
     Store.createTask(user, "Mow yard.")
   }
 
@@ -18,8 +19,8 @@ class SlickTest extends FunSuite with BeforeAndAfterAll {
   }
 
   test("get user by name") {
-    val userAsOption = Store.getUserByName(name)
-    assert(userAsOption.get == User(name))
+    val userAsOption = Store.getUserByName(fred)
+    assert(userAsOption.get == User(fred))
   }
 
   test("get users") {
