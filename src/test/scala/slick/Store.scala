@@ -32,9 +32,9 @@ object Store {
     created
   }
 
-  def deleteUserByName(name: String): Boolean = {
+  def deleteTask(id: Int): Boolean = {
     session.withTransaction {
-      val deleted: Int = users.filter(_.name === name).delete
+      val deleted: Int = tasks.filter(_.id === id).delete
       if (deleted == 1) true else false
     }
   }
