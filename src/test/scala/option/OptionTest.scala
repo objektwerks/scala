@@ -8,35 +8,21 @@ import scala.util.{Success, Try}
 
 class OptionTest extends FunSuite {
   test("option") {
-    def greaterThanZero(x: Int) = if (x > 0) Some(x) else None
+    def greaterThanZero(x: Int): Option[Int] = if (x > 0) Some(x) else None
     assert(greaterThanZero(0) == None)
     assert(greaterThanZero(1) == Some(1))
-  }
-
-  test("option try") {
-    def toInt(s: String): Option[Int] = {
-      try {
-        Some(s.toInt)
-      } catch {
-        case e: Exception => None
-      }
+    val opt = greaterThanZero(1)
+    opt match {
+      case Some(i) => assert(i > 0)
+      case None => throw new IllegalArgumentException("option test failed")
     }
-    assert(toInt("3") == Some(3))
-    assert(toInt("3").get == 3)
-    assert(toInt("c") == None)
-    assert(toInt("c").getOrElse(0) == 0)
-    assert(List("1", "A", "B").map(toInt) == List(Some(1), None, None))
-  }
+    opt map(i => assert(i > 0)) getOrElse(throw new IllegalArgumentException("option test failed"))
+    opt.fold (throw new IllegalArgumentException("option test faild")) (i => assert(i > 0))
+   }
 
   test("option flatmap") {
-    def toInt(s: String): Option[Int] = {
-      try {
-        Some(Integer.parseInt(s.trim))
-      } catch {
-        case e: Exception => None
-      }
-    }
-    val strings = Seq("1", "2", "foo", "3", "bar")
+    def toInt(s: String): Option[Int] = Some(Integer.parseInt(s.trim))
+    val strings = Seq("1", "2", "3")
     assert(strings.flatMap(toInt) == List(1, 2, 3))
     assert(strings.flatMap(toInt).sum == 6)
   }
@@ -58,12 +44,10 @@ class OptionTest extends FunSuite {
   }
 
   test("either left right") {
-    def divide(x: Int, y: Int): Either[String, Int] = {
-      try {
-        Right(x / y)
-      } catch {
-        case e: Exception => Left("divide by zero error")
-      }
+    def divide(x: Int, y: Int): Either[String, Int] = try {
+      Right(x / y)
+    } catch {
+      case t: Throwable => Left("divide by zero error")
     }
     assert(divide(9, 3) == Right(3))
     assert(divide(9, 0) == Left("divide by zero error"))
