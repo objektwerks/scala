@@ -4,3 +4,5 @@ project/boot
 project/project
 project/target
 project/plugins/target
+*.sublime-project
+*.sublime-workspace
