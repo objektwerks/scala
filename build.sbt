@@ -1,5 +1,3 @@
-import org._
-
 name := "objektwerks.scala"
 
 version := "0.1-SNAPSHOT"
@@ -23,14 +21,3 @@ libraryDependencies ++= Seq (
 
 logLevel := Level.Info
 
-scalacOptions ++= Seq("-unchecked", "-deprecation")
-
-scalastyle.sbt.ScalastylePlugin.Settings
-
-lazy val testScalaStyle = taskKey[Unit]("testScalaStyle")
-
-testScalaStyle := {
-  org.scalastyle.sbt.PluginKeys.scalastyle
-}
-
-(test in Test) <<= (test in Test) dependsOn testScalaStyle
