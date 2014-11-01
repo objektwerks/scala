@@ -1,11 +1,13 @@
 package async
 
-import org.scalatest.FunSuite
-
 import scala.async.Async._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
+
+import org.scalatest.FunSuite
+
+import rest.AsyncRest
 
 class AsyncTest extends FunSuite {
   test("async") {

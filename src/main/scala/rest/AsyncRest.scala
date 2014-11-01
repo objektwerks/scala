@@ -1,4 +1,4 @@
-package async
+package rest
 
 import scala.async.Async.{async, await}
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -14,10 +14,10 @@ object AsyncRest {
   private val jokeUrl = "http://api.icndb.com/jokes/random/"
 
   def asyncJoke: Future[String] = async {
-    await(getJoke)
+    await(futureJoke)
   }
 
-  def getJoke: Future[String] = {
+  def futureJoke: Future[String] = {
     val future = Http(url(jokeUrl) OK as.String)
     future map {
       json => parseJson(json)
