@@ -2,13 +2,14 @@ package akka
 
 import java.util.concurrent.TimeUnit
 
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Failure, Success}
+
+import org.scalatest.FunSuite
+
 import akka.actor.{ActorRef, ActorSystem, PoisonPill, Props}
 import akka.pattern.ask
 import akka.util.Timeout
-import org.scalatest.FunSuite
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
 
 class ActorTest extends FunSuite {
   private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)

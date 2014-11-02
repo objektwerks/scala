@@ -1,8 +1,8 @@
 package parallel
 
-import org.scalatest.FunSuite
-
 import scala.collection.parallel.immutable.ParRange
+
+import org.scalatest.FunSuite
 
 class ParallelTest extends FunSuite {
   test("split recursive sum") {

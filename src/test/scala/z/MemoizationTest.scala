@@ -1,9 +1,10 @@
 package z
 
-import function.Fibonacci
+import scalaz._
+
 import org.scalatest.FunSuite
 
-import scalaz._
+import function.Fibonacci
 
 class MemoizationTest extends FunSuite {
   val fibonacciSeed: Long = 39

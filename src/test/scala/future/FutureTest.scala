@@ -1,11 +1,11 @@
 package future
 
-import org.scalatest.FunSuite
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success}
+
+import org.scalatest.FunSuite
 
 class FutureTest extends FunSuite {
   test("anonymous blocking future with implicit promise") {

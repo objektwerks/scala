@@ -1,10 +1,10 @@
 package option
 
-import org.scalatest.FunSuite
-
 import scala.io.Source
 import scala.util.control.Exception._
 import scala.util.{Success, Try}
+
+import org.scalatest.FunSuite
 
 class OptionTest extends FunSuite {
   test("option") {

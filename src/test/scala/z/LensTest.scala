@@ -1,8 +1,8 @@
 package z
 
-import org.scalatest.FunSuite
-
 import scalaz._
+
+import org.scalatest.FunSuite
 
 case class Person(name: String, address: Address)
 

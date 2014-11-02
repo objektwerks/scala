@@ -1,9 +1,9 @@
 package z
 
-import org.scalatest.FunSuite
-
 import scalaz.Scalaz._
 import scalaz._
+
+import org.scalatest.FunSuite
 
 case class Profile(name: String, email: String)
 

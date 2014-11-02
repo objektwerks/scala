@@ -1,8 +1,8 @@
 package monad
 
-import org.scalatest.FunSuite
-
 import scala.collection.mutable.ListBuffer
+
+import org.scalatest.FunSuite
 
 class ForMonadTest extends FunSuite {
   test("for > map") {
