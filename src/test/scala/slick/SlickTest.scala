@@ -3,8 +3,7 @@ package slick
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
 class SlickTest extends FunSuite with BeforeAndAfterAll {
-  val fred = "Fred"
-  val barney = "Barney"
+  private val fred = "Fred"
 
   override protected def beforeAll(): Unit = {
     super.beforeAll()

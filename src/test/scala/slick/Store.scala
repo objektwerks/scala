@@ -3,10 +3,11 @@ package slick
 import scala.slick.driver.H2Driver.simple._
 
 object Store {
-  val db = Database.forURL("jdbc:h2:mem:slick", driver = "org.h2.Driver")
-  implicit var session = db.createSession()
-  val users = TableQuery[Users]
-  val tasks = TableQuery[Tasks]
+  private val db = Database.forURL("jdbc:h2:mem:slick", driver = "org.h2.Driver")
+  // WARNING: Old session slick. New dyna session fails on ddl.create, though. Must use ddl script.
+  private implicit var session = db.createSession()
+  private val users = TableQuery[Users]
+  private val tasks = TableQuery[Tasks]
 
   def open() = {
     (users.ddl ++ tasks.ddl).create
