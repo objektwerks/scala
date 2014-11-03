@@ -1,37 +1,30 @@
 package slick
 
-import org.scalatest.{BeforeAndAfterAll, FunSuite}
+import org.scalatest.FunSuite
 
-class SlickTest extends FunSuite with BeforeAndAfterAll {
+import slick.Repository._
+
+class SlickTest extends FunSuite {
+  private val store = new Store
   private val fred = "Fred"
-
-  override protected def beforeAll(): Unit = {
-    super.beforeAll()
-    Store.open()
-    val user = Store.createUser(User(fred))
-    Store.createTask(user, "Mow yard.")
-  }
-
-  override protected def afterAll(): Unit = {
-    super.afterAll()
-    Store.close()
-  }
+  private val user = store.createUser(User(fred))
+  store.createTask(user, "Mow yard.")
 
   test("get user by name") {
-    val userAsOption = Store.getUserByName(fred)
+    val userAsOption = store.getUserByName(fred)
     assert(userAsOption.get == User(fred))
   }
 
   test("get users") {
-    val users: List[User] = Store.getUsers
+    val users: List[User] = store.getUsers
     assert(users.size == 1)
   }
 
   test("get user tasks by name") {
-    val users: List[User] = Store.getUsers
+    val users: List[User] = store.getUsers
     assert(users.size == 1)
     for (u <- users) {
-      val usersWithTasks: Map[User, List[Task]] = Store.getUserTasksByName(u.name)
+      val usersWithTasks: Map[User, List[Task]] = store.getUserTasksByName(u.name)
       assert(usersWithTasks.size == 1)
     }
   }
