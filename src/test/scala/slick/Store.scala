@@ -5,9 +5,8 @@ import scala.slick.driver.H2Driver.simple._
 import slick.Repository._
 
 class Store {
-  private val db = Database.forURL("jdbc:h2:mem:slick", driver = "org.h2.Driver")
+  private val db = Database.forURL("jdbc:h2:mem:test;INIT=RUNSCRIPT FROM 'classpath:ddl.sql'", driver = "org.h2.Driver")
   private implicit var session = db.createSession()
-  (users.ddl ++ tasks.ddl).create
 
   def createUser(user: User): User = {
     session.withTransaction {
