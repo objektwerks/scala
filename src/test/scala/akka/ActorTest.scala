@@ -2,7 +2,7 @@ package akka
 
 import java.util.concurrent.TimeUnit
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
 import org.scalatest.FunSuite
@@ -12,6 +12,7 @@ import akka.pattern.ask
 import akka.util.Timeout
 
 class ActorTest extends FunSuite {
+  private implicit def executor: ExecutionContext = ExecutionContext.global
   private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
   private val system: ActorSystem = ActorSystem.create("system")
   private val master: ActorRef = system.actorOf(Props(new Master()), name = "master")

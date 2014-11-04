@@ -1,8 +1,7 @@
 package async
 
 import scala.async.Async._
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
 import org.scalatest.FunSuite
@@ -10,6 +9,8 @@ import org.scalatest.FunSuite
 import rest.AsyncRest
 
 class AsyncTest extends FunSuite {
+  private implicit def executor: ExecutionContext = ExecutionContext.global
+
   test("async") {
     val future: Future[Int] = async {
       val futureOne: Future[Int] = async { 1 }
