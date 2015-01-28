@@ -2,7 +2,7 @@ name := "objektwerks.scala"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.11.4"
+scalaVersion := "2.11.5"
 
 libraryDependencies ++= Seq (
   "org.scala-lang.modules" % "scala-async_2.11" % "0.9.2",
