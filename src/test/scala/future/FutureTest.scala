@@ -25,11 +25,12 @@ class FutureTest extends FunSuite {
 
   test("non-blocking future with promise") {
     case class Message(text: String)
-    def send(promise: Promise[Message], message: Message): Future[Message] = {
+    def send(message: Message): Future[Message] = {
+      val promise = Promise[Message] ()
       promise.success(message)
       promise.future
     }
-    val future: Future[Message] = send(Promise[Message](), Message("Hello world!"))
+    val future: Future[Message] = send(Message("Hello world!"))
     future onComplete {
       case Success(message) => assert(message.text == "Hello world!")
       case Failure(failure) => throw failure
