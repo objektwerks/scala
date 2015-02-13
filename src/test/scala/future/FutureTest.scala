@@ -2,12 +2,13 @@ package future
 
 import scala.concurrent._
 import scala.concurrent.duration._
+import scala.util.control.NonFatal
 import scala.util.{Failure, Success}
 
 import org.scalatest.FunSuite
 
 class FutureTest extends FunSuite {
-  private implicit def executor: ExecutionContext = ExecutionContext.global
+  private implicit val ec = ExecutionContext.global
 
   test("blocking future") {
     val future: Future[String] = Future { "Hello world!" }
@@ -27,7 +28,13 @@ class FutureTest extends FunSuite {
     case class Message(text: String)
     def send(message: Message): Future[Message] = {
       val promise = Promise[Message] ()
-      promise.success(message)
+      ec.execute(new Runnable {
+        def run() = try {
+          promise.success(message)
+        } catch {
+          case NonFatal(e) => promise.failure(e)
+        }
+      })
       promise.future
     }
     val future: Future[Message] = send(Message("Hello world!"))
