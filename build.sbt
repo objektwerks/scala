@@ -2,7 +2,7 @@ name := "objektwerks.scala"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.11.5"
+scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq (
   "com.typesafe" % "config" % "1.2.1",
