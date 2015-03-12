@@ -1,4 +1,4 @@
-package monad
+package theory
 
 import scala.collection.mutable.ListBuffer
 
