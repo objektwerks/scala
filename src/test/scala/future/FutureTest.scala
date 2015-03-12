@@ -44,7 +44,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("parallel futures with map") {
+  test("dependent futures with map") {
     val helloFuture: Future[String] = Future { "Hello" }
     val worldFuture: Future[String] = helloFuture map { s => s + " world!" }
     worldFuture onComplete {
@@ -53,7 +53,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("parallel futures with flat map") {
+  test("parallel, dependent futures with flat map") {
     val helloFuture: Future[String] = Future { "Hello" }
     val worldFuture: Future[String] = Future { " world!" }
     val helloWorldFuture: Future[String] = helloFuture flatMap {
