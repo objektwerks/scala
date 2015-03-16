@@ -4,9 +4,9 @@ import org.scalatest.FunSuite
 
 class TypesTest extends FunSuite {
   test("covariance") {
-    val dog: Dog[String] = new Dog
-    val animal: Animal[String] = new Dog
-    val trainer: Trainer[String] = new Trainer
+    val dog: Dog[AnyRef] = new Dog[String]
+    val animal: Animal[AnyRef] = new Dog[String]
+    val trainer = new Trainer
     assert(trainer.speak(dog) == dog.toString)
     assert(trainer.speak(animal) == animal.toString)
     assert(trainer.id(dog) == dog)
@@ -14,25 +14,19 @@ class TypesTest extends FunSuite {
   }
 
   test("contravariance") {
-    val cake: Cake[String] = new Cake
-    val cupCake: CupCake[String] = new CupCake
-    val dessertCake: Dessert[String] = new Cake
-    val dessertCupCake: Dessert[String] = new CupCake
-    val baker: Baker[AnyRef] = new Baker
+    val cake: Cake[String] = new Cake[AnyRef]
+    val dessert: Dessert[String] = new Cake[AnyRef]
+    val baker = new Baker
     assert(baker.bake(cake) == cake.toString)
-    assert(baker.bake(cupCake) == cupCake.toString)
-    assert(baker.bake(dessertCake) == dessertCake.toString)
-    assert(baker.bake(dessertCupCake) == dessertCupCake.toString)
+    assert(baker.bake(dessert) == dessert.toString)
     assert(baker.id(cake) == cake)
-    assert(baker.id(cupCake) == cupCake)
-    assert(baker.id(dessertCake) == dessertCake)
-    assert(baker.id(dessertCupCake) == dessertCupCake)
+    assert(baker.id(dessert) == dessert)
   }
 
   test("invariance") {
-    val football: Football[String] = new Football
-    val sport: Sport[Nothing] = new Football
-    val referee: Referee[String] = new Referee
+    val football: Football[String] = new Football[String]
+    val sport: Sport[Nothing] = new Football[String]
+    val referee = new Referee
     assert(referee.play(football) == football.toString)
     assert(referee.play(sport) == sport.toString)
     assert(referee.id(football) == football)

@@ -11,7 +11,6 @@ class Trainer[+A] {
 // Contravariant
 sealed abstract class Dessert[-A]
 class Cake[-A] extends Dessert { override def toString = "cake" }
-class CupCake[-A] extends Cake { override def toString = "cup cake" }
 class Baker[-A] {
   def id[B <: A] (b: B): B = identity(b)
   def bake[B <: A] (b: B): String = b.toString
