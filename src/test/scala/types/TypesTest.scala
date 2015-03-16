@@ -3,78 +3,73 @@ package types
 import org.scalatest.FunSuite
 
 class TypesTest extends FunSuite {
-  test("generic function") {
-    def selectMiddleItem[A](a: Array[A]): A = a(a.length / 2)
-    assert(selectMiddleItem(Array("a", "b", "c")) == "b")
-  }
-
   test("covariance") {
-    class Animal
-    class Dinosaur(sound: String) extends Animal { override def toString = sound }
-    class Bird(sound: String) extends Dinosaur(sound) { override def toString = sound }
-    class Ping[+A] () {
+    abstract class Animal
+    class Dog extends Animal { override def toString = "wolf wolf" }
+    class Bird extends Dog { override def toString = "chirp chirp" }
+    class Trainer[+A] () {
       def id[B >: A] (b: B): B = identity(b)
-      def test[B >: A] (b: B): String = b.toString
+      def speak[B >: A] (b: B): String = b.toString
     }
-    val ping = new Ping()
-    val dinosaur: Dinosaur = new Dinosaur("screech")
-    val bird: Bird = new Bird("chirp chirp")
-    var animal: Animal = new Dinosaur("screech")
-    animal = new Bird("chirp chirp")
-    assert(ping.test(dinosaur) == dinosaur.toString)
-    assert(ping.test(bird) == bird.toString)
-    assert(ping.test(animal) == animal.toString)
-    assert(ping.test(animal) == animal.toString)
-    assert(ping.id(bird) == bird)
-    assert(ping.id(dinosaur) == dinosaur)
-    animal = new Animal
-    assert(ping.id(animal) == animal)
+    val trainer = new Trainer
+    val dog: Dog = new Dog
+    val bird: Bird = new Bird
+    val animalDog: Animal = new Dog
+    val animalBird: Animal = new Bird
+    assert(trainer.speak(dog) == dog.toString)
+    assert(trainer.speak(bird) == bird.toString)
+    assert(trainer.speak(animalDog) == animalDog.toString)
+    assert(trainer.speak(animalBird) == animalBird.toString)
+    assert(trainer.id(dog) == dog)
+    assert(trainer.id(bird) == bird)
+    assert(trainer.id(animalDog) == animalDog)
+    assert(trainer.id(animalBird) == animalBird)
   }
 
   test("contravariance") {
-    class Food
-    class Cake(style: String) extends Food { override def toString = style }
-    class Chocolate(style: String) extends Cake(style) { override def toString = style }
-    class Ping[-A] () {
+    abstract class Dessert
+    class Cake extends Dessert { override def toString = "chocolate cake" }
+    class Pie extends Dessert { override def toString = "key west lime pie" }
+    class Baker[-A] () {
       def id[B <: A] (b: B): B = identity(b)
-      def test[B <: A] (b: B): String = b.toString
+      def bake[B <: A] (b: B): String = b.toString
     }
-    val ping = new Ping()
-    val cake:Cake = new Cake("cake")
-    val chocolate: Chocolate = new Chocolate("chocolate")
-    var food: Food = new Cake("cake")
-    food = new Chocolate("chocolate")
-    assert(ping.test(cake) == cake.toString)
-    assert(ping.test(chocolate) == chocolate.toString)
-    assert(ping.test(food) == food.toString)
-    assert(ping.test(food) == food.toString)
-    assert(ping.id(chocolate) == chocolate)
-    assert(ping.id(cake) == cake)
-    food = new Food
-    assert(ping.id(food) == food)
+    val baker = new Baker
+    val cake: Cake = new Cake
+    val pie: Pie = new Pie
+    val dessertCake: Dessert = new Cake
+    val dessertPie: Dessert = new Pie
+    assert(baker.bake(cake) == cake.toString)
+    assert(baker.bake(pie) == pie.toString)
+    assert(baker.bake(dessertCake) == dessertCake.toString)
+    assert(baker.bake(dessertPie) == dessertPie.toString)
+    assert(baker.id(cake) == cake)
+    assert(baker.id(pie) == pie)
+    assert(baker.id(dessertCake) == dessertCake)
+    assert(baker.id(dessertPie) == dessertPie)
   }
 
   test("invariance") {
-    class Company
-    class Multinational(business: String) extends Company { override def toString = business }
-    class National(business: String) extends Multinational(business) { override def toString = business }
-    class Ping[A] () {
+    abstract class Company
+    class National extends Company { override def toString = "subway" }
+    class Multinational extends Company { override def toString = "cisco" }
+    class Owner[A] () {
       def id[B] (b: B): B = identity(b)
-      def test[B] (b: B): String = b.toString
+      def name[B] (b: B): String = b.toString
     }
-    val ping = new Ping()
-    val multinational: Multinational = new Multinational("IBM")
-    val national: National = new National("Pier Imports")
-    var company: Company = new Multinational("Cisco")
-    company = new National("Marble Slab")
-    assert(ping.test(multinational) == multinational.toString)
-    assert(ping.test(national) == national.toString)
-    assert(ping.test(company) == company.toString)
-    assert(ping.test(company) == company.toString)
-    assert(ping.id(national) == national)
-    assert(ping.id(multinational) == multinational)
-    company = new Company
-    assert(ping.id(company) == company)
+    val owner = new Owner
+    val national: National = new National
+    val multinational: Multinational = new Multinational
+    val companyNational: Company = new Multinational
+    val companyMultinational = new National
+    assert(owner.name(national) == national.toString)
+    assert(owner.name(multinational) == multinational.toString)
+    assert(owner.name(companyNational) == companyNational.toString)
+    assert(owner.name(companyMultinational) == companyMultinational.toString)
+    assert(owner.id(national) == national)
+    assert(owner.id(multinational) == multinational)
+    assert(owner.id(companyNational) == companyNational)
+    assert(owner.id(companyMultinational) == companyMultinational)
   }
 
   test("type alias") {
@@ -115,5 +110,10 @@ class TypesTest extends FunSuite {
     val builder = new EmailBuilder()
     val email = builder.build(Addresses("me", "you", "them"), Message("us", "Meet as the pub for beer!")).send()
     assert(email != None)
+  }
+
+  test("generic function") {
+    def selectMiddleItem[A](a: Array[A]): A = a(a.length / 2)
+    assert(selectMiddleItem(Array("a", "b", "c")) == "b")
   }
 }
