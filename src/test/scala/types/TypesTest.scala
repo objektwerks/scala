@@ -50,26 +50,26 @@ class TypesTest extends FunSuite {
   }
 
   test("invariance") {
-    abstract class Company
-    class National extends Company { override def toString = "subway" }
-    class Multinational extends Company { override def toString = "cisco" }
+    abstract class Team
+    class Baseball extends Team { override def toString = "cubs" }
+    class Football extends Team { override def toString = "bucs" }
     class Owner[A] () {
       def id[B] (b: B): B = identity(b)
-      def name[B] (b: B): String = b.toString
+      def play[B] (b: B): String = b.toString
     }
     val owner = new Owner
-    val national: National = new National
-    val multinational: Multinational = new Multinational
-    val companyNational: Company = new Multinational
-    val companyMultinational = new National
-    assert(owner.name(national) == national.toString)
-    assert(owner.name(multinational) == multinational.toString)
-    assert(owner.name(companyNational) == companyNational.toString)
-    assert(owner.name(companyMultinational) == companyMultinational.toString)
-    assert(owner.id(national) == national)
-    assert(owner.id(multinational) == multinational)
-    assert(owner.id(companyNational) == companyNational)
-    assert(owner.id(companyMultinational) == companyMultinational)
+    val baseball: Baseball = new Baseball
+    val football: Football = new Football
+    val teamBaseball: Team = new Baseball
+    val teamFootball: Team = new Football
+    assert(owner.play(baseball) == baseball.toString)
+    assert(owner.play(football) == football.toString)
+    assert(owner.play(teamBaseball) == teamBaseball.toString)
+    assert(owner.play(teamFootball) == teamFootball.toString)
+    assert(owner.id(baseball) == baseball)
+    assert(owner.id(football) == football)
+    assert(owner.id(teamBaseball) == teamBaseball)
+    assert(owner.id(teamFootball) == teamFootball)
   }
 
   test("type alias") {
