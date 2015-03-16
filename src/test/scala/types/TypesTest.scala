@@ -18,8 +18,7 @@ class TypesTest extends FunSuite {
     val cupCake: CupCake[String] = new CupCake
     val dessertCake: Dessert[String] = new Cake
     val dessertCupCake: Dessert[String] = new CupCake
-    val baker = new Baker
-    println("baker: " + baker.getClass)
+    val baker: Baker[AnyRef] = new Baker
     assert(baker.bake(cake) == cake.toString)
     assert(baker.bake(cupCake) == cupCake.toString)
     assert(baker.bake(dessertCake) == dessertCake.toString)
