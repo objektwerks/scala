@@ -6,7 +6,7 @@ class TypesTest extends FunSuite {
   test("covariance") {
     val dog: Dog[AnyRef] = new Dog[String]
     val animal: Animal[AnyRef] = new Dog[String]
-    val trainer = new Trainer
+    val trainer: Trainer[AnyRef] = new Trainer[String]
     assert(trainer.speak(dog) == dog.toString)
     assert(trainer.speak(animal) == animal.toString)
     assert(trainer.id(dog) == dog)
@@ -16,7 +16,7 @@ class TypesTest extends FunSuite {
   test("contravariance") {
     val cake: Cake[String] = new Cake[AnyRef]
     val dessert: Dessert[String] = new Cake[AnyRef]
-    val baker = new Baker
+    val baker: Baker[AnyRef] = new Baker[AnyRef]
     assert(baker.bake(cake) == cake.toString)
     assert(baker.bake(dessert) == dessert.toString)
     assert(baker.id(cake) == cake)
@@ -26,7 +26,7 @@ class TypesTest extends FunSuite {
   test("invariance") {
     val football: Football[String] = new Football[String]
     val sport: Sport[Nothing] = new Football[String]
-    val referee = new Referee
+    val referee: Referee[String] = new Referee[String]
     assert(referee.play(football) == football.toString)
     assert(referee.play(sport) == sport.toString)
     assert(referee.id(football) == football)
