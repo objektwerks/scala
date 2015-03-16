@@ -4,9 +4,9 @@ import org.scalatest.FunSuite
 
 class TypesTest extends FunSuite {
   test("covariance") {
-    val trainer = new Trainer
     val dog: Dog = new Dog
     val animal: Animal = new Dog
+    val trainer = new Trainer
     assert(trainer.speak(dog) == dog.toString)
     assert(trainer.speak(animal) == animal.toString)
     assert(trainer.id(dog) == dog)
@@ -14,9 +14,9 @@ class TypesTest extends FunSuite {
   }
 
   test("contravariance") {
-    val baker = new Baker
     val cake: Cake = new Cake
     val dessert: Dessert = new Cake
+    val baker = new Baker
     assert(baker.bake(cake) == cake.toString)
     assert(baker.bake(dessert) == dessert.toString)
     assert(baker.id(cake) == cake)
@@ -24,9 +24,9 @@ class TypesTest extends FunSuite {
   }
 
   test("invariance") {
-    val owner = new Owner
     val football: Football = new Football
     val team: Team = new Football
+    val owner = new Owner
     assert(owner.play(football) == football.toString)
     assert(owner.play(team) == team.toString)
     assert(owner.id(football) == football)
