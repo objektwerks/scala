@@ -89,30 +89,4 @@ class TypesTest extends FunSuite {
     }
     assert(greet(new Greeter()) == "Hi!")
   }
-
-  test("singleton types") {
-    case class Addresses(from: String, to: String, cc: String = "")
-    case class Message(subject: String, text: String)
-    case class Email(addresses: Addresses, message: Message)
-    class EmailBuilder() {
-      private var email: Option[Email] = None
-
-      def build(addresses: Addresses, message: Message): this.type = {
-        email = Some(Email(addresses, message))
-        this
-      }
-
-      def send(): Option[Email] = {
-        email
-      }
-    }
-    val builder = new EmailBuilder()
-    val email = builder.build(Addresses("me", "you", "them"), Message("us", "Meet as the pub for beer!")).send()
-    assert(email != None)
-  }
-
-  test("generic function") {
-    def selectMiddleItem[A](a: Array[A]): A = a(a.length / 2)
-    assert(selectMiddleItem(Array("a", "b", "c")) == "b")
-  }
 }
