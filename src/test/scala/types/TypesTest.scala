@@ -103,7 +103,6 @@ class TypesTest extends FunSuite {
       }
 
       def send(): Option[Email] = {
-        println(s"Simulating email send...$email")
         email
       }
     }
