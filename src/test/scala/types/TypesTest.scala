@@ -15,12 +15,18 @@ class TypesTest extends FunSuite {
 
   test("contravariance") {
     val cake: Cake = new Cake
-    val dessert: Dessert = new Cake
+    val cupCake: CupCake = new CupCake
+    val dessertCake: Dessert = new Cake
+    val dessertCupCake: Dessert = new CupCake
     val baker = new Baker
     assert(baker.bake(cake) == cake.toString)
-    assert(baker.bake(dessert) == dessert.toString)
+    assert(baker.bake(cupCake) == cupCake.toString)
+    assert(baker.bake(dessertCake) == dessertCake.toString)
+    assert(baker.bake(dessertCupCake) == dessertCupCake.toString)
     assert(baker.id(cake) == cake)
-    assert(baker.id(dessert) == dessert)
+    assert(baker.id(cupCake) == cupCake)
+    assert(baker.id(dessertCake) == dessertCake)
+    assert(baker.id(dessertCupCake) == dessertCupCake)
   }
 
   test("invariance") {
