@@ -46,9 +46,4 @@ class TypesTest extends FunSuite {
     def greet(greeter: {def greet: String}): String = greeter.greet
     assert(greet(new Greeter()) == "Hi!")
   }
-
-  test("generic function") {
-    def split[A](a: Array[A]): A = a(a.length / 2)
-    assert(split(Array("a", "b", "c")) == "b")
-  }
 }
