@@ -33,6 +33,14 @@ class TypesTest extends FunSuite {
     assert(referee.id(sport) == sport)
   }
 
+  test("covariance vs contravariance") {
+    // GrandParent < Parent < Child
+    Variance.covariance(new CovariantBox[Child])
+    // Type mismatch, expected Parent. Variance.covariance(new CovariantBox[GrandParent])
+    Variance.contravariance(new ContraviantBox[GrandParent])
+    // Type mismatch, expected Parent. Variance.contravariance(new ContraviantBox[Child])
+  }
+
   test("type alias") {
     type User = String
     type Age = Int
