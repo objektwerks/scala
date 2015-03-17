@@ -1,29 +1,6 @@
 package types
 
-// Covariant
-sealed abstract class Animal[+A]
-class Dog[+A] extends Animal { override def toString = "wolf wolf" }
-class Trainer[+A] {
-  def id[B >: A] (b: B): B = identity(b)
-  def speak[B >: A] (b: B): String = b.toString
-}
-
-// Contravariant
-sealed abstract class Dessert[-A]
-class Cake[-A] extends Dessert { override def toString = "cake" }
-class Baker[-A] {
-  def id[B <: A] (b: B): B = identity(b)
-  def bake[B <: A] (b: B): String = b.toString
-}
-
-// Invariant
-sealed abstract class Sport[A]
-class Football[A] extends Sport { override def toString = "bucs" }
-class Referee[A] {
-  def id[B] (b: B): B = identity(b)
-  def play[B] (b: B): String = b.toString
-}
-
+// Variance
 class GrandParent
 class Parent extends GrandParent
 class Child extends Parent
@@ -34,4 +11,30 @@ class ContraviantBox[-A]
 object Variance {
   def covariance(x: CovariantBox[Parent]): CovariantBox[Parent] = identity(x)
   def contravariance(x: ContraviantBox[Parent]): ContraviantBox[Parent] = identity(x)
+}
+
+// Covariant
+sealed abstract class Animal(name: String) { def speak: String }
+class Cat(name: String) extends Animal(name) { override def speak = "meow meow" }
+class Dog(name: String) extends Animal(name) { override def speak = "wolf wolf" }
+class Trainer[+A] (animal: Animal) {
+  def id = identity(animal)
+  def speak: String = animal.speak
+}
+
+// Contravariant
+sealed abstract class Dessert(name: String) { def bake: String }
+class Cake(name: String) extends Dessert(name) { override def bake = "mix, bake and frost"}
+class CupCake(name: String) extends Cake(name) { override def bake = "mix, bake, frost and package"}
+class Baker[-A] (cake: Cake) {
+  def id = identity(cake)
+  def make: String = cake.bake
+}
+
+// Invariant
+sealed abstract class Sport(name: String) { def play: String }
+class Football(name: String) extends Sport(name) { override def play = "go bucs go!" }
+class Referee[A] (sport: Sport) {
+  def id = identity(sport)
+  def play: String = sport.play
 }

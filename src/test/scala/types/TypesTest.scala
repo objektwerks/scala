@@ -3,42 +3,48 @@ package types
 import org.scalatest.FunSuite
 
 class TypesTest extends FunSuite {
-  test("covariance") {
-    val dog: Dog[AnyRef] = new Dog[String]
-    val animal: Animal[AnyRef] = new Dog[String]
-    val trainer: Trainer[AnyRef] = new Trainer[String]
-    assert(trainer.speak(dog) == dog.toString)
-    assert(trainer.speak(animal) == animal.toString)
-    assert(trainer.id(dog) == dog)
-    assert(trainer.id(animal) == animal)
-  }
-
-  test("contravariance") {
-    val cake: Cake[String] = new Cake[AnyRef]
-    val dessert: Dessert[String] = new Cake[AnyRef]
-    val baker: Baker[AnyRef] = new Baker[AnyRef]
-    assert(baker.bake(cake) == cake.toString)
-    assert(baker.bake(dessert) == dessert.toString)
-    assert(baker.id(cake) == cake)
-    assert(baker.id(dessert) == dessert)
-  }
-
-  test("invariance") {
-    val football: Football[String] = new Football[String]
-    val sport: Sport[Nothing] = new Football[String]
-    val referee: Referee[String] = new Referee[String]
-    assert(referee.play(football) == football.toString)
-    assert(referee.play(sport) == sport.toString)
-    assert(referee.id(football) == football)
-    assert(referee.id(sport) == sport)
-  }
-
   test("covariance vs contravariance") {
     // GrandParent < Parent < Child
     Variance.covariance(new CovariantBox[Child])
     // Type mismatch, expected Parent. Variance.covariance(new CovariantBox[GrandParent])
     Variance.contravariance(new ContraviantBox[GrandParent])
     // Type mismatch, expected Parent. Variance.contravariance(new ContraviantBox[Child])
+  }
+
+  test("covariance") {
+    val cat: Animal = new Cat("persia")
+    val catTrainer: Trainer[Animal] = new Trainer(cat)
+    assert(catTrainer.id == cat)
+    assert(catTrainer.speak == cat.speak)
+
+    val dog: Animal = new Dog("spike")
+    val dogTrainer: Trainer[Animal] = new Trainer(dog)
+    assert(dogTrainer.id == dog)
+    assert(dogTrainer.speak == dog.speak)
+  }
+
+  test("contravariance") {
+    val cake: Cake = new Cake("chocolate")
+    val cakeBaker: Baker[Cake] = new Baker(cake)
+    assert(cakeBaker.id == cake)
+    assert(cakeBaker.make == cake.bake)
+
+    val cupCake: CupCake = new CupCake("vanila")
+    val cupCakeBaker: Baker[CupCake] = new Baker(cupCake)
+    assert(cupCakeBaker.id == cupCake)
+    assert(cupCakeBaker.make == cupCake.bake)
+
+    val angelFood: Cake = new Cake("angel")
+    val angelFoodBaker: Baker[Dessert] = new Baker(angelFood)
+    assert(angelFoodBaker.id == angelFood)
+    assert(angelFoodBaker.make == angelFood.bake)
+  }
+
+  test("invariance") {
+    val football: Sport = new Football("bucs")
+    val referee: Referee[Sport] = new Referee(football)
+    assert(referee.id == football)
+    assert(referee.play == football.play)
   }
 
   test("type alias") {
