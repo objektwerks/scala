@@ -25,26 +25,26 @@ class TypesTest extends FunSuite {
 
   test("contravariance") {
     val cake: Cake = new Cake("chocolate")
-    val cakeBaker: Baker[Cake] = new Baker(cake)
+    val cakeBaker: Baker[Dessert] = new Baker(cake)
     assert(cakeBaker.id == cake)
     assert(cakeBaker.make == cake.bake)
 
     val cupCake: CupCake = new CupCake("vanila")
-    val cupCakeBaker: Baker[CupCake] = new Baker(cupCake)
+    val cupCakeBaker: Baker[Dessert] = new Baker(cupCake)
     assert(cupCakeBaker.id == cupCake)
     assert(cupCakeBaker.make == cupCake.bake)
-
-    val angelFood: Cake = new Cake("angel")
-    val angelFoodBaker: Baker[Dessert] = new Baker(angelFood)
-    assert(angelFoodBaker.id == angelFood)
-    assert(angelFoodBaker.make == angelFood.bake)
   }
 
   test("invariance") {
     val football: Sport = new Football("bucs")
-    val referee: Referee[Sport] = new Referee(football)
-    assert(referee.id == football)
-    assert(referee.play == football.play)
+    val footballReferee: Referee[Sport] = new Referee(football)
+    assert(footballReferee.id == football)
+    assert(footballReferee.play == football.play)
+
+    val soccer: Football = new Soccer("manchester united")
+    val soccerReferee: Referee[Football] = new Referee(soccer)
+    assert(soccerReferee.id == soccer)
+    assert(soccerReferee.play == soccer.play)
   }
 
   test("type alias") {

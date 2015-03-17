@@ -34,6 +34,7 @@ class Baker[-A] (cake: Cake) {
 // Invariant
 sealed abstract class Sport(name: String) { def play: String }
 class Football(name: String) extends Sport(name) { override def play = "go bucs go!" }
+class Soccer(name: String) extends Football(name) { override def play = "go manchester united go!" }
 class Referee[A] (sport: Sport) {
   def id = identity(sport)
   def play: String = sport.play
