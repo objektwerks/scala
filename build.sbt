@@ -11,7 +11,7 @@ libraryDependencies ++= Seq (
   "com.h2database" % "h2" % "1.4.181",
   "com.typesafe.slick" % "slick_2.11" % "2.1.0",
   "org.scalaz" %% "scalaz-core" % "7.1.0",
-  "org.scalafx" % "scalafx_2.11" % "8.0.31-R7",
+  "org.scalafx" % "scalafx_2.11" % "8.0.40-R8",
   "net.databinder.dispatch" % "dispatch-core_2.11" % "0.11.2",
   "org.json4s" % "json4s-jackson_2.11" % "3.2.11",
   "org.apache.spark" % "spark-core_2.11" % "1.3.0",

@@ -45,13 +45,13 @@ object RestApp extends JFXApp {
       maxHeight = 140
       spacing = 6
       padding = Insets(6)
-      content = List(jokeLabel, jokeText, jokeButton)
+      children = List(jokeLabel, jokeText, jokeButton)
     }
     bottom = new HBox {
       alignment = Pos.BaselineRight
       spacing = 6
       padding = Insets(6)
-      content = indicator
+      children = indicator
     }
   }
 
@@ -60,7 +60,7 @@ object RestApp extends JFXApp {
     maxHeight = 400
     spacing = 6
     padding = Insets(6)
-    content = List(jokePane)
+    children = List(jokePane)
   }
 
   stage = new JFXApp.PrimaryStage {
