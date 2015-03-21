@@ -18,8 +18,8 @@ libraryDependencies ++= Seq (
   "org.apache.spark" % "spark-streaming_2.11" % "1.3.0",
   "org.slf4j" % "slf4j-api" % "1.7.10",
   "ch.qos.logback" % "logback-classic" % "1.1.2",
-  "org.scalacheck" % "scalacheck_2.11" % "1.12.1" % "test",
-  "org.scalatest" % "scalatest_2.11" % "2.2.3" % "test"
+  "org.scalacheck" % "scalacheck_2.11" % "1.12.2" % "test",
+  "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test"
 )
 
 logLevel := Level.Info
