@@ -1,4 +1,4 @@
-package datetime;
+package datetime
 
 import java.time._
 import java.time.temporal.ChronoUnit
