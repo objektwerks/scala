@@ -4,7 +4,7 @@ version := "0.1-SNAPSHOT"
 
 scalaVersion := "2.11.6"
 
-libraryDependencies ++= Seq (
+libraryDependencies ++= Seq(
   "com.typesafe" % "config" % "1.2.1",
   "org.scala-lang.modules" % "scala-async_2.11" % "0.9.2",
   "com.typesafe.akka" % "akka-actor_2.11" % "2.3.9",
@@ -20,6 +20,14 @@ libraryDependencies ++= Seq (
   "ch.qos.logback" % "logback-classic" % "1.1.2",
   "org.scalacheck" % "scalacheck_2.11" % "1.12.2" % "test",
   "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test"
+)
+
+scalacOptions ++= Seq(
+  "-language:postfixOps",
+  "-language:implicitConversions",
+  "-language:reflectiveCalls",
+  "-feature",
+  "-Xfatal-warnings"
 )
 
 logLevel := Level.Info
