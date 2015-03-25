@@ -62,12 +62,6 @@ class CollectionTest extends FunSuite {
     val vector = Vector(1, 2, 3)
     assert(vector.filter(_ > 1) == Vector(2, 3))
     assert(vector.filter(_ > 1).map(_ * 2) == Vector(4, 6))
-
-    val list = List("abc", 123)
-    assert(list.filter {
-      case s: String => true
-      case _ => false
-    } == List("abc"))
   }
 
   test("flatten") {
@@ -111,18 +105,15 @@ class CollectionTest extends FunSuite {
   }
 
   test("partition") {
-    val vector = Vector(1, 2, 3, 4)
-    assert(vector.partition(_ % 2 == 0) == (Vector(2, 4), Vector(1, 3)))
+    val tupleOfVectors: (Vector[Int], Vector[Int]) = Vector(1, 2, 3, 4).partition(_ % 2 == 0)
+    val expectedTupleOfVectors: (Vector[Int], Vector[Int]) = (Vector(2, 4), Vector(1, 3))
+    assert(tupleOfVectors == expectedTupleOfVectors)
   }
 
   test("reduce") {
     val vector = Vector(1, 2, 3)
-    assert(vector.reduceLeft(_ + _) == 6)
-    assert(vector.reduceRight(_ + _) == 6)
     assert(vector.reduceLeft(_ - _) == -4)
     assert(vector.reduceRight(_ - _) == 2)
-    assert(vector.reduceLeft(_ min _) == 1)
-    assert(vector.reduceRight(_ max _) == 3)
   }
 
   test("scan") {
@@ -138,13 +129,15 @@ class CollectionTest extends FunSuite {
   }
 
   test("span") {
-    val vector = Vector(1, 2, 3, 4)
-    assert(vector.span(_ < 3) == (Vector(1, 2), Vector(3, 4)))
+    val tupleOfVectors: (Vector[Int], Vector[Int]) = Vector(1, 2, 3, 4).span(_ < 3)
+    val expectedTupleOfVectors: (Vector[Int], Vector[Int]) = (Vector(1, 2), Vector(3, 4))
+    assert(tupleOfVectors == expectedTupleOfVectors)
   }
 
   test("splitAt") {
-    val vector = Vector(1, 2, 3, 4)
-    assert(vector.splitAt(2) == (Vector(1, 2), Vector(3, 4)))
+    val tupleOfVectors: (Vector[Int], Vector[Int]) = Vector(1, 2, 3, 4).splitAt(2)
+    val expectedTupleOfVectors: (Vector[Int], Vector[Int]) = (Vector(1, 2), Vector(3, 4))
+    assert(tupleOfVectors == expectedTupleOfVectors)
   }
 
   test("tuple") {
@@ -156,8 +149,9 @@ class CollectionTest extends FunSuite {
   }
 
   test("unzip") {
-    val list = List((1, 2), ('a', 'b'))
-    assert(list.unzip ==(List(1, 'a'), List(2, 'b')))
+    val tupleOfLists: (List[AnyVal], List[AnyVal]) = List((1, 2), ('a', 'b')).unzip
+    val expectedTupleOfLists: (List[AnyVal], List[AnyVal]) = (List(1, 'a'), List(2, 'b'))
+    assert(tupleOfLists == expectedTupleOfLists)
   }
 
   test("zip") {
