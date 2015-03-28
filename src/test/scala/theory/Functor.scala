@@ -5,5 +5,5 @@ trait Functor[F[_]] {
 }
 
 object ToListOfStrings extends Functor[List] {
-  def map[A, B](xs: List[A])(f: A => B): List[B] = xs map f
+  override def map[A, B](xs: List[A])(f: A => B): List[B] = xs map f
 }
