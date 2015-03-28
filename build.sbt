@@ -26,6 +26,7 @@ scalacOptions ++= Seq(
   "-language:postfixOps",
   "-language:implicitConversions",
   "-language:reflectiveCalls",
+  "-language:higherKinds",
   "-feature",
   "-deprecation",
   "-Xlint",
