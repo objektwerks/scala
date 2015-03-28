@@ -1,10 +1,10 @@
-package theory
-
-import scala.collection.mutable.ListBuffer
+package collection
 
 import org.scalatest.FunSuite
 
-class ForMonadTest extends FunSuite {
+import scala.collection.mutable.ListBuffer
+
+class ForTest extends FunSuite {
   test("for > map") {
     val xs = List(1, 2)
     val forList = for (x <- xs) yield x * 2
