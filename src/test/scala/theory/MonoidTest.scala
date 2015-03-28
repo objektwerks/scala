@@ -24,10 +24,18 @@ class Adder extends Monoid[Int] {
 }
 
 class MonoidTest extends FunSuite {
+  val adder = new Adder
+
   test("monoid") {
-    val adder = new Adder
     assert(adder.op(1, 1) == 2)
     assert(adder.zero == 0)
     assert(adder.isValid(1, 2, 3))
+  }
+
+  test("fold") {
+    val nums = List(1, 2, 3)
+    assert(6 == nums.foldLeft(adder.zero)(adder.op))
+    assert(6 == nums.foldRight(adder.zero)(adder.op))
+    assert(6 == nums.fold(adder.zero)(adder.op))
   }
 }
