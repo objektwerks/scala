@@ -1,9 +1,9 @@
 package theory
 
-trait Monad[M[_]] {
-  def unit[A](a: => A): M[A]
+trait Monad[F[_]] {
+  def unit[A](a: => A): F[A]
 
-  def flatMap[A, B](ma: M[A])(f: A => M[B]): M[B]
+  def flatMap[A, B](ma: F[A])(f: A => F[B]): F[B]
 
-  def map[A, B](a: M[A])(f: A => B): M[B]
+  def map[A, B](a: F[A])(f: A => B): F[B]
 }
