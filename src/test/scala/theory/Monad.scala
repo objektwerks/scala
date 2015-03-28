@@ -1,7 +1,9 @@
 package theory
 
-trait Monad[F[_]] extends Functor[F] {
-  def unit[A](a: => A): F[A]
+trait Monad[T[_]] {
+  def unit[A](a: => A): T[A]
 
-  def flatMap[A, B](ma: F[A])(f: A => F[B]): F[B]
+  def flatMap[A, B](ma: T[A])(f: A => T[B]): T[B]
+
+  def map[A, B](a: T[A])(f: A => B): T[B]
 }
