@@ -1,7 +1,7 @@
 package theory
 
-trait Functor[T[_]] {
-  def map[A, B](a: T[A])(f: A => B): T[B]
+trait Functor[F[_]] {
+  def map[A, B](a: F[A])(f: A => B): F[B]
 }
 
 object ToListOfStrings extends Functor[List] {
