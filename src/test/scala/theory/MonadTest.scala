@@ -6,7 +6,17 @@ trait Functor[F[_]] {
   def map[A, B](fa: F[A])(f: A => B): F[B]
 }
 
+trait Monad[F[_]] {
+  def unit[A](a: => A): F[A]
+  def map[A, B](fa: F[A])(f: A => B): F[B]
+  def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B]
+}
+
 class MonadTest extends FunSuite {
+  test("functor") {
+
+  }
+
   test("monad") {
 
   }
