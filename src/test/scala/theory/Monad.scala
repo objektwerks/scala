@@ -8,7 +8,7 @@ trait Monad[M[_]] {
   def flatMap[A, B](a: M[A])(f: A => M[B]): M[B]
 }
 
-class Bento extends Monad[List[String]] {
+class Bento extends Monad[List] {
   override def unit[A](a: => A): List[A] = a :: Nil
 
   override def map[A, B](a: List[A])(f: (A) => B): List[B] = a map f
