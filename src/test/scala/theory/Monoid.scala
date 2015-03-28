@@ -1,15 +1,15 @@
 package theory
 
-trait Monoid[A] {
-  def op(a1: A, a2: A): A
+trait Monoid[M] {
+  def id: M
 
-  def id: A
+  def op(x: M, y: M): M
 }
 
 object Adder extends Monoid[Int] {
-  override def op(x: Int, y: Int): Int = x + y
-
   override def id: Int = 0
+
+  override def op(x: Int, y: Int): Int = x + y
 
   def fold(xs: List[Int]): Int = xs.fold(id)(op)
 
