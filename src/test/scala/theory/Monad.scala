@@ -13,5 +13,5 @@ class Bento extends Monad[List[String]] {
 
   override def map[A, B](a: List[A])(f: (A) => B): List[B] = a map f
 
-  override def flatMap[A, B](a: List[A])(f: (A) => List[B]): List[B] = a flatmap f
+  override def flatMap[A, B](a: List[A])(f: (A) => List[B]): List[B] = a flatMap f
 }
