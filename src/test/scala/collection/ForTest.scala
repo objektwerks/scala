@@ -51,4 +51,11 @@ class ForTest extends FunSuite {
     assert(forLetters(0).getOrElse("Z") == "A")
     assert(filterLetters(0).getOrElse("Z") == "A")
   }
+
+  test("flatmap > list of list") {
+    val listOfList: List[List[String]] = List(List("a", "b", "c"))
+    val flatMappedListOfList = listOfList flatMap(as => as.map(a => a.toUpperCase))
+    assert(listOfList.length == 1)
+    assert(flatMappedListOfList.length == 3)
+  }
 }
