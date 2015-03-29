@@ -48,8 +48,8 @@ class ForTest extends FunSuite {
     val letters = List("A", "B", "C", "D", "F")
     val forLetters: List[Option[String]] = for (l <- letters if l == "A") yield Some(l)
     val filterLetters = letters filter (l => l == "A") map (l => Some(l))
-    assert(forLetters(0).getOrElse("Z") == "A")
-    assert(filterLetters(0).getOrElse("Z") == "A")
+    assert(forLetters.head.getOrElse("Z") == "A")
+    assert(filterLetters.head.getOrElse("Z") == "A")
   }
 
   test("flatmap > list of list") {
