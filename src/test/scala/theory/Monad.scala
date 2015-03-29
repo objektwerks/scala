@@ -7,3 +7,9 @@ trait Monad[M[_]] {
 
   def flatMap[A, B](a: M[A])(f: A => M[B]): M[B]
 }
+
+case class Identity[A](value: A) {
+  def map[B](f: A => B) = Identity(f(value))
+
+  def flatMap[B](f: A => Identity[B]) = f(value)
+}
