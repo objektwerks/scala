@@ -6,6 +6,7 @@ trait Functor[F[_]] {
 
 trait Applicative[F[_]] extends Functor[F] {
   def unit[A](a: => A): F[A]
+  def apply[A, B](f: F[A => B]): F[A] => F[B]
 }
 
 trait Monad[F[_]] extends Functor[F] {
