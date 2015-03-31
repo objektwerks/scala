@@ -6,8 +6,8 @@ class MonadTest extends FunSuite {
   test("option monad") {
     val optionMonad = new Monad[Option] {
       override def unit[A](a: => A): Option[A] = Some(a)
-      override def compose[A, B, C](f: (B) => C, g: (A) => B): (A) => C = ???
-      override def flatten[A](f: Option[Option[A]]): Option[A] = ???
+      override def compose[A, B, C](f: (A) => Option[B], g: (B) => Option[C]): (A) => Option[C] = ???
+      override def flatten[A](f: Option[Option[A]]): Option[A] = f flatten
       override def map[A, B](a: Option[A])(f: (A) => B): Option[B] = a map f
       override def flatMap[A, B](a: Option[A])(f: (A) => Option[B]): Option[B] = a flatMap f
     }
