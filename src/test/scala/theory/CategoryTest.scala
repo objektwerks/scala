@@ -3,6 +3,18 @@ package theory
 import org.scalatest.FunSuite
 
 class CategoryTest extends FunSuite {
+  test("applicative") {
+    val optionApplicative = new Applicative[Option] {
+      override def unit[A](a: => A): Option[A] = Option(a)
+      override def apply[A, B](f: Option[(A) => B]): (Option[A]) => Option[B] = ???
+      override def map[A, B](a: Option[A])(f: (A) => B): Option[B] = a map f
+    }
+    val option: Option[Int] = optionApplicative.unit(1)
+    val mappedOption: Option[Int] = optionApplicative.map (option) (i => i * 3)
+    assert(option.get == 1)
+    assert(mappedOption.get == 3)
+  }
+
   test("functor") {
     val toListOfStringsFunctor = new Functor[List] {
       override def map[A, B](xs: List[A])(f: A => B): List[B] = xs map f
@@ -21,9 +33,9 @@ class CategoryTest extends FunSuite {
       override def flatMap[A, B](a: Option[A])(f: (A) => Option[B]): Option[B] = a flatMap f
     }
     val option: Option[Int] = optionMonad.unit(1)
-    val mappedOption: Option[Int] = option.map(i => i * 3)
+    val mappedOption: Option[Int] = optionMonad.map (option) (i => i * 3)
     val flattenedOption: Option[Int] = optionMonad.flatten(Option(option))
-    val flatMappedOption: Option[Int] = option.flatMap(i => Some(i))
+    val flatMappedOption: Option[Int] = optionMonad.flatMap (option) (i => Some(i))
     assert(option.get == 1)
     assert(flattenedOption.get == 1)
     assert(mappedOption.get == 3)
