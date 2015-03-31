@@ -3,21 +3,17 @@ package theory
 import org.scalatest.FunSuite
 
 class CategoryTest extends FunSuite {
-  test("monoid") {
-    assert(Adder.op(1, 1) == 2)
-    assert(Adder.id == 0)
-    assert(Adder.fold(List(1, 2, 3)) == 6)
-    assert(Adder.isValid(1, 2, 3))
-  }
-
   test("functor") {
+    val toListOfStringsFunctor = new Functor[List] {
+      override def map[A, B](xs: List[A])(f: A => B): List[B] = xs map f
+    }
     val listOfNumbers = List(1, 2, 3)
-    val listOfStrings = ToListOfStrings.map(listOfNumbers)(_.toString)
+    val listOfStrings = toListOfStringsFunctor.map(listOfNumbers)(_.toString)
     val expectedMorphism = List("1", "2", "3")
     assert(listOfStrings == expectedMorphism)
   }
 
-  test("option monad") {
+  test("monad") {
     val optionMonad = new Monad[Option] {
       override def unit[A](a: => A): Option[A] = Option(a)
       override def flatten[A](a: Option[Option[A]]): Option[A] = a flatMap identity
@@ -36,13 +32,20 @@ class CategoryTest extends FunSuite {
     assert(option == flatMappedOption)
   }
 
-  test("identity monad") {
-    val identity: Identity[Int] = Identity(1)
-    val mappedIdentity: Identity[Int] = identity.map(i => i * 3)
-    val flatMappedIdentity: Identity[Int] = identity.flatMap { i => Identity(i) }
-    assert(mappedIdentity.value == 3)
-    assert(flatMappedIdentity.value == 1)
-    assert(identity != mappedIdentity)
-    assert(identity == flatMappedIdentity)
+  test("monoid") {
+    val adder = new Monoid[Int] {
+      override def id: Int = 0
+      override def op(x: Int, y: Int): Int = x + y
+      def fold(xs: List[Int]): Int = xs.fold(id)(op)
+      def isValid(x: Int, y: Int, z: Int): Boolean = {
+        val associative = op(op(x, y), z) == op(x, op(y, z))
+        val identity = op(id, x) == x
+        associative && identity
+      }
+    }
+    assert(adder.op(1, 1) == 2)
+    assert(adder.id == 0)
+    assert(adder.fold(List(1, 2, 3)) == 6)
+    assert(adder.isValid(1, 2, 3))
   }
 }
