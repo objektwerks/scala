@@ -1,5 +1,10 @@
 package theory
 
+trait Monoid[F] {
+  def id: F
+  def op(x: F, y: F): F
+}
+
 trait Functor[F[_]] {
   def map[A, B](fa: F[A])(f: A => B): F[B]
 }
@@ -16,32 +21,7 @@ trait Monad[F[_]] extends Functor[F] {
   def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B]
 }
 
-trait Monoid[F] {
-  def id: F
-  def op(x: F, y: F): F
-}
-
 object CategoryTheory {
-  val optionApplicative = new Applicative[Option] {
-    override def unit[A](a: => A): Option[A] = Some(a)
-    override def apply[A, B](fa: Option[A])(ff: Option[A => B]): Option[B] = (fa, ff) match {
-      case (None, _) => None
-      case (Some(a), None) => None
-      case(Some(a), Some(f)) => Some(f(a))
-    }
-  }
-
-  val listFunctor = new Functor[List] {
-    override def map[A, B](xs: List[A])(f: A => B): List[B] = xs map f
-  }
-
-  val optionMonad = new Monad[Option] {
-    override def unit[A](a: => A): Option[A] = Option(a)
-    override def flatten[A](ooa: Option[Option[A]]): Option[A] = ooa flatMap identity
-    override def map[A, B](oa: Option[A])(f: (A) => B): Option[B] = oa map f
-    override def flatMap[A, B](oa: Option[A])(f: (A) => Option[B]): Option[B] = oa flatMap f
-  }
-
   val adderMonoid = new Monoid[Int] {
     override def id: Int = 0
     override def op(x: Int, y: Int): Int = x + y
@@ -51,5 +31,25 @@ object CategoryTheory {
       val identity = op(id, x) == x
       associative && identity
     }
+  }
+
+  val listFunctor = new Functor[List] {
+    override def map[A, B](xs: List[A])(f: A => B): List[B] = xs map f
+  }
+
+  val optionApplicative = new Applicative[Option] {
+    override def unit[A](a: => A): Option[A] = Some(a)
+    override def apply[A, B](fa: Option[A])(ff: Option[A => B]): Option[B] = (fa, ff) match {
+      case (None, _) => None
+      case (Some(a), None) => None
+      case (Some(a), Some(f)) => Some(f(a))
+    }
+  }
+
+  val optionMonad = new Monad[Option] {
+    override def unit[A](a: => A): Option[A] = Option(a)
+    override def flatten[A](ooa: Option[Option[A]]): Option[A] = ooa flatMap identity
+    override def map[A, B](oa: Option[A])(f: (A) => B): Option[B] = oa map f
+    override def flatMap[A, B](oa: Option[A])(f: (A) => Option[B]): Option[B] = oa flatMap f
   }
 }
