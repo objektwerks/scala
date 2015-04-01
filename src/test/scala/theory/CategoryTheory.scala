@@ -1,18 +1,19 @@
 package theory
 
 trait Functor[F[_]] {
-  def map[A, B](a: F[A])(f: A => B): F[B]
+  def map[A, B](fa: F[A])(f: A => B): F[B]
 }
 
 trait Applicative[F[_]] extends Functor[F] {
   def unit[A](a: => A): F[A]
-  def apply[A, B](f: F[A => B]): F[A] => F[B]
+  def apply[A, B](fa: F[A])(f: F[A => B]): F[B]
+  override def map[A, B](fa: F[A])(f: A => B): F[B] = apply(fa)(unit(f))
 }
 
 trait Monad[F[_]] extends Functor[F] {
   def unit[A](a: => A): F[A]
-  def flatten[A](a: F[F[A]]): F[A]
-  def flatMap[A, B](a: F[A])(f: A => F[B]): F[B]
+  def flatten[A](ffa: F[F[A]]): F[A]
+  def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B]
 }
 
 trait Monoid[F] {
@@ -22,9 +23,12 @@ trait Monoid[F] {
 
 object CategoryTheory {
   val optionApplicative = new Applicative[Option] {
-    override def unit[A](a: => A): Option[A] = Option(a)
-    override def apply[A, B](f: Option[(A) => B]): (Option[A]) => Option[B] = ???
-    override def map[A, B](a: Option[A])(f: (A) => B): Option[B] = a map f
+    override def unit[A](a: => A): Option[A] = Some(a)
+    override def apply[A, B](fa: Option[A])(ff: Option[A => B]): Option[B] = (fa, ff) match {
+      case (None, _) => None
+      case (Some(a), None) => None
+      case(Some(a), Some(f)) => Some(f(a))
+    }
   }
 
   val listFunctor = new Functor[List] {
@@ -33,9 +37,9 @@ object CategoryTheory {
 
   val optionMonad = new Monad[Option] {
     override def unit[A](a: => A): Option[A] = Option(a)
-    override def flatten[A](a: Option[Option[A]]): Option[A] = a flatMap identity
-    override def map[A, B](a: Option[A])(f: (A) => B): Option[B] = a map f
-    override def flatMap[A, B](a: Option[A])(f: (A) => Option[B]): Option[B] = a flatMap f
+    override def flatten[A](ooa: Option[Option[A]]): Option[A] = ooa flatMap identity
+    override def map[A, B](oa: Option[A])(f: (A) => B): Option[B] = oa map f
+    override def flatMap[A, B](oa: Option[A])(f: (A) => Option[B]): Option[B] = oa flatMap f
   }
 
   val adderMonoid = new Monoid[Int] {
