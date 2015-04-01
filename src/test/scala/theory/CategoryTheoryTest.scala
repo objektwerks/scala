@@ -13,7 +13,7 @@ class CategoryTheoryTest extends FunSuite {
 
   test("functor") {
     val listOfNumbers = List(1, 2, 3)
-    val listOfStrings = toListOfStringsFunctor.map(listOfNumbers)(_.toString)
+    val listOfStrings = listFunctor.map(listOfNumbers)(_.toString)
     val expectedMorphism = List("1", "2", "3")
     assert(listOfStrings == expectedMorphism)
   }
@@ -32,9 +32,9 @@ class CategoryTheoryTest extends FunSuite {
   }
 
   test("monoid") {
-    assert(adder.op(1, 1) == 2)
-    assert(adder.id == 0)
-    assert(adder.fold(List(1, 2, 3)) == 6)
-    assert(adder.isValid(1, 2, 3))
+    assert(adderMonoid.op(1, 1) == 2)
+    assert(adderMonoid.id == 0)
+    assert(adderMonoid.fold(List(1, 2, 3)) == 6)
+    assert(adderMonoid.isValid(1, 2, 3))
   }
 }

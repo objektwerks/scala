@@ -27,7 +27,7 @@ object CategoryTheory {
     override def map[A, B](a: Option[A])(f: (A) => B): Option[B] = a map f
   }
 
-  val toListOfStringsFunctor = new Functor[List] {
+  val listFunctor = new Functor[List] {
     override def map[A, B](xs: List[A])(f: A => B): List[B] = xs map f
   }
 
@@ -38,7 +38,7 @@ object CategoryTheory {
     override def flatMap[A, B](a: Option[A])(f: (A) => Option[B]): Option[B] = a flatMap f
   }
 
-  val adder = new Monoid[Int] {
+  val adderMonoid = new Monoid[Int] {
     override def id: Int = 0
     override def op(x: Int, y: Int): Int = x + y
     def fold(xs: List[Int]): Int = xs.fold(id)(op)
