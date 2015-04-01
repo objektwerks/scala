@@ -3,7 +3,7 @@ package theory
 import org.scalatest.FunSuite
 import theory.CategoryTheory._
 
-class CategoryTest extends FunSuite {
+class CategoryTheoryTest extends FunSuite {
   test("applicative") {
     val option: Option[Int] = optionApplicative.unit(1)
     val mappedOption: Option[Int] = optionApplicative.map (option) (i => i * 3)
