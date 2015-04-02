@@ -1,10 +1,10 @@
 package option
 
+import org.scalatest.FunSuite
+
 import scala.io.Source
 import scala.util.control.Exception._
 import scala.util.{Success, Try}
-
-import org.scalatest.FunSuite
 
 class OptionTest extends FunSuite {
   test("option") {
@@ -12,12 +12,26 @@ class OptionTest extends FunSuite {
     assert(greaterThanZero(0) == None)
     assert(greaterThanZero(1) == Some(1))
     val opt = greaterThanZero(1)
-    val value: Int = opt match {
+    opt match {
       case Some(i) => i
       case None => throw new IllegalArgumentException("option equals none")
     }
-    assert(value == 1)
+    assert(opt.get == 1)
    }
+
+  test("option isDefined > isEmpty") {
+    val some = Some("value")
+    assert(some.isDefined)
+    val none = None
+    assert(none.isEmpty)
+  }
+
+  test("option get > getOrElse") {
+    val some = Some(1)
+    assert(some.get == 1)
+    val none = None
+    assert(none.getOrElse(3) == 3)
+  }
 
   test("option map > flatmap ") {
     def toInt(s: String): Option[Int] = Some(Integer.parseInt(s.trim))
@@ -26,12 +40,25 @@ class OptionTest extends FunSuite {
     assert(strings.flatMap(toInt).sum == 6)
   }
 
-  test("all catch") {
-    def readTextFile(name: String): Option[List[String]] = {
-      allCatch.opt(Source.fromFile(name).getLines().toList)
-    }
-    assert(readTextFile("build.sbt").nonEmpty)
-    assert(readTextFile("sbt.sbt") == None)
+  test("option filter") {
+    val number = Some(1)
+    assert(number.filter(_ > 0) == Some(1))
+    assert(number.filter(_ < 0) == None)
+  }
+
+  test("option for") {
+    val left = Some(1)
+    val right = Some(1)
+    val result = for {
+      l <- left
+      r <- right
+    } yield l + r
+    assert(result.getOrElse(-1) == 2)
+  }
+
+  test("option exception") {
+    def parseInt(s: String): Option[Int] = Some(Integer.parseInt(s.trim))
+    assert(Try(parseInt("a")).isFailure)
   }
 
   test("either") {
@@ -57,5 +84,13 @@ class OptionTest extends FunSuite {
       i <- Try(Integer.parseInt("one")).recover { case e => 0 }
     } yield i
     assert(n == Success(0))
+  }
+
+  test("all catch") {
+    def readTextFile(name: String): Option[List[String]] = {
+      allCatch.opt(Source.fromFile(name).getLines().toList)
+    }
+    assert(readTextFile("build.sbt").nonEmpty)
+    assert(readTextFile("sbt.sbt") == None)
   }
 }
