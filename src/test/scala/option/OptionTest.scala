@@ -12,38 +12,29 @@ class OptionTest extends FunSuite {
     assert(greaterThanZero(0) == None)
     assert(greaterThanZero(1) == Some(1))
     val opt = greaterThanZero(1)
-    opt match {
-      case Some(i) => assert(i > 0)
-      case None => throw new IllegalArgumentException("option test failed")
+    val value: Int = opt match {
+      case Some(i) => i
+      case None => throw new IllegalArgumentException("option equals none")
     }
-    opt map(i => assert(i > 0)) getOrElse(throw new IllegalArgumentException("option test failed"))
-    opt.fold (throw new IllegalArgumentException("option test faild")) (i => assert(i > 0))
+    assert(value == 1)
    }
 
-  test("option flatmap") {
+  test("option map > flatmap ") {
     def toInt(s: String): Option[Int] = Some(Integer.parseInt(s.trim))
     val strings = Seq("1", "2", "3")
-    assert(strings.flatMap(toInt) == List(1, 2, 3))
+    assert(strings.map(toInt) == List(Some(1), Some(2), Some(3)))
     assert(strings.flatMap(toInt).sum == 6)
-  }
-
-  test("try success failure") {
-    def readTextFile(name: String): Try[List[String]] = {
-      Try(Source.fromFile(name).getLines().toList)
-    }
-    assert(readTextFile("/etc/passwd").isSuccess)
-    assert(readTextFile("/etc/pass").isFailure)
   }
 
   test("all catch") {
     def readTextFile(name: String): Option[List[String]] = {
       allCatch.opt(Source.fromFile(name).getLines().toList)
     }
-    assert(readTextFile("/etc/passwd").nonEmpty)
-    assert(readTextFile("/etc/pass") == None)
+    assert(readTextFile("build.sbt").nonEmpty)
+    assert(readTextFile("sbt.sbt") == None)
   }
 
-  test("either left right") {
+  test("either") {
     def divide(x: Int, y: Int): Either[String, Int] = try {
       Right(x / y)
     } catch {
@@ -51,6 +42,14 @@ class OptionTest extends FunSuite {
     }
     assert(divide(9, 3) == Right(3))
     assert(divide(9, 0) == Left("divide by zero error"))
+  }
+
+  test("try") {
+    def readTextFile(name: String): Try[List[String]] = {
+      Try(Source.fromFile(name).getLines().toList)
+    }
+    assert(readTextFile("build.sbt").isSuccess)
+    assert(readTextFile("sbt.sbt").isFailure)
   }
 
   test("try recover") {
