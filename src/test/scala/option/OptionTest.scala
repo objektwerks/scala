@@ -56,6 +56,13 @@ class OptionTest extends FunSuite {
     assert(result.getOrElse(-1) == 2)
   }
 
+  test("option orElse") {
+    val resource: Option[String] = None
+    val defaultResource: Option[String] = Some("default")
+    val locatedResource: Option[String] = resource orElse defaultResource
+    assert(locatedResource == defaultResource)
+  }
+
   test("option exception") {
     def parseInt(s: String): Option[Int] = Some(Integer.parseInt(s.trim))
     assert(Try(parseInt("a")).isFailure)
