@@ -8,7 +8,6 @@ libraryDependencies ++= Seq(
   "com.typesafe" % "config" % "1.2.1",
   "org.scala-lang.modules" % "scala-async_2.11" % "0.9.2",
   "com.typesafe.akka" % "akka-actor_2.11" % "2.3.9",
-  "com.h2database" % "h2" % "1.4.186",
   "org.scalafx" % "scalafx_2.11" % "8.0.40-R8",
   "net.databinder.dispatch" % "dispatch-core_2.11" % "0.11.2",
   "org.json4s" % "json4s-jackson_2.11" % "3.2.11",
