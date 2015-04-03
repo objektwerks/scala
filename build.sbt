@@ -13,8 +13,6 @@ libraryDependencies ++= Seq(
   "org.scalafx" % "scalafx_2.11" % "8.0.40-R8",
   "net.databinder.dispatch" % "dispatch-core_2.11" % "0.11.2",
   "org.json4s" % "json4s-jackson_2.11" % "3.2.11",
-  "org.apache.spark" % "spark-core_2.11" % "1.3.0",
-  "org.apache.spark" % "spark-streaming_2.11" % "1.3.0",
   "org.slf4j" % "slf4j-api" % "1.7.10",
   "ch.qos.logback" % "logback-classic" % "1.1.2",
   "org.scalacheck" % "scalacheck_2.11" % "1.12.2" % "test",
