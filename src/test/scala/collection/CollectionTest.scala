@@ -85,6 +85,13 @@ class CollectionTest extends FunSuite {
     assert(list.flatMap(i => g(i)) == List(0, 1, 2, 1, 2, 3, 2, 3, 4))
   }
 
+  test("flatmap > list of list") {
+    val listOfList: List[List[String]] = List(List("a", "b", "c"))
+    val flatMappedListOfList = listOfList flatMap(as => as.map(a => a.toUpperCase))
+    assert(listOfList.length == 1)
+    assert(flatMappedListOfList.length == 3)
+  }
+
   test("fold") {
     val vector = Vector(1, 2, 3)
     assert(vector.foldLeft(3)(_ + _) == 9)

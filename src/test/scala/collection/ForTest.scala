@@ -32,7 +32,7 @@ class ForTest extends FunSuite {
     assert(mapList == List(6, 36, 10, 60, 12, 72, 20, 120))
   }
 
-  test("imperative for > foreach > map") {
+  test("for > foreach > map") {
     val xs = List(1, 2)
     var forList: ListBuffer[Int] = ListBuffer()
     for (x <- xs) {
@@ -50,12 +50,5 @@ class ForTest extends FunSuite {
     val filterLetters = letters filter (l => l == "A") map (l => Some(l))
     assert(forLetters.head.getOrElse("Z") == "A")
     assert(filterLetters.head.getOrElse("Z") == "A")
-  }
-
-  test("flatmap > list of list") {
-    val listOfList: List[List[String]] = List(List("a", "b", "c"))
-    val flatMappedListOfList = listOfList flatMap(as => as.map(a => a.toUpperCase))
-    assert(listOfList.length == 1)
-    assert(flatMappedListOfList.length == 3)
   }
 }
