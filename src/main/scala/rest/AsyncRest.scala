@@ -1,15 +1,14 @@
 package rest
 
-import scala.async.Async.{async, await}
-import scala.concurrent.{ExecutionContext, Future}
-
+import dispatch._
 import org.json4s.DefaultFormats
 import org.json4s.jackson.JsonMethods._
 
-import dispatch._
+import scala.async.Async.{async, await}
+import scala.concurrent.ExecutionContext.Implicits.{global => ec}
+import scala.concurrent.Future
 
 object AsyncRest {
-  private implicit def executor: ExecutionContext = ExecutionContext.global
   private implicit lazy val formats = DefaultFormats
   private val jokeUrl = "http://api.icndb.com/jokes/random/"
 
