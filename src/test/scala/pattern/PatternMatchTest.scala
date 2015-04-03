@@ -1,4 +1,4 @@
-package patternmatch
+package pattern
 
 import org.scalatest.FunSuite
 
