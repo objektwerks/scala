@@ -9,7 +9,6 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules" % "scala-async_2.11" % "0.9.2",
   "com.typesafe.akka" % "akka-actor_2.11" % "2.3.9",
   "com.h2database" % "h2" % "1.4.186",
-  "com.typesafe.slick" % "slick_2.11" % "2.1.0",
   "org.scalaz" %% "scalaz-core" % "7.1.1",
   "org.scalafx" % "scalafx_2.11" % "8.0.40-R8",
   "net.databinder.dispatch" % "dispatch-core_2.11" % "0.11.2",
