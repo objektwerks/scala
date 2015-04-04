@@ -25,7 +25,9 @@ scalacOptions ++= Seq(
   "-feature",
   "-deprecation",
   "-Xlint",
-  "-Xfatal-warnings"
+  "-Xfatal-warnings",
+  "-Xexperimental",
+  "-Ydelambdafy:method"
 )
 
 logLevel := Level.Info
