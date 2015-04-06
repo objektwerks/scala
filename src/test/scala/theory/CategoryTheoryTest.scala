@@ -32,8 +32,8 @@ class CategoryTheoryTest extends FunSuite {
   }
 
   test("monoid") {
-    assert(adderMonoid.op(1, 1) == 2)
-    assert(adderMonoid.id == 0)
+    assert(adderMonoid.append(1, 1) == 2)
+    assert(adderMonoid.zero == 0)
     assert(adderMonoid.fold(List(1, 2, 3)) == 6)
     assert(adderMonoid.isValid(1, 2, 3))
   }

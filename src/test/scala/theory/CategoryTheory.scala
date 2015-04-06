@@ -1,8 +1,11 @@
 package theory
 
-trait Monoid[F] {
-  def id: F
-  def op(x: F, y: F): F
+trait Semigroup[F] {
+  def append(x: F, y: F): F
+}
+
+trait Monoid[F] extends Semigroup[F] {
+  def zero: F
 }
 
 trait Functor[F[_]] {
@@ -23,12 +26,12 @@ trait Monad[F[_]] extends Functor[F] {
 
 object CategoryTheory {
   val adderMonoid = new Monoid[Int] {
-    override def id: Int = 0
-    override def op(x: Int, y: Int): Int = x + y
-    def fold(xs: List[Int]): Int = xs.fold(id)(op)
+    override def zero: Int = 0
+    override def append(x: Int, y: Int): Int = x + y
+    def fold(xs: List[Int]): Int = xs.fold(zero)(append)
     def isValid(x: Int, y: Int, z: Int): Boolean = {
-      val associative = op(op(x, y), z) == op(x, op(y, z))
-      val identity = op(id, x) == x
+      val associative = append(append(x, y), z) == append(x, append(y, z))
+      val identity = append(zero, x) == x
       associative && identity
     }
   }
