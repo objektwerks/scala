@@ -3,5 +3,5 @@ package object implicits {
     s"Message packed: $message"
   }
 
-  val orderByTaskName = implicitly[Ordering[Task]](Ordering.by(t => t.name))
+  implicit def ord: Ordering[Task] = Ordering.by(t => t.name)
 }

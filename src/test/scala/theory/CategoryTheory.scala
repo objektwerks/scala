@@ -13,9 +13,9 @@ trait Functor[F[_]] {
 }
 
 trait Applicative[F[_]] extends Functor[F] {
-  def unit[A](a: => A): F[A]
+  def pure[A](a: => A): F[A]
   def apply[A, B](fa: F[A])(f: F[A => B]): F[B]
-  override def map[A, B](fa: F[A])(f: A => B): F[B] = apply(fa)(unit(f))
+  override def map[A, B](fa: F[A])(f: A => B): F[B] = apply(fa)(pure(f))
 }
 
 trait Monad[F[_]] extends Functor[F] {
@@ -41,7 +41,7 @@ object CategoryTheory {
   }
 
   val optionApplicative = new Applicative[Option] {
-    override def unit[A](a: => A): Option[A] = Some(a)
+    override def pure[A](a: => A): Option[A] = Some(a)
     override def apply[A, B](fa: Option[A])(ff: Option[A => B]): Option[B] = (fa, ff) match {
       case (None, _) => None
       case (Some(a), None) => None

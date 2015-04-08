@@ -5,7 +5,7 @@ import theory.CategoryTheory._
 
 class CategoryTheoryTest extends FunSuite {
   test("applicative") {
-    val option: Option[Int] = optionApplicative.unit(1)
+    val option: Option[Int] = optionApplicative.pure(1)
     val mappedOption: Option[Int] = optionApplicative.map(option)(i => i * 3)
     assert(option.get == 1)
     assert(mappedOption.get == 3)

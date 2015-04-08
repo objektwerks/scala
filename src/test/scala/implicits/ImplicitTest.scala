@@ -34,9 +34,9 @@ class ImplicitTest extends FunSuite {
     assert(packMessage(message) == s"Message packed: $message")
   }
 
-  test("implicitly") {
+  test("implicit sorting") {
     val tasks: List[Task] = List(Task("c"), Task("b"), Task("a"))
-    val sortedTasks: List[Task] = tasks.sorted(orderByTaskName)
+    val sortedTasks: List[Task] = tasks.sorted
     assert(sortedTasks.head.name == "a")
   }
 }
