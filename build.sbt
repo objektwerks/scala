@@ -30,8 +30,8 @@ scalacOptions ++= Seq(
   "-Ydelambdafy:method"
 )
 
-fork := true
+fork in test := true
 
-javaOptions += "-server"
+javaOptions += "-server -Xmx2048G"
 
 logLevel := Level.Info
