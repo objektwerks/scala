@@ -32,6 +32,6 @@ scalacOptions ++= Seq(
 
 fork in test := true
 
-javaOptions += "-server -Xmx2048G"
+javaOptions += "-server -Xss1m -Xmx2g"
 
 logLevel := Level.Info
