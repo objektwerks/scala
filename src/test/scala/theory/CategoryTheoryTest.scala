@@ -19,7 +19,7 @@ class CategoryTheoryTest extends FunSuite {
   }
 
   test("monad") {
-    val option: Option[Int] = optionMonad.unit(1)
+    val option: Option[Int] = optionMonad.pure(1)
     val mappedOption: Option[Int] = optionMonad.map(option)(i => i * 3)
     val flattenedOption: Option[Int] = optionMonad.flatten(Option(option))
     val flatMappedOption: Option[Int] = optionMonad.flatMap(option)(i => Some(i))
