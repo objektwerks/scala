@@ -2,15 +2,12 @@ package theory
 
 trait Semigroup[F] {
   def append(x: F, y: F): F
+  def isAssociative(x: F, y: F, z: F): Boolean = append(append(x, y), z) == append(x, append(y, z))
 }
 
 trait Monoid[F] extends Semigroup[F] {
   def zero: F
-  def isLawful(x: F, y: F, z: F): Boolean = {
-    val associative = append(append(x, y), z) == append(x, append(y, z))
-    val identity = append(zero, x) == x
-    associative && identity
-  }
+  def idIdentity(x: F): Boolean = append(zero, x) == x
 }
 
 trait Functor[F[_]] {

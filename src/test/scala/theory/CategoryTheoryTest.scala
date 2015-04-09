@@ -34,7 +34,8 @@ class CategoryTheoryTest extends FunSuite {
   test("monoid") {
     assert(adderMonoid.append(1, 1) == 2)
     assert(adderMonoid.zero == 0)
-    assert(adderMonoid.isLawful(1, 2, 3))
+    assert(adderMonoid.isAssociative(1, 2, 3))
+    assert(adderMonoid.idIdentity(1))
   }
 
   test("is idempotent") {
