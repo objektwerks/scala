@@ -54,4 +54,14 @@ object CategoryTheory {
     override def map[A, B](oa: Option[A])(f: (A) => B): Option[B] = oa map f
     override def flatMap[A, B](oa: Option[A])(f: (A) => Option[B]): Option[B] = oa flatMap f
   }
+
+  def isIdempotent[T](op: T => T, x: T): Boolean = {
+    val f = op
+    val g = op compose op
+    f(x) == g(x)
+  }
+
+  def isCommutative[T](op: (T, T) => T, x: T, y: T): Boolean = {
+    op(x, y) == op(y, x)
+  }
 }

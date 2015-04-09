@@ -36,4 +36,16 @@ class CategoryTheoryTest extends FunSuite {
     assert(adderMonoid.zero == 0)
     assert(adderMonoid.isLawful(1, 2, 3))
   }
+
+  test("is idempotent") {
+    def toUpper(s: String): String = s.toUpperCase
+    def increment(i: Int) = i + 1
+    assert(isIdempotent(toUpper, "AbCdEfG"))
+    assert(!isIdempotent(increment, 0))
+  }
+
+  test("is commutative") {
+    assert(isCommutative[Int](_ + _, 3, 6))
+    assert(!isCommutative[String](_ + _, "a", "b"))
+  }
 }
