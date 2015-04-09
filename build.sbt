@@ -25,9 +25,7 @@ scalacOptions ++= Seq(
   "-feature",
   "-deprecation",
   "-Xlint",
-  "-Xfatal-warnings",
-  "-Xexperimental",
-  "-Ydelambdafy:method"
+  "-Xfatal-warnings" // 2.12 flags (blows up ide compiler. "-Xexperimental", "-Ydelambdafy:method"
 )
 
 fork in test := true
