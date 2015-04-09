@@ -18,13 +18,13 @@ trait Functor[F[_]] {
 }
 
 trait Applicative[F[_]] extends Functor[F] {
-  def pure[A](a: => A): F[A]
+  def point[A](a: => A): F[A]
   def apply[A, B](fa: F[A])(f: F[A => B]): F[B]
-  override def map[A, B](fa: F[A])(f: A => B): F[B] = apply(fa)(pure(f))
+  override def map[A, B](fa: F[A])(f: A => B): F[B] = apply(fa)(point(f))
 }
 
 trait Monad[F[_]] extends Functor[F] {
-  def pure[A](a: => A): F[A]
+  def point[A](a: => A): F[A]
   def flatten[A](ffa: F[F[A]]): F[A]
   def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B]
 }
@@ -40,7 +40,7 @@ object CategoryTheory {
   }
 
   val optionApplicative = new Applicative[Option] {
-    override def pure[A](a: => A): Option[A] = Some(a)
+    override def point[A](a: => A): Option[A] = Some(a)
     override def apply[A, B](fa: Option[A])(ff: Option[A => B]): Option[B] = (fa, ff) match {
       case (None, _) => None
       case (Some(a), None) => None
@@ -49,7 +49,7 @@ object CategoryTheory {
   }
 
   val optionMonad = new Monad[Option] {
-    override def pure[A](a: => A): Option[A] = Option(a)
+    override def point[A](a: => A): Option[A] = Option(a)
     override def flatten[A](ooa: Option[Option[A]]): Option[A] = ooa flatMap identity
     override def map[A, B](oa: Option[A])(f: (A) => B): Option[B] = oa map f
     override def flatMap[A, B](oa: Option[A])(f: (A) => Option[B]): Option[B] = oa flatMap f
