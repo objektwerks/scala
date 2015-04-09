@@ -6,6 +6,11 @@ trait Semigroup[F] {
 
 trait Monoid[F] extends Semigroup[F] {
   def zero: F
+  def isLawful(x: F, y: F, z: F): Boolean = {
+    val associative = append(append(x, y), z) == append(x, append(y, z))
+    val identity = append(zero, x) == x
+    associative && identity
+  }
 }
 
 trait Functor[F[_]] {
@@ -28,11 +33,6 @@ object CategoryTheory {
   val adderMonoid = new Monoid[Int] {
     override def zero: Int = 0
     override def append(x: Int, y: Int): Int = x + y
-    def isValid(x: Int, y: Int, z: Int): Boolean = {
-      val associative = append(append(x, y), z) == append(x, append(y, z))
-      val identity = append(zero, x) == x
-      associative && identity
-    }
   }
 
   val listFunctor = new Functor[List] {
