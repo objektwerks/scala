@@ -7,6 +7,31 @@ import scala.language.postfixOps
 import org.scalatest.FunSuite
 
 class CollectionTest extends FunSuite {
+  test("list symbols") {
+    val listOneTwo = List(1, 2)
+    assert(listOneTwo == 1 :: 2 :: Nil)
+    assert(listOneTwo == List(1) ::: List(2))
+    assert(listOneTwo == 1 :: List(2))
+    assert(listOneTwo == 1 +: List(2))
+    assert(listOneTwo == List(1) :+ 2)
+    assert(listOneTwo == List(1) ++ List(2))
+    assert(listOneTwo == List(1) ++: List(2))
+  }
+
+  test("set symbols") {
+    val setOneTwo = Set(1, 2)
+    assert(setOneTwo == Set(1) ++ Set(2))
+    assert(setOneTwo == Set(1) + 2)
+    assert(setOneTwo == Set(1, 2, 3) - 3)
+  }
+
+  test("map symbols") {
+    val mapOneTwo = Map(1 -> 1, 2 -> 2)
+    assert(mapOneTwo == Map(1 -> 1) ++ Map(2 -> 2))
+    assert(mapOneTwo == Map(1 -> 1) + (2 -> 2))
+    assert(mapOneTwo == Map(1 -> 1, 2 -> 2, 3 -> 3) - 3)
+  }
+
   test("vector") {
     val vector = Vector(1, 2, 3)
     assert(vector.head == 1)
