@@ -48,4 +48,9 @@ class CategoryTheoryTest extends FunSuite {
     assert(isCommutative[Int](_ + _, 3, 6))
     assert(!isCommutative[String](_ + _, "a", "b"))
   }
+
+  test("is associative") {
+    assert(isAssociative[Int](_ + _, 1, 2, 3))
+    assert(!isAssociative[Double](_ / _, 1, 2, 3))
+  }
 }

@@ -64,4 +64,8 @@ object CategoryTheory {
   def isCommutative[T](op: (T, T) => T, x: T, y: T): Boolean = {
     op(x, y) == op(y, x)
   }
+
+  def isAssociative[T](op: (T, T) => T, x: T, y: T, z: T): Boolean = {
+    op(op(x, y), z) == op(x, op(y, z))
+  }
 }
