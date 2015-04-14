@@ -1,4 +1,4 @@
-package function
+package recursion
 
 import math.Factorial
 import org.scalatest.FunSuite

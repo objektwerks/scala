@@ -1,4 +1,4 @@
-package function
+package recursion
 
 import math.Fibonacci
 import org.scalatest.FunSuite
