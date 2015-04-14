@@ -1,4 +1,4 @@
-package enumerator
+package enums
 
 import org.scalatest.FunSuite
 
