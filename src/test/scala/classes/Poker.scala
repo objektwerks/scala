@@ -3,9 +3,9 @@ package classes
 // Player
 case class Player(name : String)
 
-// Games
-trait Action
-trait Rule
+// Game
+sealed trait Action
+sealed trait Rule
 abstract class Game (val actions: Set[Action], val rules: Set[Rule])
 class StudPoker(actions: Set[Action], rules: Set[Rule]) extends Game (actions, rules)
 
@@ -13,14 +13,13 @@ class StudPoker(actions: Set[Action], rules: Set[Rule]) extends Game (actions, r
 case class Pot(chips : Set[Chip])
 case class Hand(game: Game, players: Set[Player], cards : Set[Card], pot: Pot)
 
-// Cards
-trait Card
-trait Suit
+// Card
+sealed trait Card
+sealed trait Suit
 trait Clubs extends Suit
 trait Diamonds extends Suit
 trait Hearts extends Suit
 trait Spades extends Suit
-
 case class Ace(suit: Suit) extends Card
 case class King(suit: Suit) extends Card
 case class Queen(suit: Suit) extends Card
@@ -41,16 +40,14 @@ case class Deck(cards: Set[Card])
 // Currency
 abstract class Currency(value: Double)
 class USD(value: Double) extends Currency(value)
-
 case class OneDollar(currency: Currency)
 case class FiveDollars(currency: Currency)
 case class TenDollars(currency: Currency)
 case class FiftyDollars(currency: Currency)
 case class OneHundredDollars(currency: Currency)
 
-// Chips
-trait Chip
-
+// Chip
+sealed trait Chip
 case class White(value: OneDollar) extends Chip
 case class Red(value: FiveDollars) extends Chip
 case class Blue(value: TenDollars) extends Chip
