@@ -2,13 +2,40 @@ package akka
 
 import java.util.concurrent.TimeUnit
 
-import akka.actor.{ActorRef, ActorSystem, PoisonPill, Props}
+import akka.actor._
 import akka.pattern.ask
 import akka.util.Timeout
 import org.scalatest.FunSuite
 
 import scala.concurrent.ExecutionContext.Implicits.{global => ec}
 import scala.util.{Failure, Success}
+
+class Master extends Actor {
+  println(s"Master created: $self")
+  val worker: ActorRef = context.actorOf(Props(new Worker()), name = "worker")
+
+  def receive = {
+    case Message(Tell, who, message) => println(s"\nMaster received $message from $who.")
+    case Message(Ask, who, message) => sender ! s"Master received $message from $who."
+    case Message(TellDelegate, who, message) => worker ! new Message(Tell, "Master", message)
+    case _ => println("Master received invalid message.")
+  }
+}
+
+class Worker extends Actor {
+  println(s"Worker created: $self")
+
+  def receive = {
+    case Message(Tell, who, message) => println(s"Worker received $message from $who.")
+    case _ => println("Worker received invalid message.")
+  }
+}
+
+sealed trait Mode
+case object Tell extends Mode
+case object TellDelegate extends Mode
+case object Ask extends Mode
+case class Message(mode: Mode, who: String, message: String)
 
 class ActorTest extends FunSuite {
   private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
