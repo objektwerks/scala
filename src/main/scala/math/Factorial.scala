@@ -1,4 +1,4 @@
-package function
+package math
 
 import scala.annotation.tailrec
 

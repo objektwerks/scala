@@ -1,6 +1,6 @@
 package z
 
-import function.Fibonacci
+import math.Fibonacci
 import org.scalatest.FunSuite
 
 import scalaz._

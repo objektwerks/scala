@@ -1,5 +1,6 @@
 package function
 
+import math.Fibonacci
 import org.scalatest.FunSuite
 
 class FibonacciTest extends FunSuite {

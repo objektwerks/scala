@@ -1,5 +1,6 @@
 package function
 
+import math.Factorial
 import org.scalatest.FunSuite
 
 class FactorialTest extends FunSuite{
