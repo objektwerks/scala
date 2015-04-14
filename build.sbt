@@ -5,6 +5,7 @@ version := "1.0"
 scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
+  "org.scalaz" % "scalaz-core_2.11" % "7.1.1",
   "com.typesafe" % "config" % "1.2.1",
   "org.scala-lang.modules" % "scala-async_2.11" % "0.9.2",
   "com.typesafe.akka" % "akka-actor_2.11" % "2.3.9",
