@@ -1,9 +1,17 @@
 package recursion
 
-import math.Fibonacci
+import math.{Fibonacci, Factorial}
 import org.scalatest.FunSuite
 
-class FibonacciTest extends FunSuite {
+class RecursionTest extends FunSuite{
+  test("non tail callable factorial") {
+    assert(Factorial.nonTailCallableFactorial(4) == 24)
+  }
+
+  test("tail callable factorial") {
+    assert(Factorial.tailCallableFactorial(4) == 24)
+  }
+
   test("naive recursive fibonacci") {
     def fibbonacci(n : Long) : BigInt = n match {
       case 0 | 1 => n
