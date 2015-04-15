@@ -2,10 +2,11 @@ package slick
 
 import slick.driver.H2Driver.api._
 
-case class User(id: Option[Int], name: String)
+case class Person(id: Int, name: String, age: Int)
 
-class Users(tag: Tag) extends Table[User](tag, "users") {
+class Persons(tag: Tag) extends Table[Person](tag, "persons") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
   def name = column[String]("name")
-  def * = (id.?, name) <> (User.tupled, User.unapply)
+  def age = column[Int]("age")
+  def * = (id.?, name, age) <> (Person.tupled, Person.unapply)
 }

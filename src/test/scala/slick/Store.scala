@@ -5,17 +5,31 @@ import slick.driver.H2Driver.api._
 import scala.concurrent.Future
 
 object Store {
-  val users = TableQuery[Users]
-  val createSchema = DBIO.seq( users.schema.create )
-  val dropSchema = DBIO.seq( users.schema.drop )
+  val persons = TableQuery[Persons]
+  val createSchema = DBIO.seq( persons.schema.create )
+  val dropSchema = DBIO.seq( persons.schema.drop )
   val db = Database.forConfig("slick")
 
   def create = db.run(createSchema)
   def drop = db.run(dropSchema)
 
-  def listUsers: Future[Seq[User]] = {
-    val q = for ( u <- users ) yield u
-    val a = q.result
-    db.run( a )
+  def listPersons: Future[Seq[Person]] = {
+    val query = for ( u <- persons ) yield u
+    db.run(query.result)
   }
+
+  def create(person: Person): Future[Int] =
+    try db.run(persons += person)
+    finally db.close()
+
+  def update(person: Person): Future[Int] =
+    try db.run(filter(person).update(person))
+    finally db.close()
+
+  def delete(person: Person): Future[Int] =
+    try db.run(filter(person).delete)
+    finally db.close()
+
+  private[this] def filter(person: Person): Query[Persons, Person, Seq] =
+    persons.filter(person => person.id === person.id)
 }
