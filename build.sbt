@@ -15,6 +15,7 @@ libraryDependencies ++= Seq(
   "net.databinder.dispatch" % "dispatch-core_2.11" % "0.11.2",
   "org.apache.spark" % "spark-core_2.11" % "1.3.0",
   "org.json4s" % "json4s-jackson_2.11" % "3.2.11",
+  "com.h2database" % "h2" % "1.4.187",
   "org.scalacheck" % "scalacheck_2.11" % "1.12.2" % "test",
   "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test"
 )
