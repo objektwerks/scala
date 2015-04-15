@@ -44,7 +44,7 @@ class ActorTest extends FunSuite {
 
   test("async one way ! -> tell") {
     master ! Message(Tell, "System", "an async one way ! -> tell message")
-    master ! Message(TellDelegate, "System", "an async one way ! -> tell delegate message")
+    master ! Message(TellDelegate, "System", "an async one way ! -> tell message")
   }
 
   test("async two way ? -> ask") {
@@ -57,10 +57,7 @@ class ActorTest extends FunSuite {
 
   private def kill(result: Any) {
     println(result)
-    master ! PoisonPill
-    println("Master killed by poison pill sent from System.")
-    Thread.sleep(1000)
-    system.shutdown()
-    println("Actor system shutdown.")
+    println(s"Actor system shutdown: $system")
+    system.awaitTermination()
   }
 }

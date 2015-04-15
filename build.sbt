@@ -5,10 +5,12 @@ version := "1.0"
 scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
+  "com.typesafe.play" % "play_2.11" % "2.4.0-M3",
+  "com.typesafe.slick" % "slick_2.11" % "3.0.0-RC3",
+  "com.typesafe.akka" % "akka-actor_2.11" % "2.3.9",
   "org.scalaz" % "scalaz-core_2.11" % "7.1.1",
   "com.typesafe" % "config" % "1.2.1",
   "org.scala-lang.modules" % "scala-async_2.11" % "0.9.2",
-  "com.typesafe.akka" % "akka-actor_2.11" % "2.3.9",
   "org.scalafx" % "scalafx_2.11" % "8.0.40-R8",
   "net.databinder.dispatch" % "dispatch-core_2.11" % "0.11.2",
   "org.apache.spark" % "spark-core_2.11" % "1.3.0",
