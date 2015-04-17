@@ -36,11 +36,11 @@ object Store {
   }
 
   def create(person: Person): Future[Int] = {
-    db.run(persons.returning(persons.map(_.id)).forceInsert(person))
+    db.run(persons.forceInsert(person))
   }
 
   def create(task: Task): Future[Int] = {
-    db.run(tasks.returning(tasks.map(_.id)).forceInsert(task))
+    db.run(tasks.forceInsert(task))
   }
 
   def update(person: Person): Future[Int] = {
