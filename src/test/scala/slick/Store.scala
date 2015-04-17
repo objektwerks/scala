@@ -6,7 +6,8 @@ import scala.concurrent.Future
 
 object Store {
   val persons = TableQuery[Persons]
-  val createSchema = DBIO.seq( persons.schema.create )
+  val tasks = TableQuery[Tasks]
+  val createSchema = DBIO.seq( ( persons.schema ++ tasks.schema ).create )
   val dropSchema = DBIO.seq( persons.schema.drop )
   val db = Database.forConfig("slick")
 
