@@ -15,7 +15,7 @@ object Store {
   def drop = db.run(dropSchema)
 
   def listPersons: Future[Seq[Person]] = {
-    val query = for ( u <- persons ) yield u
+    val query = for ( p <- persons ) yield p
     db.run(query.result)
   }
 
