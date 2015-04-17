@@ -19,6 +19,7 @@ class SlickTest extends FunSuite with BeforeAndAfterAll {
   }
 
   test("persons 1 -> * tasks") {
+    Store.create(new Person(-1, "fred", 21))
     val future = Store.listPersons
     future onSuccess { case p => p foreach println }
   }
