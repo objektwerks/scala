@@ -2,8 +2,8 @@ package z
 
 import org.scalatest.FunSuite
 
+import scalaz.Scalaz._
 import scalaz._
-import Scalaz._
 
 class OrderTest extends FunSuite {
   test("order") {

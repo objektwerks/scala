@@ -3,7 +3,6 @@ package slick
 import slick.driver.H2Driver.api._
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success}
 
 object Store {
   private[this] val persons = TableQuery[Persons]

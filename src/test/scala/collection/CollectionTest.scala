@@ -1,10 +1,10 @@
 package collection
 
-import scala.collection.mutable.{ListBuffer, ArrayBuffer}
+import org.scalatest.FunSuite
+
+import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 import scala.collection.parallel.immutable.ParRange
 import scala.language.postfixOps
-
-import org.scalatest.FunSuite
 
 class CollectionTest extends FunSuite {
   test("list symbols") {

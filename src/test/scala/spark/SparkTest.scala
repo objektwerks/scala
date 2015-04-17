@@ -1,6 +1,6 @@
 package spark
 
-import org.apache.spark.{SparkContext, SparkConf}
+import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.FunSuite
 
 class SparkTest extends FunSuite {

@@ -1,6 +1,6 @@
 package recursion
 
-import math.{Fibonacci, Factorial}
+import math.{Factorial, Fibonacci}
 import org.scalatest.FunSuite
 
 class RecursionTest extends FunSuite{

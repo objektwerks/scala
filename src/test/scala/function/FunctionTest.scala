@@ -1,10 +1,10 @@
 package function
 
+import org.scalatest.FunSuite
+
 import scala.annotation.tailrec
 import scala.language.reflectiveCalls
 import scala.util.Random
-
-import org.scalatest.FunSuite
 
 class FunctionTest extends FunSuite {
   test ("anonymous") {
