@@ -2,7 +2,9 @@ package slick
 
 import slick.driver.H2Driver.api._
 
-case class Person(id: Int, name: String, age: Int)
+case class Person(id: Int, name: String, age: Int) {
+  def copyWithAutoIncId(autoIncId: Int): Person = copy(id = autoIncId)
+}
 
 class Persons(tag: Tag) extends Table[Person](tag, "persons") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
@@ -11,7 +13,9 @@ class Persons(tag: Tag) extends Table[Person](tag, "persons") {
   def * = (id, name, age) <> (Person.tupled, Person.unapply)
 }
 
-case class Task(id: Int, personId: Int, task: String)
+case class Task(id: Int, personId: Int, task: String) {
+  def copyWithAutoIncId(autoIncId: Int): Task = copy(id = autoIncId)
+}
 
 class Tasks(tag: Tag) extends Table[Task](tag, "tasks") {
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)

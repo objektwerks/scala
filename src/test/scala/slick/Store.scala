@@ -36,14 +36,14 @@ object Store {
     db.run(query.result)
   }
 
-  def create(person: Person): Unit = {
+  def create(person: Person): Future[Int] = {
     val tuple: (String, Int) = (person.name, person.age)
-    persons.map(p => tuple).returning(persons.map(_.id)).forceInsert(tuple)
+    db.run(persons.map(p => tuple).returning(persons.map(_.id)).forceInsert(tuple))
   }
 
-  def create(task: Task): Unit = {
+  def create(task: Task): Future[Int] = {
     val tuple: (Int, String) = (task.personId, task.task)
-    tasks.map(p => tuple).returning(tasks.map(_.id)).forceInsert(tuple)
+    db.run(tasks.map(p => tuple).returning(tasks.map(_.id)).forceInsert(tuple))
   }
 
   def update(person: Person): Unit = {
