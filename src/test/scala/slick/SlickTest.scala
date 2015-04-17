@@ -1,14 +1,23 @@
 package slick
 
-import org.scalatest.FunSuite
+import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
 import scala.concurrent.ExecutionContext.Implicits.{global => ec}
 
-class SlickTest extends FunSuite {
+class SlickTest extends FunSuite with BeforeAndAfterAll {
+  override protected def beforeAll(): Unit = {
+    super.beforeAll()
+    Store.createSchema()
+  }
+
+  override protected def afterAll(): Unit = {
+    super.afterAll()
+    Store.dropSchema()
+    Store.close()
+  }
+
   test("users") {
-    Store.create
     val persons = Store.listPersons
     persons onSuccess { case u => println(s"Persons: $persons") }
-    Store.drop
   }
 }
