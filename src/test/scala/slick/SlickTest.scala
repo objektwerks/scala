@@ -2,9 +2,11 @@ package slick
 
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
-import scala.concurrent.ExecutionContext.Implicits.{global => ec}
+import scala.concurrent.ExecutionContext
 
 class SlickTest extends FunSuite with BeforeAndAfterAll {
+  private implicit val ec = ExecutionContext.global
+
   override protected def beforeAll(): Unit = {
     super.beforeAll()
     Store.createSchema()
@@ -17,7 +19,7 @@ class SlickTest extends FunSuite with BeforeAndAfterAll {
   }
 
   test("persons 1 -> * tasks") {
-    val persons = Store.listPersons
-    persons onSuccess { case p => println(s"Persons: $persons") }
+    val future = Store.listPersons
+    future onSuccess { case p => p foreach println }
   }
 }
