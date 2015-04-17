@@ -46,11 +46,11 @@ object Store {
     db.run(tasks.map(p => tuple).returning(tasks.map(_.id)).forceInsert(tuple))
   }
 
-  def update(person: Person): Unit = {
+  def update(person: Person): Future[Int] = {
     db.run(filter(person).update(person))
   }
 
-  def update(task: Task): Unit = {
+  def update(task: Task): Future[Int] = {
      db.run(filter(task).update(task))
   }
 
