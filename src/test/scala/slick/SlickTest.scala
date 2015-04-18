@@ -52,7 +52,7 @@ class SlickTest extends FunSuite with BeforeAndAfterAll {
       val futureTasks = Store.listTasks(p)
       val tasks = Await.ready(futureTasks, Duration.Inf).value.get.get
       for (t <- tasks) {
-        println(t)
+        println(s"\t$t")
       }
     }
   }
