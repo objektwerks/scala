@@ -26,8 +26,8 @@ class SlickTest extends FunSuite with BeforeAndAfterAll {
     val futureBarney = Store.insert(barney)
     val fredId = Await.ready(futureFred, Duration.Inf).value.get.get
     val barneyId = Await.ready(futureBarney, Duration.Inf).value.get.get
-    println(s"Fred inserted id: $fredId")
-    println(s"Barney inserted id: $barneyId")
+    println(s"Fred inserted autoinc id: $fredId")
+    println(s"Barney inserted autoinc id: $barneyId")
   }
 
   test("insert task") {
@@ -39,8 +39,8 @@ class SlickTest extends FunSuite with BeforeAndAfterAll {
     val futureBarneyTask = Store.insert(Task(personId = barney.id.get, task = "Clean pool."))
     val fredTaskId = Await.ready(futureFredTask, Duration.Inf).value.get.get
     val barneyTaskId = Await.ready(futureBarneyTask, Duration.Inf).value.get.get
-    println(s"Fred inserted task id: $fredTaskId")
-    println(s"Barney inserted task id: $barneyTaskId")
+    println(s"Fred inserted task autoinc id: $fredTaskId")
+    println(s"Barney inserted task autoinc id: $barneyTaskId")
     list()
   }
 
