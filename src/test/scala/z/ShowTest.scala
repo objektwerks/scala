@@ -3,7 +3,6 @@ package z
 import org.scalatest.FunSuite
 
 import scalaz.Scalaz._
-import scalaz._
 
 class ShowTest extends FunSuite {
   test("show") {
