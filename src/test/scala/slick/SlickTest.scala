@@ -20,8 +20,8 @@ class SlickTest extends FunSuite with BeforeAndAfterAll {
   }
 
   test("insert person") {
-    val fred = Person(name = "fred", age = 21)
-    val barney = Person(name = "barney", age = 19)
+    val fred = Person(name = "fred")
+    val barney = Person(name = "barney")
     val futureFred = Store.insert(fred)
     val futureBarney = Store.insert(barney)
     val fredId = Await.ready(futureFred, Duration.Inf).value.get.get
