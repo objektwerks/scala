@@ -41,10 +41,9 @@ class SlickTest extends FunSuite with BeforeAndAfterAll {
     val barneyTaskId = Await.ready(futureBarneyTask, Duration.Inf).value.get.get
     println(s"Fred inserted task autoinc id: $fredTaskId")
     println(s"Barney inserted task autoinc id: $barneyTaskId")
-    list()
   }
 
-  private def list(): Unit = {
+  test("list persons and tasks") {
     val futurePersons = Store.listPersons
     val persons = Await.ready(futurePersons, Duration.Inf).value.get.get
     for (p <- persons) {
