@@ -2,7 +2,8 @@ package slick
 
 import slick.driver.H2Driver.api._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContext, Future}
 
 object Store {
   private[this] val persons = TableQuery[Persons]
@@ -13,12 +14,14 @@ object Store {
 
   def createSchema(): Unit = {
     val schema = DBIO.seq( ( persons.schema ++ tasks.schema ).create )
-    db.run(schema)
+    val future = db.run(schema)
+    Await.ready(future, Duration.Inf)
   }
 
   def dropSchema(): Unit = {
     val schema = DBIO.seq( ( persons.schema ++ tasks.schema ).drop )
-    db.run(schema)
+    val future = db.run(schema)
+    Await.ready(future, Duration.Inf)
   }
 
   def close(): Unit = {
@@ -35,20 +38,16 @@ object Store {
     db.run(query.result)
   }
 
-  def create(person: Person): Future[Int] = {
-    db.run(persons.forceInsert(person))
+  def findPerson(name: String): Future[Person] = {
+    db.run(persons.filter(_.name === name).result.head)
   }
 
-  def create(task: Task): Future[Int] = {
-    db.run(tasks.forceInsert(task))
+  def insert(person: Person): Future[Int] = {
+    db.run( (persons returning persons.map(_.id)) forceInsert person )
   }
 
-  def update(person: Person): Future[Int] = {
-    db.run(filter(person).update(person))
-  }
-
-  def update(task: Task): Future[Int] = {
-     db.run(filter(task).update(task))
+  def insert(task: Task): Future[Int] = {
+    db.run( (tasks returning tasks.map(_.id)) forceInsert task )
   }
 
   private[this] def filter(person: Person): Query[Persons, Person, Seq] = {
