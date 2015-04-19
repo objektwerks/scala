@@ -7,6 +7,11 @@ scalaVersion := "2.11.6"
 resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/"
 
 libraryDependencies ++= Seq(
+  "com.typesafe.akka" %% "akka-stream-experimental" % "1.0-M5",
+  "com.typesafe.akka" %% "akka-http-core-experimental" % "1.0-M5",
+  "com.typesafe.akka" %% "akka-http-experimental" % "1.0-M5",
+  "com.typesafe.akka" %% "akka-http-spray-json-experimental" % "1.0-M5",
+  "com.typesafe.akka" %% "akka-http-testkit-experimental" % "1.0-M5",
   "com.typesafe.akka" %% "akka-actor" % "2.4-SNAPSHOT",
   "com.typesafe.slick" % "slick_2.11" % "3.0.0-RC3",
   "com.typesafe" % "config" % "1.2.1",
