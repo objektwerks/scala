@@ -7,9 +7,7 @@ import akka.pattern.ask
 import akka.util.Timeout
 import org.scalatest.FunSuite
 
-import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.{global => ec}
-import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
 class Master extends Actor {
@@ -60,6 +58,6 @@ class ActorTest extends FunSuite {
   private def kill(result: Any) {
     println(result)
     println(s"Actor system shutdown: $system")
-    Await.ready(system.terminate(), Duration.Inf)
+    system.shutdown()
   }
 }
