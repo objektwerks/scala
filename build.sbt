@@ -4,7 +4,10 @@ version := "1.0"
 
 scalaVersion := "2.11.6"
 
-resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/"
+resolvers ++= Seq(
+  "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/",
+  "Scalaz Bintray" at "http://dl.bintray.com/scalaz/releases"
+)
 
 libraryDependencies ++= {
   val akkaVersion = "2.3.9"
@@ -25,7 +28,8 @@ libraryDependencies ++= {
     "io.spray" %% "spray-testkit" % spayVersion  % "test",
     "org.scalacheck" % "scalacheck_2.11" % "1.12.2" % "test",
     "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
-    "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test"
+    "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",
+    "org.specs2" %% "specs2-core" % "2.4.17" % "test"
   )
 }
 
