@@ -11,7 +11,7 @@ resolvers ++= Seq(
 
 libraryDependencies ++= {
   val akkaVersion = "2.3.9"
-  val scalatraVersion = "2.3.1"
+  val scalatraVersion = "2.4.0.RC1"
   val spayVersion = "1.3.3"
   val json4sVersion = "3.2.11"
   Seq(
