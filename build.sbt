@@ -11,7 +11,9 @@ resolvers ++= Seq(
 
 libraryDependencies ++= {
   val akkaVersion = "2.3.9"
+  val scalatraVersion = "2.3.1"
   val spayVersion = "1.3.3"
+  val json4sVersion = "3.2.11"
   Seq(
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
     "com.typesafe.slick" % "slick_2.11" % "3.0.0-RC3",
@@ -20,9 +22,13 @@ libraryDependencies ++= {
     "org.scala-lang.modules" % "scala-async_2.11" % "0.9.2",
     "org.scalafx" % "scalafx_2.11" % "8.0.40-R8",
     "net.databinder.dispatch" % "dispatch-core_2.11" % "0.11.2",
-    "org.json4s" % "json4s-jackson_2.11" % "3.2.11",
     "com.h2database" % "h2" % "1.4.187",
     "org.apache.spark" % "spark-core_2.11" % "1.3.0",
+    "org.scalatra" % "scalatra_2.11" % scalatraVersion,
+    "org.scalatra" %% "scalatra-json" % scalatraVersion,
+    "org.json4s" % "json4s-jackson_2.11" % json4sVersion,
+    "org.json4s" % "json4s-native_2.11" % json4sVersion,
+    "org.eclipse.jetty" % "jetty-webapp" % "9.2.10.v20150310",
     "io.spray" %% "spray-can" % spayVersion,
     "io.spray" %% "spray-routing" % spayVersion,
     "io.spray" %% "spray-testkit" % spayVersion  % "test",
