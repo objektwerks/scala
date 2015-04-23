@@ -36,7 +36,8 @@ libraryDependencies ++= {
     "org.scalacheck" % "scalacheck_2.11" % "1.12.2" % "test",
     "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
     "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",
-    "org.specs2" %% "specs2-core" % "2.4.17" % "test"
+    "org.specs2" %% "specs2-core" % "2.4.17" % "test",
+    "org.scalatra" % "scalatra-scalatest_2.11" % scalatraVersion % "test"
   )
 }
 

@@ -12,11 +12,6 @@ import spray.testkit.Specs2RouteTest
 
 import scala.concurrent.duration._
 
-class RestServiceActor extends Actor with RestService {
-  def actorRefFactory = context
-  def receive = runRoute(restServiceRoute)
-}
-
 trait RestService extends HttpService {
   val restServiceRoute =
     path("") {
@@ -28,6 +23,11 @@ trait RestService extends HttpService {
         }
       }
     }
+}
+
+class RestServiceActor extends Actor with RestService {
+  def actorRefFactory = context
+  def receive = runRoute(restServiceRoute)
 }
 
 class RestServiceRunner {
@@ -44,7 +44,6 @@ class SprayTest extends Specification with Specs2RouteTest with RestService {
   "RestService" should {
     "return a text response" in {
       Get() ~> restServiceRoute ~> check {
-        println("Calling rest service...")
         responseAs[String] must contain("test")
       }
     }
