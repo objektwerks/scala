@@ -31,6 +31,7 @@ libraryDependencies ++= {
     "org.eclipse.jetty" % "jetty-webapp" % "9.2.10.v20150310",
     "io.spray" %% "spray-can" % spayVersion,
     "io.spray" %% "spray-routing" % spayVersion,
+    "org.scala-lang" % "scala-pickling_2.11" % "0.9.1",
     "io.spray" %% "spray-testkit" % spayVersion  % "test",
     "org.scalacheck" % "scalacheck_2.11" % "1.12.2" % "test",
     "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
