@@ -3,6 +3,7 @@ name := "objektwerks.scala"
 version := "1.0"
 
 scalaVersion := "2.11.6"
+ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 
 resolvers ++= Seq(
   "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/",
