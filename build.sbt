@@ -30,6 +30,7 @@ libraryDependencies ++= {
     "io.spray" %% "spray-routing" % sprayVersion,
     "io.spray" %%  "spray-json" % "1.3.1",
     "org.scala-lang" % "scala-pickling_2.11" % "0.9.1",
+    "org.sorm-framework" % "sorm" % "0.3.18",
     "io.spray" %% "spray-testkit" % sprayVersion  % "test",
     "org.scalacheck" % "scalacheck_2.11" % "1.12.2" % "test",
     "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
