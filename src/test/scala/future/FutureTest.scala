@@ -111,9 +111,16 @@ class FutureTest extends FunSuite {
 
   test("future fold") {
     val listOfFutures: Seq[Future[Int]] = for (i <- 1 to 2) yield Future(i * 1)
-    val result: Future[Int] = Future.fold(listOfFutures) (0) (_ + _)
+    val result: Future[Int] = Future.fold(listOfFutures) (0) (_ + _) // reduce without (0) arg yields identical result
     result onSuccess {
       case i: Int => assert(i == 3)
+    }
+  }
+
+  test("future andThen") {
+    val result: Future[Int] = Future(Integer.parseInt("one")) andThen { case Failure(e) => assert(e.isInstanceOf[NumberFormatException]) }
+    result onFailure {
+      case e: Exception => assert(e.isInstanceOf[NumberFormatException])
     }
   }
 
@@ -124,7 +131,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("future fallback") {
+  test("future fallbackTo") {
     val result: Future[Int] = Future(Integer.parseInt("one")) fallbackTo Future(1)
     result onSuccess {
       case i: Int => assert(i == 1)
