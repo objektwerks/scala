@@ -116,4 +116,25 @@ class FutureTest extends FunSuite {
       case i: Int => assert(i == 3)
     }
   }
+
+  test("future recover") {
+    val result: Future[Int] = Future(Integer.parseInt("one")) recover { case e: Exception => 0 }
+    result onSuccess {
+      case i: Int => assert(i == 0)
+    }
+  }
+
+  test("future fallback") {
+    val result: Future[Int] = Future(Integer.parseInt("one")) fallbackTo Future(1)
+    result onSuccess {
+      case i: Int => assert(i == 1)
+    }
+  }
+
+  test("future zip") {
+    val result: Future[Int] = Future(1) zip Future(2) map { case (x, y) => x + y }
+    result onSuccess {
+      case i: Int => assert(i == 3)
+    }
+  }
 }
