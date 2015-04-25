@@ -91,4 +91,29 @@ class FutureTest extends FunSuite {
       case Failure(failure) => throw failure
     }
   }
+
+  test("future sequence") {
+    val listOfFutures: List[Future[Int]] = List(Future(1), Future(2))
+    val futureOfList: Future[List[Int]] = Future.sequence(listOfFutures)
+    val result: Future[Int] = futureOfList.map(_.sum)
+    result onSuccess {
+      case i: Int => assert(i == 3)
+    }
+  }
+
+  test("future traverse") {
+    val futureOfList: Future[List[Int]] = Future.traverse((1 to 2).toList) (i => Future(i * 1))
+    val result: Future[Int] = futureOfList.map(_.sum)
+    result onSuccess {
+      case i: Int => assert(i == 3)
+    }
+  }
+
+  test("future fold") {
+    val listOfFutures: Seq[Future[Int]] = for (i <- 1 to 2) yield Future(i * 1)
+    val result: Future[Int] = Future.fold(listOfFutures) (0) (_ + _)
+    result onSuccess {
+      case i: Int => assert(i == 3)
+    }
+  }
 }
