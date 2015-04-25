@@ -13,12 +13,14 @@ import spray.testkit.Specs2RouteTest
 import scala.concurrent.duration._
 
 trait RestService extends HttpService {
+  val jsonMessage = """{ "key": "value" }"""
+
   val restServiceRoute =
     path("") {
       get {
-        respondWithMediaType(`text/html`) {
+        respondWithMediaType(`application/json`) {
           complete(
-            "test"
+            jsonMessage
           )
         }
       }
@@ -44,7 +46,7 @@ class SprayTest extends Specification with Specs2RouteTest with RestService {
   "RestService" should {
     "return a text response" in {
       Get() ~> restServiceRoute ~> check {
-        responseAs[String] must contain("test")
+        responseAs[String] must contain(jsonMessage)
       }
     }
   }
