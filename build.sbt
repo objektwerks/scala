@@ -12,7 +12,7 @@ resolvers ++= Seq(
 
 libraryDependencies ++= {
   val akkaVersion = "2.3.9"
-  val spayVersion = "1.3.3"
+  val sprayVersion = "1.3.3"
   val json4sVersion = "3.2.11"
   Seq(
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
@@ -26,10 +26,11 @@ libraryDependencies ++= {
     "org.apache.spark" % "spark-core_2.11" % "1.3.0",
     "org.json4s" % "json4s-jackson_2.11" % json4sVersion,
     "org.json4s" % "json4s-native_2.11" % json4sVersion,
-    "io.spray" %% "spray-can" % spayVersion,
-    "io.spray" %% "spray-routing" % spayVersion,
+    "io.spray" %% "spray-can" % sprayVersion,
+    "io.spray" %% "spray-routing" % sprayVersion,
+    "io.spray" %%  "spray-json" % "1.3.1",
     "org.scala-lang" % "scala-pickling_2.11" % "0.9.1",
-    "io.spray" %% "spray-testkit" % spayVersion  % "test",
+    "io.spray" %% "spray-testkit" % sprayVersion  % "test",
     "org.scalacheck" % "scalacheck_2.11" % "1.12.2" % "test",
     "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
     "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",

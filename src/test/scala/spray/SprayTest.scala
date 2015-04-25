@@ -9,11 +9,20 @@ import spray.can.Http
 import spray.http.MediaTypes._
 import spray.routing._
 import spray.testkit.Specs2RouteTest
-
+import spray.json._
 import scala.concurrent.duration._
 
+case class Message(text: String)
+
+object MessageJsonProtocol extends DefaultJsonProtocol {
+  implicit val messageFormat = jsonFormat1(Message)
+}
+
 trait RestService extends HttpService {
-  val jsonMessage = """{ "key": "value" }"""
+  import MessageJsonProtocol._
+
+  val jsonMessage = Message("test").toJson.toString()
+  println(jsonMessage)
 
   val restServiceRoute =
     path("") {
