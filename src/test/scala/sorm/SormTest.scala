@@ -16,8 +16,12 @@ object Db extends Instance(
 class SormTest extends FunSuite {
   test("db") {
     val fredTask = Db.save(Task("reading"))
-    Db.save(Student("fred", Set(fredTask)))
+    println(fredTask)
+    val fred = Db.save(Student("fred", Set(fredTask)))
+    println(fred)
     val barneyTask = Db.save(Task("writing"))
-    Db.save(Student("barney", Set(barneyTask)))
+    println(barneyTask)
+    val barney = Db.save(Student("barney", Set(barneyTask)))
+    println(barney)
   }
 }
