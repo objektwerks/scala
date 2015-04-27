@@ -1,5 +1,6 @@
 package sorm
 
+import com.typesafe.config.ConfigFactory
 import org.scalatest.FunSuite
 
 case class Student(name: String, tasks: Set[Task])
@@ -8,7 +9,7 @@ case class Task(task: String)
 
 object Db extends Instance(
   entities = Set(Entity[Student](), Entity[Task]()),
-  url = "jdbc:h2:mem:sorm",
+  url = ConfigFactory.load().getString("sorm.url"),
   user = "",
   password = "",
   initMode = InitMode.Create)
