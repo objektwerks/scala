@@ -6,7 +6,6 @@ scalaVersion := "2.11.6"
 ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 
 resolvers ++= Seq(
-  "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/",
   "Scalaz Bintray" at "http://dl.bintray.com/scalaz/releases"
 )
 
