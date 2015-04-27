@@ -36,7 +36,7 @@ class SormTest extends FunSuite {
   test("fetch") {
     val students = Db.query[Student].fetch()
     println(students)
-    assert(students.length > 1)
+    assert(students.length >= 2)
 
     val fred = Db.query[Student].whereEqual("name", "fred").fetchOne()
     println(fred)
