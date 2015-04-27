@@ -59,5 +59,6 @@ class ActorTest extends FunSuite {
     println(result)
     println(s"Actor system shutdown: $system")
     system.shutdown()
+    system.awaitTermination()
   }
 }
