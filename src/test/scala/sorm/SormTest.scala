@@ -12,10 +12,10 @@ object Db extends Instance(
   url = ConfigFactory.load().getString("sorm.url"),
   user = "",
   password = "",
-  initMode = InitMode.Create)
+  initMode = InitMode.DropCreate)
 
 class SormTest extends FunSuite {
-  test("db") {
+  test("save") {
     val fredTask = Db.save(Task("reading"))
     println(fredTask)
     assert(fredTask.id > 0)
@@ -31,5 +31,19 @@ class SormTest extends FunSuite {
     val barney = Db.save(Student("barney", Set(barneyTask)))
     println(barney)
     assert(barney.id > 0)
+  }
+
+  test("fetch") {
+    val students = Db.query[Student].fetch()
+    println(students)
+    assert(students.length > 1)
+
+    val fred = Db.query[Student].whereEqual("name", "fred").fetchOne()
+    println(fred)
+    assert(fred.get.name == "fred")
+
+    val barney = Db.query[Student].whereEqual("name", "barney").fetchOne()
+    println(barney)
+    assert(barney.get.name == "barney")
   }
 }
