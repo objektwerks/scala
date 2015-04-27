@@ -18,11 +18,18 @@ class SormTest extends FunSuite {
   test("db") {
     val fredTask = Db.save(Task("reading"))
     println(fredTask)
+    assert(fredTask.id > 0)
+
     val fred = Db.save(Student("fred", Set(fredTask)))
     println(fred)
+    assert(fred.id > 0)
+
     val barneyTask = Db.save(Task("writing"))
     println(barneyTask)
+    assert(barneyTask.id > 0)
+
     val barney = Db.save(Student("barney", Set(barneyTask)))
     println(barney)
+    assert(barney.id > 0)
   }
 }
