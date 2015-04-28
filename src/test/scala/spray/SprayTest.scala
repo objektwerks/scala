@@ -49,11 +49,13 @@ class RestServiceRunner {
 class SprayTest extends Specification with Specs2RouteTest with RestService {
   def restServiceRunner = new RestServiceRunner
   def actorRefFactory = restServiceRunner.system
+  import MessageJsonProtocol._
+  import spray.httpx.SprayJsonSupport._
 
   "RestService" should {
     "return a text response" in {
       Get() ~> restServiceRoute ~> check {
-        responseAs[String] must contain("test")
+        responseAs[Message] === Message("test")
       }
     }
   }
