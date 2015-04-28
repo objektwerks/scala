@@ -19,21 +19,19 @@ object MessageJsonProtocol extends DefaultJsonProtocol {
 }
 
 trait RestService extends HttpService {
-  import MessageJsonProtocol._
-
-  val jsonMessage = Message("test").toJson.toString()
-  println(jsonMessage)
-
-  val restServiceRoute =
+  val restServiceRoute = {
+    import MessageJsonProtocol._
+    import spray.httpx.SprayJsonSupport._
     path("") {
       get {
         respondWithMediaType(`application/json`) {
-          complete(
-            jsonMessage
-          )
+          complete {
+            Message("test")
+          }
         }
       }
     }
+  }
 }
 
 class RestServiceActor extends Actor with RestService {
@@ -55,7 +53,7 @@ class SprayTest extends Specification with Specs2RouteTest with RestService {
   "RestService" should {
     "return a text response" in {
       Get() ~> restServiceRoute ~> check {
-        responseAs[String] must contain(jsonMessage)
+        responseAs[String] must contain("test")
       }
     }
   }
