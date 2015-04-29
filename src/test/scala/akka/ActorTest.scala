@@ -51,7 +51,7 @@ class ActorTest extends FunSuite {
     val future = master ? Message(Ask, "System", "an async two way ? -> ask message")
     future onComplete {
       case Success(result) => kill(result)
-      case Failure(e) => kill(e)
+      case Failure(failure) => throw failure
     }
   }
 
