@@ -18,7 +18,7 @@ libraryDependencies ++= {
     "com.typesafe.akka" % "akka-http-scala-experimental_2.11" % akkaExperimentalVersion,
     "com.typesafe.akka" % "akka-http-spray-json-experimental_2.11" % akkaExperimentalVersion,
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
-    "com.typesafe.slick" % "slick_2.11" % "3.0.0-RC3",
+    "com.typesafe.slick" % "slick_2.11" % "3.0.0",
     "com.typesafe" % "config" % "1.2.1",
     "org.scalaz" % "scalaz-core_2.11" % "7.1.1",
     "org.scala-lang.modules" % "scala-async_2.11" % "0.9.2",
