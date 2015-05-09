@@ -289,11 +289,12 @@ class CollectionTest extends FunSuite {
     assert(total == 1783293664)
   }
 
-  test("view") {
-    def nonview = (1 to 100).map(_ % 10).filter(_ > 5).sum
-    def view = (1 to 100).view.map(_ % 10).filter(_ > 5).sum
-    assert(nonview == 300)
-    assert(nonview == view)
+  test("view") { // view unit test micro-benchmark
+    (1 to 10000000).view.map(_ % 10).filter(_ > 5).sum
+  }
+
+  test("view non") { // view unit test micro-benchmark
+    (1 to 10000000).map(_ % 10).filter(_ > 5).sum
   }
 
   test("stream") {
