@@ -24,9 +24,9 @@ class SparkTest extends FunSuite {
     assert(rdd.filter(_.contains("Permission")).count == 1)
     val longestLine = rdd.map(line => line.length).reduce((a, b) => Math.max(a, b))
     assert(longestLine == 77)
-    val wordCount = rdd.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey((a, b) => a + b)
-    assert(wordCount.count() == 125)
-    val (word, count) = wordCount.max
+    val wordCountRdd = rdd.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey((a, b) => a + b)
+    assert(wordCountRdd.count() == 125)
+    val (word, count) = wordCountRdd.max
     assert(word == "without")
     assert(count == 2)
   }
