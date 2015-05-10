@@ -25,7 +25,7 @@ libraryDependencies ++= {
     "org.scalafx" % "scalafx_2.11" % "8.0.40-R8",
     "net.databinder.dispatch" % "dispatch-core_2.11" % "0.11.2",
     "com.h2database" % "h2" % "1.4.187",
-    "org.apache.spark" % "spark-core_2.11" % "1.3.0",
+    "org.apache.spark" % "spark-core_2.11" % "1.3.1",
     "org.json4s" % "json4s-jackson_2.11" % json4sVersion,
     "org.json4s" % "json4s-native_2.11" % json4sVersion,
     "io.spray" %% "spray-can" % sprayVersion,
