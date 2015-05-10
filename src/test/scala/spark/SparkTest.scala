@@ -1,6 +1,6 @@
 package spark
 
-import org.apache.spark.{SparkContext, SparkConf}
+import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.FunSuite
 
 class SparkTest extends FunSuite {
@@ -26,7 +26,7 @@ class SparkTest extends FunSuite {
     val longestLine = rdd.map(l => l.length).reduce((a, b) => Math.max(a, b))
     assert(longestLine == 77)
     val wordCountRdd = rdd.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).
-      reduceByKey((a, b) => a + b).map(p => p.swap).sortByKey(ascending = false, 1).cache()
+      reduceByKey(_ + _).map(p => p.swap).sortByKey(ascending = false, 1).cache()
     val wordCount = wordCountRdd.count()
     assert(wordCount == 96)
     val (count, word) = wordCountRdd.max
