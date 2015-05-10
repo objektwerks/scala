@@ -18,6 +18,17 @@ class SparkTest extends FunSuite {
     assert(rdd.reduce(_ + _) == 6)
   }
 
+  test("text") {
+    val rdd = context.textFile("license.mit")
+    assert(rdd.count == 19)
+    assert(rdd.filter(_.contains("Permission")).count == 1)
+    val longestLine = rdd.map(line => line.length).reduce((a, b) => Math.max(a, b))
+    assert(longestLine == 77)
+    val wordCount = rdd.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey((a, b) => a + b).collect()
+    assert(wordCount.length == 125)
+    wordCount.foreach(println)
+  }
+
   test("parallelize") {
     val data = 1 to 1000000
     val rdd = context.parallelize(data)
