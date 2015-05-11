@@ -11,16 +11,13 @@ resolvers ++= Seq(
 
 libraryDependencies ++= {
   val akkaVersion = "2.3.10"
-  val akkaExperimentalVersion = "1.0-RC2"
   val sprayVersion = "1.3.3"
   val json4sVersion = "3.2.11"
   Seq(
-    "com.typesafe.akka" % "akka-http-scala-experimental_2.11" % akkaExperimentalVersion,
-    "com.typesafe.akka" % "akka-http-spray-json-experimental_2.11" % akkaExperimentalVersion,
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
     "com.typesafe.slick" % "slick_2.11" % "3.0.0",
     "com.typesafe" % "config" % "1.2.1",
-    "org.scalaz" % "scalaz-core_2.11" % "7.1.1",
+    "org.scalaz" % "scalaz-core_2.11" % "7.1.2",
     "org.scala-lang.modules" % "scala-async_2.11" % "0.9.2",
     "org.scalafx" % "scalafx_2.11" % "8.0.40-R8",
     "net.databinder.dispatch" % "dispatch-core_2.11" % "0.11.2",
@@ -38,7 +35,6 @@ libraryDependencies ++= {
     "org.scalacheck" % "scalacheck_2.11" % "1.12.2" % "test",
     "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
     "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",
-    "com.typesafe.akka" % "akka-stream-testkit-experimental_2.11" % akkaExperimentalVersion,
     "org.specs2" %% "specs2-core" % "2.4.17" % "test"
   )
 }
