@@ -6,6 +6,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
 import scala.collection.mutable
+import scala.io.Source
 
 class SparkTest extends FunSuite with BeforeAndAfterAll {
   val conf = new SparkConf().setMaster("local[2]").setAppName("sparky")
@@ -54,7 +55,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   test("streaming") {
     val queue = mutable.Queue[RDD[String]]()
     val ds = streamingContext.queueStream(queue)
-    queue += context.makeRDD(Seq("Fred mowed the yard.", "Barney washed the car."))
+    queue += context.makeRDD(Source.fromFile("license.mit").getLines().toSeq)
     val wordCountDs = ds.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _)
     wordCountDs.saveAsTextFiles(System.getProperty("user.home") + "/.scala/spark/ds")
     wordCountDs.foreachRDD(rdd => {
