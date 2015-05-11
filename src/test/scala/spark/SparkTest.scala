@@ -55,8 +55,11 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     val queue = mutable.Queue[RDD[String]]()
     val ds = streamingContext.queueStream(queue)
     queue += context.makeRDD(Seq("Fred mowed the yard.", "Barney washed the car."))
-    val wordCount = ds.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _)
-    wordCount.print()
+    val wordCountDs = ds.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _)
+    wordCountDs.saveAsTextFiles(System.getProperty("user.home") + "/.scala/spark/ds")
+    wordCountDs.foreachRDD(rdd => {
+      rdd.saveAsTextFile(System.getProperty("user.home") + "/.scala/spark/rdd")
+    })
     streamingContext.start()
   }
 }
