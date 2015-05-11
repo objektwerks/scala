@@ -3,13 +3,19 @@ package spark
 import org.apache.spark.rdd.RDD
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
-import org.scalatest.FunSuite
+import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
 import scala.collection.mutable
 
-class SparkTest extends FunSuite {
+class SparkTest extends FunSuite with BeforeAndAfterAll {
   val conf = new SparkConf().setMaster("local[2]").setAppName("sparky")
   val context = new SparkContext(conf)
+  val streamingContext = new StreamingContext(context, Seconds(1))
+
+  override protected def afterAll(): Unit = {
+    super.afterAll()
+    streamingContext.stop(stopSparkContext = true, stopGracefully = true)
+  }
 
   test("core") {
     val rdd = context.makeRDD(Array(1, 2, 3))
@@ -46,13 +52,11 @@ class SparkTest extends FunSuite {
   }
 
   test("streaming") {
-    val streamingContext = new StreamingContext(context, Seconds(1))
     val queue = mutable.Queue[RDD[String]]()
     val ds = streamingContext.queueStream(queue)
     queue += context.makeRDD(Seq("Fred mowed the yard.", "Barney washed the car."))
     val wordCount = ds.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _)
     wordCount.print()
     streamingContext.start()
-    streamingContext.stop(stopSparkContext = true, stopGracefully = true)
   }
 }
