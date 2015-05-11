@@ -1,10 +1,14 @@
 package spark
 
+import org.apache.spark.rdd.RDD
+import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.FunSuite
 
+import scala.collection.mutable
+
 class SparkTest extends FunSuite {
-  val conf = new SparkConf().setMaster("local").setAppName("sparky")
+  val conf = new SparkConf().setMaster("local[2]").setAppName("sparky")
   val context = new SparkContext(conf)
 
   test("core") {
@@ -39,5 +43,16 @@ class SparkTest extends FunSuite {
     val rdd = context.parallelize(data)
     val result = rdd.filter(_ % 2 == 0).collect()
     assert(result.length == 500000)
+  }
+
+  test("streaming") {
+    val streamingContext = new StreamingContext(context, Seconds(1))
+    val queue = mutable.Queue[RDD[String]]()
+    val ds = streamingContext.queueStream(queue)
+    queue += context.makeRDD(Seq("Fred mowed the yard.", "Barney washed the car."))
+    val wordCount = ds.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _)
+    wordCount.print()
+    streamingContext.start()
+    streamingContext.stop(stopSparkContext = true, stopGracefully = true)
   }
 }
