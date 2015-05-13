@@ -32,7 +32,7 @@ class Master extends Actor {
       val future = worker ? Message(AskWorker, s"$who -> Master", message)
       future onComplete {
         case Success(returnMessage) => sender ! returnMessage
-        case Failure(failure) => throw new Exception(failure)
+        case Failure(failure) => throw failure
       }
       Await.ready(future, Duration(1000, TimeUnit.SECONDS))
     case _ => println("Master received invalid message.")
@@ -73,17 +73,15 @@ class ActorTest extends FunSuite with BeforeAndAfterAll {
     val future = master ? Message(Ask, "System", "an async ask ? message")
     future onComplete {
       case Success(message) => println(message)
-      case Failure(failure) => throw new Exception(failure)
+      case Failure(failure) => println(failure.getMessage); throw failure
     }
-    Await.ready(future, Duration(1000, TimeUnit.SECONDS))
   }
 
   test("async ask ? -> system ask worker via master") {
     val future = master ? Message(AskWorker, "System", "an async ask ? message")
     future onComplete  {
       case Success(message) => println(message)
-      case Failure(failure) => throw new Exception(failure)
+      case Failure(failure) => println(failure.getMessage); throw failure
     }
-    Await.ready(future, Duration(1000, TimeUnit.SECONDS))
   }
 }
