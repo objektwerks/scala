@@ -2,18 +2,12 @@
 <configuration>
     <timestamp key="timeStamp" datePattern="yyyyMMdd'T'HHmm"/>
     <appender name="file" class="ch.qos.logback.core.FileAppender">
-        <file>${user.home}/.scala/logs/test.log.${timeStamp}.txt</file>
+        <file>${user.home}/.scala/logs/log.${timeStamp}.txt</file>
         <append>true</append>
         <encoder>
             <pattern>%-5p: %d{ISO8601} [%t] %m%n</pattern>
         </encoder>
     </appender>
-    <logger name="akka" level="INFO" additivity="false">
-        <appender-ref ref="file"/>
-    </logger>
-    <logger name="org.apache.spark" level="INFO" additivity="false">
-        <appender-ref ref="file"/>
-    </logger>
     <root level="INFO">
         <appender-ref ref="file"/>
     </root>
