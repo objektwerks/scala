@@ -22,9 +22,8 @@ class Master extends Actor {
     case Message(TellWorker, who, message) => worker ! Message(Tell, s"$who -> Master", message)
     case Message(Ask, who, message) => sender ! s"Master received $message from $who."
     case Message(AskWorker, who, message) => val future = worker ? Message(AskWorker, s"$who -> Master", message)
-      future onComplete {
+      future onSuccess {
         case Success(returnMessage) => sender ! returnMessage
-        case Failure(returnMessage) => sender ! returnMessage
       }
       Await.ready(future, Duration(1000, TimeUnit.SECONDS))
     case _ => println("Master received invalid message.")
@@ -70,17 +69,15 @@ class ActorTest extends FunSuite with BeforeAndAfterAll {
 
   test("async two way ? -> ask master") {
     val future = master ? Message(Ask, "System", "an async two way ? -> ask message")
-    future onComplete {
+    future onSuccess {
       case Success(message) => println(message)
-      case Failure(message) => println(message)
     }
   }
 
   test("async two way ? -> ask worker via master") {
     val future = master ? Message(AskWorker, "System", "an async two way ? -> ask worker message")
-    future onComplete {
+    future onSuccess  {
       case Success(message) => println(message)
-      case Failure(message) => println(message)
     }
   }
 }
