@@ -32,7 +32,7 @@ class Master extends Actor {
       val future = worker ? Message(AskWorker, s"$who -> Master", message)
       future onComplete {
         case Success(returnMessage) => sender ! returnMessage
-        case Failure(failure) => throw failure
+        case Failure(failure) => println(failure.getMessage); throw failure
       }
       Await.ready(future, Duration(3000, TimeUnit.SECONDS)) // Is there a better way?
     case _ => println("Master received invalid message.")
