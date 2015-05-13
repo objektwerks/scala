@@ -10,7 +10,7 @@ import org.scalatest.{BeforeAndAfterAll, FunSuite}
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.{global => ec}
 import scala.concurrent.duration.Duration
-import scala.util.Success
+import scala.util.{Failure, Success}
 
 sealed trait Mode
 case object Tell extends Mode
@@ -28,9 +28,11 @@ class Master extends Actor {
     case Message(Tell, who, message) => println(s"\nMaster received $message from $who.")
     case Message(TellWorker, who, message) => worker ! Message(Tell, s"$who -> Master", message)
     case Message(Ask, who, message) => sender ! s"Master received $message from $who."
-    case Message(AskWorker, who, message) => val future = worker ? Message(AskWorker, s"$who -> Master", message)
-      future onSuccess {
+    case Message(AskWorker, who, message) =>
+      val future = worker ? Message(AskWorker, s"$who -> Master", message)
+      future onComplete {
         case Success(returnMessage) => sender ! returnMessage
+        case Failure(failure) => throw new Exception(failure)
       }
       Await.ready(future, Duration(1000, TimeUnit.SECONDS))
     case _ => println("Master received invalid message.")
@@ -60,24 +62,28 @@ class ActorTest extends FunSuite with BeforeAndAfterAll {
   }
 
   test("async tell ! -> system tell master") {
-    master ! Message(Tell, "System", "an async one way ! -> tell message")
+    master ! Message(Tell, "System", "an async tell ! message")
   }
 
   test("async tell ! -> system tell worker via master") {
-    master ! Message(TellWorker, "System", "an async one way ! -> tell worker message")
+    master ! Message(TellWorker, "System", "an async tell ! message")
   }
 
   test("async ask ? -> system ask master") {
-    val future = master ? Message(Ask, "System", "an async two way ? -> ask message")
-    future onSuccess {
+    val future = master ? Message(Ask, "System", "an async ask ? message")
+    future onComplete {
       case Success(message) => println(message)
+      case Failure(failure) => throw new Exception(failure)
     }
+    Await.ready(future, Duration(1000, TimeUnit.SECONDS))
   }
 
   test("async ask ? -> system ask worker via master") {
-    val future = master ? Message(AskWorker, "System", "an async two way ? -> ask worker message")
-    future onSuccess  {
+    val future = master ? Message(AskWorker, "System", "an async ask ? message")
+    future onComplete  {
       case Success(message) => println(message)
+      case Failure(failure) => throw new Exception(failure)
     }
+    Await.ready(future, Duration(1000, TimeUnit.SECONDS))
   }
 }
