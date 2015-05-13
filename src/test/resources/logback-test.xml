@@ -8,6 +8,14 @@
             <pattern>%-5p: %d{ISO8601} [%t] %m%n</pattern>
         </encoder>
     </appender>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-5p: %d{ISO8601} [%t] %m%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="org.apache.spark" level="WARN" additivity="false">
+        <appender-ref ref="file"/>
+    </logger>
     <root level="INFO">
         <appender-ref ref="file"/>
     </root>
