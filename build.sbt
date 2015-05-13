@@ -38,7 +38,6 @@ libraryDependencies ++= {
     "io.spray" %% "spray-testkit" % sprayVersion  % "test",
     "org.scalacheck" % "scalacheck_2.11" % "1.12.2" % "test",
     "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
-    "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",
     "org.specs2" %% "specs2-core" % "2.4.17" % "test"
   )
 }
@@ -57,3 +56,5 @@ scalacOptions ++= Seq(
 fork in test := true
 
 javaOptions += "-server -Xss1m -Xmx2g"
+
+logLevel := Level.Info
