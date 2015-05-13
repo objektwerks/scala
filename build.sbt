@@ -13,6 +13,8 @@ libraryDependencies ++= {
   val akkaVersion = "2.3.11"
   val sprayVersion = "1.3.3"
   val json4sVersion = "3.2.11"
+  val slf4jVersion = "1.7.12"
+  val logbackVersion = "1.1.3"
   Seq(
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
     "com.typesafe.slick" % "slick_2.11" % "3.0.0",
@@ -31,7 +33,10 @@ libraryDependencies ++= {
     "io.spray" %%  "spray-json" % "1.3.1",
     "org.scala-lang" % "scala-pickling_2.11" % "0.9.1",
     "org.sorm-framework" % "sorm" % "0.3.18",
-    "ch.qos.logback" % "logback-classic" % "1.1.3",
+    "org.slf4j" % "slf4j-api" % slf4jVersion,
+    "org.slf4j" % "log4j-over-slf4j" % slf4jVersion,
+    "ch.qos.logback" % "logback-classic" % logbackVersion,
+    "ch.qos.logback" % "logback-core" % logbackVersion,
     "io.spray" %% "spray-testkit" % sprayVersion  % "test",
     "org.scalacheck" % "scalacheck_2.11" % "1.12.2" % "test",
     "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
@@ -53,3 +58,5 @@ scalacOptions ++= Seq(
 fork in test := true
 
 javaOptions += "-server -Xss1m -Xmx2g"
+
+logLevel := Level.Info
