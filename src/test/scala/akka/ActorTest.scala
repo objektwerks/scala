@@ -21,7 +21,7 @@ case class Message(mode: Mode, who: String, message: String)
 
 class Master extends Actor {
   println(s"Master created: $self")
-  private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
+  private implicit val timeout = new Timeout(3, TimeUnit.SECONDS)
   val worker: ActorRef = context.actorOf(Props(new Worker()), name = "worker")
 
   def receive = {
@@ -34,7 +34,7 @@ class Master extends Actor {
         case Success(returnMessage) => sender ! returnMessage
         case Failure(failure) => throw failure
       }
-      Await.ready(future, Duration(1000, TimeUnit.SECONDS))
+      Await.ready(future, Duration(3000, TimeUnit.SECONDS)) // Is there a better way?
     case _ => println("Master received invalid message.")
   }
 }
