@@ -10,7 +10,14 @@ import org.scalatest.{BeforeAndAfterAll, FunSuite}
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.{global => ec}
 import scala.concurrent.duration.Duration
-import scala.util.{Failure, Success}
+import scala.util.Success
+
+sealed trait Mode
+case object Tell extends Mode
+case object TellWorker extends Mode
+case object Ask extends Mode
+case object AskWorker extends Mode
+case class Message(mode: Mode, who: String, message: String)
 
 class Master extends Actor {
   println(s"Master created: $self")
@@ -38,13 +45,6 @@ class Worker extends Actor {
     case _ => println("Worker received invalid message.")
   }
 }
-
-sealed trait Mode
-case object Tell extends Mode
-case object TellWorker extends Mode
-case object Ask extends Mode
-case object AskWorker extends Mode
-case class Message(mode: Mode, who: String, message: String)
 
 class ActorTest extends FunSuite with BeforeAndAfterAll {
   private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
