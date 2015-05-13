@@ -59,22 +59,22 @@ class ActorTest extends FunSuite with BeforeAndAfterAll {
     system.awaitTermination()
   }
 
-  test("async one way ! -> tell master") {
+  test("async tell ! -> system tell master") {
     master ! Message(Tell, "System", "an async one way ! -> tell message")
   }
 
-  test("async one way ! -> tell worker via master") {
+  test("async tell ! -> system tell worker via master") {
     master ! Message(TellWorker, "System", "an async one way ! -> tell worker message")
   }
 
-  test("async two way ? -> ask master") {
+  test("async ask ? -> system ask master") {
     val future = master ? Message(Ask, "System", "an async two way ? -> ask message")
     future onSuccess {
       case Success(message) => println(message)
     }
   }
 
-  test("async two way ? -> ask worker via master") {
+  test("async ask ? -> system ask worker via master") {
     val future = master ? Message(AskWorker, "System", "an async two way ? -> ask worker message")
     future onSuccess  {
       case Success(message) => println(message)
