@@ -27,7 +27,7 @@ class Master extends Actor {
   def receive = {
     case Message(Tell, who, message) => println(s"\nMaster received $message from $who.")
     case Message(TellWorker, who, message) => worker ! Message(Tell, s"$who -> Master", message)
-    case Message(Ask, who, message) => sender ! s"Master received $message from $who."
+    case Message(Ask, who, message) => sender ! s"Master received and responded to $message from $who."
     case Message(AskWorker, who, message) =>
       val future = worker ? Message(AskWorker, s"$who -> Master", message)
       future onComplete {
@@ -43,7 +43,7 @@ class Worker extends Actor {
   println(s"Worker created: $self")
   def receive = {
     case Message(Tell, who, message) => println(s"Worker received $message from $who.")
-    case Message(AskWorker, who, message) => sender ! s"Worker received $message from $who."
+    case Message(AskWorker, who, message) => sender ! s"Worker received and responded to $message from $who."
     case _ => println("Worker received invalid message.")
   }
 }
@@ -61,24 +61,24 @@ class ActorTest extends FunSuite with BeforeAndAfterAll {
     system.awaitTermination()
   }
 
-  test("async tell -> system ! master") {
-    master ! Message(Tell, "System", "an async tell ! message")
+  test("system ! master") {
+    master ! Message(Tell, "System", "tell ! message")
   }
 
-  test("async tell -> system ! master ! worker") {
-    master ! Message(TellWorker, "System", "an async tell ! message")
+  test("system ! master ! worker") {
+    master ! Message(TellWorker, "System", "tell ! message")
   }
 
-  test("async ask -> system ? master") {
-    val future = master ? Message(Ask, "System", "an async ask ? message")
+  test("system ? master") {
+    val future = master ? Message(Ask, "System", "ask ? message")
     future onComplete {
       case Success(message) => println(message)
       case Failure(failure) => println(failure.getMessage); throw failure
     }
   }
 
-  test("async ask -> system ? master ? worker") {
-    val future = master ? Message(AskWorker, "System", "an async ask ? message")
+  test("system ? master ? worker") {
+    val future = master ? Message(AskWorker, "System", "ask ? message")
     future onComplete  {
       case Success(message) => println(message)
       case Failure(failure) => println(failure.getMessage); throw failure
