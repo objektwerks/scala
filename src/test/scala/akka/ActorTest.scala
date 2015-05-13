@@ -7,7 +7,9 @@ import akka.pattern.ask
 import akka.util.Timeout
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
+import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.{global => ec}
+import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
 class Master extends Actor {
@@ -17,10 +19,14 @@ class Master extends Actor {
 
   def receive = {
     case Message(Tell, who, message) => println(s"\nMaster received $message from $who.")
-    case Message(TellWorker, who, message) => worker ! new Message(Tell, s"$who -> Master", message)
+    case Message(TellWorker, who, message) => worker ! Message(Tell, s"$who -> Master", message)
     case Message(Ask, who, message) => sender ! s"Master received $message from $who."
-    case Message(AskWorker, who, message) => sender ! s"Master received $message from $who. Asked worker."
-                                              worker ? new Message(AskWorker, s"$who -> Master", message)
+    case Message(AskWorker, who, message) => val future = worker ? Message(AskWorker, s"$who -> Master", message)
+      future onComplete {
+        case Success(returnMessage) => sender ! returnMessage
+        case Failure(returnMessage) => sender ! returnMessage
+      }
+      Await.ready(future, Duration(1000, TimeUnit.SECONDS))
     case _ => println("Master received invalid message.")
   }
 }
@@ -65,16 +71,16 @@ class ActorTest extends FunSuite with BeforeAndAfterAll {
   test("async two way ? -> ask master") {
     val future = master ? Message(Ask, "System", "an async two way ? -> ask message")
     future onComplete {
-      case Success(result) => println(result)
-      case Failure(failure) => throw failure
+      case Success(message) => println(message)
+      case Failure(message) => println(message)
     }
   }
 
   test("async two way ? -> ask worker via master") {
     val future = master ? Message(AskWorker, "System", "an async two way ? -> ask worker message")
     future onComplete {
-      case Success(result) => println(result)
-      case Failure(failure) => throw failure
+      case Success(message) => println(message)
+      case Failure(message) => println(message)
     }
   }
 }
