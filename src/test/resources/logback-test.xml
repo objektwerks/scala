@@ -16,7 +16,7 @@
     <logger name="akka" level="WARN" additivity="false">
         <appender-ref ref="file"/>
     </logger>
-    <logger name="org.apache.spark" level="WARN" additivity="false">
+    <logger name="org" level="WARN" additivity="false">
         <appender-ref ref="file"/>
     </logger>
     <root level="INFO">
