@@ -1,6 +1,7 @@
 package spark
 
 import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.SQLContext
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
@@ -12,6 +13,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   val conf = new SparkConf().setMaster("local[2]").setAppName("sparky")
   val context = new SparkContext(conf)
   val streamingContext = new StreamingContext(context, Seconds(1))
+  val sqlContext = new SQLContext(context)
 
   override protected def afterAll(): Unit = {
     super.afterAll()
@@ -66,5 +68,10 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
       rdd.saveAsTextFile(System.getProperty("user.home") + "/.scala/spark/rdd")
     })
     streamingContext.start()
+  }
+
+  test("data frames") {
+    val df = sqlContext.jsonFile("src/test/resources/spark.data.frame.json.txt")
+    df.show()
   }
 }
