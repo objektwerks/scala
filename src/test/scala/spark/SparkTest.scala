@@ -10,9 +10,6 @@ import scala.collection.mutable
 import scala.io.Source
 
 class SparkTest extends FunSuite with BeforeAndAfterAll {
-  Logger.getLogger("org").setLevel(Level.WARN)
-  Logger.getLogger("akka").setLevel(Level.WARN)
-
   val conf = new SparkConf().setMaster("local[2]").setAppName("sparky")
   val context = new SparkContext(conf)
   val streamingContext = new StreamingContext(context, Seconds(1))
