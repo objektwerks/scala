@@ -31,8 +31,6 @@ libraryDependencies ++= {
     "io.spray" %%  "spray-json" % "1.3.1",
     "org.scala-lang" % "scala-pickling_2.11" % "0.9.1",
     "org.sorm-framework" % "sorm" % "0.3.18",
-    "org.slf4j" % "slf4j-api" % "1.7.12",
-    "ch.qos.logback" % "logback-classic" % "1.1.3",
     "io.spray" %% "spray-testkit" % sprayVersion  % "test",
     "org.scalacheck" % "scalacheck_2.11" % "1.12.2" % "test",
     "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
