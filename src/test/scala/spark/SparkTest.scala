@@ -73,5 +73,14 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   test("data frames") {
     val df = sqlContext.jsonFile("src/test/resources/spark.data.frame.json.txt")
     df.show()
+    df.printSchema()
+
+    val names = df.select("name").collect()
+    names.foreach(println)
+    assert(names.length == 4)
+
+    val ages = df.select("age").collect()
+    ages.foreach(println)
+    assert(ages.length == 4)
   }
 }
