@@ -1,4 +1,9 @@
-{"name":"fred", "age":24}
-{"name":"wilma", "age":23}
-{"name":"barney", "age":22}
-{"name":"betty", "age":21}
+{"people": [
+  {"name":"fred", "age":24},
+
+  {"name":"wilma", "age":23},
+
+  {"name":"barney", "age":22},
+
+  {"name":"betty", "age":21}
+]}
