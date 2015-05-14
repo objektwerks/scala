@@ -36,7 +36,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     val lineCount = rdd.count()
     assert(lineCount == 19)
 
-    val wordPermission = rdd.filter(_.contains("Permission")).count
+    val wordPermission = rdd.filter(_.contains("Permission")).count()
     assert(wordPermission == 1)
 
     val longestLine = rdd.map(l => l.length).reduce((a, b) => Math.max(a, b))
