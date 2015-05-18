@@ -81,11 +81,11 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     df.show()
     df.printSchema()
 
-    val names = df.select("name").collect()
+    val names = df.select("name").orderBy("name").collect()
     names.foreach(println)
     assert(names.length == 4)
 
-    val ages = df.select("age").collect()
+    val ages = df.select("age").orderBy("age").collect()
     ages.foreach(println)
     assert(ages.length == 4)
   }
