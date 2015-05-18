@@ -24,6 +24,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     val rdd = context.makeRDD(Array(1, 2, 3))
     assert(rdd.filter(_ % 2 == 0).first == 2)
     assert(rdd.filter(_ % 2 != 0).first == 1)
+    assert(rdd.map(_ + 1).sum == 9)
     assert(rdd.reduce(_ + _) == 6)
   }
 
@@ -33,6 +34,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     assert(rdd.first == 1)
     assert(rdd.min == 1)
     assert(rdd.max == 3)
+    assert(rdd.sum == 6)
   }
 
   test("parallelize") {
