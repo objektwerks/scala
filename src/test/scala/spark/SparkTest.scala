@@ -84,9 +84,11 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     val names = df.select("name").orderBy("name").collect()
     names.foreach(println)
     assert(names.length == 4)
+    assert(names.head.mkString == "barney")
 
     val ages = df.select("age").orderBy("age").collect()
     ages.foreach(println)
     assert(ages.length == 4)
+    assert(ages.head.getLong(0) == 21)
   }
 }
