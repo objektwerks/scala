@@ -46,18 +46,18 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
 
   test("text") {
     val rdd = context.textFile("license.mit").cache()
-    val lineCount = rdd.count()
-    assert(lineCount == 19)
+    val totalLines = rdd.count()
+    assert(totalLines == 19)
 
-    val selectedWord = rdd.filter(_.contains("Permission")).count()
-    assert(selectedWord == 1)
+    val selectedWordCount = rdd.filter(_.contains("Permission")).count()
+    assert(selectedWordCount == 1)
 
     val longestLine = rdd.map(l => l.length).reduce((a, b) => Math.max(a, b))
     assert(longestLine == 77)
 
     val wordCountRdd = rdd.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _).cache()
-    val wordCount = wordCountRdd.count()
-    assert(wordCount == 96)
+    val totalWords = wordCountRdd.count()
+    assert(totalWords == 96)
 
     val maxCount = wordCountRdd.values.max()
     val (word, count) = wordCountRdd.filter(_._2 == maxCount).first()
