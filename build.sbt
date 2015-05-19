@@ -6,14 +6,15 @@ scalaVersion := "2.11.6"
 ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 
 resolvers ++= Seq(
-  "Scalaz Bintray" at "http://dl.bintray.com/scalaz/releases"
+  "Scalaz Bintray" at "http://dl.bintray.com/scalaz/releases",
+  "Apache Spark" at "https://repository.apache.org/content/repositories/orgapachespark-1093"
 )
 
 libraryDependencies ++= {
   val akkaVersion = "2.3.11"
   val sprayVersion = "1.3.3"
   val json4sVersion = "3.2.11"
-  val sparkVersion = "1.3.1"
+  val sparkVersion = "1.4.0-rc1"
   Seq(
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
     "com.typesafe.slick" % "slick_2.11" % "3.0.0",

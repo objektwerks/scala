@@ -79,7 +79,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   }
 
   test("dataframes") {
-    val df = sqlContext.jsonFile("src/test/resources/spark.data.frame.json.txt")
+    val df = sqlContext.read.json("src/test/resources/spark.data.frame.json.txt")
     df.show()
     df.printSchema()
 
@@ -105,11 +105,11 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   }
 
   /*
-    Test passes in Intellij. Fails in sbt: scala.ScalaReflectionException: class org.apache.spark.sql.catalyst.ScalaReflection
     See: https://issues.apache.org/jira/browse/SPARK-5281 and https://github.com/apache/spark/pull/5981
+    FIXED with 1.4
    */
   test("case class") {
-    val personRdd: RDD[Person] = sqlContext.jsonFile("src/test/resources/spark.data.frame.json.txt")
+    val personRdd: RDD[Person] = sqlContext.read.json("src/test/resources/spark.data.frame.json.txt")
       .map(p => Person(p(0).asInstanceOf[Long], p(1).asInstanceOf[String]))
     val personDf: DataFrame = sqlContext.createDataFrame[Person](personRdd)
     personDf.registerTempTable("persons")
