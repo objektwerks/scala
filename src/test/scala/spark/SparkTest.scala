@@ -104,6 +104,10 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     assert(row.getDouble(0) == 22.5)
   }
 
+  /*
+    Test passes in Intellij. Fails in sbt: scala.ScalaReflectionException: class org.apache.spark.sql.catalyst.ScalaReflection
+    A known bug for months. No resolution to date.
+   */
   test("case class") {
     val personRdd: RDD[Person] = sqlContext.jsonFile("src/test/resources/spark.data.frame.json.txt")
       .map(p => Person(p(0).asInstanceOf[Long], p(1).asInstanceOf[String]))
