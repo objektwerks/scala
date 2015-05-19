@@ -9,7 +9,7 @@ import org.scalatest.{BeforeAndAfterAll, FunSuite}
 import scala.collection.mutable
 import scala.io.Source
 
-case class Person(age: Int, name: String)
+
 
 class SparkTest extends FunSuite with BeforeAndAfterAll {
   val conf = new SparkConf().setMaster("local[2]").setAppName("sparky")
