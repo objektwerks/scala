@@ -106,7 +106,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
 
   /*
     Test passes in Intellij. Fails in sbt: scala.ScalaReflectionException: class org.apache.spark.sql.catalyst.ScalaReflection
-    A known bug for months. No resolution to date.
+    See: https://issues.apache.org/jira/browse/SPARK-5281 and https://github.com/apache/spark/pull/5981
    */
   test("case class") {
     val personRdd: RDD[Person] = sqlContext.jsonFile("src/test/resources/spark.data.frame.json.txt")
