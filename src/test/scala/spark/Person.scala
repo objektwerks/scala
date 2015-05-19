@@ -1,3 +1,3 @@
 package spark
 
-case class Person(age: Int, name: String)
+case class Person(age: Long, name: String)

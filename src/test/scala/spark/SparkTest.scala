@@ -106,7 +106,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
 
   test("case class") {
     val personRdd: RDD[Person] = sqlContext.jsonFile("src/test/resources/spark.data.frame.json.txt")
-      .map(p => Person(p(0).toString.toInt, p(1).toString))
+      .map(p => Person(p(0).asInstanceOf[Long], p(1).asInstanceOf[String]))
     val personDf: DataFrame = sqlContext.createDataFrame[Person](personRdd)
     personDf.registerTempTable("persons")
     personDf.printSchema()
