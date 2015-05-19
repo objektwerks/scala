@@ -90,5 +90,15 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     ages.foreach(println)
     assert(ages.length == 4)
     assert(ages.head.getLong(0) == 21)
+
+    var row = df.filter(df("age") > 23).first()
+    assert(row.getLong(0) == 24)
+    assert(row.getAs[String](1) == "fred")
+
+    row = df.agg(Map("age" -> "max")).first()
+    assert(row.getLong(0) == 24)
+
+    row = df.agg(Map("age" -> "avg")).first()
+    assert(row.getDouble(0) == 22.5)
   }
 }
