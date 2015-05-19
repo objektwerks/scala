@@ -1,13 +1,15 @@
 package spark
 
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.{DataFrame, SQLContext}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
 import scala.collection.mutable
 import scala.io.Source
+
+case class Person(age: Int, name: String)
 
 class SparkTest extends FunSuite with BeforeAndAfterAll {
   val conf = new SparkConf().setMaster("local[2]").setAppName("sparky")
@@ -76,7 +78,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     streamingContext.start()
   }
 
-  test("data frames") {
+  test("dataframes") {
     val df = sqlContext.jsonFile("src/test/resources/spark.data.frame.json.txt")
     df.show()
     df.printSchema()
@@ -100,5 +102,14 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
 
     row = df.agg(Map("age" -> "avg")).first()
     assert(row.getDouble(0) == 22.5)
+  }
+
+  test("case class") {
+    val personRdd: RDD[Person] = sqlContext.jsonFile("src/test/resources/spark.data.frame.json.txt")
+      .map(p => Person(p(0).toString.toInt, p(1).toString))
+    val personDf: DataFrame = sqlContext.createDataFrame[Person](personRdd)
+    personDf.registerTempTable("persons")
+    personDf.printSchema()
+    personDf.show() // age accessed first, not name. so reversed Person case class properties.
   }
 }
