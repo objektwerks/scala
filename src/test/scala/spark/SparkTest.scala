@@ -104,16 +104,12 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     assert(row.getDouble(0) == 22.5)
   }
 
-  /*
-    See: https://issues.apache.org/jira/browse/SPARK-5281 and https://github.com/apache/spark/pull/5981
-    FIXED with 1.4
-   */
   test("case class") {
-    val personRdd: RDD[Person] = sqlContext.read.json("src/test/resources/spark.data.frame.json.txt")
+    val personRdd = sqlContext.read.json("src/test/resources/spark.data.frame.json.txt")
       .map(p => Person(p(0).asInstanceOf[Long], p(1).asInstanceOf[String]))
-    val personDf: DataFrame = sqlContext.createDataFrame[Person](personRdd)
+    val personDf = sqlContext.createDataFrame[Person](personRdd)
     personDf.registerTempTable("persons")
     personDf.printSchema()
-    personDf.show() // age accessed first, not name. so reversed Person case class properties.
+    personDf.show()
   }
 }
