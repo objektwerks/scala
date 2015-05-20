@@ -1,4 +1,4 @@
-{"name":"fred", "age":24}
-{"name":"wilma", "age":23}
-{"name":"barney", "age":22}
-{"name":"betty", "age":21}
+{"age": 24, "name":"fred"}
+{"age": 23, "name":"wilma"}
+{"age": 22, "name":"barney"}
+{"age": 21, "name":"betty"}
