@@ -22,7 +22,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     streamingContext.stop(stopSparkContext = true, stopGracefully = true)
   }
 
-  test("transformations") {
+  test("transformations to action") {
     val rdd = context.makeRDD(Array(1, 2, 3))
     assert(rdd.filter(_ % 2 == 0).first == 2)
     assert(rdd.filter(_ % 2 != 0).first == 1)
