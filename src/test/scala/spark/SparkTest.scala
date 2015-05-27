@@ -51,6 +51,13 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     assert(result.length == 500000)
   }
 
+  test("aggregate") {
+    val data = 1 to 10
+    val rdd = context.parallelize(data)
+    val (x, y) = rdd.aggregate((0, 0))((x, y) => (x._1 + y, x._2 + 1), (x, y) => (x._1 + y._1, x._2 + y._2))
+    assert(x == 55 && y == 10)
+  }
+
   test("sets") {
     val rdd1 = context.makeRDD(Array(1, 2, 3)).cache()
     val rdd2 = context.makeRDD(Array(3, 4, 5)).cache()
