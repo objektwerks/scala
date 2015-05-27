@@ -29,6 +29,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     assert(rdd.filter(_ % 2 == 0).first == 2)
     assert(rdd.filter(_ % 2 != 0).first == 1)
     assert(rdd.map(_ + 1).sum == 9)
+    assert(rdd.map(_ + 1).collect sameElements Array(2, 3, 4))
   }
 
   test("actions") {
