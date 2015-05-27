@@ -25,20 +25,21 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   }
 
   test("transformations to action") {
-    val rdd = context.makeRDD(Array(1, 2, 3))
+    val rdd = context.makeRDD(Array(1, 2, 3)).cache()
     assert(rdd.filter(_ % 2 == 0).first == 2)
     assert(rdd.filter(_ % 2 != 0).first == 1)
     assert(rdd.map(_ + 1).sum == 9)
   }
 
   test("actions") {
-    val rdd = context.makeRDD(Array(1, 2, 3))
+    val rdd = context.makeRDD(Array(1, 2, 3)).cache()
     assert(rdd.count == 3)
     assert(rdd.first == 1)
     assert(rdd.min == 1)
     assert(rdd.max == 3)
     assert(rdd.sum == 6)
     assert(rdd.reduce(_ + _) == 6)
+    assert(rdd.take(1) sameElements Array(1))
   }
 
   test("parallelize") {
