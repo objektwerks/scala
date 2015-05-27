@@ -1,5 +1,6 @@
 package spark
 
+import com.typesafe.config.ConfigFactory
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.streaming.{Seconds, StreamingContext}
@@ -12,7 +13,8 @@ import scala.io.Source
 case class Person(age: Long, name: String)
 
 class SparkTest extends FunSuite with BeforeAndAfterAll {
-  val conf = new SparkConf().setMaster("local[2]").setAppName("sparky")
+  val props = ConfigFactory.load("spark.properties")
+  val conf = new SparkConf().setMaster(props.getString("spark.master")).setAppName(props.getString("spark.app.name"))
   val context = new SparkContext(conf)
   val streamingContext = new StreamingContext(context, Seconds(1))
   val sqlContext = new SQLContext(context)
