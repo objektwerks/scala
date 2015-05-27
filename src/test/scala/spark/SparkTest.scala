@@ -39,6 +39,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     assert(rdd.min == 1)
     assert(rdd.max == 3)
     assert(rdd.sum == 6)
+    assert(rdd.fold(0)(_ + _) == 6)
     assert(rdd.reduce(_ + _) == 6)
     assert(rdd.take(1) sameElements Array(1))
   }
@@ -48,6 +49,18 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     val rdd = context.parallelize(data)
     val result = rdd.filter(_ % 2 == 0).collect()
     assert(result.length == 500000)
+  }
+
+  test("sets") {
+    val rdd1 = context.makeRDD(Array(1, 2, 3)).cache()
+    val rdd2 = context.makeRDD(Array(3, 4, 5)).cache()
+    val rdd3 = context.makeRDD(Array(1, 1, 2, 2, 3, 3))
+    assert(rdd1.union(rdd2).collect sameElements Array(1, 2, 3, 3, 4, 5))
+    assert(rdd1.intersection(rdd2).collect sameElements Array(3))
+    assert(rdd1.subtract(rdd2).collect().sorted sameElements Array(1, 2))
+    assert(rdd2.subtract(rdd1).collect().sorted sameElements Array(4, 5))
+    assert(rdd3.distinct().collect().sorted sameElements Array(1, 2, 3))
+    rdd1.cartesian(rdd2).foreach(println)
   }
 
   test("text") {
