@@ -1,10 +1,11 @@
 package spark
 
 import com.typesafe.config.ConfigFactory
+import org.apache
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.{rdd, SparkConf, SparkContext}
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
 import scala.collection.mutable
@@ -72,6 +73,18 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     val rdd4 = context.makeRDD(Array(1, 2))
     val rdd5 = context.makeRDD(Array(3, 4))
     assert(rdd4.cartesian(rdd5).collect sameElements Array((1,3), (1, 4), (2, 3), (2, 4)))
+  }
+
+  test("reduce by key") {
+    val rdd = context.makeRDD(Array((1, 1), (1, 2), (1, 3)))
+    val (key, aggregate) = rdd.reduceByKey(_ + _).first
+    assert(key == 1 && aggregate == 6)
+  }
+
+  test("group by key") {
+    val rdd = context.makeRDD(Array((1, 1), (1, 2), (1, 3)))
+    val (key, list) = rdd.groupByKey.first
+    assert(key == 1 && list.sum == 6)
   }
 
   test("text") {
