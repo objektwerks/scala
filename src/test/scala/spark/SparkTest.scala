@@ -76,14 +76,18 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   }
 
   test("reduce by key") {
-    val rdd = context.makeRDD(Array((1, 1), (1, 2), (1, 3)))
+    val rdd = context.makeRDD(Array((1, 1), (1, 2), (1, 3))).cache
     val (key, aggregate) = rdd.reduceByKey(_ + _).first
+    assert(rdd.keys.collect sameElements Array(1, 1, 1))
+    assert(rdd.values.collect sameElements Array(1, 2, 3))
     assert(key == 1 && aggregate == 6)
   }
 
   test("group by key") {
-    val rdd = context.makeRDD(Array((1, 1), (1, 2), (1, 3)))
+    val rdd = context.makeRDD(Array((1, 1), (1, 2), (1, 3))).cache
     val (key, list) = rdd.groupByKey.first
+    assert(rdd.keys.collect sameElements Array(1, 1, 1))
+    assert(rdd.values.collect sameElements Array(1, 2, 3))
     assert(key == 1 && list.sum == 6)
   }
 
