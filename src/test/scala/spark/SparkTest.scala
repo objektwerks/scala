@@ -5,7 +5,7 @@ import org.apache
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import org.apache.spark.{rdd, SparkConf, SparkContext}
+import org.apache.spark.{HashPartitioner, rdd, SparkConf, SparkContext}
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
 import scala.collection.mutable
@@ -50,6 +50,12 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     val rdd = context.parallelize(data)
     val result = rdd.filter(_ % 2 == 0).collect
     assert(result.length == 500000)
+  }
+
+  test("partitioner") {
+    val rdd = context.parallelize(List((1, 1), (2, 2), (3, 3))).partitionBy(new HashPartitioner(2)).persist()
+    val partitioner = rdd.partitioner.get // ShuffleRDDPartition @0 / @1
+    assert(partitioner.numPartitions == 2)
   }
 
   test("aggregate") {
