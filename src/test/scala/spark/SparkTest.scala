@@ -20,12 +20,12 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   val sqlContext = new SQLContext(context)
 
   override protected def afterAll(): Unit = {
-    super.afterAll()
+    super.afterAll
     streamingContext.stop(stopSparkContext = true, stopGracefully = true)
   }
 
   test("transformations to action") {
-    val rdd = context.makeRDD(Array(1, 2, 3)).cache()
+    val rdd = context.makeRDD(Array(1, 2, 3)).cache
     assert(rdd.filter(_ % 2 == 0).first == 2)
     assert(rdd.filter(_ % 2 != 0).first == 1)
     assert(rdd.map(_ + 1).sum == 9)
@@ -33,7 +33,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   }
 
   test("actions") {
-    val rdd = context.makeRDD(Array(1, 2, 3)).cache()
+    val rdd = context.makeRDD(Array(1, 2, 3)).cache
     assert(rdd.count == 3)
     assert(rdd.first == 1)
     assert(rdd.min == 1)
@@ -47,7 +47,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   test("parallelize") {
     val data = 1 to 1000000
     val rdd = context.parallelize(data)
-    val result = rdd.filter(_ % 2 == 0).collect()
+    val result = rdd.filter(_ % 2 == 0).collect
     assert(result.length == 500000)
   }
 
@@ -59,72 +59,76 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   }
 
   test("sets") {
-    val rdd1 = context.makeRDD(Array(1, 2, 3)).cache()
-    val rdd2 = context.makeRDD(Array(3, 4, 5)).cache()
-    val rdd3 = context.makeRDD(Array(1, 1, 2, 2, 3, 3))
+    val rdd1 = context.makeRDD(Array(1, 2, 3)).cache
+    val rdd2 = context.makeRDD(Array(3, 4, 5)).cache
     assert(rdd1.union(rdd2).collect sameElements Array(1, 2, 3, 3, 4, 5))
     assert(rdd1.intersection(rdd2).collect sameElements Array(3))
-    assert(rdd1.subtract(rdd2).collect().sorted sameElements Array(1, 2))
-    assert(rdd2.subtract(rdd1).collect().sorted sameElements Array(4, 5))
-    assert(rdd3.distinct().collect().sorted sameElements Array(1, 2, 3))
-    rdd1.cartesian(rdd2).foreach(println)
+    assert(rdd1.subtract(rdd2).collect.sorted sameElements Array(1, 2))
+    assert(rdd2.subtract(rdd1).collect.sorted sameElements Array(4, 5))
+
+    val rdd3 = context.makeRDD(Array(1, 1, 2, 2, 3, 3))
+    assert(rdd3.distinct.collect.sorted sameElements Array(1, 2, 3))
+
+    val rdd4 = context.makeRDD(Array(1, 2))
+    val rdd5 = context.makeRDD(Array(3, 4))
+    assert(rdd4.cartesian(rdd5).collect sameElements Array((1,3), (1, 4), (2, 3), (2, 4)))
   }
 
   test("text") {
-    val rdd = context.textFile("license.mit").cache()
-    val totalLines = rdd.count()
+    val rdd = context.textFile("license.mit").cache
+    val totalLines = rdd.count
     assert(totalLines == 19)
 
-    val selectedWordCount = rdd.filter(_.contains("Permission")).count()
+    val selectedWordCount = rdd.filter(_.contains("Permission")).count
     assert(selectedWordCount == 1)
 
     val longestLine = rdd.map(l => l.length).reduce((a, b) => Math.max(a, b))
     assert(longestLine == 77)
 
-    val wordCountRdd = rdd.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _).cache()
-    val totalWords = wordCountRdd.count()
+    val wordCountRdd = rdd.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _).cache
+    val totalWords = wordCountRdd.count
     assert(totalWords == 96)
 
-    val maxCount = wordCountRdd.values.max()
-    val (word, count) = wordCountRdd.filter(_._2 == maxCount).first()
+    val maxCount = wordCountRdd.values.max
+    val (word, count) = wordCountRdd.filter(_._2 == maxCount).first
     assert(word == "the" && count == 14)
   }
 
   test("streaming") {
     val queue = mutable.Queue[RDD[String]]()
     val ds = streamingContext.queueStream(queue)
-    queue += context.makeRDD(Source.fromFile("license.mit").getLines().toSeq)
+    queue += context.makeRDD(Source.fromFile("license.mit").getLines.toSeq)
     val wordCountDs = ds.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _)
     wordCountDs.saveAsTextFiles(System.getProperty("user.home") + "/.scala/spark/ds")
     wordCountDs.foreachRDD(rdd => {
       rdd.saveAsTextFile(System.getProperty("user.home") + "/.scala/spark/rdd")
     })
-    streamingContext.start()
+    streamingContext.start
   }
 
   test("dataframes") {
     val df = sqlContext.read.json("src/test/resources/spark.data.frame.json.txt")
-    df.printSchema()
-    df.show()
+    df.printSchema
+    df.show
 
-    val names = df.select("name").orderBy("name").collect()
+    val names = df.select("name").orderBy("name").collect
     names.foreach(println)
     assert(names.length == 4)
     assert(names.head.mkString == "barney")
 
-    val ages = df.select("age").orderBy("age").collect()
+    val ages = df.select("age").orderBy("age").collect
     ages.foreach(println)
     assert(ages.length == 4)
     assert(ages.head.getLong(0) == 21)
 
-    var row = df.filter(df("age") > 23).first()
+    var row = df.filter(df("age") > 23).first
     assert(row.getLong(0) == 24)
     assert(row.getAs[String](1) == "fred")
 
-    row = df.agg(Map("age" -> "max")).first()
+    row = df.agg(Map("age" -> "max")).first
     assert(row.getLong(0) == 24)
 
-    row = df.agg(Map("age" -> "avg")).first()
+    row = df.agg(Map("age" -> "avg")).first
     assert(row.getDouble(0) == 22.5)
   }
 
@@ -137,7 +141,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
       .map(p => Person(p(0).asInstanceOf[Long], p(1).asInstanceOf[String]))
     val personDf = sqlContext.createDataFrame[Person](personRdd)
     personDf.registerTempTable("persons")
-    personDf.printSchema()
-    personDf.show()
+    personDf.printSchema
+    personDf.show
   }
 }
