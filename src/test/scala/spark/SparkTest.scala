@@ -91,6 +91,11 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     assert(key == 1 && list.sum == 6)
   }
 
+  test("sort by key") {
+    val rdd = context.makeRDD(Array((3, 1), (2, 2), (1, 3))).cache
+    assert(rdd.reduceByKey(_ + _).sortByKey(ascending = true).collect sameElements Array((1,3), (2, 2), (3, 1)))
+  }
+
   test("text") {
     val rdd = context.textFile("license.mit").cache
     val totalLines = rdd.count
