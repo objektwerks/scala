@@ -39,10 +39,16 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     assert(rdd.first == 1)
     assert(rdd.min == 1)
     assert(rdd.max == 3)
+    assert(rdd.mean == 2.0)
+    assert(rdd.variance == 0.6666666666666666)
+    assert(rdd.sampleVariance == 1.0)
+    assert(rdd.stdev == 0.816496580927726)
+    assert(rdd.sampleStdev == 1.0)
     assert(rdd.sum == 6)
     assert(rdd.fold(0)(_ + _) == 6)
     assert(rdd.reduce(_ + _) == 6)
     assert(rdd.take(1) sameElements Array(1))
+    println(rdd.stats)
   }
 
   test("parallelize") {
