@@ -1,11 +1,10 @@
 package spark
 
 import com.typesafe.config.ConfigFactory
-import org.apache
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import org.apache.spark.{HashPartitioner, rdd, SparkConf, SparkContext}
+import org.apache.spark.{HashPartitioner, SparkConf, SparkContext}
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
 import scala.collection.mutable
