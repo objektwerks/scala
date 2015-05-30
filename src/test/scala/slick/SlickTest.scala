@@ -9,14 +9,14 @@ class SlickTest extends FunSuite with BeforeAndAfterAll {
   private implicit val ec = ExecutionContext.global
 
   override protected def beforeAll(): Unit = {
-    super.beforeAll()
-    Store.createSchema()
+    super.beforeAll
+    Store.createSchema
   }
 
   override protected def afterAll(): Unit = {
-    super.afterAll()
-    Store.dropSchema()
-    Store.close()
+    super.afterAll
+    Store.dropSchema
+    Store.close
   }
 
   test("insert person") {

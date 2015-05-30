@@ -9,8 +9,8 @@ import scala.util.{Success, Try}
 class OptionTest extends FunSuite {
   test("option") {
     def greaterThanZero(x: Int): Option[Int] = if (x > 0) Some(x) else None
-    assert(greaterThanZero(0) == None)
-    assert(greaterThanZero(1) == Some(1))
+    assert(greaterThanZero(0).isEmpty)
+    assert(greaterThanZero(1).contains(1))
     val opt = greaterThanZero(1)
     opt match {
       case Some(i) => i
@@ -42,8 +42,8 @@ class OptionTest extends FunSuite {
 
   test("option filter") {
     val number = Some(1)
-    assert(number.filter(_ > 0) == Some(1))
-    assert(number.filter(_ < 0) == None)
+    assert(number.contains(1))
+    assert(number.isEmpty)
   }
 
   test("option for") {
@@ -80,7 +80,7 @@ class OptionTest extends FunSuite {
 
   test("try") {
     def readTextFile(name: String): Try[List[String]] = {
-      Try(Source.fromFile(name).getLines().toList)
+      Try(Source.fromFile(name).getLines.toList)
     }
     assert(readTextFile("build.sbt").isSuccess)
     assert(readTextFile("sbt.sbt").isFailure)
@@ -95,9 +95,9 @@ class OptionTest extends FunSuite {
 
   test("all catch") {
     def readTextFile(name: String): Option[List[String]] = {
-      allCatch.opt(Source.fromFile(name).getLines().toList)
+      allCatch.opt(Source.fromFile(name).getLines.toList)
     }
     assert(readTextFile("build.sbt").nonEmpty)
-    assert(readTextFile("sbt.sbt") == None)
+    assert(readTextFile("sbt.sbt").isEmpty)
   }
 }

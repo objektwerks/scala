@@ -53,7 +53,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   }
 
   test("partitioner") {
-    val rdd = context.parallelize(List((1, 1), (2, 2), (3, 3))).partitionBy(new HashPartitioner(2)).persist()
+    val rdd = context.parallelize(List((1, 1), (2, 2), (3, 3))).partitionBy(new HashPartitioner(2)).persist
     val partitioner = rdd.partitioner.get // ShuffleRDDPartition @0 / @1
     assert(partitioner.numPartitions == 2)
   }

@@ -9,7 +9,7 @@ case class Task(task: String)
 
 object Db extends Instance(
   entities = Set(Entity[Student](), Entity[Task]()),
-  url = ConfigFactory.load().getString("sorm.url"),
+  url = ConfigFactory.load.getString("sorm.url"),
   user = "",
   password = "",
   initMode = InitMode.DropCreate)
@@ -34,15 +34,15 @@ class SormTest extends FunSuite {
   }
 
   test("fetch") {
-    val students = Db.query[Student].fetch()
+    val students = Db.query[Student].fetch
     println(students)
     assert(students.length >= 2)
 
-    val fred = Db.query[Student].whereEqual("name", "fred").fetchOne()
+    val fred = Db.query[Student].whereEqual("name", "fred").fetchOne
     println(fred)
     assert(fred.get.name == "fred")
 
-    val barney = Db.query[Student].whereEqual("name", "barney").fetchOne()
+    val barney = Db.query[Student].whereEqual("name", "barney").fetchOne
     println(barney)
     assert(barney.get.name == "barney")
   }

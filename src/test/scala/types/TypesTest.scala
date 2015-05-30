@@ -58,6 +58,6 @@ class TypesTest extends FunSuite {
   test("duck typing") {
     class Greeter { def greet = "Hi!" }
     def greet(greeter: {def greet: String}): String = greeter.greet
-    assert(greet(new Greeter()) == "Hi!")
+    assert(greet(new Greeter) == "Hi!")
   }
 }

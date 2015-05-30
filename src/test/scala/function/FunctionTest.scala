@@ -28,14 +28,14 @@ class FunctionTest extends FunSuite {
   }
 
   test("call by value") {
-    def random: Long = Random.nextLong()
+    def random: Long = Random.nextLong
     def callByValue(r: Long): (Long, Long) = (r, r)
     val r = callByValue(random)
     assert(r._1 == r._2)
   }
 
   test("call by name") {
-    def random: Long = Random.nextLong()
+    def random: Long = Random.nextLong
     def callByName(r: => Long): (Long, Long) = (r, r)
     val r = callByName(random)
     assert(r._1 != r._2)

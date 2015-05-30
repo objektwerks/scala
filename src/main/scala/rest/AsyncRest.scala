@@ -40,5 +40,5 @@ object AsyncRest {
 JObject(List((type, JString(success)),
              (value, JObject(List((id, JInt(174)),
                                  (joke, JString(Chuck Norris cannot love, he can only not kill.)),
-                                 (categories, JArray(List())))))))
+                                 (categories, JArray(List)))))))
  */

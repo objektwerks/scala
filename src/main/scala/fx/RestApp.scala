@@ -16,7 +16,7 @@ object RestApp extends JFXApp {
     text = "Joke:"
   }
 
-  private val jokeText = new TextArea() {
+  private val jokeText = new TextArea {
     wrapText = true
   }
 
