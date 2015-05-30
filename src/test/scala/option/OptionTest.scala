@@ -43,7 +43,7 @@ class OptionTest extends FunSuite {
   test("option filter") {
     val number = Some(1)
     assert(number.contains(1))
-    assert(number.isEmpty)
+    assert(number.nonEmpty)
   }
 
   test("option for") {
