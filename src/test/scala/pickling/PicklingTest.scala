@@ -1,9 +1,9 @@
 package pickling
 
-import scala.pickling._
-import json._
-
 import org.scalatest.FunSuite
+
+import scala.pickling._
+import scala.pickling.json._
 
 case class Dill(brand: String)
 

@@ -7,9 +7,10 @@ import akka.util.Timeout
 import org.specs2.mutable._
 import spray.can.Http
 import spray.http.MediaTypes._
+import spray.json._
 import spray.routing._
 import spray.testkit.Specs2RouteTest
-import spray.json._
+
 import scala.concurrent.duration._
 
 case class Message(text: String)
