@@ -14,7 +14,7 @@ import scala.io.Source
   Notes
   -----
   1. a driver is a client app with a main method. it can be run locally or on a cluster.
-  2. a driver app contains one or more transformation * ---> 1 action chains. i.e., map -> filter -> reducebykey -> collect
+  2. a driver app contains one or more transformation * ---> 1 action chains. i.e., map -> filter -> reducebykey ->> collect
   3. a transformation yields an RDD or DStream. An RDD composes tunable partitions. A DStream composes RDDs.
   4. an action is a terminal operation that yields a numeric value or array of types, often simple tuples of numeric values.
   5. transformation * ---> 1 action chains are lazily evaluated upon invocation of a terminal action.
