@@ -13,14 +13,14 @@ import scala.io.Source
 /*
   Notes
   -----
-  1. a driver is a client app with a main method. it can be run locally or on a cluster.
+  1. a driver is a client app with a main method. it can be run locally or on a cluster, across worker nodes by executors.
   2. a driver app contains one or more transformation * ---> 1 action chains. i.e., map -> filter -> reducebykey ->> collect
   3. a transformation yields an RDD or DStream. An RDD composes tunable partitions. A DStream composes RDDs.
   4. an action is a terminal operation that yields a numeric value or array of types, often simple tuples of numeric values.
   5. transformation * ---> 1 action chains are lazily evaluated upon invocation of a terminal action.
   6. invoking an action creates a job, composing one or more stages, each composing a set of executable tasks on RDDs.
   7. a job is structurally defined as a DAG of RDDs, which is translated into an execution plan
-  8. jobs can execute locally or on a cluster, across worker nodes.
+  8. jobs can execute locally or on a cluster, across worker nodes by executors.
  */
 case class Person(age: Long, name: String)
 
