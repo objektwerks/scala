@@ -12,12 +12,12 @@ import scala.concurrent.ExecutionContext.Implicits.{global => ec}
 import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
-sealed trait Category
-case object Tell extends Category
-case object TellWorker extends Category
-case object Ask extends Category
-case object AskWorker extends Category
-case class Message(category: Category, from: String, message: String)
+sealed trait KindOf
+case object Tell extends KindOf
+case object TellWorker extends KindOf
+case object Ask extends KindOf
+case object AskWorker extends KindOf
+case class Message(kindOf: KindOf, from: String, message: String)
 
 class Master extends Actor {
   println(s"Master created: $self")
