@@ -186,7 +186,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     personDf.show
   }
 
-  test("streaming") {
+  test("stateless streaming") {
     val queue = mutable.Queue[RDD[String]]()
     val ds = streamingContext.queueStream(queue)
     queue += context.makeRDD(Source.fromFile("license.mit").getLines.toSeq)
