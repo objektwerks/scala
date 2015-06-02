@@ -174,8 +174,8 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
 
   /*
     A json schema is inferred and then sorted alphabetically by field name. This is incorrect behavior.
-    Until a fix is found, case classes must be adjusted accordingly.
-   */
+    Until a fix is found, case classes must define fields in alphabetical order.
+  */
   test("case class") {
     val personRdd = sqlContext.read.json("src/test/resources/spark.data.frame.json.txt")
       .map(p => Person(p(0).asInstanceOf[Long], p(1).asInstanceOf[String]))
