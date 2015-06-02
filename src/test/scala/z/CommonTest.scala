@@ -25,7 +25,7 @@ class CommonTest extends FunSuite {
     enum.byName(0) assert_=== 'a'
     enum.byName(enum.length - 1) assert_=== 'z'
     enum.head assert_=== 'a'
-    enum(enum.length - 1) assert_=== 'z'
+    enum.last assert_=== 'z'
     enum.contains('m') assert_=== true
     'o'.succ assert_=== 'p'
     'o'.pred assert_=== 'n'
