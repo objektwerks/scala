@@ -3,7 +3,7 @@ package spark
 import com.typesafe.config.ConfigFactory
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SQLContext
-import org.apache.spark.streaming.{Milliseconds, Seconds, StreamingContext}
+import org.apache.spark.streaming.{Milliseconds, StreamingContext}
 import org.apache.spark.{HashPartitioner, SparkConf, SparkContext}
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
@@ -28,7 +28,8 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   val props = ConfigFactory.load("spark.properties")
   val conf = new SparkConf().setMaster(props.getString("spark.master")).setAppName(props.getString("spark.app.name"))
   val context = new SparkContext(conf)
-  val streamingContext = new StreamingContext(context, Seconds(1))
+  val streamingContext = new StreamingContext(context, Milliseconds(500))
+  streamingContext.checkpoint(System.getProperty("user.home") + "/.scala/spark/checkpoint")
   val sqlContext = new SQLContext(context)
 
   override protected def afterAll(): Unit = {
@@ -188,10 +189,9 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   test("streaming") {
     val queue = mutable.Queue[RDD[String]]()
     val ds = streamingContext.queueStream(queue)
-    streamingContext.checkpoint(System.getProperty("user.home") + "/.scala/spark/ds/checkpoint")
     queue += context.makeRDD(Source.fromFile("license.mit").getLines.toSeq)
     val wordCountDs = ds.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _)
-    wordCountDs.checkpoint(Milliseconds(1000))
+    wordCountDs.checkpoint(Milliseconds(500))
     wordCountDs.saveAsTextFiles(System.getProperty("user.home") + "/.scala/spark/ds")
     wordCountDs.foreachRDD(rdd => {
       rdd.saveAsTextFile(System.getProperty("user.home") + "/.scala/spark/rdd")
