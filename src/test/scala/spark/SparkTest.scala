@@ -29,7 +29,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   val conf = new SparkConf().setMaster(props.getString("spark.master")).setAppName(props.getString("spark.app.name"))
   val context = new SparkContext(conf)
   val streamingContext = new StreamingContext(context, Milliseconds(500))
-  streamingContext.checkpoint(System.getProperty("user.home") + "/.scala/spark/checkpoint")
+  streamingContext.checkpoint(System.getProperty("user.home") + "/.scala/spark/ds.checkpoint")
   val sqlContext = new SQLContext(context)
 
   override protected def afterAll(): Unit = {
