@@ -17,7 +17,7 @@ case object Tell extends Category
 case object TellWorker extends Category
 case object Ask extends Category
 case object AskWorker extends Category
-case class Message(category: Category, who: String, message: String)
+case class Message(category: Category, from: String, message: String)
 
 class Master extends Actor {
   println(s"Master created: $self")
@@ -25,11 +25,11 @@ class Master extends Actor {
   val worker: ActorRef = context.actorOf(Props(new Worker), name = "worker")
 
   def receive = {
-    case Message(Tell, who, message) => println(s"\nMaster received $message from $who.")
-    case Message(TellWorker, who, message) => worker ! Message(Tell, s"$who -> Master", message)
-    case Message(Ask, who, message) => sender ! s"Master received and responded to $message from $who."
-    case Message(AskWorker, who, message) =>
-      val future = worker ? Message(AskWorker, s"$who -> Master", message)
+    case Message(Tell, from, message) => println(s"\nMaster received $message from $from.")
+    case Message(TellWorker, from, message) => worker ! Message(Tell, s"$from -> Master", message)
+    case Message(Ask, from, message) => sender ! s"Master received and responded to $message from $from."
+    case Message(AskWorker, from, message) =>
+      val future = worker ? Message(AskWorker, s"$from -> Master", message)
       future onComplete {
         case Success(returnMessage) => sender ! returnMessage
         case Failure(failure) => println(failure.getMessage); throw failure
@@ -42,8 +42,8 @@ class Master extends Actor {
 class Worker extends Actor {
   println(s"Worker created: $self")
   def receive = {
-    case Message(Tell, who, message) => println(s"Worker received $message from $who.")
-    case Message(AskWorker, who, message) => sender ! s"Worker received and responded to $message from $who."
+    case Message(Tell, from, message) => println(s"Worker received $message from $from.")
+    case Message(AskWorker, from, message) => sender ! s"Worker received and responded to $message from $from."
     case _ => println("Worker received invalid message.")
   }
 }
