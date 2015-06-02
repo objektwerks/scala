@@ -3,7 +3,7 @@ package spark
 import com.typesafe.config.ConfigFactory
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SQLContext
-import org.apache.spark.streaming.{Seconds, StreamingContext}
+import org.apache.spark.streaming.{Milliseconds, Seconds, StreamingContext}
 import org.apache.spark.{HashPartitioner, SparkConf, SparkContext}
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
@@ -33,6 +33,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
 
   override protected def afterAll(): Unit = {
     super.afterAll
+    streamingContext.awaitTerminationOrTimeout(2000)
     streamingContext.stop(stopSparkContext = true, stopGracefully = true)
   }
 
@@ -145,18 +146,6 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     assert(word == "the" && count == 14)
   }
 
-  test("streaming") {
-    val queue = mutable.Queue[RDD[String]]()
-    val ds = streamingContext.queueStream(queue)
-    queue += context.makeRDD(Source.fromFile("license.mit").getLines.toSeq)
-    val wordCountDs = ds.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _)
-    wordCountDs.saveAsTextFiles(System.getProperty("user.home") + "/.scala/spark/ds")
-    wordCountDs.foreachRDD(rdd => {
-      rdd.saveAsTextFile(System.getProperty("user.home") + "/.scala/spark/rdd")
-    })
-    streamingContext.start
-  }
-
   test("dataframes") {
     val df = sqlContext.read.json("src/test/resources/spark.data.frame.json.txt")
     df.printSchema
@@ -194,5 +183,19 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     personDf.registerTempTable("persons")
     personDf.printSchema
     personDf.show
+  }
+
+  test("streaming") {
+    val queue = mutable.Queue[RDD[String]]()
+    val ds = streamingContext.queueStream(queue)
+    streamingContext.checkpoint(System.getProperty("user.home") + "/.scala/spark/ds/checkpoint")
+    queue += context.makeRDD(Source.fromFile("license.mit").getLines.toSeq)
+    val wordCountDs = ds.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _)
+    wordCountDs.checkpoint(Milliseconds(1000))
+    wordCountDs.saveAsTextFiles(System.getProperty("user.home") + "/.scala/spark/ds")
+    wordCountDs.foreachRDD(rdd => {
+      rdd.saveAsTextFile(System.getProperty("user.home") + "/.scala/spark/rdd")
+    })
+    streamingContext.start
   }
 }
