@@ -22,7 +22,7 @@ case class Message(kindOf: KindOf, from: String, message: String)
 class Master extends Actor {
   println(s"Master created: $self")
   private implicit val timeout = new Timeout(3, TimeUnit.SECONDS)
-  val worker: ActorRef = context.actorOf(Props(new Worker), name = "worker")
+  private val worker: ActorRef = context.actorOf(Props(new Worker), name = "worker")
 
   def receive = {
     case Message(Tell, from, message) => println(s"\nMaster received $message from $from.")
