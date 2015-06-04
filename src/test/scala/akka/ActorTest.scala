@@ -37,14 +37,35 @@ class Master extends Actor {
       Await.ready(future, Duration(3000, TimeUnit.SECONDS)) // Is there a better way?
     case _ => println("Master received invalid message.")
   }
+
+  override def preStart(): Unit = {
+    super.preStart()
+    println("Master pre-start event.")
+  }
+
+  override def postStop(): Unit = {
+    super.postStop()
+    println("Master post-stop event.")
+  }
 }
 
 class Worker extends Actor {
   println(s"Worker created: $self")
+
   def receive = {
     case Message(Tell, from, message) => println(s"Worker received $message from $from.")
     case Message(AskWorker, from, message) => sender ! s"Worker received and responded to $message from $from."
     case _ => println("Worker received invalid message.")
+  }
+
+  override def preStart(): Unit = {
+    super.preStart()
+    println("Worker pre-start event.")
+  }
+
+  override def postStop(): Unit = {
+    super.postStop()
+    println("Worker post-stop event.")
   }
 }
 
