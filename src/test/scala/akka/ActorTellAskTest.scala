@@ -69,7 +69,7 @@ class Worker extends Actor {
   }
 }
 
-class ActorTest extends FunSuite with BeforeAndAfterAll {
+class ActorTellAskTest extends FunSuite with BeforeAndAfterAll {
   private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
   private val system: ActorSystem = ActorSystem.create("system")
   private val master: ActorRef = system.actorOf(Props[Master], name = "master")
