@@ -51,6 +51,7 @@ class Master extends Actor {
 
 class Worker extends Actor {
   println(s"Worker created: $self")
+  println(s"Worker parent: ${context.parent.path.name}")
 
   def receive = {
     case Message(Tell, from, message) => println(s"Worker received $message from $from.")
