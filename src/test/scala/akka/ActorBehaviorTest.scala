@@ -1,0 +1,64 @@
+package akka
+
+import java.util.concurrent.TimeUnit
+
+import akka.actor.{Props, ActorRef, Actor, ActorSystem}
+import akka.util.Timeout
+import org.scalatest.{BeforeAndAfterAll, FunSuite}
+
+case object Ready
+case object Swim
+case object Bike
+case object Run
+case object Finish
+
+class Triathlete extends Actor {
+  def receive = prepare
+
+  def prepare: Actor.Receive = {
+    case Ready => println("Triathlete ready!")
+    case Swim => println("Triathlete swimming!"); context.become(swim)
+  }
+
+  def swim: Actor.Receive = {
+    case Bike => println("Triathlete biking!"); context.become(bike)
+  }
+
+  def bike: Actor.Receive = {
+    case Run => println("Triathlete running!"); context.become(run)
+  }
+
+  def run: Actor.Receive = {
+    case Finish => println("Triathlete finished race!"); context.become(prepare)
+  }
+
+  override def unhandled(message: Any): Unit = {
+    super.unhandled(message)
+    println(s"Triathlete failed to handle message: $message.")
+  }
+}
+
+class ActorBehaviorTest extends FunSuite with BeforeAndAfterAll {
+  private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
+  private val system: ActorSystem = ActorSystem.create("system")
+  private val triathlete: ActorRef = system.actorOf(Props[Triathlete], name = "triathlete")
+
+  override protected def afterAll(): Unit = {
+    super.afterAll
+    system.shutdown
+    system.awaitTermination
+  }
+
+  test("race") {
+    race
+    race
+  }
+
+  def race(): Unit = {
+    triathlete ! Ready
+    triathlete ! Swim
+    triathlete ! Bike
+    triathlete ! Run
+    triathlete ! Finish
+  }
+}
