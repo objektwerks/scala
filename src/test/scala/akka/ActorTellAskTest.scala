@@ -70,10 +70,19 @@ class Worker extends Actor {
   }
 }
 
+class Identifier extends Actor {
+  def receive = {
+    case path: String => context.actorSelection(path) ! Identify(path)
+    case ActorIdentity(path, Some(ref)) => println(s"Actor identified: $ref at path $path.")
+    case ActorIdentity(path, None) => println(s"Actor NOT identified at path $path.")
+  }
+}
+
 class ActorTellAskTest extends FunSuite with BeforeAndAfterAll {
   private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
   private val system: ActorSystem = ActorSystem.create("funky")
   private val master: ActorRef = system.actorOf(Props[Master], name = "master")
+  private val identifier: ActorRef = system.actorOf(Props[Identifier], name = "identifier")
   println(s"Actor system created: $system")
 
   override protected def afterAll(): Unit = {
@@ -81,6 +90,12 @@ class ActorTellAskTest extends FunSuite with BeforeAndAfterAll {
     println(s"Actor system shutdown: $system")
     system.shutdown
     system.awaitTermination
+  }
+
+  test("actor selection") {
+    identifier ! "/user/*"
+    identifier ! "/user/master/*"
+    identifier ! "/funky/*"
   }
 
   test("system ! master") {
