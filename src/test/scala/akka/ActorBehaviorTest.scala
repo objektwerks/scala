@@ -54,7 +54,7 @@ class ActorBehaviorTest extends FunSuite with BeforeAndAfterAll {
     race
   }
 
-  def race(): Unit = {
+  private def race(): Unit = {
     triathlete ! Ready
     triathlete ! Swim
     triathlete ! Bike
