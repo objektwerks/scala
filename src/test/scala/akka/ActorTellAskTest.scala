@@ -86,8 +86,8 @@ class Worker extends Actor {
 class Identifier extends Actor {
   def receive = {
     case path: String => context.actorSelection(path) ! Identify(path)
-    case ActorIdentity(path, Some(ref)) => println(s"Actor identified: $ref at path $path.")
-    case ActorIdentity(path, None) => println(s"Actor NOT identified at path $path.")
+    case ActorIdentity(path, Some(ref)) => println(s"Actor identified: $ref at path: $path.")
+    case ActorIdentity(path, None) => println(s"Actor NOT identified at path: $path.")
   }
 }
 
