@@ -3,13 +3,11 @@ package akka
 import java.util.concurrent.TimeUnit
 
 import akka.actor._
-import akka.pattern.ask
+import akka.pattern._
 import akka.util.Timeout
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
-import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.{global => ec}
-import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
 sealed trait KindOf
@@ -31,11 +29,7 @@ class Master extends Actor {
     case Message(Ask, from, message) => sender ! s"Master received and responded to $message from $from."
     case Message(AskWorker, from, message) =>
       val future = worker ? Message(AskWorker, s"$from -> Master", message)
-      future onComplete {
-        case Success(returnMessage) => sender ! returnMessage
-        case Failure(failure) => println(failure.getMessage); throw failure
-      }
-      Await.ready(future, Duration(3000, TimeUnit.SECONDS)) // Is there a better way?
+      future pipeTo sender
     case Message(AbortWorker, from, message) => worker ! Message(AbortWorker, s"$from -> Master", message)
     case _ => println("Master received an invalid message.")
   }
