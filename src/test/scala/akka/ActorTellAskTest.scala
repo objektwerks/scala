@@ -137,7 +137,7 @@ class ActorTellAskTest extends FunSuite with BeforeAndAfterAll {
 
   test("system ! master ! abort worker") {
     master ! Message(AbortWorker, "System", "abort ! message")
-    Thread.sleep(1000)
+    Thread.sleep(1000) // Allow system time to recreate aborted worker and process messages.
     master ! Message(TellWorker, "System", "AFTER ABORT tell ! message")
   }
 }
