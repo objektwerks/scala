@@ -35,7 +35,7 @@ class Master extends Actor {
         case Failure(failure) => println(failure.getMessage); throw failure
       }
       Await.ready(future, Duration(3000, TimeUnit.SECONDS)) // Is there a better way?
-    case _ => println("Master received invalid message.")
+    case _ => println("Master received an invalid message.")
   }
 
   override def preStart(): Unit = {
@@ -56,7 +56,7 @@ class Worker extends Actor {
   def receive = {
     case Message(Tell, from, message) => println(s"Worker received $message from $from.")
     case Message(AskWorker, from, message) => sender ! s"Worker received and responded to $message from $from."
-    case _ => println("Worker received invalid message.")
+    case _ => println("Worker received an invalid message.")
   }
 
   override def preStart(): Unit = {

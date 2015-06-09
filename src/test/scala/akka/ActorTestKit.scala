@@ -9,7 +9,7 @@ import scala.concurrent.duration._
 class Ping extends Actor {
   def receive = {
     case ping: String => println(ping); sender ! ping
-    case _ => println("TestActor received invalid message.")
+    case _ => println("Ping received an invalid message.")
   }
 }
 
@@ -24,7 +24,7 @@ with WordSpecLike with Matchers with BeforeAndAfterAll {
     system.awaitTermination
   }
 
-  "Ping Actor" should {
+  "Ping actor" should {
     "reply with an identical message" in {
       within(2 seconds) {
         ping ! "ping"
