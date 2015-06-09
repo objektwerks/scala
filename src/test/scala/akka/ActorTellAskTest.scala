@@ -17,6 +17,7 @@ case object Tell extends KindOf
 case object TellWorker extends KindOf
 case object Ask extends KindOf
 case object AskWorker extends KindOf
+case object AbortWorker extends KindOf
 case class Message(kindOf: KindOf, from: String, message: String)
 
 class Master extends Actor {
@@ -35,12 +36,18 @@ class Master extends Actor {
         case Failure(failure) => println(failure.getMessage); throw failure
       }
       Await.ready(future, Duration(3000, TimeUnit.SECONDS)) // Is there a better way?
+    case Message(AbortWorker, from, message) => worker ! Message(AbortWorker, s"$from -> Master", message)
     case _ => println("Master received an invalid message.")
   }
 
   override def preStart(): Unit = {
     super.preStart()
     println("Master pre-start event.")
+  }
+
+  override def postRestart(reason: Throwable): Unit = {
+    super.postRestart(reason)
+    println("Master post-restart event.")
   }
 
   override def postStop(): Unit = {
@@ -56,12 +63,18 @@ class Worker extends Actor {
   def receive = {
     case Message(Tell, from, message) => println(s"Worker received $message from $from.")
     case Message(AskWorker, from, message) => sender ! s"Worker received and responded to $message from $from."
+    case Message(AbortWorker, from, message) => throw new Exception(message)
     case _ => println("Worker received an invalid message.")
   }
 
   override def preStart(): Unit = {
     super.preStart()
     println("Worker pre-start event.")
+  }
+
+  override def postRestart(reason: Throwable): Unit = {
+    super.postRestart(reason)
+    println(s"Worker post-restart event throwable message: ${reason.getMessage}")
   }
 
   override def postStop(): Unit = {
@@ -120,5 +133,11 @@ class ActorTellAskTest extends FunSuite with BeforeAndAfterAll {
       case Success(message) => println(message)
       case Failure(failure) => println(failure.getMessage); throw failure
     }
+  }
+
+  test("system ! master ! abort worker") {
+    master ! Message(AbortWorker, "System", "abort ! message")
+    Thread.sleep(1000)
+    master ! Message(TellWorker, "System", "AFTER ABORT tell ! message")
   }
 }
