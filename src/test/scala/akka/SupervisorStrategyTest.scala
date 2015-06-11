@@ -77,6 +77,12 @@ class Child extends Actor {
   }
 }
 
+class Listener extends Actor {
+  def receive = {
+    case dl: DeadLetter => println(s"DeadLetter: ${dl.message}")
+  }
+}
+
 class Watcher extends Actor {
   private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
   private val futureChild = context.system.actorSelection("/user/nanny/*").resolveOne()
@@ -91,6 +97,8 @@ class SupervisorStrategyTest extends FunSuite with BeforeAndAfterAll {
   private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
   private val system: ActorSystem = ActorSystem.create("funky")
   private val nanny: ActorRef = system.actorOf(Props[Nanny], name = "nanny")
+  private val listener: ActorRef = system.actorOf(Props[Listener], name = "listener")
+  system.eventStream.subscribe(listener, classOf[AllDeadLetters])
   system.actorOf(Props[Watcher], name = "watcher")
   println(s"Actor system created: $system")
 
