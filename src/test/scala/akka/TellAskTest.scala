@@ -85,7 +85,7 @@ class Identifier extends Actor {
   }
 }
 
-class ActorTellAskTest extends FunSuite with BeforeAndAfterAll {
+class TellAskTest extends FunSuite with BeforeAndAfterAll {
   private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
   private val system: ActorSystem = ActorSystem.create("funky")
   private val master: ActorRef = system.actorOf(Props[Master], name = "master")

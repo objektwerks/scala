@@ -38,7 +38,7 @@ class Triathlete extends Actor {
   }
 }
 
-class ActorBehaviorTest extends FunSuite with BeforeAndAfterAll {
+class BehaviorTest extends FunSuite with BeforeAndAfterAll {
   private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
   private val system: ActorSystem = ActorSystem.create("funky")
   private val triathlete: ActorRef = system.actorOf(Props[Triathlete], name = "triathlete")
