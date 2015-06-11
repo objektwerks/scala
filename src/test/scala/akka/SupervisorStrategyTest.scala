@@ -92,11 +92,9 @@ class SupervisorStrategyTest extends FunSuite with BeforeAndAfterAll {
   private val system: ActorSystem = ActorSystem.create("funky")
   private val nanny: ActorRef = system.actorOf(Props[Nanny], name = "nanny")
   system.actorOf(Props[Watcher], name = "watcher")
-  println(s"Actor system created: $system")
 
   override protected def afterAll(): Unit = {
     super.afterAll
-    println(s"Actor system shutdown: $system")
     system.shutdown
     system.awaitTermination
   }

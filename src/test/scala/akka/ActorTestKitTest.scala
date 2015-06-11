@@ -19,7 +19,6 @@ with WordSpecLike with Matchers with BeforeAndAfterAll {
 
   override protected def afterAll(): Unit = {
     super.afterAll
-    println(s"Actor system shutdown: $system")
     system.shutdown
     system.awaitTermination
   }

@@ -21,7 +21,7 @@ case class Message(kindOf: KindOf, from: String, message: String)
 class Master extends Actor {
   println(s"Master created: $self")
   private implicit val timeout = new Timeout(3, TimeUnit.SECONDS)
-  private val worker: ActorRef = context.actorOf(Props[Worker], name = "worker")
+  private val worker: ActorRef = context.actorOf(Props[Service], name = "worker")
 
   def receive = {
     case Message(Tell, from, message) => println(s"\nMaster received $message from $from.")
@@ -90,11 +90,9 @@ class ActorTellAskTest extends FunSuite with BeforeAndAfterAll {
   private val system: ActorSystem = ActorSystem.create("funky")
   private val master: ActorRef = system.actorOf(Props[Master], name = "master")
   private val identifier: ActorRef = system.actorOf(Props[Identifier], name = "identifier")
-  println(s"Actor system created: $system")
 
   override protected def afterAll(): Unit = {
     super.afterAll
-    println(s"Actor system shutdown: $system")
     system.shutdown
     system.awaitTermination
   }
