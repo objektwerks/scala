@@ -41,10 +41,10 @@ class Referee[A] (sport: Sport) {
 }
 
 // Self Type
-trait Greeter {
+sealed trait Greeter {
   val greeting = "test"
 }
-trait Prompter {
+sealed trait Prompter {
   self: Greeter =>
 
   def greet: String = greeting
