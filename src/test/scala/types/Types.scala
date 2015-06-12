@@ -41,11 +41,11 @@ class Referee[A] (sport: Sport) {
 }
 
 // Self Type
-sealed trait Greeter {
-  val greeting = "test"
-}
-sealed trait Prompter {
-  self: Greeter =>
+trait Greeting { def greeting: String }
+trait Hello extends Greeting { override def greeting = "hello"}
+trait Goodbye extends Greeting { override def greeting = "goodbye"}
+class Speaker {
+  self: Greeting =>
 
   def greet: String = greeting
 }

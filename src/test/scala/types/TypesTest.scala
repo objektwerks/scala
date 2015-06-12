@@ -70,7 +70,9 @@ class TypesTest extends FunSuite {
   }
 
   test("self type") {
-    val prompter = new Prompter() with Greeter
-    assert(prompter.greet == "test")
+    val hello = new Speaker() with Hello
+    assert(hello.greet == "hello")
+    val goodbye = new Speaker() with Goodbye
+    assert(goodbye.greet == "goodbye")
   }
 }
