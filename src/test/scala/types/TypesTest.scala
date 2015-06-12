@@ -1,6 +1,7 @@
 package types
 
 import org.scalatest.FunSuite
+import theory.CategoryTheory._
 
 class TypesTest extends FunSuite {
   test("covariance vs contravariance") {
@@ -59,5 +60,12 @@ class TypesTest extends FunSuite {
     class Greeter { def greet = "Hi!" }
     def greet(greeter: {def greet: String}): String = greeter.greet
     assert(greet(new Greeter) == "Hi!")
+  }
+
+  test("type constructor") {
+    assert(adderMonoid.append(1, 1) == 2)
+    assert(adderMonoid.zero == 0)
+    assert(adderMonoid.isAssociative(1, 2, 3))
+    assert(adderMonoid.identity(1))
   }
 }
