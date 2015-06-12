@@ -46,6 +46,5 @@ trait Hello extends Greeting { override def greeting = "hello"}
 trait Goodbye extends Greeting { override def greeting = "goodbye"}
 class Speaker {
   self: Greeting =>
-
   def greet: String = greeting
 }
