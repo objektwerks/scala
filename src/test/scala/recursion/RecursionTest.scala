@@ -33,6 +33,13 @@ class RecursionTest extends FunSuite{
     println(s"@tailrec fibonacci performance is constant using <= $n : $f")
   }
 
+  test("tailcalls fibonacci") {
+    val n = 13
+    val f = Fibonacci.tailcalls(n).result
+    //assert(f == 63245986)
+    println(s"@tailcalls ( trampolining ) fibonacci performance is horrible: $n : $f")
+  }
+
   test("fibonacci sequece generator") {
     val sequence = Fibonacci.sequence()
     assert(sequence.size == 47)
