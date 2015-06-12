@@ -7,7 +7,7 @@ trait Semigroup[F] {
 
 trait Monoid[F] extends Semigroup[F] {
   def zero: F
-  def idIdentity(x: F): Boolean = append(zero, x) == x
+  def identity(x: F): Boolean = append(zero, x) == x
 }
 
 trait Functor[F[_]] {
