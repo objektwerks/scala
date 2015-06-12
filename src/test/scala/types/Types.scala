@@ -19,7 +19,7 @@ class Cat(name: String) extends Animal(name) { override def speak = "meow meow" 
 class Dog(name: String) extends Animal(name) { override def speak = "wolf wolf" }
 class Trainer[+A] (animal: Animal) {
   def id = identity(animal)
-  def speak: String = animal.speak
+  def speak[T <: Animal](): String = animal.speak
 }
 
 // Contravariant
@@ -28,7 +28,7 @@ class Cake(name: String) extends Dessert(name) { override def bake = "mix, bake 
 class CupCake(name: String) extends Cake(name) { override def bake = "mix, bake, frost and package"}
 class Baker[-A] (cake: Cake) {
   def id = identity(cake)
-  def make: String = cake.bake
+  def make[T >: CupCake](): String = cake.bake
 }
 
 // Invariant
