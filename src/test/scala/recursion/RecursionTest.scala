@@ -42,7 +42,7 @@ class RecursionTest extends FunSuite{
   }
 
   test("fibonacci sequece generator") {
-    val sequence = Fibonacci.sequence().takeWhile(_>= 0).toList
+    val sequence = Fibonacci.sequence().takeWhile(_>= 0)
     assert(sequence.size == 47)
     println("Fibonacci sequence: " + sequence)
   }
