@@ -48,3 +48,8 @@ class Speaker {
   self: Greeting =>
   def greet: String = greeting
 }
+
+// Path Dependent Types
+class First {
+  class Second
+}

@@ -75,4 +75,12 @@ class TypesTest extends FunSuite {
     val goodbye = new Speaker() with Goodbye
     assert(goodbye.greet == "goodbye")
   }
+
+  test("path dependent types") {
+    val first1 = new First()
+    val path1 = new first1.Second()
+    val first2 = new First()
+    val path2 = new first2.Second()
+    assert(path1 != path2)
+  }
 }
