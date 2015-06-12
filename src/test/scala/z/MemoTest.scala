@@ -12,7 +12,7 @@ class MemoTest extends FunSuite {
 
   def computeFibonacci(n: Long): BigInt = {
     computeCount = computeCount + 1
-    val f = Fibonacci.number(n)
+    val f = Fibonacci.tailrec(n)
     println(s"Computed fibonacci number, $f, from seed number, $n.")
     f
   }
