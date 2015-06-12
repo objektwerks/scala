@@ -20,7 +20,7 @@ class RecursionTest extends FunSuite{
     val n = 34
     val f = fibbonacci(n)
     assert(f.equals(BigInt(5702887)))
-    println(s"Naive recursive performance slows dramtically using a number greater than $n, which equals $f")
+    println(s"Naive recursive fibonacci performance slows dramtically using > $n : $f")
   }
 
   test("tail recursive fibonacci") {
@@ -31,14 +31,14 @@ class RecursionTest extends FunSuite{
     val n = 39
     val f = fibonacci(n, 0, 1)
     assert(f.equals(BigInt(63245986)))
-    println(s"Tail recursive performance is constant using a number less than $n, which equals $f")
+    println(s"Tail recursive fibonacci performance is constant using <= $n : $f")
   }
 
   test("@tailrec fibonacci") {
     val n = 39
     val f = Fibonacci.number(n)
     assert(f.equals(BigInt(63245986)))
-    println(s"@tailrec performance is constant using a number less than $n, which equals $f")
+    println(s"@tailrec fibonacci performance is constant using <= $n : $f")
   }
 
   test("fibonacci sequece generator") {
