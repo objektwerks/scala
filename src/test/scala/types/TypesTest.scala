@@ -62,7 +62,7 @@ class TypesTest extends FunSuite {
     assert(greet(new Greeter) == "Hi!")
   }
 
-  test("type constructor") {
+  test("type constructor") { // from theory package
     assert(adderMonoid.append(1, 1) == 2)
     assert(adderMonoid.zero == 0)
     assert(adderMonoid.isAssociative(1, 2, 3))
