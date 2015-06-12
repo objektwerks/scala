@@ -68,4 +68,9 @@ class TypesTest extends FunSuite {
     assert(adderMonoid.isAssociative(1, 2, 3))
     assert(adderMonoid.identity(1))
   }
+
+  test("self type") {
+    val prompter = new Prompter() with Greeter
+    assert(prompter.greet == "test")
+  }
 }

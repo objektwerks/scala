@@ -39,3 +39,13 @@ class Referee[A] (sport: Sport) {
   def id[T] = identity(sport)
   def play[T](): String = sport.play
 }
+
+// Self Type
+trait Greeter {
+  val greeting = "test"
+}
+trait Prompter {
+  self: Greeter =>
+
+  def greet: String = greeting
+}
