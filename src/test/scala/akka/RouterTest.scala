@@ -23,11 +23,6 @@ class Clock extends Actor {
 
   def receive = {
     case m: String => router.route(m, sender())
-    case Terminated(a) =>
-      router = router.removeRoutee(a)
-      val t = context.actorOf(Props[Time])
-      context watch t
-      router = router.addRoutee(t)
   }
 }
 
