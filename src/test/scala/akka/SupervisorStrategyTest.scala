@@ -2,12 +2,13 @@ package akka
 
 import java.util.concurrent.TimeUnit
 
-import akka.actor.SupervisorStrategy.{Stop, Resume, Restart, Escalate}
+import akka.actor.SupervisorStrategy.{Restart, Stop}
 import akka.actor._
 import akka.util.Timeout
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
-import scala.concurrent.duration._
+
 import scala.concurrent.ExecutionContext.Implicits.{global => ec}
+import scala.concurrent.duration._
 
 trait Task
 case object Play extends Task
@@ -91,7 +92,7 @@ class SupervisorStrategyTest extends FunSuite with BeforeAndAfterAll {
   private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
   private val system: ActorSystem = ActorSystem.create("funky")
   private val nanny: ActorRef = system.actorOf(Props[Nanny], name = "nanny")
-  system.actorOf(Props[Watcher], name = "watcher")
+  system.actorOf(Props[Time], name = "watcher")
 
   override protected def afterAll(): Unit = {
     super.afterAll
