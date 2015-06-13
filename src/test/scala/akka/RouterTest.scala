@@ -43,7 +43,7 @@ class RouterTest extends FunSuite with BeforeAndAfterAll {
     system.awaitTermination
   }
 
-  test("router") {
+  test("router") { // naturally non-deterministic. just a proof.
     clock ? "time a: " onSuccess { case m: String => println(m) }
     clock ? "time b: " onSuccess { case m: String => println(m) }
     clock ? "time c: " onSuccess { case m: String => println(m) }
