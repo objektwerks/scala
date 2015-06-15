@@ -297,6 +297,10 @@ class CollectionTest extends FunSuite {
     (1 to 10000000).map(_ % 10).filter(_ > 5).sum
   }
 
+  test("iterator") { // view unit test micro-benchmark. faster than view!
+    (1 to 10000000).iterator.map(_ % 10).filter(_ > 5).sum
+  }
+
   test("stream") {
     val numberOfEvens = (1 to 100).toStream.count(_ % 2 == 0)
     assert(numberOfEvens == 50)
