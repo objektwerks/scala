@@ -5,6 +5,7 @@ import org.scalatest.FunSuite
 import scala.io.Source
 import scala.util.control.Exception._
 import scala.util.{Success, Try}
+import scalafx.beans.value
 
 class OptionTest extends FunSuite {
   test("option") {
@@ -62,10 +63,14 @@ class OptionTest extends FunSuite {
     assert(locatedResource == defaultResource)
   }
 
-  test("option collect & getOrElse") {
+  test("option collect") {
     val value = Some(1)
-    val result = value collect { case v => v }
-    assert(result.getOrElse(0) == 1)
+    value collect { case v:Int => assert(v == 1) }
+  }
+
+  test("option foreach") {
+    val values = List(Some(1), Some(2), Some(3))
+    values foreach { case Some(v) => assert(v > 0 && v < 4) }
   }
 
   test("option try") {
