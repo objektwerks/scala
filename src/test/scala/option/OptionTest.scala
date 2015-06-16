@@ -19,31 +19,30 @@ class OptionTest extends FunSuite {
     assert(opt.get == 1)
    }
 
-  test("option isDefined > isEmpty") {
+  test("option isDefined & isEmpty") {
     val some = Some("value")
     assert(some.isDefined)
     val none = None
     assert(none.isEmpty)
   }
 
-  test("option get > getOrElse") {
+  test("option get & getOrElse") {
     val some = Some(1)
     assert(some.get == 1)
     val none = None
     assert(none.getOrElse(3) == 3)
   }
 
-  test("option map > flatmap ") {
+  test("option map & flatmap ") {
     def toInt(s: String): Option[Int] = Some(Integer.parseInt(s.trim))
     val strings = Seq("1", "2", "3")
     assert(strings.map(toInt) == List(Some(1), Some(2), Some(3)))
     assert(strings.flatMap(toInt).sum == 6)
   }
 
-  test("option filter") {
+  test("option exists") {
     val number = Some(1)
-    assert(number.contains(1))
-    assert(number.nonEmpty)
+    assert(number.exists(n => n > 0 ))
   }
 
   test("option for") {
@@ -63,7 +62,7 @@ class OptionTest extends FunSuite {
     assert(locatedResource == defaultResource)
   }
 
-  test("option exception") {
+  test("option try") {
     def parseInt(s: String): Option[Int] = Some(Integer.parseInt(s.trim))
     assert(Try(parseInt("a")).isFailure)
   }
