@@ -21,6 +21,8 @@ import scala.io.Source
   6. invoking an action creates a job, composing one or more stages, each composing a set of executable tasks on RDDs.
   7. a job is structurally defined as a DAG of RDDs, which is translated into an execution plan
   8. jobs can execute locally or on a cluster, across worker nodes by executors.
+
+  See this video: https://www.parleys.com/tutorial/scala-spark
  */
 case class Person(age: Long, name: String)
 
