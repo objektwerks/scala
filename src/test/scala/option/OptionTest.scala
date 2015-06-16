@@ -33,7 +33,7 @@ class OptionTest extends FunSuite {
     assert(none.getOrElse(3) == 3)
   }
 
-  test("option map & flatmap ") {
+  test("option map & flatmap") {
     def toInt(s: String): Option[Int] = Some(Integer.parseInt(s.trim))
     val strings = Seq("1", "2", "3")
     assert(strings.map(toInt) == List(Some(1), Some(2), Some(3)))
