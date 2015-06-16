@@ -70,7 +70,7 @@ class OptionTest extends FunSuite {
 
   test("option foreach") {
     val values = List(Some(1), Some(2), Some(3))
-    values foreach { case Some(v) => assert(v > 0 && v < 4) }
+    values foreach { case Some(v) => assert(v < 4) }
   }
 
   test("option try") {
