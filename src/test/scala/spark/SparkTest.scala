@@ -18,8 +18,8 @@ import scala.io.Source
   3. a transformation yields an RDD or DStream. An RDD composes tunable partitions. A DStream composes RDDs.
   4. an action is a terminal operation that yields a numeric value or array of types, often simple tuples of numeric values.
   5. transformation * ---> 1 action chains are lazily evaluated upon invocation of a terminal action.
-  6. invoking an action creates a job, composing one or more stages, each composing a set of executable tasks on RDDs.
-  7. a job is structurally defined as a DAG of RDDs, which is translated into an execution plan
+  6. invoking an action creates a job, composing one or more stages, each composing a set of executable tasks on RDD partitionss.
+  7. a job is structurally defined as a DAG of RDDs, which is translated into an execution plan.
   8. jobs can execute locally or on a cluster, across worker nodes by executors.
 
   See this video: https://www.parleys.com/tutorial/scala-spark
