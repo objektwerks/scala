@@ -32,7 +32,7 @@ trait RestService extends HttpService with DefaultJsonProtocol {
   }
 }
 
-class RestServiceActor extends Actor with RestService {
+class RestServiceActor extends RestService with Actor {
   def actorRefFactory = context
   def receive = runRoute(restServiceRoute)
 }
