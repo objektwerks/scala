@@ -15,13 +15,10 @@ import scala.concurrent.duration._
 
 case class Message(text: String)
 
-object MessageJsonProtocol extends DefaultJsonProtocol {
+trait RestService extends HttpService with DefaultJsonProtocol {
   implicit val messageFormat = jsonFormat1(Message)
-}
 
-trait RestService extends HttpService {
   val restServiceRoute = {
-    import MessageJsonProtocol._
     import spray.httpx.SprayJsonSupport._
     path("") {
       get {
@@ -43,14 +40,13 @@ class RestServiceActor extends Actor with RestService {
 class RestServiceRunner {
   implicit val timeout = Timeout(3.seconds)
   implicit val system = ActorSystem("system")
-  val restServiceActor = system.actorOf(Props[RestServiceActor], "rest-service")
+  val restServiceActor = system.actorOf(Props[RestServiceActor], "rest-service-actor")
   IO(Http) ? Http.Bind(restServiceActor, interface = "localhost", port = 9999)
 }
 
 class SprayTest extends Specification with Specs2RouteTest with RestService {
   def restServiceRunner = new RestServiceRunner
   def actorRefFactory = restServiceRunner.system
-  import MessageJsonProtocol._
   import spray.httpx.SprayJsonSupport._
 
   "RestService" should {
