@@ -6,7 +6,7 @@ import akka.pattern.ask
 import akka.util.Timeout
 import org.specs2.mutable._
 import spray.can.Http
-import spray.http.MediaTypes
+import spray.http.MediaTypes._
 import spray.json._
 import spray.routing._
 import spray.testkit.Specs2RouteTest
@@ -22,22 +22,22 @@ trait RestService extends HttpService with DefaultJsonProtocol {
     import spray.httpx.SprayJsonSupport._
     path("") {
       get {
-        respondWithMediaType(MediaTypes.`application/json`) {
+        respondWithMediaType(`application/json`) {
           complete(Message("get rest message"))
         }
       } ~
       post {
-        respondWithMediaType(MediaTypes.`application/json`) {
+        respondWithMediaType(`application/json`) {
           complete(Message("post rest message"))
         }
       } ~
       put {
-        respondWithMediaType(MediaTypes.`application/json`) {
+        respondWithMediaType(`application/json`) {
           complete(Message("put rest message"))
         }
       } ~
       delete {
-        respondWithMediaType(MediaTypes.`application/json`) {
+        respondWithMediaType(`application/json`) {
           complete(Message("delete rest message"))
         }
       }
@@ -65,15 +65,19 @@ class SprayTest extends Specification with Specs2RouteTest with RestService {
   "RestService" should {
     "handle Get, Post, Put and Delete json Messages." in {
       Get() ~> restServiceRoute ~> check {
+        mediaType === `application/json`
         responseAs[Message] === Message("get rest message")
       }
       Post() ~> restServiceRoute ~> check {
+        mediaType === `application/json`
         responseAs[Message] === Message("post rest message")
       }
       Put() ~> restServiceRoute ~> check {
+        mediaType === `application/json`
         responseAs[Message] === Message("put rest message")
       }
       Delete() ~> restServiceRoute ~> check {
+        mediaType === `application/json`
         responseAs[Message] === Message("delete rest message")
       }
     }
