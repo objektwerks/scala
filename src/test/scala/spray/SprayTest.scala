@@ -6,6 +6,7 @@ import akka.pattern.ask
 import akka.util.Timeout
 import org.specs2.mutable._
 import spray.can.Http
+import spray.http.MediaTypes
 import spray.http.MediaTypes._
 import spray.json._
 import spray.routing._
@@ -22,7 +23,7 @@ trait RestService extends HttpService with DefaultJsonProtocol {
     import spray.httpx.SprayJsonSupport._
     path("") {
       get {
-        respondWithMediaType(`application/json`) {
+        respondWithMediaType(MediaTypes.`application/json`) {
           complete {
             Message("test")
           }
