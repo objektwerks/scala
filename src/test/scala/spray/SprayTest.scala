@@ -50,7 +50,7 @@ class SprayTest extends Specification with Specs2RouteTest with RestService {
   import spray.httpx.SprayJsonSupport._
 
   "RestService" should {
-    "return a text response" in {
+    "return a Message response" in {
       Get() ~> restServiceRoute ~> check {
         responseAs[Message] === Message("test")
       }
