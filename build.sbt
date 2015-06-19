@@ -26,6 +26,8 @@ libraryDependencies ++= {
     "org.apache.spark" % "spark-core_2.11" % sparkVersion,
     "org.apache.spark" % "spark-streaming_2.11" % sparkVersion,
     "org.apache.spark" % "spark-sql_2.11" % sparkVersion,
+    "com.datastax.spark" % "spark-cassandra-connector_2.11" % "1.4.0-M1",
+    "com.datastax.spark"  %% "spark-cassandra-connector-embedded" % "1.4.0-M1",
     "org.json4s" % "json4s-jackson_2.11" % json4sVersion,
     "org.json4s" % "json4s-native_2.11" % json4sVersion,
     "io.spray" %% "spray-can" % sprayVersion,
