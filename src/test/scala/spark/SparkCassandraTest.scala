@@ -1,4 +1,4 @@
-package sc
+package spark
 
 import com.datastax.spark.connector.cql.CassandraConnector
 import com.datastax.spark.connector.embedded.EmbeddedCassandra
