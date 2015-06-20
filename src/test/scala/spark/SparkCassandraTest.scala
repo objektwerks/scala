@@ -7,6 +7,20 @@ import com.typesafe.config.ConfigFactory
 import org.apache.spark.{SparkContext, SparkConf}
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
+/*
+  Cassandra properties:
+
+  (rpc_address,127.0.0.1)
+  (jmx_port,7199)
+  (cluster_name,Test Cluster0)
+  (listen_address,127.0.0.1)
+  (native_transport_port,9042)
+  (ssl_storage_port,7100)
+  (storage_port,7000)
+  (seeds,127.0.0.1)
+
+  Occasionally a NoHostAvailableException occurs. Running Cassandra from the console mysteriously resovles the error.
+ */
 class SparkCassandraTest extends FunSuite with BeforeAndAfterAll {
   val props = ConfigFactory.load("spark.properties")
   val cassandra = EmbeddedCassandra
@@ -39,6 +53,7 @@ class SparkCassandraTest extends FunSuite with BeforeAndAfterAll {
   test("read") {
     val rdd = context.cassandraTable(keyspace = "test", table = "kv").cache
     assert(rdd.count == 3)
+    assert(rdd.first.getInt("value") == 1)
     assert(rdd.map(_.getInt("value")).sum == 6.0)
   }
 
