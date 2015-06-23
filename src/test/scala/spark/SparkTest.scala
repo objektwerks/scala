@@ -130,7 +130,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   }
 
   test("text") {
-    val rdd = context.textFile("license.mit").cache
+    val rdd = context.textFile("LICENSE").cache
     val totalLines = rdd.count
     assert(totalLines == 19)
 
@@ -140,9 +140,9 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     val longestLine = rdd.map(l => l.length).reduce((a, b) => Math.max(a, b))
     assert(longestLine == 77)
 
-    val wordCountRdd = rdd.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _).cache
+    val wordCountRdd = rdd.flatMap(l => l.split("\\P{L}+")).filter(_.nonEmpty).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _).cache
     val totalWords = wordCountRdd.count
-    assert(totalWords == 96)
+    assert(totalWords == 95)
 
     val maxCount = wordCountRdd.values.max
     val (word, count) = wordCountRdd.filter(_._2 == maxCount).first
@@ -150,7 +150,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   }
 
   test("dataframes") {
-    val df = sqlContext.read.json("src/test/resources/spark.data.frame.json.txt")
+    val df = sqlContext.read.json("src/test/resources/spark.json.txt")
     df.printSchema
     df.show
 
@@ -180,7 +180,7 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
     Until a fix is found, case classes must define fields in alphabetical order.
   */
   test("case class") {
-    val personRdd = sqlContext.read.json("src/test/resources/spark.data.frame.json.txt")
+    val personRdd = sqlContext.read.json("src/test/resources/spark.json.txt")
       .map(p => Person(p(0).asInstanceOf[Long], p(1).asInstanceOf[String]))
     val personDf = sqlContext.createDataFrame[Person](personRdd)
     personDf.registerTempTable("persons")
@@ -191,8 +191,8 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   test("stateless streaming") {
     val queue = mutable.Queue[RDD[String]]()
     val ds = streamingContext.queueStream(queue)
-    queue += context.makeRDD(Source.fromFile("license.mit").getLines.toSeq)
-    val wordCountDs = ds.flatMap(l => l.split("\\P{L}+")).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _)
+    queue += context.makeRDD(Source.fromFile("LICENSE").getLines.toSeq)
+    val wordCountDs = ds.flatMap(l => l.split("\\P{L}+")).filter(_.nonEmpty).map(_.toLowerCase).map(w => (w, 1)).reduceByKey(_ + _)
     wordCountDs.checkpoint(Milliseconds(500))
     wordCountDs.saveAsTextFiles(System.getProperty("user.home") + "/.scala/spark/ds")
     wordCountDs.foreachRDD(rdd => {
