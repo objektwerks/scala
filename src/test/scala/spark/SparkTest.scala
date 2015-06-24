@@ -36,7 +36,6 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
 
   override protected def afterAll(): Unit = {
     super.afterAll
-    streamingContext.awaitTerminationOrTimeout(2000)
     streamingContext.stop(stopSparkContext = true, stopGracefully = true)
   }
 
@@ -199,5 +198,6 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
       rdd.saveAsTextFile(System.getProperty("user.home") + "/.scala/spark/rdd")
     })
     streamingContext.start
+    streamingContext.awaitTerminationOrTimeout(2000)
   }
 }
