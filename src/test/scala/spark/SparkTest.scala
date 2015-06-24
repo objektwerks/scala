@@ -35,7 +35,6 @@ class SparkTest extends FunSuite with BeforeAndAfterAll {
   val sqlContext = new SQLContext(context)
 
   override protected def afterAll(): Unit = {
-    super.afterAll
     streamingContext.stop(stopSparkContext = true, stopGracefully = true)
   }
 
