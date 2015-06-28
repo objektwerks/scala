@@ -46,6 +46,7 @@ scalacOptions ++= Seq(
   "-language:reflectiveCalls",
   "-language:higherKinds",
   "-feature",
+  "-unchecked",
   "-deprecation",
   "-Xlint",
   "-Xfatal-warnings" // 2.12 flags (blows up ide compiler. "-Xexperimental", "-Ydelambdafy:method"
