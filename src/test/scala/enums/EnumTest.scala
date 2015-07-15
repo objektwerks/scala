@@ -2,25 +2,46 @@ package enums
 
 import org.scalatest.FunSuite
 
-object WeekDay extends Enumeration {
+object Weekday extends Enumeration {
   type WeekDay = Value
   val Mon, Tue, Wed, Thu, Fri, Sat, Sun = Value
+  def validate(weekday: Weekday.Value): Unit = {
+    assert(values.contains(weekday))
+  }
+}
+
+object Month {
+  sealed trait Enum
+  case object Jan extends Enum
+  case object Feb extends Enum
+  case object Mar extends Enum
+  case object Apr extends Enum
+  case object May extends Enum
+  case object Jun extends Enum
+  case object Jul extends Enum
+  case object Aug extends Enum
+  case object Sep extends Enum
+  case object Oct extends Enum
+  case object Nov extends Enum
+  case object Dec extends Enum
+  val values = Seq(Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec)
+  def validate(month: Enum): Unit = {
+    assert(values.contains(month))
+  }
 }
 
 class EnumTest extends FunSuite {
   test("java enum") {
-    assert(Lights.green == Lights.green)
-    assert(Lights.yellow == Lights.yellow)
-    assert(Lights.red == Lights.red)
+    assert(Lights.valueOf("green") == Lights.green)
+    assert(Lights.valueOf("yellow") == Lights.yellow)
+    assert(Lights.valueOf("red") == Lights.red)
   }
 
   test("scala enum") {
-    assert(WeekDay.values.contains(WeekDay.Mon))
-    assert(WeekDay.values.contains(WeekDay.Tue))
-    assert(WeekDay.values.contains(WeekDay.Wed))
-    assert(WeekDay.values.contains(WeekDay.Thu))
-    assert(WeekDay.values.contains(WeekDay.Fri))
-    assert(WeekDay.values.contains(WeekDay.Sat))
-    assert(WeekDay.values.contains(WeekDay.Sun))
+    Weekday.values.foreach(v => Weekday.validate(_))
+  }
+
+  test("alternative scala enum") {
+    Month.values.foreach(Month.validate(_))
   }
 }
