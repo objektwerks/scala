@@ -32,9 +32,9 @@ object Month {
 
 class EnumTest extends FunSuite {
   test("java enum") {
-    assert(Lights.valueOf("green") == Lights.green)
-    assert(Lights.valueOf("yellow") == Lights.yellow)
-    assert(Lights.valueOf("red") == Lights.red)
+    assert(Light.valueOf("green") == Light.green)
+    assert(Light.valueOf("yellow") == Light.yellow)
+    assert(Light.valueOf("red") == Light.red)
   }
 
   test("scala enum") {
