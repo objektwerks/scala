@@ -1,3 +1,3 @@
 package enums;
 
-public enum Lights { green, red, yellow }
+public enum Lights { green, yellow, red }

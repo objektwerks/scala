@@ -9,9 +9,9 @@ object WeekDay extends Enumeration {
 
 class EnumTest extends FunSuite {
   test("java enum") {
-    assert(Lights.red == Lights.red)
-    assert(Lights.yellow == Lights.yellow)
     assert(Lights.green == Lights.green)
+    assert(Lights.yellow == Lights.yellow)
+    assert(Lights.red == Lights.red)
   }
 
   test("scala enum") {
