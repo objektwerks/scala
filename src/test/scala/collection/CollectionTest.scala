@@ -330,7 +330,7 @@ class CollectionTest extends FunSuite {
     buffer.foreach(println)
   }
 
-  test("same interview question") {
+  test("same interview question, different solution") {
     def moduloThree(n: Int): Boolean = n % 3 == 0
     def moduloFive(n: Int): Boolean = n % 5 == 0
     def moduloThreeFive(n: Int): Boolean = moduloThree(n) && moduloFive(n)
