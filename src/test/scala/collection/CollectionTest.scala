@@ -325,6 +325,7 @@ class CollectionTest extends FunSuite {
       case i if moduloFive(i) => buffer += s"$i -> m5"
       case i => buffer += i.toString
     }
+    assert(buffer.size == 99)
     println(s"buffer size: ${buffer.size}")
     buffer.foreach(println)
   }
@@ -340,6 +341,7 @@ class CollectionTest extends FunSuite {
       else if (moduloFive(i)) buffer += s"$i -> m5"
       else buffer += i.toString
     }
+    assert(buffer.size == 99)
     println(s"buffer size: ${buffer.size}")
     buffer.foreach(println)
   }
