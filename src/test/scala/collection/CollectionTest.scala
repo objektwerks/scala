@@ -105,7 +105,7 @@ class CollectionTest extends FunSuite {
     val map = Map(1 -> "one", 2 -> "two", 3 -> "three")
     assert((1 to map.size flatMap map.get) == Vector("one", "two", "three"))
 
-    def g(v:Int) = List(v-1, v, v+1)
+    def g(v: Int) = List(v - 1, v, v + 1)
     val list = List(1, 2, 3)
     assert(list.map(i => g(i)) == List(List(0, 1, 2), List(1, 2, 3), List(2, 3, 4)))
     assert(list.flatMap(i => g(i)) == List(0, 1, 2, 1, 2, 3, 2, 3, 4))
@@ -113,7 +113,7 @@ class CollectionTest extends FunSuite {
 
   test("flatmap > list of list") {
     val listOfList: List[List[String]] = List(List("a", "b", "c"))
-    val flatMappedListOfList = listOfList flatMap(as => as.map(a => a.toUpperCase))
+    val flatMappedListOfList = listOfList flatMap (as => as.map(a => a.toUpperCase))
     assert(listOfList.length == 1)
     assert(flatMappedListOfList.length == 3)
   }
@@ -232,19 +232,23 @@ class CollectionTest extends FunSuite {
 
   test("for > flatmap > map") {
     val xs = List(2, 4)
-    val ys = List (3, 5)
+    val ys = List(3, 5)
     val forList = for (x <- xs; y <- ys) yield x * y
     val mapList = xs flatMap { e => ys map { o => e * o } }
-    assert (forList == List (2 * 3, 2 * 5, 4 * 3, 4 * 5))
-    assert (mapList == List (2 * 3, 2 * 5, 4 * 3, 4 * 5))
+    assert(forList == List(2 * 3, 2 * 5, 4 * 3, 4 * 5))
+    assert(mapList == List(2 * 3, 2 * 5, 4 * 3, 4 * 5))
   }
 
   test("for > flatmap > flatmap > map") {
     val xs = List(2, 4)
-    val ys = List (3, 5)
+    val ys = List(3, 5)
     val zs = List(1, 6)
     val forList = for (x <- xs; y <- ys; z <- zs) yield x * y * z
-    val mapList = xs flatMap { x => ys flatMap { y => { zs map { z => x * y * z } } } }
+    val mapList = xs flatMap { x => ys flatMap { y => {
+      zs map { z => x * y * z }
+    }
+    }
+    }
     assert(forList == List(6, 36, 10, 60, 12, 72, 20, 120))
     assert(mapList == List(6, 36, 10, 60, 12, 72, 20, 120))
   }
@@ -289,20 +293,54 @@ class CollectionTest extends FunSuite {
     assert(total == 1783293664)
   }
 
-  test("view") { // view unit test micro-benchmark
+  test("view") {
+    // view unit test micro-benchmark
     (1 to 10000000).view.map(_ % 10).filter(_ > 5).sum
   }
 
-  test("view non") { // view unit test micro-benchmark
+  test("view non") {
+    // view unit test micro-benchmark
     (1 to 10000000).map(_ % 10).filter(_ > 5).sum
   }
 
-  test("iterator") { // view unit test micro-benchmark. faster than view!
+  test("iterator") {
+    // view unit test micro-benchmark. faster than view!
     (1 to 10000000).iterator.map(_ % 10).filter(_ > 5).sum
   }
 
   test("stream") {
     val numberOfEvens = (1 to 100).toStream.count(_ % 2 == 0)
     assert(numberOfEvens == 50)
+  }
+
+  test("interview question") {
+    def moduloThree(n: Int): Boolean = n % 3 == 0
+    def moduloFive(n: Int): Boolean = n % 5 == 0
+    def moduloThreeFive(n: Int): Boolean = moduloThree(n) && moduloFive(n)
+    val buffer = ArrayBuffer[String]()
+    val range = Range(1, 100)
+    range foreach {
+      case i if moduloThreeFive(i) => buffer += s"$i -> m3 & m5"
+      case i if moduloThree(i) => buffer += s"$i -> m3"
+      case i if moduloFive(i) => buffer += s"$i -> m5"
+      case i => buffer += i.toString
+    }
+    println(s"buffer size: ${buffer.size}")
+    buffer.foreach(println)
+  }
+
+  test("same interview question") {
+    def moduloThree(n: Int): Boolean = n % 3 == 0
+    def moduloFive(n: Int): Boolean = n % 5 == 0
+    def moduloThreeFive(n: Int): Boolean = moduloThree(n) && moduloFive(n)
+    val buffer = ArrayBuffer[String]()
+    for (i <- 1 to 99) {
+      if (moduloThreeFive(i)) buffer += s"$i -> m3 & m5"
+      else if (moduloThree(i)) buffer += s"$i -> m3"
+      else if (moduloFive(i)) buffer += s"$i -> m5"
+      else buffer += i.toString
+    }
+    println(s"buffer size: ${buffer.size}")
+    buffer.foreach(println)
   }
 }
