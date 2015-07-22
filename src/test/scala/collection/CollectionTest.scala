@@ -314,12 +314,8 @@ class CollectionTest extends FunSuite {
   }
 
   test("interview question") {
-    def moduloThree(n: Int): Boolean = n % 3 == 0
-    def moduloFive(n: Int): Boolean = n % 5 == 0
-    def moduloThreeFive(n: Int): Boolean = moduloThree(n) && moduloFive(n)
     val buffer = ArrayBuffer[String]()
-    val range = Range(1, 100)
-    range foreach {
+    1 until 100 foreach {
       case i if moduloThreeFive(i) => buffer += s"$i -> m3 & m5"
       case i if moduloThree(i) => buffer += s"$i -> m3"
       case i if moduloFive(i) => buffer += s"$i -> m5"
@@ -331,9 +327,6 @@ class CollectionTest extends FunSuite {
   }
 
   test("same interview question, different solution") {
-    def moduloThree(n: Int): Boolean = n % 3 == 0
-    def moduloFive(n: Int): Boolean = n % 5 == 0
-    def moduloThreeFive(n: Int): Boolean = moduloThree(n) && moduloFive(n)
     val buffer = ArrayBuffer[String]()
     for (i <- 1 to 99) {
       if (moduloThreeFive(i)) buffer += s"$i -> m3 & m5"
@@ -345,4 +338,10 @@ class CollectionTest extends FunSuite {
     println(s"buffer size: ${buffer.size}")
     buffer.foreach(println)
   }
+
+  def moduloThree(n: Int): Boolean = n % 3 == 0
+
+  def moduloFive(n: Int): Boolean = n % 5 == 0
+
+  def moduloThreeFive(n: Int): Boolean = moduloThree(n) && moduloFive(n)
 }
