@@ -21,16 +21,14 @@ case class Message(kindOf: KindOf, from: String, message: String)
 
 class Master extends Actor {
   println(s"Master created: $self")
-  private implicit val timeout = new Timeout(3, TimeUnit.SECONDS)
+  private implicit val timeout = new Timeout(1, TimeUnit.SECONDS)
   private val worker: ActorRef = context.actorOf(Props[Service], name = "worker")
 
   def receive = {
     case Message(Tell, from, message) => println(s"\nMaster received $message from $from.")
     case Message(TellWorker, from, message) => worker ! Message(Tell, s"$from -> Master", message)
     case Message(Ask, from, message) => sender ! s"Master received and responded to $message from $from."
-    case Message(AskWorker, from, message) =>
-      val future = worker ? Message(AskWorker, s"$from -> Master", message)
-      future pipeTo sender
+    case Message(AskWorker, from, message) => worker ? Message(AskWorker, s"$from -> Master", message) pipeTo sender
     case Message(AbortWorker, from, message) => worker ! Message(AbortWorker, s"$from -> Master", message)
     case _ => println("Master received an invalid message.")
   }
@@ -130,7 +128,6 @@ class TellAskTest extends FunSuite with BeforeAndAfterAll {
 
   test("system ! master ! abort worker") {
     master ! Message(AbortWorker, "System", "abort ! message")
-    Thread.sleep(1000) // Allow system time to recreate aborted worker and process messages.
     master ! Message(TellWorker, "System", "AFTER ABORT tell ! message")
   }
 }
