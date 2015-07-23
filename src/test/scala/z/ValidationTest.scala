@@ -16,40 +16,30 @@ object Profile {
     if (email.isEmpty) "Please, enter your email.".failure else email.success
   }
 
-  def validate(profile: Profile) : ValidationNel[String, Profile] = {
+  def validate(profile: Profile): ValidationNel[String, Profile] = {
     (validateName(profile.name).toValidationNel |@| validateEmail(profile.email).toValidationNel) {
       Profile(_, _)
     }
   }
 
-  def validate(validation: ValidationNel[String, Profile]): Unit = {
+  def isValid(validation: ValidationNel[String, Profile]): Boolean = {
     validation match {
-      case Success(s) =>
-        assert(validation.isSuccess)
-        persist(s)
-      case Failure(f) =>
-        assert(validation.isFailure)
-        assert(f.toList.size == 2)
-        println(s"Profile is invalid: $f")
-        println("Invalid profile as list: " + f.toList)
+      case Success(s) => true
+      case Failure(f) => false
     }
-  }
-
-  def persist(profile: Profile): Unit = {
-    println(s"Profile persisted: $profile")
   }
 }
 
 class ValidationTest extends FunSuite {
   test("valid profile") {
     val profile = Profile("Barney Rebel", "barney.rebel@gmail.com")
-    val isProfileValid = Profile.validate(profile)
-    Profile.validate(isProfileValid)
+    val validationNel = Profile.validate(profile)
+    assert(Profile.isValid(validationNel))
   }
 
   test("invalid profile") {
-    val profile = Profile("", "")
-    val isProfileValid = Profile.validate(profile)
-    Profile.validate(isProfileValid)
+    val invalidProfile = Profile("", "")
+    val validationNel = Profile.validate(invalidProfile)
+    assert(!Profile.isValid(validationNel))
   }
 }
