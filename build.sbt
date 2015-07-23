@@ -15,6 +15,8 @@ libraryDependencies ++= {
   val json4sVersion = "3.2.11"
   Seq(
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+    "com.typesafe.akka" % "akka-http-experimental_2.11" % "1.0",
+    "com.typesafe.akka" % "akka-stream-experimental_2.11" % "1.0",
     "com.typesafe.slick" % "slick_2.11" % "3.0.0",
     "com.typesafe" % "config" % "1.3.0",
     "org.scalaz" % "scalaz-core_2.11" % "7.1.2",
