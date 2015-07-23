@@ -16,7 +16,7 @@ libraryDependencies ++= {
   Seq(
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
     "com.typesafe.slick" % "slick_2.11" % "3.0.0",
-    "com.typesafe" % "config" % "1.2.1",
+    "com.typesafe" % "config" % "1.3.0",
     "org.scalaz" % "scalaz-core_2.11" % "7.1.2",
     "org.scala-lang.modules" % "scala-async_2.11" % "0.9.2",
     "org.scalafx" % "scalafx_2.11" % "8.0.40-R8",
