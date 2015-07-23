@@ -17,7 +17,7 @@ class OptionTest extends FunSuite {
       case None => throw new IllegalArgumentException("option equals none")
     }
     assert(opt.get == 1)
-   }
+  }
 
   test("option isDefined & isEmpty") {
     val some = Some("value")
@@ -42,7 +42,7 @@ class OptionTest extends FunSuite {
 
   test("option exists") {
     val number = Some(1)
-    assert(number.exists(n => n > 0 ))
+    assert(number.exists(n => n > 0))
   }
 
   test("option for") {
@@ -64,7 +64,7 @@ class OptionTest extends FunSuite {
 
   test("option collect") {
     val value = Some(1)
-    value collect { case v:Int => assert(v == 1) }
+    value collect { case v: Int => assert(v == 1) }
   }
 
   test("option foreach") {
