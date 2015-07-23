@@ -19,8 +19,7 @@ with WordSpecLike with Matchers with BeforeAndAfterAll {
 
   override protected def afterAll(): Unit = {
     super.afterAll
-    system.shutdown
-    system.awaitTermination
+    system.terminate
   }
 
   "Ping actor" should {

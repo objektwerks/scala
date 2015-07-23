@@ -39,8 +39,7 @@ class RouterTest extends FunSuite with BeforeAndAfterAll {
 
   override protected def afterAll(): Unit = {
     super.afterAll
-    system.shutdown
-    system.awaitTermination
+    system.terminate
   }
 
   test("router") {
