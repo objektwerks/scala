@@ -322,8 +322,6 @@ class CollectionTest extends FunSuite {
       case i => buffer += i.toString
     }
     assert(buffer.size == 99)
-    println(s"buffer size: ${buffer.size}")
-    buffer.foreach(println)
   }
 
   test("same interview question, different solution") {
@@ -335,8 +333,6 @@ class CollectionTest extends FunSuite {
       else buffer += i.toString
     }
     assert(buffer.size == 99)
-    println(s"buffer size: ${buffer.size}")
-    buffer.foreach(println)
   }
 
   def moduloThree(n: Int): Boolean = n % 3 == 0
