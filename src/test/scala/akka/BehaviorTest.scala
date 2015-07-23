@@ -2,7 +2,7 @@ package akka
 
 import java.util.concurrent.TimeUnit
 
-import akka.actor.{Props, ActorRef, Actor, ActorSystem}
+import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.util.Timeout
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 

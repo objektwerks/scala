@@ -5,7 +5,6 @@ import org.scalatest.FunSuite
 import scala.io.Source
 import scala.util.control.Exception._
 import scala.util.{Success, Try}
-import scalafx.beans.value
 
 class OptionTest extends FunSuite {
   test("option") {
