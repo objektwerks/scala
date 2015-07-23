@@ -8,6 +8,7 @@ import akka.util.Timeout
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
 import scala.concurrent.ExecutionContext.Implicits.{global => ec}
+import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
 sealed trait KindOf
@@ -93,7 +94,8 @@ class TellAskTest extends FunSuite with BeforeAndAfterAll {
 
   override protected def afterAll(): Unit = {
     super.afterAll
-    system.terminate
+    system.shutdown
+    system.awaitTermination(3 seconds)
   }
 
   test("actor selection") {

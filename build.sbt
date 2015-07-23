@@ -10,7 +10,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= {
-  val akkaVersion = "2.4-M2"
+  val akkaVersion = "2.3.12"
   val sprayVersion = "1.3.3"
   val json4sVersion = "3.2.11"
   Seq(

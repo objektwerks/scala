@@ -6,6 +6,8 @@ import akka.actor._
 import akka.util.Timeout
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
+import scala.concurrent.duration._
+
 class Service extends Actor {
   def receive = {
     case message: String => println(s"Service: $message")
@@ -27,7 +29,8 @@ class DeadLetterTest extends FunSuite  with BeforeAndAfterAll {
 
   override protected def afterAll(): Unit = {
     super.afterAll
-    system.terminate
+    system.shutdown
+    system.awaitTermination(3 seconds)
   }
 
   test("dead letter") {
