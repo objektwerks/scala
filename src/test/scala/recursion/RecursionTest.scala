@@ -5,11 +5,11 @@ import org.scalatest.FunSuite
 
 class RecursionTest extends FunSuite{
   test("non tail callable factorial") {
-    assert(Factorial.nonTailCallableFactorial(4) == 24)
+    assert(Factorial.nonTailCallable(4) == 24)
   }
 
   test("tail callable factorial") {
-    assert(Factorial.tailCallableFactorial(4) == 24)
+    assert(Factorial.tailCallable(4) == 24)
   }
 
   test("naive recursive fibonacci") {
