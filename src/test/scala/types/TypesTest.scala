@@ -11,17 +11,6 @@ trait Off { def off(): Int = -1 }
 // Class with Compound Types and Traits
 class Robot(power: On with Off) extends Speach with Emotion
 
-// Type Constructor with Type Parameter
-class IBox[T]  // Invariant
-class CBox[+T] // Covariant
-class XBox[-T] // Contravariant
-
-// Type Bounds
-class Parent
-class Child extends Parent
-
-
-
 // Covariant
 sealed abstract class Animal(name: String) { def speak: String }
 class Cat(name: String) extends Animal(name) { override def speak = "meow meow" }
