@@ -13,13 +13,11 @@ libraryDependencies ++= {
   val sprayVersion = "1.3.3"
   val json4sVersion = "3.2.11"
   Seq(
-    "com.typesafe.slick" % "slick_2.11" % "3.0.0",
     "com.typesafe" % "config" % "1.3.0",
     "org.scalaz" % "scalaz-core_2.11" % "7.1.2",
     "org.scala-lang.modules" % "scala-async_2.11" % "0.9.4",
     "org.scalafx" % "scalafx_2.11" % "8.0.40-R8",
     "net.databinder.dispatch" % "dispatch-core_2.11" % "0.11.3",
-    "com.h2database" % "h2" % "1.4.187",
     "org.json4s" % "json4s-jackson_2.11" % json4sVersion,
     "org.json4s" % "json4s-native_2.11" % json4sVersion,
     "io.spray" %% "spray-can" % sprayVersion,
