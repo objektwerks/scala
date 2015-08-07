@@ -9,8 +9,7 @@ resolvers ++= Seq(
   "Scalaz Bintray" at "http://dl.bintray.com/scalaz/releases"
 )
 
-libraryDependencies ++= {
-  val sprayVersion = "1.3.3"
+libraryDependencies ++= {emov
   val json4sVersion = "3.2.11"
   Seq(
     "com.typesafe" % "config" % "1.3.0",
@@ -20,15 +19,10 @@ libraryDependencies ++= {
     "net.databinder.dispatch" % "dispatch-core_2.11" % "0.11.3",
     "org.json4s" % "json4s-jackson_2.11" % json4sVersion,
     "org.json4s" % "json4s-native_2.11" % json4sVersion,
-    "io.spray" %% "spray-can" % sprayVersion,
-    "io.spray" %% "spray-routing" % sprayVersion,
-    "io.spray" %%  "spray-json" % "1.3.2",
     "org.slf4j" % "slf4j-api" % "1.7.12",
     "ch.qos.logback" % "logback-classic" % "1.1.3",
-    "io.spray" %% "spray-testkit" % sprayVersion  % "test",
     "org.scalacheck" % "scalacheck_2.11" % "1.12.4" % "test",
-    "org.scalatest" % "scalatest_2.11" % "2.2.5" % "test",
-    "org.specs2" %% "specs2-core" % "2.4.17" % "test"
+    "org.scalatest" % "scalatest_2.11" % "2.2.5" % "test"
   )
 }
 
