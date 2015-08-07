@@ -9,7 +9,7 @@ resolvers ++= Seq(
   "Scalaz Bintray" at "http://dl.bintray.com/scalaz/releases"
 )
 
-libraryDependencies ++= {emov
+libraryDependencies ++= {
   val json4sVersion = "3.2.11"
   Seq(
     "com.typesafe" % "config" % "1.3.0",
