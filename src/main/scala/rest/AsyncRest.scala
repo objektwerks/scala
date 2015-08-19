@@ -16,7 +16,7 @@ object AsyncRest {
     await(futureJoke)
   }
 
-  def futureJoke: Future[String] = {
+  private def futureJoke: Future[String] = {
     val future = Http(url(jokeUrl) OK as.String)
     future map {
       json => parseJson(json)
