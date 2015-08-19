@@ -1,4 +1,4 @@
-package async
+package future
 
 import org.scalatest.FunSuite
 import rest.AsyncRest
