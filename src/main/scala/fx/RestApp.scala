@@ -2,7 +2,7 @@ package fx
 
 import rest.AsyncRest
 
-import scala.concurrent.ExecutionContext.Implicits.{global => ec}
+import scala.concurrent.ExecutionContext
 import scalafx.Includes._
 import scalafx.application.{JFXApp, Platform}
 import scalafx.event.ActionEvent
@@ -12,6 +12,8 @@ import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox, VBox}
 
 object RestApp extends JFXApp {
+  private implicit val ec = ExecutionContext.global
+
   private val jokeLabel = new Label {
     text = "Joke:"
   }
