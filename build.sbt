@@ -5,15 +5,10 @@ version := "1.0"
 scalaVersion := "2.11.7"
 ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 
-resolvers ++= Seq(
-  "Scalaz Bintray" at "http://dl.bintray.com/scalaz/releases"
-)
-
 libraryDependencies ++= {
   val json4sVersion = "3.2.11"
   Seq(
     "com.typesafe" % "config" % "1.3.0",
-    "org.scalaz" % "scalaz-core_2.11" % "7.1.2",
     "org.scala-lang.modules" % "scala-async_2.11" % "0.9.4",
     "org.scalafx" % "scalafx_2.11" % "8.0.40-R8",
     "net.databinder.dispatch" % "dispatch-core_2.11" % "0.11.3",
