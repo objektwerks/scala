@@ -1,4 +1,4 @@
-package rest
+package fx
 
 import dispatch._
 import org.json4s.DefaultFormats

@@ -2,8 +2,6 @@ package fx
 
 import javafx.{concurrent => jfxc}
 
-import rest.AsyncRest
-
 import scala.concurrent.ExecutionContext
 import scalafx.Includes._
 import scalafx.application.JFXApp
