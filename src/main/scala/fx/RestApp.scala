@@ -4,8 +4,7 @@ import javafx.{concurrent => jfxc}
 
 import rest.AsyncRest
 
-import scala.concurrent.duration._
-import scala.concurrent.{Await, ExecutionContext}
+import scala.concurrent.ExecutionContext
 import scalafx.Includes._
 import scalafx.application.JFXApp
 import scalafx.concurrent.Task
@@ -17,7 +16,7 @@ import scalafx.scene.layout.VBox
 
 object JokeTask extends Task(new jfxc.Task[String] {
   override def call(): String = {
-    Await.result[String](AsyncRest.asyncJoke, 10 seconds)
+    AsyncRest.joke
   }
 })
 

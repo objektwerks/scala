@@ -160,10 +160,6 @@ class FutureTest extends FunSuite {
   }
 
   test("async rest") {
-    val future = AsyncRest.asyncJoke
-    future onComplete {
-      case Success(joke) => assert(joke.nonEmpty)
-      case Failure(failure) => throw failure
-    }
+    assert(AsyncRest.joke.nonEmpty)
   }
 }
