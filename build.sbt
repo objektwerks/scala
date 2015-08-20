@@ -6,12 +6,9 @@ scalaVersion := "2.11.7"
 ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 
 libraryDependencies ++= {
-  val json4sVersion = "3.2.11"
   Seq(
     "com.typesafe" % "config" % "1.3.0",
     "org.scala-lang.modules" % "scala-async_2.11" % "0.9.4",
-    "org.json4s" % "json4s-jackson_2.11" % json4sVersion,
-    "org.json4s" % "json4s-native_2.11" % json4sVersion,
     "org.slf4j" % "slf4j-api" % "1.7.12",
     "ch.qos.logback" % "logback-classic" % "1.1.3",
     "org.scalacheck" % "scalacheck_2.11" % "1.12.4" % "test",
