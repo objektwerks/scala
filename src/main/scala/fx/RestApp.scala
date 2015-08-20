@@ -16,11 +16,13 @@ import scalafx.scene.layout.VBox
 
 object JokeTask extends Task(new jfxc.Task[String] {
   override def call(): String = {
-    AsyncRest.joke
+    new AsyncRest().joke // AsyncRest fails on second request! It's a net.databinder.dispatch mystery.:)
   }
 })
 
 object RestApp extends JFXApp {
+  private val ec = ExecutionContext.global
+
   val jokeLabel = new Label {
     text = "Joke:"
   }
@@ -39,7 +41,7 @@ object RestApp extends JFXApp {
   val jokeButton = new Button {
     text = "New Joke"
     disable <== JokeTask.running
-    onAction = (e: ActionEvent) => { ExecutionContext.global.execute(JokeTask) }
+    onAction = (e: ActionEvent) => { ec.execute(JokeTask) }
   }
 
   val jokePane = new VBox {

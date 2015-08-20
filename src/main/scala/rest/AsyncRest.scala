@@ -7,13 +7,13 @@ import org.json4s.jackson.JsonMethods._
 import scala.concurrent.duration._
 import scala.concurrent.{Await, ExecutionContext}
 
-object AsyncRest {
+class AsyncRest {
   private implicit val ec = ExecutionContext.global
   private implicit lazy val formats = DefaultFormats
-  private val service = url("http://api.icndb.com/jokes/random/")
-  Http.configure(_.setAllowPoolingConnections(true).setConnectTimeout(30000))
 
   def joke: String = {
+    Http.configure(_.setConnectTimeout(10000))
+    val service = url("http://api.icndb.com/jokes/random/")
     val request = Http(service.GET)
     val response = Await.result(request, 10 seconds)
     response.getStatusCode match {
