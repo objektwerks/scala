@@ -4,20 +4,15 @@ import dispatch._
 import org.json4s.DefaultFormats
 import org.json4s.jackson.JsonMethods._
 
-import scala.async.Async.{async, await}
-import scala.concurrent.ExecutionContext.Implicits.{global => ec}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 object AsyncRest {
+  private implicit val ec = ExecutionContext.global
   private implicit lazy val formats = DefaultFormats
-  private val jokeUrl = "http://api.icndb.com/jokes/random/"
+  private val jokeUrl = url("http://api.icndb.com/jokes/random/")
 
-  def asyncJoke: Future[String] = async {
-    await(futureJoke)
-  }
-
-  private def futureJoke: Future[String] = {
-    val future = Http(url(jokeUrl) OK as.String)
+  def asyncJoke: Future[String] = {
+    val future = Http(jokeUrl OK as.String)
     future map {
       json => parseJson(json)
     }

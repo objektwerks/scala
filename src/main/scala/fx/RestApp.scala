@@ -1,65 +1,66 @@
 package fx
 
+import javafx.{concurrent => jfxc}
+
 import rest.AsyncRest
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.duration._
+import scala.concurrent.{Await, ExecutionContext}
 import scalafx.Includes._
-import scalafx.application.{JFXApp, Platform}
+import scalafx.application.JFXApp
+import scalafx.concurrent.Task
 import scalafx.event.ActionEvent
-import scalafx.geometry.{Insets, Pos}
+import scalafx.geometry.Insets
 import scalafx.scene.Scene
 import scalafx.scene.control._
-import scalafx.scene.layout.{BorderPane, HBox, VBox}
+import scalafx.scene.layout.VBox
+
+object JokeTask extends Task(new jfxc.Task[String] {
+  override def call(): String = {
+    Await.result(AsyncRest.asyncJoke, 30 seconds)
+  }
+})
 
 object RestApp extends JFXApp {
-  private implicit val ec = ExecutionContext.global
-
-  private val jokeLabel = new Label {
+  val jokeLabel = new Label {
     text = "Joke:"
   }
 
-  private val jokeText = new TextArea {
+  val jokeText = new TextArea {
     wrapText = true
+    text <== JokeTask.value
   }
 
-  private val indicator = new ProgressBar {
-    progress = 0.0
+  val indicator = new ProgressIndicator {
+    prefWidth = 50
+    progress = -1.0
+    visible <== JokeTask.running
   }
 
-  private val jokeButton = new Button {
+  val jokeButton = new Button {
     text = "New Joke"
-    defaultButton = true
-    onAction = (e: ActionEvent) => {
-      Platform.runLater(indicator.progress = 0.99)
-      val future = AsyncRest.asyncJoke
-      future.map {
-        text => Platform.runLater(jokeText.text = text)
-        Platform.runLater(indicator.progress = 0.0)
-      }
-    }
+    disable <== JokeTask.running
+    onAction = (e: ActionEvent) => { ExecutionContext.global.execute(JokeTask) }
   }
 
-  private val jokePane = new BorderPane {
-    center = new VBox {
-      maxHeight = 140
-      spacing = 6
-      padding = Insets(6)
-      children = List(jokeLabel, jokeText, jokeButton)
-    }
-    bottom = new HBox {
-      alignment = Pos.BaselineRight
-      spacing = 6
-      padding = Insets(6)
-      children = indicator
-    }
-  }
-
-  private val appPane = new VBox {
+  val jokePane = new VBox {
     maxWidth = 400
     maxHeight = 400
     spacing = 6
     padding = Insets(6)
-    children = List(jokePane)
+    children = List(jokeLabel, jokeText)
+  }
+
+  val toolbar = new ToolBar {
+    content = List(jokeButton, new Separator(), indicator)
+  }
+
+  val appPane = new VBox {
+    maxWidth = 400
+    maxHeight = 400
+    spacing = 6
+    padding = Insets(6)
+    children = List(toolbar, jokePane)
   }
 
   stage = new JFXApp.PrimaryStage {
