@@ -10,11 +10,11 @@ import scala.concurrent.{Await, ExecutionContext}
 object AsyncRest {
   private implicit val ec = ExecutionContext.global
   private implicit lazy val formats = DefaultFormats
-  private val jokeUrl = url("http://api.icndb.com/jokes/random/")
+  private val service = url("http://api.icndb.com/jokes/random/")
   Http.configure(_.setAllowPoolingConnections(true).setConnectTimeout(30000))
 
   def joke: String = {
-    val request = Http(jokeUrl.GET)
+    val request = Http(service.GET)
     val response = Await.result(request, 10 seconds)
     response.getStatusCode match {
       case 200 => parseJson(response.getResponseBody)
