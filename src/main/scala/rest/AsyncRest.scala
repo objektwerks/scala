@@ -10,14 +10,14 @@ import scala.concurrent.{Await, ExecutionContext}
 object AsyncRest {
   private implicit val ec = ExecutionContext.global
   private implicit lazy val formats = DefaultFormats
-  private val jokeUrl = url("http://api.icndb.com/jokes/random/")
+  private val jokeUrl = "http://api.icndb.com/jokes/random/"
 
   def joke: String = {
-    val request = Http(jokeUrl.GET)
+    val request = Http(url(jokeUrl).GET)
     val response = Await.result(request, 10 seconds)
     response.getStatusCode match {
       case 200 => parseJson(response.getResponseBody)
-      case _ => response.getStatusText
+      case _ => s"${response.getStatusCode} : ${response.getStatusText}"
     }
   }
 
