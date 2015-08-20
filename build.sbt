@@ -21,6 +21,8 @@ libraryDependencies ++= {
   )
 }
 
+unmanagedJars in Compile += Attributed.blank(file(System.getenv("JAVA_HOME") + "/jre/lib/ext/jfxrt.jar"))
+
 scalacOptions ++= Seq(
   "-language:postfixOps",
   "-language:implicitConversions",

@@ -17,7 +17,7 @@ import scalafx.scene.layout.VBox
 
 object JokeTask extends Task(new jfxc.Task[String] {
   override def call(): String = {
-    Await.result(AsyncRest.asyncJoke, 30 seconds)
+    Await.result[String](AsyncRest.asyncJoke, 10 seconds)
   }
 })
 
