@@ -1,7 +1,6 @@
 package future
 
 import org.scalatest.FunSuite
-import rest.AsyncRest
 
 import scala.async.Async._
 import scala.concurrent._
@@ -157,9 +156,5 @@ class FutureTest extends FunSuite {
       case Success(result) => assert(result == 3)
       case Failure(failure) => throw failure
     }
-  }
-
-  test("async rest") {
-    assert(AsyncRest.joke.nonEmpty)
   }
 }
