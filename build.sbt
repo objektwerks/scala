@@ -10,8 +10,6 @@ libraryDependencies ++= {
   Seq(
     "com.typesafe" % "config" % "1.3.0",
     "org.scala-lang.modules" % "scala-async_2.11" % "0.9.4",
-    "org.scalafx" % "scalafx_2.11" % "8.0.40-R8",
-    "net.databinder.dispatch" % "dispatch-core_2.11" % "0.11.3",
     "org.json4s" % "json4s-jackson_2.11" % json4sVersion,
     "org.json4s" % "json4s-native_2.11" % json4sVersion,
     "org.slf4j" % "slf4j-api" % "1.7.12",
@@ -20,8 +18,6 @@ libraryDependencies ++= {
     "org.scalatest" % "scalatest_2.11" % "2.2.5" % "test"
   )
 }
-
-unmanagedJars in Compile += Attributed.blank(file(System.getenv("JAVA_HOME") + "/jre/lib/ext/jfxrt.jar"))
 
 scalacOptions ++= Seq(
   "-language:postfixOps",
