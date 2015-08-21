@@ -11,7 +11,6 @@ libraryDependencies ++= {
     "org.scala-lang.modules" % "scala-async_2.11" % "0.9.4",
     "org.slf4j" % "slf4j-api" % "1.7.12",
     "ch.qos.logback" % "logback-classic" % "1.1.3",
-    "org.scalacheck" % "scalacheck_2.11" % "1.12.4" % "test",
     "org.scalatest" % "scalatest_2.11" % "2.2.5" % "test"
   )
 }
