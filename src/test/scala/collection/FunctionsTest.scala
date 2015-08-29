@@ -6,7 +6,7 @@ import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 import scala.language.postfixOps
 
 class FunctionsTest extends FunSuite {
-  test("seq") {
+  test("seq *") {
     val seq = Seq(1, 2, 3)
     assert(seq == 1 +: Seq(2, 3))
     assert(seq == Seq(1, 2) :+ 3)
