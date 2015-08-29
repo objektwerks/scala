@@ -139,21 +139,19 @@ class FunctionsTest extends FunSuite {
   test("foreach") {
     val seq = Seq(1, 2, 3)
     seq.foreach(i => assert(i > 0))
-
     val map = Map("a" -> 1, "b" -> 2, "c" -> 3)
-    map.foreach((t) => assert(t._1.length > 0 && t._2 > 0))
+    map.foreach(t => assert(t._1.length == 1 && t._2 > 0))
   }
 
   test("for") {
-    for (i <- 1 to 3) {
-      assert(i > 0)
-    }
-
+    for (i <- 1 to 3) assert(i > 0)
     val map = Map("a" -> 1, "b" -> 2, "c" -> 3)
     for (t <- map) {
-      assert(t._1.length > 0 && t._2 > 0)
+      assert(t._1.length == 1 && t._2 > 0)
     }
+  }
 
+  test("for > yield") {
     val seq = Seq(1, 2, 3)
     val result = for (e <- seq if e > 0) yield e * 2
     assert(result == Seq(2, 4, 6))
