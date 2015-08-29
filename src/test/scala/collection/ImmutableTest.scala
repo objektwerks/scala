@@ -68,7 +68,7 @@ class ImmutableTest extends FunSuite {
     assert(result == 30000000)
   }
 
-  test("view non") {
+  test("view less") {
     val result = (1 to 10000000).map(_ % 10).filter(_ > 5).sum
     assert(result == 30000000)
   }
