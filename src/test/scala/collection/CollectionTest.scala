@@ -53,7 +53,7 @@ class CollectionTest extends FunSuite {
     assert(list == List(1) ++: List(2))
   }
 
-  test("vector ops") {
+  test("vector") {
     val vector = Vector(1, 2, 3)
     assert(vector.head == 1)
     assert(vector.tail == Vector(2, 3))
