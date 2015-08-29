@@ -45,4 +45,18 @@ class RecursionTest extends FunSuite{
     assert(sequence.size == 47)
     println("Fibonacci sequence: " + sequence)
   }
+
+  test("split recursive sum") {
+    def sum(ints: IndexedSeq[Int]): Int = {
+      if (ints.size <= 1)
+        ints.headOption getOrElse 0
+      else {
+        val (l, r) = ints.splitAt(ints.length / 2)
+        sum(l) + sum(r)
+      }
+    }
+    val range = Range(1, 1000000)
+    val total = sum(range)
+    assert(total == 1783293664)
+  }
 }
