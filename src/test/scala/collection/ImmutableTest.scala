@@ -55,11 +55,10 @@ class ImmutableTest extends FunSuite {
   }
 
   test("tuple") {
-    val (first, last) = ("john", "doe")
-    assert(first == "john" && last == "doe")
-
-    val (city, state) = "Tampa" -> "Florida"
-    assert(city == "Tampa" && state == "Florida")
+    val (first, last) = ("fred", "flintstone")
+    assert(first == "fred" && last == "flintstone")
+    val (city, state) = "barney" -> "rebel"
+    assert(city == "barney" && state == "rebel")
   }
 
   test("view") {
