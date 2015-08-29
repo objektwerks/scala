@@ -7,32 +7,53 @@ import scala.collection.parallel.immutable.ParRange
 import scala.language.postfixOps
 
 class CollectionTest extends FunSuite {
-  test("list symbols") {
-    val listOneTwo = List(1, 2)
-    assert(listOneTwo == 1 :: 2 :: Nil)
-    assert(listOneTwo == List(1) ::: List(2))
-    assert(listOneTwo == 1 :: List(2))
-    assert(listOneTwo == 1 +: List(2))
-    assert(listOneTwo == List(1) :+ 2)
-    assert(listOneTwo == List(1) ++ List(2))
-    assert(listOneTwo == List(1) ++: List(2))
+  test("seq symbols") {
+    val seq = Seq(1, 2)
+    assert(seq == 1 :: 2 :: Nil)
+    assert(seq == 1 +: Seq(2))
+    assert(seq == Seq(1) :+ 2)
+    assert(seq == Seq(1) ++ Seq(2))
+    assert(seq == Seq(1) ++: Seq(2))
   }
 
   test("set symbols") {
-    val setOneTwo = Set(1, 2)
-    assert(setOneTwo == Set(1) ++ Set(2))
-    assert(setOneTwo == Set(1) + 2)
-    assert(setOneTwo == Set(1, 2, 3) - 3)
+    val set = Set(1, 2)
+    assert(set == Set(1) ++ Set(2))
+    assert(set == Set(1) + 2)
+    assert(set == Set(1, 2, 3) - 3)
+    assert(set.contains(1))
   }
 
   test("map symbols") {
-    val mapOneTwo = Map(1 -> 1, 2 -> 2)
-    assert(mapOneTwo == Map(1 -> 1) ++ Map(2 -> 2))
-    assert(mapOneTwo == Map(1 -> 1) + (2 -> 2))
-    assert(mapOneTwo == Map(1 -> 1, 2 -> 2, 3 -> 3) - 3)
+    val map = Map(1 -> 1, 2 -> 2)
+    assert(map == Map(1 -> 1) ++ Map(2 -> 2))
+    assert(map == Map(1 -> 1) + (2 -> 2))
+    assert(map == Map(1 -> 1, 2 -> 2, 3 -> 3) - 3)
+    assert(map.get(1).get == 1)
   }
 
-  test("vector") {
+  test("vector symbols") {
+    val vector = Vector(1, 2)
+    assert(vector == 1 +: Vector(2))
+    assert(vector == Vector(1) :+ 2)
+    assert(vector == Vector(1) ++ Vector(2))
+    assert(vector == Vector(1) ++: Vector(2))
+  }
+
+  test("list symbols") {
+    val list = List(1, 2)
+    assert(list == List(1) ::: List(2))
+    assert(list == 1 :: List(2))
+    assert(list == 1 :: 2 :: Nil)
+    assert(list == List(1) ::: List(2))
+    assert(list == 1 :: List(2))
+    assert(list == 1 +: List(2))
+    assert(list == List(1) :+ 2)
+    assert(list == List(1) ++ List(2))
+    assert(list == List(1) ++: List(2))
+  }
+
+  test("vector ops") {
     val vector = Vector(1, 2, 3)
     assert(vector.head == 1)
     assert(vector.tail == Vector(2, 3))
@@ -51,25 +72,18 @@ class CollectionTest extends FunSuite {
     assert(vector.mkString(", ") == "1, 2, 3")
   }
 
-  test("list") {
-    val range = List.range(1, 10)
-    assert(range.filter(_ % 2 == 0) == List(2, 4, 6, 8))
-  }
+  test("tuple") {
+    val (first, last) = ("john", "doe")
+    assert(first == "john" && last == "doe")
 
-  test("k-v map") {
-    val map = Map(1 -> "a", 2 -> "b")
-    assert(map.getOrElse(1, "z") == "a")
-  }
-
-  test("set") {
-    val set = Set(1, 2, 3)
-    assert(set.contains(1))
+    val (city, state) = "Tampa" -> "Florida"
+    assert(city == "Tampa" && state == "Florida")
   }
 
   test("array buffer") {
-    var array = ArrayBuffer(1, 2, 3)
-    assert((array += 4) == ArrayBuffer(1, 2, 3, 4))
-    assert((array -= 4) == ArrayBuffer(1, 2, 3))
+    var buffer = ArrayBuffer(1, 2, 3)
+    assert((buffer += 4) == ArrayBuffer(1, 2, 3, 4))
+    assert((buffer -= 4) == ArrayBuffer(1, 2, 3))
   }
 
   test("diff") {
@@ -111,7 +125,7 @@ class CollectionTest extends FunSuite {
     assert(list.flatMap(i => g(i)) == List(0, 1, 2, 1, 2, 3, 2, 3, 4))
   }
 
-  test("flatmap > list of list") {
+  test("flatmap > list of seq") {
     val listOfList: List[List[String]] = List(List("a", "b", "c"))
     val flatMappedListOfList = listOfList flatMap (as => as.map(a => a.toUpperCase))
     assert(listOfList.length == 1)
@@ -171,14 +185,6 @@ class CollectionTest extends FunSuite {
     val tupleOfVectors: (Vector[Int], Vector[Int]) = Vector(1, 2, 3, 4).splitAt(2)
     val expectedTupleOfVectors: (Vector[Int], Vector[Int]) = (Vector(1, 2), Vector(3, 4))
     assert(tupleOfVectors == expectedTupleOfVectors)
-  }
-
-  test("tuple") {
-    val (first, last) = ("john", "doe")
-    assert(first == "john" && last == "doe")
-
-    val (city, state) = "Tampa" -> "Florida"
-    assert(city == "Tampa" && state == "Florida")
   }
 
   test("unzip") {
@@ -244,11 +250,7 @@ class CollectionTest extends FunSuite {
     val ys = List(3, 5)
     val zs = List(1, 6)
     val forList = for (x <- xs; y <- ys; z <- zs) yield x * y * z
-    val mapList = xs flatMap { x => ys flatMap { y => {
-      zs map { z => x * y * z }
-    }
-    }
-    }
+    val mapList = xs flatMap { x => ys flatMap { y => { zs map { z => x * y * z } } } }
     assert(forList == List(6, 36, 10, 60, 12, 72, 20, 120))
     assert(mapList == List(6, 36, 10, 60, 12, 72, 20, 120))
   }
@@ -324,7 +326,7 @@ class CollectionTest extends FunSuite {
     assert(buffer.size == 99)
   }
 
-  test("same interview question, different solution") {
+  test("different solution") {
     val buffer = ArrayBuffer[String]()
     for (i <- 1 to 99) {
       if (moduloThreeFive(i)) buffer += s"$i -> m3 & m5"
