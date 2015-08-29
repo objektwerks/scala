@@ -2,7 +2,7 @@ package collection
 
 import org.scalatest.FunSuite
 
-import scala.collection.mutable.{ListBuffer, ArrayBuffer}
+import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
 class MutableTest extends FunSuite {
   test("array buffer") {

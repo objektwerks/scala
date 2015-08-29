@@ -2,7 +2,7 @@ package collection
 
 import org.scalatest.FunSuite
 
-import scala.collection.mutable.{ArrayBuffer, ListBuffer}
+import scala.collection.mutable.ArrayBuffer
 import scala.language.postfixOps
 
 class FunctionalTest extends FunSuite {
