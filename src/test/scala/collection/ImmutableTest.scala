@@ -26,6 +26,7 @@ class ImmutableTest extends FunSuite {
     assert(seq == Seq(1) :+ 2)
     assert(seq == Seq(1) ++ Seq(2))
     assert(seq == Seq(1) ++: Seq(2))
+    assert(seq.contains(1))
   }
 
   test("list") {
@@ -39,6 +40,7 @@ class ImmutableTest extends FunSuite {
     assert(list == List(1) :+ 2)
     assert(list == List(1) ++ List(2))
     assert(list == List(1) ++: List(2))
+    assert(list.contains(1))
   }
 
   test("vector") {
@@ -47,6 +49,7 @@ class ImmutableTest extends FunSuite {
     assert(vector == Vector(1, 2) :+ 3)
     assert(vector == Vector(1) ++ Vector(2, 3))
     assert(vector == Vector(1) ++: Vector(2, 3))
+    assert(vector.contains(1))
   }
 
   test("stream") {

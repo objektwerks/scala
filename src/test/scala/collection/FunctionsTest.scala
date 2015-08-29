@@ -8,17 +8,12 @@ import scala.language.postfixOps
 class FunctionsTest extends FunSuite {
   test("seq *") {
     val seq = Seq(1, 2, 3)
-    assert(seq == 1 +: Seq(2, 3))
-    assert(seq == Seq(1, 2) :+ 3)
-    assert(seq == Seq(1) ++ Seq(2, 3))
-    assert(seq == Seq(1) ++: Seq(2, 3))
     assert(seq.head == 1)
     assert(seq.tail == Seq(2, 3))
     assert(seq.last == 3)
     assert(seq.sum == 6)
     assert(seq.filter(_ > 1) == Seq(2, 3))
     assert(seq.map(_ * 2) == Seq(2, 4, 6))
-    assert((seq :+ 4) == Seq(1, 2, 3, 4))
     assert((seq drop 1) == Seq(2, 3))
     assert(seq.dropWhile(_ < 2) == Seq(2, 3))
     assert(seq.dropRight(1) == Seq(1, 2))
@@ -36,12 +31,6 @@ class FunctionsTest extends FunSuite {
     assert((list diff seq) == List(3))
   }
 
-  test("map") {
-    val list = List(1, 2)
-    val result = list map (_ * 2)
-    assert(result == List(2, 4))
-  }
-
   test("filter") {
     val seq = Seq(1, 2, 3)
     assert(seq.filter(_ > 1) == Seq(2, 3))
@@ -54,6 +43,12 @@ class FunctionsTest extends FunSuite {
 
     val seq = Seq(Some(1), None, Some(3), None)
     assert(seq.flatten == Seq(1, 3))
+  }
+
+  test("map") {
+    val list = List(1, 2)
+    val result = list map (_ * 2)
+    assert(result == List(2, 4))
   }
 
   test("flatmap") {
