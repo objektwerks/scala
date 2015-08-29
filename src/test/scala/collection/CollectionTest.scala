@@ -94,8 +94,9 @@ class CollectionTest extends FunSuite {
   }
 
   test("map") {
-    val vector = Vector(1, 2, 3)
-    assert(vector.map(_ * 2) == Vector(2, 4, 6))
+    val list = List(1, 2)
+    val result = list map (_ * 2)
+    assert(result == List(2, 4))
   }
 
   test("filter") {
@@ -123,9 +124,7 @@ class CollectionTest extends FunSuite {
     val list = List(1, 2, 3)
     assert(list.map(i => g(i)) == List(List(0, 1, 2), List(1, 2, 3), List(2, 3, 4)))
     assert(list.flatMap(i => g(i)) == List(0, 1, 2, 1, 2, 3, 2, 3, 4))
-  }
 
-  test("flatmap > list of seq") {
     val listOfList: List[List[String]] = List(List("a", "b", "c"))
     val flatMappedListOfList = listOfList flatMap (as => as.map(a => a.toUpperCase))
     assert(listOfList.length == 1)
@@ -199,7 +198,7 @@ class CollectionTest extends FunSuite {
     assert((wives zip husbands) == List(("wilma", "fred"), ("betty", "barney")))
   }
 
-  test("for each") {
+  test("foreach") {
     val vector = Vector(1, 2, 3)
     vector.foreach(i => assert(i > 0))
 
@@ -218,22 +217,8 @@ class CollectionTest extends FunSuite {
     }
 
     val vector = Vector(1, 2, 3)
-    var range = for (e <- vector if e > 0) yield e * 2
-    assert(range == Vector(2, 4, 6))
-
-    range = for {
-      e <- vector
-      if e > 0
-    } yield e * 2
-    assert(range == Vector(2, 4, 6))
-  }
-
-  test("for > map") {
-    val xs = List(1, 2)
-    val forList = for (x <- xs) yield x * 2
-    val mapList = xs map (x => x * 2)
-    assert(forList == List(2, 4))
-    assert(mapList == List(2, 4))
+    val result = for (e <- vector if e > 0) yield e * 2
+    assert(result == Vector(2, 4, 6))
   }
 
   test("for > flatmap > map") {
@@ -257,12 +242,12 @@ class CollectionTest extends FunSuite {
 
   test("for > foreach > map") {
     val xs = List(1, 2)
-    var forList: ListBuffer[Int] = ListBuffer()
+    var forList = ListBuffer[Int]()
     for (x <- xs) {
       forList += (x * 2)
     }
-    val mapList: ListBuffer[Int] = ListBuffer()
-    xs map (x => x * 2) foreach (x => mapList += x)
+    val mapList = ListBuffer[Int]()
+    xs map (_ * 2) foreach (x => mapList += x)
     assert(forList == ListBuffer(2, 4))
     assert(mapList == ListBuffer(2, 4))
   }
@@ -291,23 +276,25 @@ class CollectionTest extends FunSuite {
 
   test("parallel sum") {
     val range = new ParRange(Range(1, 1000000))
-    val total = range.sum
-    assert(total == 1783293664)
+    assert(range.sum == 1783293664)
   }
 
   test("view") {
     // view unit test micro-benchmark
-    (1 to 10000000).view.map(_ % 10).filter(_ > 5).sum
+    val result = (1 to 10000000).view.map(_ % 10).filter(_ > 5).sum
+    assert(result == 30000000)
   }
 
   test("view non") {
     // view unit test micro-benchmark
-    (1 to 10000000).map(_ % 10).filter(_ > 5).sum
+    val result = (1 to 10000000).map(_ % 10).filter(_ > 5).sum
+    assert(result == 30000000)
   }
 
   test("iterator") {
     // view unit test micro-benchmark. faster than view!
-    (1 to 10000000).iterator.map(_ % 10).filter(_ > 5).sum
+    val result = (1 to 10000000).iterator.map(_ % 10).filter(_ > 5).sum
+    assert(result == 30000000)
   }
 
   test("stream") {
