@@ -5,16 +5,18 @@ import org.scalatest.FunSuite
 import scala.collection.mutable
 
 class MutableTest extends FunSuite {
-  test("queue") {
+  test("fifo queue") {
     val queue = mutable.Queue(1, 2, 3)
     queue enqueue  4
     assert(4 == queue.last)
+    assert(queue.dequeue() == 1)
   }
 
-  test("stack") {
-    val stack = mutable.Stack(1, 2, 3)
+  test("lifo stack") {
+    val stack = mutable.Stack(3, 2, 1)
     stack push 4
     assert(4 == stack.pop)
+    assert(3 == stack.pop)
   }
 
   test("array buffer") {
