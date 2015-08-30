@@ -44,11 +44,11 @@ class ImmutableTest extends FunSuite {
   }
 
   test("vector") {
-    val vector = Vector(1, 2, 3)
-    assert(vector == 1 +: Vector(2, 3))
-    assert(vector == Vector(1, 2) :+ 3)
-    assert(vector == Vector(1) ++ Vector(2, 3))
-    assert(vector == Vector(1) ++: Vector(2, 3))
+    val vector = Vector(1, 2)
+    assert(vector == 1 +: Vector(2))
+    assert(vector == Vector(1) :+ 2)
+    assert(vector == Vector(1) ++ Vector(2))
+    assert(vector == Vector(1) ++: Vector(2))
     assert(vector.contains(1))
   }
 
