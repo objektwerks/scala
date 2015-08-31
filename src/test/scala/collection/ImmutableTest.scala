@@ -19,16 +19,6 @@ class ImmutableTest extends FunSuite {
     assert(map.get(1).get == 1)
   }
 
-  test("seq") {
-    val seq = Seq(1, 2)
-    assert(seq == 1 :: 2 :: Nil)
-    assert(seq == 1 +: Seq(2))
-    assert(seq == Seq(1) :+ 2)
-    assert(seq == Seq(1) ++ Seq(2))
-    assert(seq == Seq(1) ++: Seq(2))
-    assert(seq.contains(1))
-  }
-
   test("list") {
     val list = List(1, 2)
     assert(list == List(1) ::: List(2))
@@ -50,6 +40,15 @@ class ImmutableTest extends FunSuite {
     assert(vector == Vector(1) ++ Vector(2))
     assert(vector == Vector(1) ++: Vector(2))
     assert(vector.contains(1))
+  }
+
+  test("array") {
+    val array = Array(1, 2)
+    assert(array(0) == 1)
+    assert(array.reverse === Array(2, 1))
+    assert(array === Array(1) ++ Array(2))
+    assert(array === 1 +: Array(2))
+    assert(array === Array(1) :+ 2)
   }
 
   test("stream") {
