@@ -30,6 +30,7 @@ class ImmutableTest extends FunSuite {
     assert(list == List(1) :+ 2)
     assert(list == List(1) ++ List(2))
     assert(list == List(1) ++: List(2))
+    assert(list == (List(1) union List(2)))
     assert(list.contains(1))
   }
 
