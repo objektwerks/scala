@@ -40,7 +40,7 @@ class MutableTest extends FunSuite {
     assert((buffer -= 1) == mutable.ListBuffer())
   }
 
-  test("list map") {
+  test("mutable map") {
     var map = mutable.Map(1 -> 1, 2 -> 2)
     assert((map += 3 -> 3) == Map(1 -> 1, 2 -> 2, 3 -> 3))
     assert((map -= 3) == Map(1 -> 1, 2 -> 2))
