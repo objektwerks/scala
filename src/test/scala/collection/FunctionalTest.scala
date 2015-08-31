@@ -6,14 +6,19 @@ import scala.collection.mutable.ArrayBuffer
 import scala.language.postfixOps
 
 class FunctionalTest extends FunSuite {
-  test("list *") {
+  test("list") {
     val list = List(1, 2, 3)
+    assert(list.nonEmpty)
+    assert(List().isEmpty)
     assert(list.head == 1)
+    assert(list.headOption.get == 1)
     assert(list.tail == List(2, 3))
+    assert(list.tails.toList == List(List(1, 2, 3), List(2, 3), List(3), List()))
+    assert(list.init == List(1, 2))
+    assert(list.inits.toList == List(List(1, 2, 3), List(1, 2), List(1), List()))
     assert(list.last == 3)
-    assert(list.sum == 6)
-    assert(list.filter(_ > 1) == List(2, 3))
-    assert(list.map(_ * 2) == List(2, 4, 6))
+    assert(list.lastOption.get == 3)
+    assert(list.contains(1))
     assert((list drop 1) == List(2, 3))
     assert(list.dropWhile(_ < 2) == List(2, 3))
     assert(list.dropRight(1) == List(1, 2))
@@ -21,7 +26,26 @@ class FunctionalTest extends FunSuite {
     assert(list.takeWhile(_ < 3) == List(1, 2))
     assert(list.takeRight(1) == List(3))
     assert(list.slice(0, 2) == List(1, 2))
+    assert(list.min == 1)
+    assert(list.minBy(_ * 2) == 1)
+    assert(list.max == 3)
+    assert(list.maxBy(_ * 2) == 3)
+    assert(list.sum == 6)
+    assert(list.aggregate(0)(_ + _, _ + _) == 6)
+    assert(list.count(_ > 0) == 3)
+    assert(list.filter(_ > 1) == List(2, 3))
+    assert(list.filterNot(_ > 1) == List(1))
+    assert(list.find(_ > 2).get == 3)
+    assert(list.map(_ * 2) == List(2, 4, 6))
+    assert(list.flatMap(i => List(i * 2)) == List(2, 4, 6))
+    assert(list.foldLeft(3)(_ + _) == 9)
+    assert(list.foldRight(3)(_ + _) == 9)
+    assert(list.forall(_ > 0))
+    list foreach { i => assert(i > 0) }
+    assert(list.groupBy(_ % 2 == 0) == Map(false -> List(1, 3), true -> List(2)))
+    assert(list.grouped(1).toList == List(List(1), List(2), List(3)))
     assert(list.mkString(", ") == "1, 2, 3")
+    assert((List[Int](2), List[Int](1, 3)) == list.partition(_ % 2 == 0))
   }
   
   test("diff") {
@@ -67,12 +91,6 @@ class FunctionalTest extends FunSuite {
     val flatMappedListOfList = listOfList flatMap (as => as.map(a => a.toUpperCase))
     assert(listOfList.length == 1)
     assert(flatMappedListOfList.length == 3)
-  }
-
-  test("fold") {
-    val list = List(1, 2, 3)
-    assert(list.foldLeft(3)(_ + _) == 9)
-    assert(list.foldRight(3)(_ + _) == 9)
   }
 
   test("groupBy") {
