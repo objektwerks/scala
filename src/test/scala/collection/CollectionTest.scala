@@ -83,6 +83,7 @@ class CollectionTest extends FunSuite {
     assert(List(List(1), List(2), List(3)) == list.sliding(1).toList)
     assert((List[Int](1), List[Int](2, 3)) == list.span(_ < 2))
     assert((List[Int](1, 2), List[Int](3)) == list.splitAt(2))
+    assert(List(2, 4, 6) == list.withFilter(_ > 0).map(_ * 2))
     assert((List[Int](1, 3),List[Int](2, 4)) == List((1, 2), (3, 4)).unzip)
     assert(List((1,3), (2,4)) == (List(1, 2) zip List(3, 4)))
     assert(List((1,3), (2,4), (3,5)) == List(1, 2, 3).zipAll(List(3, 4, 5), 0, 1))
