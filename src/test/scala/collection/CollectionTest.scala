@@ -31,7 +31,8 @@ class CollectionTest extends FunSuite {
     assert(list.inits.toList == List(List(1, 2, 3), List(1, 2), List(1), List()))
     assert(list.last == 3)
     assert(list.lastOption.get == 3)
-
+    assert(list.lastIndexOfSlice(List(3)) == 2)
+    assert(list.lastIndexWhere(_ > 2) == 2)
     assert(list.collect { case i if i % 2 == 0 => i } == List(2))
     assert(list.collectFirst { case i if i % 2 == 0 => i } == Some(2))
     assert(list.contains(1))
