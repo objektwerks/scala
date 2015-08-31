@@ -65,18 +65,18 @@ class IterableTest extends FunSuite {
     assert(filterLetters.head.getOrElse("Z") == "A")
   }
 
-  test("view") {
-    val result = (1 to 10000000).view.map(_ % 10).filter(_ > 5).sum
+  test("iterator") {
+    val result = (1 to 10000000).iterator.map(_ % 10).filter(_ > 5).sum
     assert(result == 30000000)
   }
 
-  test("view less") {
+  test("non view") {
     val result = (1 to 10000000).map(_ % 10).filter(_ > 5).sum
     assert(result == 30000000)
   }
 
-  test("iterator") {
-    val result = (1 to 10000000).iterator.map(_ % 10).filter(_ > 5).sum
+  test("view") {
+    val result = (1 to 10000000).view.map(_ % 10).filter(_ > 5).sum
     assert(result == 30000000)
   }
 }
