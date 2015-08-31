@@ -6,9 +6,8 @@ import scala.collection.parallel.immutable.{ParMap, ParSeq, ParSet, ParRange}
 import scala.collection.mutable
 
 class CollectionTest extends FunSuite {
-  def toList(v: Int) = List(v - 1, v, v + 1)
-
   test("list") {
+    def toList(v: Int) = List(v - 1, v, v + 1)
     val list = List(1, 2, 3)
     assert(list == 1 :: 2 :: 3 :: Nil)
     assert(list == List(1) ::: List(2, 3))
@@ -86,6 +85,8 @@ class CollectionTest extends FunSuite {
     assert((List[Int](1, 2), List[Int](3)) == list.splitAt(2))
     assert((List[Int](1, 3),List[Int](2, 4)) == List((1, 2), (3, 4)).unzip)
     assert(List((1,3), (2,4)) == (List(1, 2) zip List(3, 4)))
+    assert(List((1,3), (2,4), (3,5)) == List(1, 2, 3).zipAll(List(3, 4, 5), 0, 1))
+    assert(List((1,0), (2,1), (3,2)) == list.zipWithIndex)
   }
 
   test("set") {
