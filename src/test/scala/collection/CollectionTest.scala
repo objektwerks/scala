@@ -17,6 +17,7 @@ class CollectionTest extends FunSuite {
     assert(list == List(1) ++ List(2, 3))
     assert(list == List(1) ++: List(2, 3))
     assert(list == (List(1) union List(2, 3)))
+    assert(list == (List(-2, -1, 0, 1, 2, 3) intersect List(1, 2, 3, 4, 5, 6)))
     assert(list.size == 3)
     assert(list.nonEmpty)
     assert(List().isEmpty)
