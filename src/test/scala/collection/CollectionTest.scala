@@ -78,6 +78,7 @@ class CollectionTest extends FunSuite {
     assert(list.reduceRightOption(_ + _).get == 6)
     assert(list == List(3, 2, 1).reverse)
     assert(list sameElements List(1, 2, 3))
+    assert(list.segmentLength(_ > 0, 0) == 3)
     assert(List(1, 2, 3).sortWith(_ > _) == List(3, 2, 1))
     assert(List(3, 2, 1).sortWith(_ < _) == List(1, 2, 3))
     assert(list.sum == 6)
