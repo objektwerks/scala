@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 
 import scala.collection.mutable.ListBuffer
 
-class TraversableTest extends FunSuite {
+class IterableTest extends FunSuite {
   test("foreach") {
     val seq = Seq(1, 2, 3)
     seq.foreach(i => assert(i > 0))
