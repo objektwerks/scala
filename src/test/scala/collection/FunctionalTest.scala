@@ -58,10 +58,10 @@ class FunctionalTest extends FunSuite {
     val map = Map(1 -> "one", 2 -> "two", 3 -> "three")
     assert((1 to map.size flatMap map.get) == List("one", "two", "three"))
 
-    def g(v: Int) = List(v - 1, v, v + 1)
+    def toList(v: Int) = List(v - 1, v, v + 1)
     val ys = List(1, 2, 3)
-    assert(ys.map(i => g(i)) == List(List(0, 1, 2), List(1, 2, 3), List(2, 3, 4)))
-    assert(ys.flatMap(i => g(i)) == List(0, 1, 2, 1, 2, 3, 2, 3, 4))
+    assert(ys.map(i => toList(i)) == List(List(0, 1, 2), List(1, 2, 3), List(2, 3, 4)))
+    assert(ys.flatMap(i => toList(i)) == List(0, 1, 2, 1, 2, 3, 2, 3, 4))
 
     val listOfList: List[List[String]] = List(List("a", "b", "c"))
     val flatMappedListOfList = listOfList flatMap (as => as.map(a => a.toUpperCase))
