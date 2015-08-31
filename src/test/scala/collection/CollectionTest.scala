@@ -31,6 +31,7 @@ class CollectionTest extends FunSuite {
     assert(list.inits.toList == List(List(1, 2, 3), List(1, 2), List(1), List()))
     assert(list.last == 3)
     assert(list.lastOption.get == 3)
+
     assert(list.collect { case i if i % 2 == 0 => i } == List(2))
     assert(list.collectFirst { case i if i % 2 == 0 => i } == Some(2))
     assert(list.contains(1))
@@ -79,6 +80,8 @@ class CollectionTest extends FunSuite {
     assert(list == List(3, 2, 1).reverse)
     assert(list sameElements List(1, 2, 3))
     assert(list.segmentLength(_ > 0, 0) == 3)
+    assert(list == List(3, 2, 1).sortBy(i => i))
+    assert(list == List(3, 2, 1).sorted)
     assert(List(1, 2, 3).sortWith(_ > _) == List(3, 2, 1))
     assert(List(3, 2, 1).sortWith(_ < _) == List(1, 2, 3))
     assert(list.sum == 6)
