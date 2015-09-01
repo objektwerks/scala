@@ -24,7 +24,7 @@ class CollectionTest extends FunSuite {
     assert(list == (List(1) union List(2, 3)))
     assert(list == (List(-2, -1, 0, 1, 2, 3) intersect List(1, 2, 3, 4, 5, 6)))
 
-    assert(list.size == 3)
+    assert(list.length == 3 && list.size == 3)
     assert(list.nonEmpty)
     assert(List().isEmpty)
 
@@ -36,6 +36,7 @@ class CollectionTest extends FunSuite {
     assert(list.inits.toList == List(List(1, 2, 3), List(1, 2), List(1), List()))
     assert(list.last == 3)
     assert(list.lastOption.get == 3)
+    assert(list.lastIndexOf(3) == 2)
     assert(list.lastIndexOfSlice(List(3)) == 2)
     assert(list.lastIndexWhere(_ > 2) == 2)
 
@@ -94,6 +95,9 @@ class CollectionTest extends FunSuite {
     assert(list.indexOf(1) == 0)
     assert(list.indexOfSlice(List(2, 3)) == 1)
     assert(list.indexWhere(_ > 2) == 2)
+    assert(list.indices.length == 3)
+    for (i <- 0 to 2) assert(list.isDefinedAt(i))
+    assert(list.hasDefiniteSize)
 
     assert(list.mkString(", ") == "1, 2, 3")
 
