@@ -149,7 +149,7 @@ class CollectionTest extends FunSuite {
   }
 
   test("mutable set") {
-    var set = mutable.Set(1, 2)
+    val set = mutable.Set(1, 2)
     assert((set += 3) == Set(1, 2, 3))
     assert((set -= 3) == Set(1, 2))
     assert((set -= 2) == Set(1))
@@ -180,7 +180,7 @@ class CollectionTest extends FunSuite {
   }
 
   test("mutable map") {
-    var map = mutable.Map(1 -> 1, 2 -> 2)
+    val map = mutable.Map(1 -> 1, 2 -> 2)
     assert((map += 3 -> 3) == Map(1 -> 1, 2 -> 2, 3 -> 3))
     assert((map -= 3) == Map(1 -> 1, 2 -> 2))
     assert((map -= 2) == Map(1 -> 1))
@@ -239,7 +239,7 @@ class CollectionTest extends FunSuite {
   }
 
   test("array buffer") {
-    var buffer = mutable.ArrayBuffer(1, 2)
+    val buffer = mutable.ArrayBuffer(1, 2)
     assert((buffer += 3) == mutable.ArrayBuffer(1, 2, 3))
     assert((buffer -= 3) == mutable.ArrayBuffer(1, 2))
     assert((buffer -= 2) == mutable.ArrayBuffer(1))
@@ -247,7 +247,7 @@ class CollectionTest extends FunSuite {
   }
 
   test("list buffer") {
-    var buffer = mutable.ListBuffer(1, 2)
+    val buffer = mutable.ListBuffer(1, 2)
     assert((buffer += 3) == mutable.ListBuffer(1, 2, 3))
     assert((buffer -= 3) == mutable.ListBuffer(1, 2))
     assert((buffer -= 2) == mutable.ListBuffer(1))
