@@ -213,10 +213,10 @@ class CollectionTest extends FunSuite {
   }
 
   test("tuple") {
-    val (first, last) = ("fred", "flintstone")
-    assert(first == "fred" && last == "flintstone")
-    val (city, state) = "barney" -> "rebel"
-    assert(city == "barney" && state == "rebel")
+    val cityStateZip = ("placida", "florida", 33946)
+    assert(cityStateZip._1 == "placida" && cityStateZip._2 == "florida"  && cityStateZip._3 == 33946)
+    val (first, last, age) = ("fred", "flintstone", 99)
+    assert(first == "fred" && last == "flintstone" && age == 99)
   }
 
   test("fifo queue") {
