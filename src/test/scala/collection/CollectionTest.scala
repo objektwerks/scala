@@ -235,6 +235,7 @@ class CollectionTest extends FunSuite {
 
   test("mutable set") {
     var set = mutable.Set(1, 2)
+    assert(set.size == 2 && set.contains(1) && set.contains(2))
     assert((0 /: set)(_ + _) == 3)
     assert(3 == (set :\ 0)(_ + _))
     assert((set += 3) == Set(1, 2, 3))
@@ -247,6 +248,8 @@ class CollectionTest extends FunSuite {
 
   test("mutable map") {
     var map = mutable.Map(1 -> 1, 2 -> 2)
+    assert(map.size == 2 && map(1) == 1 && map(2) == 2)
+    assert(map.keySet == Set(1, 2) && map.values.toSet == Set(1, 2))
     assert((0 /: map.keys)(_ + _) == 3)
     assert(3 == (map.keys :\ 0)(_ + _))
     assert((0 /: map.values)(_ + _) == 3)
