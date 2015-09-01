@@ -25,6 +25,8 @@ class CollectionTest extends FunSuite {
     assert(list == (List(-2, -1, 0, 1, 2, 3) intersect List(1, 2, 3, 4, 5, 6)))
 
     assert(list.length == 3 && list.size == 3)
+    assert(list.lengthCompare(list.size) == 0)
+    assert(list.lengthCompare(list.size - 1) == 1)
     assert(list.nonEmpty)
     assert(List().isEmpty)
 
@@ -102,6 +104,7 @@ class CollectionTest extends FunSuite {
     assert(list.mkString(", ") == "1, 2, 3")
 
     assert(list.padTo(7, 0) == List(1, 2, 3, 0, 0, 0, 0))
+    assert(List(4, 5, 6) == list.patch(0, List(4, 5, 6), 3))
     assert((List[Int](2), List[Int](1, 3)) == list.partition(_ % 2 == 0))
     assert(list.product == 6)
 
