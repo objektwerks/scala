@@ -46,6 +46,7 @@ class CollectionTest extends FunSuite {
     assert(list.collectFirst { case i if i % 2 == 0 => i } == Some(2))
     assert(list.contains(1))
     assert(list.containsSlice(List(2, 3)))
+    assert(list.startsWith(List(1, 2)))
     assert(list.endsWith(List(2, 3)))
     assert(list.count(_ > 0) == 3)
 
@@ -107,6 +108,7 @@ class CollectionTest extends FunSuite {
     assert(list.patch(0, List(4, 5, 6), 3) == List(4, 5, 6))
     assert((List[Int](2), List[Int](1, 3)) == list.partition(_ % 2 == 0))
     assert(list.permutations.toList == List(List(1, 2, 3), List(1, 3, 2), List(2, 1, 3), List(2, 3, 1), List(3, 1, 2), List(3, 2, 1)))
+    assert(list.prefixLength(_ > 0) == 3)
     assert(list.product == 6)
 
     assert(list.reduce(_ + _) == 6)
@@ -114,7 +116,9 @@ class CollectionTest extends FunSuite {
     assert(list.reduceLeftOption(_ + _).get == 6)
     assert(list.reduceRight(_ + _) == 6)
     assert(list.reduceRightOption(_ + _).get == 6)
+    assert(list.repr == list)
     assert(list == List(3, 2, 1).reverse)
+    assert(list.reverseMap(_ * 2) == List(6, 4, 2))
 
     assert(list sameElements List(1, 2, 3))
     assert(list.segmentLength(_ > 0, 0) == 3)
@@ -134,6 +138,8 @@ class CollectionTest extends FunSuite {
     assert((List[Int](1, 2), List[Int](3)) == list.splitAt(2))
     assert(list.sum == 6)
 
+    assert(List(Set(1, 2), Set(3, 4), Set(5, 6)).transpose == List(List(1, 3, 5),
+                                                                   List(2, 4, 6)))
     assert(List(1, 2, 1) == list.updated(index = 2, elem = 1))
     assert(List(2, 4, 6) == list.withFilter(_ > 0).map(_ * 2))
 
