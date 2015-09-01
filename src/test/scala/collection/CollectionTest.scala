@@ -143,6 +143,11 @@ class CollectionTest extends FunSuite {
     assert(List(1, 2, 1) == list.updated(index = 2, elem = 1))
     assert(List(2, 4, 6) == list.withFilter(_ > 0).map(_ * 2))
 
+    assert((1 to 100).map(_ % 10).filter(_ > 5).sum == 300) // strict, slowest
+    assert((1 to 100).view.map(_ % 10).filter(_ > 5).sum == 300)  // non-strict, fast
+    assert((1 to 100).iterator.map(_ % 10).filter(_ > 5).sum == 300)  // non-strict, fastest
+    assert((1 to 100).toStream.map(_ % 10).filter(_ > 5).sum == 300)  // non-strict, fastest
+
     assert((List[Int](1, 3),List[Int](2, 4)) == List((1, 2), (3, 4)).unzip)
     assert(List((1,3), (2,4)) == (List(1, 2) zip List(3, 4)))
     assert(List((1,3), (2,4), (3,5)) == List(1, 2, 3).zipAll(List(3, 4, 5), 0, 1))
@@ -336,21 +341,6 @@ class CollectionTest extends FunSuite {
     val filterLetters = letters filter (l => l == "A") map (l => Some(l))
     assert(forLetters.head.getOrElse("Z") == "A")
     assert(filterLetters.head.getOrElse("Z") == "A")
-  }
-
-  test("iterator") {
-    val result = (1 to 10000000).iterator.map(_ % 10).filter(_ > 5).sum
-    assert(result == 30000000)
-  }
-
-  test("view less") {
-    val result = (1 to 10000000).map(_ % 10).filter(_ > 5).sum
-    assert(result == 30000000)
-  }
-
-  test("view") {
-    val result = (1 to 10000000).view.map(_ % 10).filter(_ > 5).sum
-    assert(result == 30000000)
   }
 
   test("par set") {
