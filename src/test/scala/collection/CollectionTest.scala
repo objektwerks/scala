@@ -154,6 +154,10 @@ class CollectionTest extends FunSuite {
     assert(map == Map(1 -> 1, 2 -> 2, 3 -> 3) - 3)
     assert(map == Map(1 -> 1) ++ Map(2 -> 2))
     assert(map == Map(1 -> 1, 2 -> 2, 3 -> 3, 4 -> 4) -- List(3, 4))
+    assert((0 /: map.keys)(_ + _) == 3)
+    assert(3 == (map.keys :\ 0)(_ + _))
+    assert((0 /: map.values)(_ + _) == 3)
+    assert(3 == (map.values :\ 0)(_ + _))
     assert(map.size == 2 && map(1) == 1 && map(2) == 2)
     assert(map.keySet == Set(1, 2) && map.values.toSet == Set(1, 2))
     assert(map.empty.isEmpty)
@@ -231,6 +235,8 @@ class CollectionTest extends FunSuite {
 
   test("mutable set") {
     var set = mutable.Set(1, 2)
+    assert((0 /: set)(_ + _) == 3)
+    assert(3 == (set :\ 0)(_ + _))
     assert((set += 3) == Set(1, 2, 3))
     assert((set -= 3) == Set(1, 2))
     assert((set -= 2) == Set(1))
@@ -241,6 +247,10 @@ class CollectionTest extends FunSuite {
 
   test("mutable map") {
     var map = mutable.Map(1 -> 1, 2 -> 2)
+    assert((0 /: map.keys)(_ + _) == 3)
+    assert(3 == (map.keys :\ 0)(_ + _))
+    assert((0 /: map.values)(_ + _) == 3)
+    assert(3 == (map.values :\ 0)(_ + _))
     assert((map += 3 -> 3) == Map(1 -> 1, 2 -> 2, 3 -> 3))
     assert((map -= 3) == Map(1 -> 1, 2 -> 2))
     assert((map -= 2) == Map(1 -> 1))
