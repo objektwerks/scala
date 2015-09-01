@@ -104,8 +104,9 @@ class CollectionTest extends FunSuite {
     assert(list.mkString(", ") == "1, 2, 3")
 
     assert(list.padTo(7, 0) == List(1, 2, 3, 0, 0, 0, 0))
-    assert(List(4, 5, 6) == list.patch(0, List(4, 5, 6), 3))
+    assert(list.patch(0, List(4, 5, 6), 3) == List(4, 5, 6))
     assert((List[Int](2), List[Int](1, 3)) == list.partition(_ % 2 == 0))
+    assert(list.permutations.toList == List(List(1, 2, 3), List(1, 3, 2), List(2, 1, 3), List(2, 3, 1), List(3, 1, 2), List(3, 2, 1)))
     assert(list.product == 6)
 
     assert(list.reduce(_ + _) == 6)
