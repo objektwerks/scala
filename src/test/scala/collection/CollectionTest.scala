@@ -145,7 +145,7 @@ class CollectionTest extends FunSuite {
 
   test("sorted set") {
     val set = SortedSet(3, 2, 1)
-    for (i <- set) assert(i == i)
+    for (v <- set) assert(v == v)
   }
 
   test("mutable set") {
@@ -175,8 +175,8 @@ class CollectionTest extends FunSuite {
 
   test("sorted map") {
     val map = SortedMap(3 -> 3, 2 -> 2, 1 -> 1)
-    for (i <- map.keys) assert(i == i)
-    for (i <- map.values) assert(i == i)
+    for (k <- map.keys) assert(k == k)
+    for (v <- map.values) assert(v == v)
   }
 
   test("mutable map") {
