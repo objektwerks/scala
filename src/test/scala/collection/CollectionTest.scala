@@ -101,6 +101,7 @@ class CollectionTest extends FunSuite {
 
     assert(list.mkString(", ") == "1, 2, 3")
 
+    assert(list.padTo(7, 0) == List(1, 2, 3, 0, 0, 0, 0))
     assert((List[Int](2), List[Int](1, 3)) == list.partition(_ % 2 == 0))
     assert(list.product == 6)
 
