@@ -260,9 +260,16 @@ class CollectionTest extends FunSuite {
   }
 
   test("for") {
-    for (i <- 1 to 3) assert(i > 0)
-    val map = Map("a" -> 1, "b" -> 2, "c" -> 3)
-    for (t <- map) assert(t._1.length == 1 && t._2 > 0)
+    for (i <- 1 to 3) assert(i == i)
+    val set = Set(1, 2, 3)
+    for (v <- set) assert(v == v)
+    val map = Map(1 -> 1, 2 -> 2, 3 -> 3)
+    for (k <- map.keys; v <- map.values) assert(k == k && v == v)
+  }
+
+  test("forall") {
+    val map = Map(1 -> 1, 2 -> 2, 3 -> 3)
+    assert(map.forall( _._2 > 0 ))
   }
 
   test("for > flatmap > map") {
