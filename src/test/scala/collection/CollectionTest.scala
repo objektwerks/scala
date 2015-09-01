@@ -42,6 +42,8 @@ class CollectionTest extends FunSuite {
     assert(list.collect { case i if i % 2 == 0 => i } == List(2))
     assert(list.collectFirst { case i if i % 2 == 0 => i } == Some(2))
     assert(list.contains(1))
+    assert(list.containsSlice(List(2, 3)))
+    assert(list.endsWith(List(2, 3)))
     assert(list.count(_ > 0) == 3)
 
     assert((List(1, 2) diff List(2, 3)) == List(1))
@@ -88,6 +90,10 @@ class CollectionTest extends FunSuite {
 
     assert(list.groupBy(_ % 2 == 0) == Map(false -> List(1, 3), true -> List(2)))
     assert(list.grouped(1).toList == List(List(1), List(2), List(3)))
+
+    assert(list.indexOf(1) == 0)
+    assert(list.indexOfSlice(List(2, 3)) == 1)
+    assert(list.indexWhere(_ > 2) == 2)
 
     assert(list.mkString(", ") == "1, 2, 3")
 
