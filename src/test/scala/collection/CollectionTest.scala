@@ -197,6 +197,8 @@ class CollectionTest extends FunSuite {
     assert(vector === Vector(1) :+ 2)
     assert(vector === Vector(1) ++ Vector(2))
     assert(vector === Vector(1) ++: Vector(2))
+    assert((0 /: vector)(_ + _) == 3)
+    assert(3 == (vector :\ 0)(_ + _))
   }
 
   test("array") {
@@ -207,6 +209,8 @@ class CollectionTest extends FunSuite {
     assert(array === Array(1) :+ 2)
     assert(array === Array(1) ++ Array(2))
     assert(array === Array(1) ++: Array(2))
+    assert((0 /: array)(_ + _) == 3)
+    assert(3 == (array :\ 0)(_ + _))
   }
 
   test("stream") {
