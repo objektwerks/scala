@@ -191,20 +191,22 @@ class CollectionTest extends FunSuite {
 
   test("vector") {
     val vector = Vector(1, 2)
-    assert(vector == 1 +: Vector(2))
-    assert(vector == Vector(1) :+ 2)
-    assert(vector == Vector(1) ++ Vector(2))
-    assert(vector == Vector(1) ++: Vector(2))
-    assert(vector.contains(1))
+    assert(vector.length == 2 && vector(0) == 1 && vector(1) == 2)
+    assert(vector.reverse === Vector(2, 1))
+    assert(vector === 1 +: Vector(2))
+    assert(vector === Vector(1) :+ 2)
+    assert(vector === Vector(1) ++ Vector(2))
+    assert(vector === Vector(1) ++: Vector(2))
   }
 
   test("array") {
     val array = Array(1, 2)
-    assert(array(0) == 1)
+    assert(array.length == 2 && array(0) == 1 && array(1) == 2)
     assert(array.reverse === Array(2, 1))
-    assert(array === Array(1) ++ Array(2))
     assert(array === 1 +: Array(2))
     assert(array === Array(1) :+ 2)
+    assert(array === Array(1) ++ Array(2))
+    assert(array === Array(1) ++: Array(2))
   }
 
   test("stream") {
