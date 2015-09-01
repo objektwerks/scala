@@ -3,7 +3,7 @@ package collection
 import org.scalatest.FunSuite
 
 import scala.collection.parallel.immutable.{ParMap, ParSeq, ParSet, ParRange}
-import scala.collection.mutable
+import scala.collection.{SortedMap, SortedSet, mutable}
 
 class CollectionTest extends FunSuite {
   test("list") {
@@ -81,6 +81,8 @@ class CollectionTest extends FunSuite {
     assert(list.foldLeft(0)(_ + _) == 6)
     assert(list.foldRight(0)(_ + _) == 6)
 
+    assert(List(2, 4, 6) === (for (i <- list) yield i * 2))
+    assert(List(2, 4, 6) === (for (i <- list if i > 0) yield i * 2))
     assert(list.forall(_ > 0))
     list foreach { i => assert(i > 0) }
 
@@ -128,18 +130,38 @@ class CollectionTest extends FunSuite {
 
   test("set") {
     val set = Set(1, 2)
-    assert(set == Set(1) ++ Set(2))
     assert(set == Set(1) + 2)
     assert(set == Set(1, 2, 3) - 3)
-    assert(set.contains(1))
+    assert(set == Set(1) ++ Set(2))
+    assert(set == Set(1, 2, 3, 4) -- List(3, 4))
+    assert(set == (Set(-1, 0, 1, 2) & Set(1, 2, 3, 4)))
+    assert(Set(-1, 0) == (Set(-1, 0, 1, 2) &~ Set(1, 2, 3, 4)))
+    assert(Set(3, 4) == (Set(1, 2, 3, 4) &~ Set(-1, 0, 1, 2)))
+    assert((0 /: set)(_ + _) == 3)
+    assert(3 == (set :\ 0)(_ + _))
+    assert(set.size == 2 && set.contains(1) && set.contains(2))
+    assert(set.empty.isEmpty)
+  }
+
+  test("sorted set") {
+    val set = SortedSet(2, 1)
+
   }
 
   test("map") {
     val map = Map(1 -> 1, 2 -> 2)
-    assert(map == Map(1 -> 1) ++ Map(2 -> 2))
     assert(map == Map(1 -> 1) + (2 -> 2))
     assert(map == Map(1 -> 1, 2 -> 2, 3 -> 3) - 3)
-    assert(map.get(1).get == 1)
+    assert(map == Map(1 -> 1) ++ Map(2 -> 2))
+    assert(map == Map(1 -> 1, 2 -> 2, 3 -> 3, 4 -> 4) -- List(3, 4))
+    assert(map.size == 2 && map(1) == 1 && map(2) == 2)
+    assert(map.keySet == Set(1, 2) && map.values.toSet == Set(1, 2))
+    assert(map.empty.isEmpty)
+  }
+
+  test("sorted map") {
+    val map = SortedMap(2 -> 2, 1 -> 1)
+
   }
 
   test("vector") {
@@ -207,17 +229,27 @@ class CollectionTest extends FunSuite {
     assert((buffer -= 1) == mutable.ListBuffer())
   }
 
+  test("mutable set") {
+    var set = mutable.Set(1, 2)
+    assert((set += 3) == Set(1, 2, 3))
+    assert((set -= 3) == Set(1, 2))
+    assert((set -= 2) == Set(1))
+    assert((set -= 1) == Set())
+    assert((set ++= List(1, 2)) == Set(1, 2))
+    assert((set --= List(1, 2)) == Set())
+  }
+
   test("mutable map") {
     var map = mutable.Map(1 -> 1, 2 -> 2)
     assert((map += 3 -> 3) == Map(1 -> 1, 2 -> 2, 3 -> 3))
     assert((map -= 3) == Map(1 -> 1, 2 -> 2))
     assert((map -= 2) == Map(1 -> 1))
     assert((map -= 1) == Map())
+    assert((map ++= List(1 -> 1, 2 -> 2)) == Map(1 -> 1, 2 -> 2))
+    assert((map --= List(1, 2)) == Map())
   }
 
   test("foreach") {
-    val list = List(1, 2, 3)
-    list.foreach(i => assert(i > 0))
     val map = Map("a" -> 1, "b" -> 2, "c" -> 3)
     map.foreach(t => assert(t._1.length == 1 && t._2 > 0))
   }
@@ -225,15 +257,7 @@ class CollectionTest extends FunSuite {
   test("for") {
     for (i <- 1 to 3) assert(i > 0)
     val map = Map("a" -> 1, "b" -> 2, "c" -> 3)
-    for (t <- map) {
-      assert(t._1.length == 1 && t._2 > 0)
-    }
-  }
-
-  test("for > yield") {
-    val list = List(1, 2, 3)
-    val result = for (e <- list if e > 0) yield e * 2
-    assert(result == List(2, 4, 6))
+    for (t <- map) assert(t._1.length == 1 && t._2 > 0)
   }
 
   test("for > flatmap > map") {
