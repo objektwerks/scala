@@ -144,8 +144,18 @@ class CollectionTest extends FunSuite {
   }
 
   test("sorted set") {
-    val set = SortedSet(2, 1)
+    val set = SortedSet(3, 2, 1)
+    for (i <- set) assert(i == i)
+  }
 
+  test("mutable set") {
+    var set = mutable.Set(1, 2)
+    assert((set += 3) == Set(1, 2, 3))
+    assert((set -= 3) == Set(1, 2))
+    assert((set -= 2) == Set(1))
+    assert((set -= 1) == Set())
+    assert((set ++= List(1, 2)) == Set(1, 2))
+    assert((set --= List(1, 2)) == Set())
   }
 
   test("map") {
@@ -164,8 +174,19 @@ class CollectionTest extends FunSuite {
   }
 
   test("sorted map") {
-    val map = SortedMap(2 -> 2, 1 -> 1)
+    val map = SortedMap(3 -> 3, 2 -> 2, 1 -> 1)
+    for (i <- map.keys) assert(i == i)
+    for (i <- map.values) assert(i == i)
+  }
 
+  test("mutable map") {
+    var map = mutable.Map(1 -> 1, 2 -> 2)
+    assert((map += 3 -> 3) == Map(1 -> 1, 2 -> 2, 3 -> 3))
+    assert((map -= 3) == Map(1 -> 1, 2 -> 2))
+    assert((map -= 2) == Map(1 -> 1))
+    assert((map -= 1) == Map())
+    assert((map ++= List(1 -> 1, 2 -> 2)) == Map(1 -> 1, 2 -> 2))
+    assert((map --= List(1, 2)) == Map())
   }
 
   test("vector") {
@@ -231,35 +252,6 @@ class CollectionTest extends FunSuite {
     assert((buffer -= 3) == mutable.ListBuffer(1, 2))
     assert((buffer -= 2) == mutable.ListBuffer(1))
     assert((buffer -= 1) == mutable.ListBuffer())
-  }
-
-  test("mutable set") {
-    var set = mutable.Set(1, 2)
-    assert(set.size == 2 && set.contains(1) && set.contains(2))
-    assert((0 /: set)(_ + _) == 3)
-    assert(3 == (set :\ 0)(_ + _))
-    assert((set += 3) == Set(1, 2, 3))
-    assert((set -= 3) == Set(1, 2))
-    assert((set -= 2) == Set(1))
-    assert((set -= 1) == Set())
-    assert((set ++= List(1, 2)) == Set(1, 2))
-    assert((set --= List(1, 2)) == Set())
-  }
-
-  test("mutable map") {
-    var map = mutable.Map(1 -> 1, 2 -> 2)
-    assert(map.size == 2 && map(1) == 1 && map(2) == 2)
-    assert(map.keySet == Set(1, 2) && map.values.toSet == Set(1, 2))
-    assert((0 /: map.keys)(_ + _) == 3)
-    assert(3 == (map.keys :\ 0)(_ + _))
-    assert((0 /: map.values)(_ + _) == 3)
-    assert(3 == (map.values :\ 0)(_ + _))
-    assert((map += 3 -> 3) == Map(1 -> 1, 2 -> 2, 3 -> 3))
-    assert((map -= 3) == Map(1 -> 1, 2 -> 2))
-    assert((map -= 2) == Map(1 -> 1))
-    assert((map -= 1) == Map())
-    assert((map ++= List(1 -> 1, 2 -> 2)) == Map(1 -> 1, 2 -> 2))
-    assert((map --= List(1, 2)) == Map())
   }
 
   test("foreach") {
