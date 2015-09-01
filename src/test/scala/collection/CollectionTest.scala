@@ -111,6 +111,7 @@ class CollectionTest extends FunSuite {
     assert(list.prefixLength(_ > 0) == 3)
     assert(list.product == 6)
 
+    assert(list == List.range(1, 4))
     assert(list.reduce(_ + _) == 6)
     assert(list.reduceLeft(_ + _) == 6)
     assert(list.reduceLeftOption(_ + _).get == 6)
