@@ -10,10 +10,10 @@ class ImplicitTest extends FunSuite {
   }
 
   test("implicit parameter") {
+    implicit val item = "beers"
     def order(number: Int) (implicit item: String): String = {
       s"$number $item"
     }
-    implicit val item = "beers"
     assert(order(2) == "2 beers")
   }
 
@@ -29,16 +29,16 @@ class ImplicitTest extends FunSuite {
     assert("xml".toXml == "<xml>")
   }
 
-  test("package object") {
-    val message = "test"
-    assert(packMessage(message) == s"Message packed: $message")
-  }
-
   test("implicit sorting") {
     case class Runner(task: String)
     implicit def ord: Ordering[Runner] = Ordering.by(t => t.task)
     val runners: List[Runner] = List(Runner("c"), Runner("b"), Runner("a"))
     val sortedRunners: List[Runner] = runners.sorted
     assert(sortedRunners.head.task == "a")
+  }
+
+  test("package object") {
+    val message = "test"
+    assert(packMessage(message) == s"Message packed: $message")
   }
 }
