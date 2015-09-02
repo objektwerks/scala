@@ -20,7 +20,7 @@ class FutureTest extends FunSuite {
   test("non-blocking future") {
     val future: Future[String] = Future { "Hello world!" }
     future onComplete {
-      case Success(success) => assert(success == "Hello world!")
+      case Success(result) => assert(result == "Hello world!")
       case Failure(failure) => throw failure
     }
   }
@@ -49,7 +49,7 @@ class FutureTest extends FunSuite {
     val helloFuture: Future[String] = Future { "Hello" }
     val worldFuture: Future[String] = helloFuture map { s => s + " world!" }
     worldFuture onComplete {
-      case Success(success) => assert(success == "Hello world!")
+      case Success(result) => assert(result == "Hello world!")
       case Failure(failure) => throw failure
     }
   }
@@ -64,7 +64,7 @@ class FutureTest extends FunSuite {
         }
     }
     helloWorldFuture onComplete {
-      case Success(success) => assert(success == "Hello world!")
+      case Success(result) => assert(result == "Hello world!")
       case Failure(failure) => throw failure
     }
   }
@@ -77,7 +77,7 @@ class FutureTest extends FunSuite {
       world <- worldFuture
     } yield hello + world
     helloWorldFuture onComplete {
-      case Success(success) => assert(success == "Hello world!")
+      case Success(result) => assert(result == "Hello world!")
       case Failure(failure) => throw failure
     }
   }
@@ -88,7 +88,7 @@ class FutureTest extends FunSuite {
       world <- Future { " world!" }
     } yield hello + world
     helloWorldFuture onComplete {
-      case Success(success) => assert(success == "Hello world!")
+      case Success(result) => assert(result == "Hello world!")
       case Failure(failure) => throw failure
     }
   }
@@ -96,53 +96,60 @@ class FutureTest extends FunSuite {
   test("future sequence") {
     val listOfFutures: List[Future[Int]] = List(Future(1), Future(2))
     val futureOfList: Future[List[Int]] = Future.sequence(listOfFutures)
-    val result: Future[Int] = futureOfList.map(_.sum)
-    result onSuccess {
-      case i: Int => assert(i == 3)
+    val future: Future[Int] = futureOfList.map(_.sum)
+    future onComplete {
+      case Success(result) => assert(result == 3)
+      case Failure(failure) => throw failure
     }
   }
 
   test("future traverse") {
     val futureOfList: Future[List[Int]] = Future.traverse((1 to 2).toList) (i => Future(i * 1))
-    val result: Future[Int] = futureOfList.map(_.sum)
-    result onSuccess {
-      case i: Int => assert(i == 3)
+    val future: Future[Int] = futureOfList.map(_.sum)
+    future onComplete {
+      case Success(result) => assert(result == 3)
+      case Failure(failure) => throw failure
     }
   }
 
   test("future fold") {
     val listOfFutures: Seq[Future[Int]] = for (i <- 1 to 2) yield Future(i * 1)
-    val result: Future[Int] = Future.fold(listOfFutures) (0) (_ + _) // reduce without (0) arg yields identical result
-    result onSuccess {
-      case i: Int => assert(i == 3)
+    val future: Future[Int] = Future.fold(listOfFutures) (0) (_ + _) // reduce without (0) arg yields identical result
+    future onComplete {
+      case Success(result) => assert(result == 3)
+      case Failure(failure) => throw failure
     }
   }
 
   test("future andThen") {
-    val result: Future[Int] = Future(Integer.parseInt("one")) andThen { case Failure(e) => assert(e.isInstanceOf[NumberFormatException]) }
-    result onFailure {
-      case e: Exception => assert(e.isInstanceOf[NumberFormatException])
+    val future: Future[Int] = Future(Integer.parseInt("1")) andThen { case Success(result) => println(s"side-effecting andThen output: $result") }
+    future onComplete {
+      case Success(result) => assert(result == 1)
+      case Failure(failure) => throw failure
     }
   }
 
   test("future recover") {
-    val result: Future[Int] = Future(Integer.parseInt("one")) recover { case e: Exception => 0 }
-    result onSuccess {
-      case i: Int => assert(i == 0)
+    val future: Future[Int] = Future(Integer.parseInt("one")) recover { case t: Throwable => 0 }
+    future onComplete {
+      case Success(result) => assert(result == 0)
+      case Failure(failure) => throw failure
     }
   }
 
   test("future fallbackTo") {
-    val result: Future[Int] = Future(Integer.parseInt("one")) fallbackTo Future(1)
-    result onSuccess {
-      case i: Int => assert(i == 1)
+    val future: Future[Int] = Future(Integer.parseInt("one")) fallbackTo Future(0)
+    future onComplete {
+      case Success(result) => assert(result == 0)
+      case Failure(failure) => throw failure
     }
   }
 
   test("future zip") {
-    val result: Future[Int] = Future(1) zip Future(2) map { case (x, y) => x + y }
-    result onSuccess {
-      case i: Int => assert(i == 3)
+    val future: Future[Int] = Future(1) zip Future(2) map { case (x, y) => x + y }
+    future onComplete  {
+      case Success(result) => assert(result == 3)
+      case Failure(failure) => throw failure
     }
   }
 
