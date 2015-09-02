@@ -12,33 +12,54 @@ class FunctionTest extends FunSuite {
     assert(v.filter(_ % 2 == 0) == Vector(2, 4))
   }
 
-  test("type implicit") {
+  test("val implicit") {
     val add = (x: Int, y: Int) => x + y
     assert(add(3, 3) == 6)
   }
 
-  test("type explicit") {
+  test("val explicit") {
     val subtract: (Int, Int) => Int = (x, y) => x - y
     assert(subtract(9, 3) == 6)
   }
 
-  test("defined") {
+  test("def expression") {
     def isEven(i: Int): Boolean = i % 2 == 0
     assert(isEven(2))
   }
 
+  test("def body") {
+    def isOdd(i: Int): Boolean = {
+      i % 2 != 0
+    }
+    assert(isOdd(3))
+  }
+
+  test("def match") {
+    def sum(xs: List[Int]): Int = xs match {
+      case head :: tail => head + sum(tail)
+      case Nil => 0
+    }
+    assert(sum(List(1, 2, 3)) == 6)
+  }
+
+  test("def returning a function") {
+    def greeting(greeting: String) = (name: String) => {
+      greeting + ", " + name + "!"
+    }
+    val hello = greeting("Hello")
+    assert(hello("John") == "Hello, John!")
+  }
+
   test("call by value") {
-    def random: Long = Random.nextLong
     def callByValue(r: Long): (Long, Long) = (r, r)
-    val r = callByValue(random)
-    assert(r._1 == r._2)
+    val (r1, r2) = callByValue(Random.nextLong())
+    assert(r1 == r2)
   }
 
   test("call by name") {
-    def random: Long = Random.nextLong
     def callByName(r: => Long): (Long, Long) = (r, r)
-    val r = callByName(random)
-    assert(r._1 != r._2)
+    val (r1, r2) = callByName(Random.nextLong())
+    assert(r1 != r2)
   }
 
   test("default args") {
@@ -49,12 +70,13 @@ class FunctionTest extends FunSuite {
   test("var args") {
     def add(varargs: Int*): Int = varargs.sum
     assert(add(1, 2, 3) == 6)
+    assert(add(List(1, 2, 3):_*) == 6 )
   }
 
   test("closure") {
-    val drinkingAge = 21
-    val canDrink = (age: Int) => age >= drinkingAge
-    assert(canDrink(21))
+    val legalDrinkingAge = 21
+    def isLegallyOldEnoughToDrink(age: Int): Boolean = age >= legalDrinkingAge
+    assert(isLegallyOldEnoughToDrink(22))
   }
 
   test("higher order") {
@@ -75,14 +97,6 @@ class FunctionTest extends FunSuite {
     }
     assert(fraction(2) == 1)
     assert(fraction.isDefinedAt(-42))
-  }
-
-  test("returning a function") {
-    def greeting(greeting: String) = (name: String) => {
-      greeting + ", " + name + "!"
-    }
-    val hello = greeting("Hello")
-    assert(hello("John") == "Hello, John!")
   }
 
   test("curry") {
