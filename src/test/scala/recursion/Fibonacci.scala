@@ -1,4 +1,4 @@
-package math
+package recursion
 
 import scala.annotation.tailrec
 import scala.util.control.TailCalls._
