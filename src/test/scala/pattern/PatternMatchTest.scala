@@ -60,17 +60,11 @@ class PatternMatchTest extends FunSuite {
   test("case modulo") {
     val buffer = ArrayBuffer[String]()
     1 until 100 foreach {
-      case i if moduloThreeFive(i) => buffer += s"$i -> m3 & m5"
-      case i if moduloThree(i) => buffer += s"$i -> m3"
-      case i if moduloFive(i) => buffer += s"$i -> m5"
+      case i if i % 3 == 0 => buffer += s"$i -> m3 & m5"
+      case i if i % 5 == 0 => buffer += s"$i -> m3"
+      case i if i % 3 == 0 && i % 5 == 0 => buffer += s"$i -> m5"
       case i => buffer += i.toString
     }
     assert(buffer.size == 99)
   }
-
-  def moduloThree(n: Int): Boolean = n % 3 == 0
-
-  def moduloFive(n: Int): Boolean = n % 5 == 0
-
-  def moduloThreeFive(n: Int): Boolean = moduloThree(n) && moduloFive(n)
 }
