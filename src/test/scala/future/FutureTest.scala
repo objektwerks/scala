@@ -18,8 +18,8 @@ class FutureTest extends FunSuite {
   }
 
   test("non-blocking future") {
-    val helloWorldFuture: Future[String] = Future { "Hello world!" }
-    helloWorldFuture onComplete {
+    val future: Future[String] = Future { "Hello world!" }
+    future onComplete {
       case Success(success) => assert(success == "Hello world!")
       case Failure(failure) => throw failure
     }
