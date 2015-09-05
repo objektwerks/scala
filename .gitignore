@@ -1,6 +1,9 @@
 target/
 project/project/
 project/target/
+.cache-tests
+.classpath
+.project
 .idea
 .ensime
 .ensime_cache
