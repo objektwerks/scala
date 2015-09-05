@@ -27,6 +27,12 @@ class ClassesTest extends FunSuite {
     val cars = Owner.startEngines
     for (car <- cars) {
       assert(car.sound.nonEmpty)
+      car match {
+        case p: Porsche => assert(p.sound == "prrrr")
+        case c: Corvette => assert(c.sound == "woosh")
+        case m: Maserati => assert(m.sound == "grrrr")
+        case _ => throw new IllegalArgumentException("Not a car!")
+      }
     }
   }
 }
