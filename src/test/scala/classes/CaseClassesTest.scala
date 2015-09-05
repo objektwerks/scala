@@ -3,19 +3,19 @@ package classes
 import org.scalatest.FunSuite
 
 trait Animal {
-  def sound: String = ""
+  def speak: String = ""
 }
 
 case class Tiger(speach: String) extends Animal {
-  override def sound: String = speach
+  override def speak: String = speach
 }
 
 case class Shark(speach: String) extends Animal {
-  override def sound: String = speach
+  override def speak: String = speach
 }
 
 case class Bear(speach: String) extends Animal {
-  override def sound: String = speach
+  override def speak: String = speach
 }
 
 case object ZooKeeper {
@@ -34,7 +34,7 @@ class CaseClassesTest extends FunSuite {
   test("case classes") {
     val animals = ZooKeeper.openCages
     for(animal <- animals) {
-      assert(animal.sound.nonEmpty)
+      assert(animal.speak.nonEmpty)
       animal match {
         case Tiger(s) => assert(s == "prrrr")
         case Shark(s) => assert(s == "woosh")
@@ -52,7 +52,13 @@ class CaseClassesTest extends FunSuite {
     assert(t1.hashCode == t2.hashCode)
     assert(t1.hashCode != t3.hashCode)
     assert(Tiger.unapply(t1).get == "prrrr")
-    assert(t1 == Tiger.apply(t1.sound))
+    assert(t1 == Tiger.apply(t1.speak))
+  }
+
+  test("copy") {
+    val s1 = Shark("woosh")
+    val s2 = s1.copy(speach = "arrrgh")
+    assert(s1 != s2)
   }
 
   test("value classes") {
