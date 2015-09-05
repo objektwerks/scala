@@ -3,19 +3,19 @@ package classes
 import org.scalatest.FunSuite
 
 abstract class Car {
-  def sound: String
+  def sound: String = ""
 }
 
 class Porsche extends Car {
-  def sound: String = "prrrr"
+  override def sound: String = "prrrr"
 }
 
 class Corvette extends Car {
-  def sound: String = "woosh"
+  override def sound: String = "woosh"
 }
 
 class Maserati extends Car {
-  def sound: String = "grrrr"
+  override def sound: String = "grrrr"
 }
 
 object Owner {
@@ -25,8 +25,8 @@ object Owner {
 class ClassesTest extends FunSuite {
   test("classes") {
     val cars = Owner.startEngines
-    for (animal <- cars) {
-      assert(animal.sound.length > 0)
+    for (car <- cars) {
+      assert(car.sound.nonEmpty)
     }
   }
 }

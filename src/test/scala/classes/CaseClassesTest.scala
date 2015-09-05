@@ -3,19 +3,19 @@ package classes
 import org.scalatest.FunSuite
 
 trait Animal {
-  def sound: String
+  def sound: String = ""
 }
 
 case class Tiger(speach: String) extends Animal {
-  def sound: String = speach
+  override def sound: String = speach
 }
 
 case class Shark(speach: String) extends Animal {
-  def sound: String = speach
+  override def sound: String = speach
 }
 
 case class Bear(speach: String) extends Animal {
-  def sound: String = speach
+  override def sound: String = speach
 }
 
 case object ZooKeeper {
@@ -31,10 +31,10 @@ case class Foot(value: Double) extends AnyVal {
 }
 
 class CaseClassesTest extends FunSuite {
-  test("animals") {
+  test("case classes") {
     val animals = ZooKeeper.openCages
     for(animal <- animals) {
-      assert(animal.sound.length > 0)
+      assert(animal.sound.nonEmpty)
       animal match {
         case Tiger(s) => assert(s == "prrrr")
         case Shark(s) => assert(s == "woosh")
