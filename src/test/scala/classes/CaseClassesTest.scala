@@ -19,7 +19,7 @@ case class Bear(speach: String) extends Animal {
 }
 
 case object ZooKeeper {
-  def openCages: Set[Animal] = Set(new Tiger("prrrr"), new Shark("woosh"), new Bear("grrrr"))
+  def openCages: Set[Animal] = Set(Tiger("prrrr"), Shark("woosh"), Bear("grrrr"))
 }
 
 case class Meter(value: Double) extends AnyVal {
