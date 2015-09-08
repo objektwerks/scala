@@ -7,9 +7,9 @@ import scala.language.reflectiveCalls
 import scala.util.Random
 
 class FunctionTest extends FunSuite {
-  test ("anonymous") {
-    val v = Vector(1, 2, 3, 4)
-    assert(v.filter(_ % 2 == 0) == Vector(2, 4))
+  test ("lambda") {
+    val list = List(1, 2, 3, 4)
+    assert(list.filter(_ % 2 == 0) == List(2, 4))
   }
 
   test("val implicit") {
