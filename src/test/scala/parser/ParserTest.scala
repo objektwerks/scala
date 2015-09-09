@@ -31,6 +31,13 @@ class ParserTest extends FunSuite {
     assert((regex replaceAllIn(source, replacement) length) == 34)
   }
 
+  test("pattern match") {
+    val date = """(\d\d\d\d)-(\d\d)-(\d\d)""".r
+    "2015-09-09" match {
+      case date(year, month, day) => assert(year.toInt == 2015 && month.toInt == 9 && day.toInt == 9)
+    }
+  }
+
   test("parse all") {
     val parser = new ExprParser()
     assert(parser.parseAll(parser.expr, "3+3").get == 6)
