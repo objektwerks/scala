@@ -33,7 +33,9 @@ class ParserTest extends FunSuite {
 
   test("parse all") {
     val parser = new ExprParser()
-    assert(parser.parseAll(parser.expr, "3+3+3").get == 9)
-    assert(parser.parseAll(parser.expr, "3*3*3").get == 27)
+    assert(parser.parseAll(parser.expr, "3+3").get == 6)
+    assert(parser.parseAll(parser.expr, "3*3").get == 9)
+    assert(parser.parseAll(parser.expr, "9-6").get == 3)
+    assert(parser.parseAll(parser.expr, "9/3").get == 3)
   }
 }
