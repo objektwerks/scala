@@ -26,16 +26,6 @@ class PatternMatchTest extends FunSuite {
     assert(!isTrue(""))
   }
 
-  test("int to string match") {
-    def isEqual(s: Int): String = s match {
-      case 1 => "one"
-      case 2 => "two"
-      case _ => "many"
-    }
-    assert(isEqual(1) == "one")
-    assert(isEqual(3) == "many")
-  }
-
   test("case class match") {
     case class Person(name: String)
     def isPerson(p: Person): String = p match {
@@ -44,6 +34,7 @@ class PatternMatchTest extends FunSuite {
       case _ => "Mr. Nobody"
     }
     assert(isPerson(Person("John")) == "Mr. John")
+    assert(isPerson(Person("Jane")) == "Ms. Jane")
     assert(isPerson(Person("Jake")) == "Mr. Nobody")
   }
 
@@ -57,7 +48,7 @@ class PatternMatchTest extends FunSuite {
     assert(order(Order(0, "")) == "we're out of that")
   }
 
-  test("case modulo") {
+  test("guarded match") {
     val buffer = ArrayBuffer[String]()
     1 until 100 foreach {
       case i if i % 3 == 0 && i % 5 == 0 => buffer += s"$i -> m3 & m5"
@@ -66,5 +57,15 @@ class PatternMatchTest extends FunSuite {
       case i => buffer += i.toString
     }
     assert(buffer.size == 99)
+  }
+
+  test("alias match") {
+    case class Stock(symbol: String, price: Double)
+    def isPriceHigher(yesterday: Stock, today: Stock): Boolean = today match {
+      case s @ Stock(_, price) if yesterday.symbol == today.symbol => s.price > yesterday.price
+    }
+    val yesterday = Stock("XYZ", 1.11)
+    val today = Stock("XYZ", 3.33)
+    assert(isPriceHigher(yesterday, today))
   }
 }
