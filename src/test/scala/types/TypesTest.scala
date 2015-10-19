@@ -22,8 +22,8 @@ class Robot extends Bootable with Speach with Emotion
 
 // Self Type
 trait Greeting { def greeting: String }
-trait Hello extends Greeting { override def greeting = "hello"}
-trait Goodbye extends Greeting { override def greeting = "goodbye"}
+trait Hello extends Greeting { override def greeting = "hello" }
+trait Goodbye extends Greeting { override def greeting = "goodbye" }
 class Speaker {
   self: Greeting =>
   def greet: String = greeting
@@ -60,7 +60,7 @@ class TypesTest extends FunSuite {
 
   test("duck typing") {
     class Greeter { def greet = "Hi!" }
-    def greet(greeter: { def greet: String }): String = greeter.greet
+    def greet(greeter: { def greet: String } ): String = greeter.greet
     assert(greet(new Greeter) == "Hi!")
   }
 
