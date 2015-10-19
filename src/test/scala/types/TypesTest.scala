@@ -2,41 +2,23 @@ package types
 
 import org.scalatest.FunSuite
 
-// Trait
-trait Speach { def speak(): String = "arrgh" }
-trait Emotion { def emotion(): String = "happy" }
-trait On { def on(): Int = 1 }
-trait Off { def off(): Int = -1 }
+// Variance
+trait Relative
+class Parent extends Relative
+class Child extends Parent
+class Covariant[+R](val relative: R)
+class Contravariant[-R, +S](val relative: S)
+class Invariant[R](val relative: R)
 
-// Class with Compound Types and Traits
-class Robot(power: On with Off) extends Speach with Emotion
-
-// Covariant
-sealed abstract class Animal(name: String) { def speak: String }
-class Cat(name: String) extends Animal(name) { override def speak = "meow meow" }
-class Dog(name: String) extends Animal(name) { override def speak = "wolf wolf" }
-class Trainer[+A] (animal: Animal) {
-  def id[T] = identity(animal)
-  def speak[T <: Animal](): String = animal.speak
+// Compound Types
+trait Speach { def speak: String = "arrgh" }
+trait Emotion { def emotion: String = "happy" }
+trait Init { def init: Boolean = true }
+trait Run { def run: Boolean = true }
+class Bootable extends Init with Run {
+  def boot: Boolean = init; run
 }
-
-// Contravariant
-sealed abstract class Dessert(name: String) { def bake: String }
-class Cake(name: String) extends Dessert(name) { override def bake = "mix, bake and frost"}
-class CupCake(name: String) extends Cake(name) { override def bake = "mix, bake, frost and package"}
-class Baker[-A] (cake: Cake) {
-  def id[T] = identity(cake)
-  def make[T >: CupCake](): String = cake.bake
-}
-
-// Invariant
-sealed abstract class Sport(name: String) { def play: String }
-class Football(name: String) extends Sport(name) { override def play = "go bucs go!" }
-class Soccer(name: String) extends Football(name) { override def play = "go manchester united go!" }
-class Referee[A] (sport: Sport) {
-  def id[T] = identity(sport)
-  def play[T](): String = sport.play
-}
+class Robot extends Bootable with Speach with Emotion
 
 // Self Type
 trait Greeting { def greeting: String }
@@ -53,40 +35,19 @@ class First {
 }
 
 class TypesTest extends FunSuite {
-  test("covariance") {
-    val cat: Animal = new Cat("persia")
-    val catTrainer: Trainer[Animal] = new Trainer(cat)
-    assert(catTrainer.id == cat)
-    assert(catTrainer.speak == cat.speak)
-
-    val dog: Animal = new Dog("spike")
-    val dogTrainer: Trainer[Animal] = new Trainer(dog)
-    assert(dogTrainer.id == dog)
-    assert(dogTrainer.speak == dog.speak)
+  test("variance") {
+    val covariant: Covariant[Parent] = new Covariant[Child](new Child())
+    val contravariant: Contravariant[Child, Parent] = new Contravariant[Child, Parent](new Parent())
+    val invariant: Invariant[Child] = new Invariant[Child](new Child())
+    assert(covariant.relative.isInstanceOf[Child])
+    assert(contravariant.relative.isInstanceOf[Parent])
+    assert(invariant.relative.isInstanceOf[Child])
   }
 
-  test("contravariance") {
-    val cake: Cake = new Cake("chocolate")
-    val cakeBaker: Baker[Dessert] = new Baker(cake)
-    assert(cakeBaker.id == cake)
-    assert(cakeBaker.make == cake.bake)
-
-    val cupCake: CupCake = new CupCake("vanila")
-    val cupCakeBaker: Baker[Dessert] = new Baker(cupCake)
-    assert(cupCakeBaker.id == cupCake)
-    assert(cupCakeBaker.make == cupCake.bake)
-  }
-
-  test("invariance") {
-    val football: Sport = new Football("bucs")
-    val footballReferee: Referee[Sport] = new Referee(football)
-    assert(footballReferee.id == football)
-    assert(footballReferee.play == football.play)
-
-    val soccer: Football = new Soccer("manchester united")
-    val soccerReferee: Referee[Football] = new Referee(soccer)
-    assert(soccerReferee.id == soccer)
-    assert(soccerReferee.play == soccer.play)
+  test("compound types") {
+    val robot = new Robot()
+    val booted = robot.boot
+    assert(booted)
   }
 
   test("type alias") {
@@ -99,7 +60,7 @@ class TypesTest extends FunSuite {
 
   test("duck typing") {
     class Greeter { def greet = "Hi!" }
-    def greet(greeter: {def greet: String}): String = greeter.greet
+    def greet(greeter: { def greet: String }): String = greeter.greet
     assert(greet(new Greeter) == "Hi!")
   }
 
