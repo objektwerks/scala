@@ -9,16 +9,17 @@ class Child extends Parent
 class Covariant[+R](val relative: R)
 class Contravariant[-R, +S](val relative: S)
 class Invariant[R](val relative: R)
+trait PositiveFilter[-A, +B] { def isPositive(n: Int): Boolean }
 
 // Compound Types
-trait Speach { def speak: String = "arrgh" }
-trait Emotion { def emotion: String = "happy" }
 trait Init { def init: Boolean = true }
-trait Run { def run: Boolean = true }
-class Bootable extends Init with Run {
-  def boot: Boolean = init; run
+trait Run extends Init { def run: Boolean = init }
+class Runnable extends Run {
+  def isRunning: Boolean = run
 }
-class Robot extends Bootable with Speach with Emotion
+trait Emotion { def isEmoting: Boolean = true }
+trait Speach { def isSpeaking: Boolean = true }
+class Robot extends Runnable with Emotion with Speach
 
 // Self Type
 trait Greeting { def greeting: String }
@@ -44,10 +45,20 @@ class TypesTest extends FunSuite {
     assert(invariant.relative.isInstanceOf[Child])
   }
 
+  test("contravariant in, covariant out") {
+    val filter = new PositiveFilter[Int, Boolean] {
+      override def isPositive(n: Int): Boolean = n > 0
+    }
+    val numbers = List(-3, -2, -1, 0, 1, 2, 3)
+    val positives: List[Int] = numbers.filter(n => filter.isPositive(n))
+    assert(positives == List(1, 2, 3))
+  }
+
   test("compound types") {
     val robot = new Robot()
-    val booted = robot.boot
-    assert(booted)
+    assert(robot.isRunning)
+    assert(robot.isEmoting)
+    assert(robot.isSpeaking)
   }
 
   test("type alias") {
