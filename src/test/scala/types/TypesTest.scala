@@ -12,8 +12,8 @@ class Invariant[R](val relative: R)
 trait PositiveFilter[-A, +B] { def isPositive(n: Int): Boolean }
 
 // Bounds
-object UpperBounds { def apply[N <: Any](n: N): N = identity(n) }
-object LowerBounds { def apply[V >: AnyVal](v: V): V = identity(v) }
+object UpperBounds { def apply[N <: AnyVal](n: N): N = identity(n) }
+object LowerBounds { def apply[A >: AnyVal](a: A): A = identity(a) }
 
 // Compound Types
 trait Init { def init: Boolean = true }
