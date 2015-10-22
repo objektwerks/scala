@@ -11,6 +11,10 @@ class Contravariant[-R, +S](val relative: S)
 class Invariant[R](val relative: R)
 trait PositiveFilter[-A, +B] { def isPositive(n: Int): Boolean }
 
+// Bounds
+object UpperBounds { def apply[N <: Any](n: N): N = identity(n) }
+object LowerBounds { def apply[V >: AnyVal](v: V): V = identity(v) }
+
 // Compound Types
 trait Init { def init: Boolean = true }
 trait Run extends Init { def run: Boolean = init }
@@ -52,6 +56,13 @@ class TypesTest extends FunSuite {
     val numbers = List(-3, -2, -1, 0, 1, 2, 3)
     val positives: List[Int] = numbers.filter(n => filter.isPositive(n))
     assert(positives == List(1, 2, 3))
+  }
+
+  test("bounds") {
+    val upperBounds: Int = UpperBounds(3)
+    assert(upperBounds == 3)
+    val lowerBounds: Any = LowerBounds(3)
+    assert(lowerBounds == 3)
   }
 
   test("compound types") {
