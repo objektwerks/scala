@@ -2,7 +2,7 @@ package classes
 
 import org.scalatest.FunSuite
 
-trait Animal { def speak: String }
+sealed trait Animal { def speak: String }
 case class Tiger(speach: String) extends Animal { override def speak: String = speach }
 case class Shark(speach: String) extends Animal { override def speak: String = speach }
 case class Bear(speach: String) extends Animal { override def speak: String = speach }
