@@ -2,6 +2,20 @@ package types
 
 import org.scalatest.FunSuite
 
+// Product | Has-A-And Pattern
+trait C
+trait B
+trait A {
+  def b: B
+  def c: C
+}
+case class D(b: B, c: C)
+
+// Sum | Is-A-Or Pattern
+sealed trait Z
+final case class X(x: Any) extends Z
+final case class Y(y: Any) extends Z
+
 // Variance
 trait Relative
 class Parent extends Relative
