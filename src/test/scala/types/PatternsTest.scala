@@ -31,8 +31,60 @@ trait L
 trait M
 trait N extends L with M  // N is-a L and M
 
-class PatternsTest extends FunSuite {
-  test("patterns") {
+// Polymorphism
+sealed trait Food
+case object Hamburger extends Food
+case object Pizza extends Food
 
+sealed trait SportsFan {
+  def name: String
+  def favorite: Food
+}
+case class BaseballFan(name: String) extends SportsFan {
+  override def favorite: Food = Hamburger
+}
+case class FootballFan(name: String) extends SportsFan {
+  override def favorite: Food = Pizza
+}
+
+// Pattern Matching
+sealed trait Movie
+case object Drama extends Movie
+case object Action extends Movie
+
+sealed trait MovieFan {
+  def name: String
+  def favorite: Movie = {
+    this match {
+      case Gal(_) => Drama
+      case Guy(_) => Action
+    }
+  }
+}
+case class Guy(name: String) extends MovieFan
+case class Gal(name: String) extends MovieFan
+
+object MovieReporter {
+  def favorite(fan: MovieFan): Movie = {
+    fan match {
+      case Gal(_) => Drama
+      case Guy(_) => Action
+    }
+  }
+}
+
+class PatternsTest extends FunSuite {
+  test("polymorphism") {
+    val (baseballFan, footballFan): (SportsFan, SportsFan) = (BaseballFan("Fred"), FootballFan("Barney"))
+    assert(baseballFan.favorite == Hamburger)
+    assert(footballFan.favorite == Pizza)
+  }
+
+  test("pattern matching") {
+    val (dramaFan, actionFan): (MovieFan, MovieFan) = (Gal("Betty"), Guy("Barney"))
+    assert(dramaFan.favorite == Drama)
+    assert(actionFan.favorite == Action)
+    assert(MovieReporter.favorite(dramaFan) == Drama)
+    assert(MovieReporter.favorite(actionFan) == Action)
   }
 }

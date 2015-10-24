@@ -6,14 +6,14 @@ import org.scalatest.FunSuite
 trait Relative
 class Parent extends Relative
 class Child extends Parent
-class Covariant[+R](val relative: R)
-class Contravariant[-R, +S](val relative: S)
-class Invariant[R](val relative: R)
-trait PositiveFilter[-A, +B] { def isPositive(n: Int): Boolean }
+class Covariant[+RR](val relative: RR)
+class Contravariant[-RR, +SS](val relative: SS)
+class Invariant[RR](val relative: RR)
+trait PositiveFilter[-AA, +BB] { def isPositive(n: Int): Boolean }
 
 // Bounds
-object UpperBounds { def apply[N <: AnyVal](n: N): N = identity(n) }
-object LowerBounds { def apply[A >: AnyVal](a: A): A = identity(a) }
+object UpperBounds { def apply[UB <: AnyVal](n: UB): UB = identity(n) }
+object LowerBounds { def apply[LB >: AnyVal](a: LB): LB = identity(a) }
 
 // Compound Types
 trait Init { def init: Boolean = true }
