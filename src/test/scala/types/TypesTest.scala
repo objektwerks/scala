@@ -13,7 +13,7 @@ trait PositiveFilter[-AA, +BB] { def isPositive(n: Int): Boolean }
 
 // Bounds
 object UpperBounds { def apply[UB <: AnyVal](n: UB): UB = identity(n) }
-object LowerBounds { def apply[LB >: AnyVal](a: LB): LB = identity(a) }
+object LowerBounds { def apply[LB >: AnyVal](n: LB): LB = identity(n) }
 
 // Compound Types
 trait Init { def init: Boolean = true }
