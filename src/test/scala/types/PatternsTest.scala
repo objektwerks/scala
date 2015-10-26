@@ -2,6 +2,8 @@ package types
 
 import org.scalatest.FunSuite
 
+import scala.annotation.tailrec
+
 // Product | Has-A-And Pattern
 trait C
 trait B
@@ -73,7 +75,19 @@ object MovieReporter {
   }
 }
 
+// Recursive Data
+sealed trait IntList
+case object End extends IntList
+case class Pair(head: Int, tail: IntList) extends IntList
+
 class PatternsTest extends FunSuite {
+  @tailrec
+  private def sum(list: IntList, total: Int = 0): Int =
+    list match {
+      case End => total
+      case Pair(head, tail) => sum(tail, total + head)
+    }
+
   test("polymorphism") {
     val (baseballFan, footballFan): (SportsFan, SportsFan) = (BaseballFan("Fred"), FootballFan("Barney"))
     assert(baseballFan.favorite == Hamburger)
@@ -86,5 +100,12 @@ class PatternsTest extends FunSuite {
     assert(actionFan.favorite == Action)
     assert(MovieReporter.favorite(dramaFan) == Drama)
     assert(MovieReporter.favorite(actionFan) == Action)
+  }
+
+  test("resursive data") {
+    val list = Pair(1, Pair(2, Pair(3, End)))
+    assert(sum(list) == 6)
+    assert(sum(list.tail) == 5)
+    assert(sum(End) == 0)
   }
 }
