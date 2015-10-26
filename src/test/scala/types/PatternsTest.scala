@@ -79,15 +79,15 @@ object MovieReporter {
 sealed trait IntList
 case object End extends IntList
 case class Pair(head: Int, tail: IntList) extends IntList
-
-class PatternsTest extends FunSuite {
+object SumList {
   @tailrec
-  private def sum(list: IntList, total: Int = 0): Int =
+  final def sum(list: IntList, total: Int = 0): Int =
     list match {
       case End => total
       case Pair(head, tail) => sum(tail, total + head)
     }
-
+}
+class PatternsTest extends FunSuite {
   test("polymorphism") {
     val (baseballFan, footballFan): (SportsFan, SportsFan) = (BaseballFan("Fred"), FootballFan("Barney"))
     assert(baseballFan.favorite == Hamburger)
@@ -104,8 +104,8 @@ class PatternsTest extends FunSuite {
 
   test("resursive data") {
     val list = Pair(1, Pair(2, Pair(3, End)))
-    assert(sum(list) == 6)
-    assert(sum(list.tail) == 5)
-    assert(sum(End) == 0)
+    assert(SumList.sum(list) == 6)
+    assert(SumList.sum(list.tail) == 5)
+    assert(SumList.sum(End) == 0)
   }
 }
