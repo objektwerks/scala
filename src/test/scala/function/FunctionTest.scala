@@ -7,17 +7,10 @@ import scala.language.reflectiveCalls
 import scala.util.Random
 
 class FunctionTest extends FunSuite {
-  test ("lambda") {
-    val list = List(1, 2, 3, 4)
-    assert(list.filter(_ % 2 == 0) == List(2, 4))
-  }
-
-  test("val implicit") {
+  test("literal") {
     val add = (x: Int, y: Int) => x + y
     assert(add(3, 3) == 6)
-  }
 
-  test("val explicit") {
     val subtract: (Int, Int) => Int = (x, y) => x - y
     assert(subtract(9, 3) == 6)
   }
@@ -102,6 +95,11 @@ class FunctionTest extends FunSuite {
   test("curry") {
     def multiply(x: Int)(y: Int) = x * y
     assert(multiply(3)(3) == 9)
+  }
+
+  test ("lambda") {
+    val list = List(1, 2, 3, 4)
+    assert(list.filter(_ % 2 == 0) == List(2, 4))
   }
 
   test("recursion") {
