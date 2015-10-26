@@ -79,7 +79,7 @@ object MovieReporter {
 sealed trait IntList
 case object End extends IntList
 case class Pair(head: Int, tail: IntList) extends IntList
-object SumList {
+object SumIntList {
   @tailrec
   final def sum(list: IntList, total: Int = 0): Int =
     list match {
@@ -104,8 +104,8 @@ class PatternsTest extends FunSuite {
 
   test("resursive data") {
     val list = Pair(1, Pair(2, Pair(3, End)))
-    assert(SumList.sum(list) == 6)
-    assert(SumList.sum(list.tail) == 5)
-    assert(SumList.sum(End) == 0)
+    assert(SumIntList.sum(list) == 6)
+    assert(SumIntList.sum(list.tail) == 5)
+    assert(SumIntList.sum(End) == 0)
   }
 }
