@@ -11,6 +11,9 @@ class FunctionTest extends FunSuite {
     val add = (x: Int, y: Int) => x + y
     assert(add(3, 3) == 6)
 
+    val multiply = (x: Int, y: Int) => x * y: Int
+    assert(multiply(3, 3) == 9)
+
     val subtract: (Int, Int) => Int = (x, y) => x - y
     assert(subtract(9, 3) == 6)
   }
