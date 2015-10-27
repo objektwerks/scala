@@ -1,7 +1,7 @@
-package theory
+package types
 
 import org.scalatest.FunSuite
-import theory.CategoryTheory._
+import types.CategoryTheory._
 
 class CategoryTheoryTest extends FunSuite {
   test("applicative") {

@@ -1,4 +1,4 @@
-package theory
+package types
 
 trait Semigroup[F] {
   def append(x: F, y: F): F
