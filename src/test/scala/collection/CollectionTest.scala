@@ -102,7 +102,7 @@ class CollectionTest extends FunSuite {
     for (i <- 0 to 2) assert(list.isDefinedAt(i))
     assert(list.hasDefiniteSize)
 
-    assert(list.mkString(", ") == "1, 2, 3")
+    assert("123" == list.mkString)
 
     assert(list.padTo(7, 0) == List(1, 2, 3, 0, 0, 0, 0))
     assert(list.patch(0, List(4, 5, 6), 3) == List(4, 5, 6))
