@@ -11,12 +11,6 @@ class OptionTest extends FunSuite {
     def greaterThanZero(x: Int): Option[Int] = if (x > 0) Some(x) else None
     assert(greaterThanZero(0).isEmpty)
     assert(greaterThanZero(1).contains(1))
-    val opt = greaterThanZero(1)
-    opt match {
-      case Some(i) => i
-      case None => throw new IllegalArgumentException("option equals none")
-    }
-    assert(opt.get == 1)
   }
 
   test("option isDefined & isEmpty") {
