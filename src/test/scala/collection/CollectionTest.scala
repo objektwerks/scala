@@ -349,6 +349,21 @@ class CollectionTest extends FunSuite {
     assert(filterLetters.head.getOrElse("Z") == "A")
   }
 
+  test("for comprehension") {
+    val xs = List( 1,2, 3)
+    val ys = for {
+      x <- xs
+    } yield x * 2
+    assert(ys == xs.map(_ * 2))
+
+    val as = List(List(1), List(2, 3), List(4, 5, 6))
+    val bs = for {
+      sas <- as
+      a <- sas
+    } yield a * 2
+    assert(bs == as.flatMap(_.map( _ * 2)))
+  }
+
   test("par set") {
     val set = ParSet(1 to 1000000:_*)
     assert(set.sum == 1784293664)
