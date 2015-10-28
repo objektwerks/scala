@@ -34,10 +34,15 @@ class OptionTest extends FunSuite {
   }
 
   test("option map & flatmap") {
-    def toInt(s: String): Option[Int] = Some(Integer.parseInt(s.trim))
+    def toInt(s: String): Option[Int] = if(s matches "\\d+") Some(s.toInt) else None
     val strings = Seq("1", "2", "3")
     assert(strings.map(toInt) == List(Some(1), Some(2), Some(3)))
+    assert(strings.flatMap(toInt) == List(1, 2, 3))
     assert(strings.flatMap(toInt).sum == 6)
+
+    def sum(x: Option[Int], y: Option[Int]): Option[Int] = x.flatMap(a => y.map(b => a + b))
+    assert(sum(toInt("1"), toInt("2")).contains(3))
+    assert(sum(toInt("1"), toInt("z")).isEmpty)
   }
 
   test("option exists") {
