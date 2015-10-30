@@ -1,7 +1,7 @@
 package theory
 
 import org.scalatest.FunSuite
-import theory.CategoryTheory._
+import theory.Theory._
 
 trait Semigroup[F] {
   def append(x: F, y: F): F
@@ -29,7 +29,7 @@ trait Monad[F[_]] extends Functor[F] {
   def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B]
 }
 
-object CategoryTheory {
+object Theory {
   val adderMonoid = new Monoid[Int] {
     override def zero: Int = 0
     override def append(x: Int, y: Int): Int = x + y
@@ -70,7 +70,7 @@ object CategoryTheory {
   }
 }
 
-class CategoryTheoryTest extends FunSuite {
+class TheoryTest extends FunSuite {
   test("applicative") {
     val option: Option[Int] = optionApplicative.point(1)
     val mappedOption: Option[Int] = optionApplicative.map(option)(i => i * 3)
