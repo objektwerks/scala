@@ -363,6 +363,13 @@ class CollectionTest extends FunSuite {
     assert(filteredNumbers == List(1, 2))
   }
 
+  test("for comphrension > zip") {
+    val zippedNumbers = for {
+      (a, b) <- List(1, 2, 3) zip List(4, 5, 6)
+    } yield a + b
+    assert(zippedNumbers == List(5, 7, 9))
+  }
+
   test("par set") {
     val set = ParSet(1 to 1000000:_*)
     assert(set.sum == 1784293664)
