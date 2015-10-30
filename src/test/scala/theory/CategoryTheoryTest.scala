@@ -1,7 +1,7 @@
-package types
+package theory
 
 import org.scalatest.FunSuite
-import CategoryTheory._
+import theory.CategoryTheory._
 
 trait Semigroup[F] {
   def append(x: F, y: F): F
