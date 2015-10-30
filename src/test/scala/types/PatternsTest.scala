@@ -3,13 +3,13 @@ package types
 import org.scalatest.FunSuite
 
 // Product | Has-A-And Pattern
-trait G
-trait K
-trait J { // J has-a K and G
-def k: K
-  def g: G
+trait C
+trait B
+trait A { // A has-a B and C
+def b: B
+  def c: C
 }
-case class D(k: K, g: G)  // D has-a K and G
+case class D(b: B, c: C)  // D has-a B and C
 
 // Product | Has-A-Or Pattern
 sealed trait P
@@ -18,8 +18,8 @@ final case class R(r: Any) extends P
 trait O {  // O has-a Q or R
 def p: P
 }
-final case class H(b: K) extends P  // O is-a H or I, and H has-a B and I has-a C
-final case class I(c: G) extends P
+final case class H(b: B) extends P  // O is-a H or I, and H has-a B and I has-a C
+final case class I(c: C) extends P
 
 // Sum | Is-A-Or Pattern
 sealed trait Z  // Z is-a X or Y
