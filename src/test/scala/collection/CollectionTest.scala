@@ -2,8 +2,9 @@ package collection
 
 import org.scalatest.FunSuite
 
+import scala.collection.immutable.ListMap
 import scala.collection.parallel.immutable.{ParMap, ParSeq, ParSet, ParRange}
-import scala.collection.{SortedMap, SortedSet, mutable}
+import scala.collection.{mutable, SortedMap, SortedSet}
 
 class CollectionTest extends FunSuite {
   test("list") {
@@ -193,6 +194,7 @@ class CollectionTest extends FunSuite {
     assert(map(1) == 1)
     assert(map.get(2).get == 2)
     assert(map.getOrElse(3, -1) == -1)
+    assert(map.contains(1))
     assert(map == Map(1 -> 1) + (2 -> 2))
     assert(map == Map(1 -> 1, 2 -> 2, 3 -> 3) - 3)
     assert(map == Map(1 -> 1) ++ Map(2 -> 2))
@@ -204,6 +206,14 @@ class CollectionTest extends FunSuite {
     assert(map.size == 2 && map(1) == 1 && map(2) == 2)
     assert(map.keySet == Set(1, 2) && map.values.toSet == Set(1, 2))
     assert(map.empty.isEmpty)
+  }
+
+  test("list map") {
+    val map = ListMap(3 -> 3, 2 -> 2, 1 -> 1)
+    val list = map.keys.toIndexedSeq
+    assert(list(0) == 3)
+    assert(list(1) == 2)
+    assert(list(2) == 1)
   }
 
   test("sorted map") {
