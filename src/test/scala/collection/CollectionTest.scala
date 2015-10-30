@@ -383,6 +383,11 @@ class CollectionTest extends FunSuite {
     assert(zippedNumbers == List(5, 7, 9))
   }
 
+  test("range") {
+    assert((1 until 10) == Range(1, 10, 1))
+    assert((10 until 1 by -1) == Range(10, 1, -1))
+  }
+
   test("par set") {
     val set = ParSet(1 to 1000000:_*)
     assert(set.sum == 1784293664)
