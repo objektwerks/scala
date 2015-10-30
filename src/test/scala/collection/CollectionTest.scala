@@ -190,6 +190,9 @@ class CollectionTest extends FunSuite {
 
   test("map") {
     val map = Map(1 -> 1, 2 -> 2)
+    assert(map(1) == 1)
+    assert(map.get(2).get == 2)
+    assert(map.getOrElse(3, -1) == -1)
     assert(map == Map(1 -> 1) + (2 -> 2))
     assert(map == Map(1 -> 1, 2 -> 2, 3 -> 3) - 3)
     assert(map == Map(1 -> 1) ++ Map(2 -> 2))
