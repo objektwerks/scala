@@ -356,12 +356,11 @@ class CollectionTest extends FunSuite {
     assert(mapList == List(6, 36, 10, 60, 12, 72, 20, 120))
   }
 
-  test("for comprehension > if guard > filter") {
-    val letters = List("A", "B", "C", "D", "F")
-    val forLetters: List[Option[String]] = for (l <- letters if l == "A") yield Some(l)
-    val filterLetters = letters filter (l => l == "A") map (l => Some(l))
-    assert(forLetters.head.getOrElse("Z") == "A")
-    assert(filterLetters.head.getOrElse("Z") == "A")
+  test("for comprehension > if guard filter") {
+    val filteredLetters = for (l <- List("A", "B", "C", "D", "F") if l == "A") yield Some(l)
+    val filteredNumbers = for (n <- List(-2, -1, 0, 1, 2) if n > 0) yield n
+    assert(filteredLetters.head.getOrElse("Z") == "A")
+    assert(filteredNumbers == List(1, 2))
   }
 
   test("par set") {
