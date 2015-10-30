@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
 
-class PatternMatchTest extends FunSuite {
+class MatchTest extends FunSuite {
   test("type match") {
     def byType(t: Any): String = t match {
       case i:Int => s"integer: $i"
