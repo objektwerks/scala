@@ -39,6 +39,14 @@ class First {
   class Second
 }
 
+// Companion Object with Implict
+case class Rational(numerator: Int, denominator: Int)
+object Rational {
+  implicit val ordering = Ordering.fromLessThan[Rational]((x, y) =>
+    (x.numerator.toDouble / x.denominator.toDouble) <
+      (y.numerator.toDouble / y.denominator.toDouble) )
+}
+
 class TypesTest extends FunSuite {
   test("variance") {
     val covariant: Covariant[Parent] = new Covariant[Child](new Child())
@@ -111,5 +119,9 @@ class TypesTest extends FunSuite {
   test("implicit type instance") {
     implicit val ordering: Ordering[String] = Ordering.fromLessThan[String](_ < _)
     assert(List("c", "b", "a").sorted == List("a", "b", "c"))
+  }
+
+  test("companion object with implicit") {
+    assert(List(Rational(1, 2), Rational(3, 4), Rational(1, 3)).sorted == List(Rational(1, 3), Rational(1, 2), Rational(3, 4)))
   }
 }
