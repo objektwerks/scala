@@ -100,4 +100,16 @@ class TypesTest extends FunSuite {
     val path2 = new first2.Second()
     assert(path1 != path2)
   }
+
+  test("type instances") {
+    val minOrdering: Ordering[Int] = Ordering.fromLessThan[Int](_ < _)
+    val maxOrdering: Ordering[Int] = Ordering.fromLessThan[Int](_ > _)
+    assert(List(3, 4, 2).sorted(minOrdering) == List( 2, 3, 4))
+    assert(List(3, 4, 2).sorted(maxOrdering) == List(4, 3, 2))
+  }
+
+  test("implicit type instance") {
+    implicit val ordering: Ordering[String] = Ordering.fromLessThan[String](_ < _)
+    assert(List("c", "b", "a").sorted == List("a", "b", "c"))
+  }
 }
