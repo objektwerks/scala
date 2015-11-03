@@ -3,6 +3,7 @@ package pattern
 import org.scalatest.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
+import scala.util.matching.Regex
 
 class MatchTest extends FunSuite {
   test("variable match") {
@@ -83,5 +84,13 @@ class MatchTest extends FunSuite {
     val yesterday = Stock("XYZ", 1.11)
     val today = Stock("XYZ", 3.33)
     assert(isPriceHigher(yesterday, today))
+  }
+
+  test("regex match") {
+    val ipAddress = new Regex("""(\d+)\.(\d+)\.(\d+)\.(\d+)""")
+    def byRegex(address: String): (Int, Int, Int, Int) = address match {
+      case ipAddress(a, b, c, d) => (a.toInt, b.toInt, c.toInt, d.toInt)
+    }
+    assert((10, 10, 0, 1) == byRegex("10.10.0.1"))
   }
 }
