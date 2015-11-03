@@ -1,10 +1,19 @@
-package `match`
+package pattern
 
 import org.scalatest.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
 
-class MatchTest extends FunSuite {
+class PatternMatchTest extends FunSuite {
+  test("variable match") {
+    case class Order(product: String, quantity: Int)
+    def byVariable(order: Order): (String, Int) = order match {
+      case Order(p, q) => (p, q)
+    }
+    val (product, quanity) = byVariable(Order("beer", 6))
+    assert(product == "beer" && quanity == 6)
+  }
+
   test("type match") {
     def byType(t: Any): String = t match {
       case i:Int => s"integer: $i"
