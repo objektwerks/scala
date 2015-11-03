@@ -55,6 +55,15 @@ class MatchTest extends FunSuite {
     assert(isPerson(Person("Jake")) == "Mr. Nobody")
   }
 
+  test("list match") {
+    def byList(xs: List[Int]): Int = xs match {
+      case Nil => 0
+      case head :: tail => head + tail.sum
+    }
+    assert(byList(Nil) == 0)
+    assert(byList(List(1, 2, 3)) == 6)
+  }
+
   test("wild card case class match") {
     case class Order(number: Int, item: String)
     def order(o: Order): String = o match {
