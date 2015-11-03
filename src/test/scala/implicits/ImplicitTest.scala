@@ -37,6 +37,12 @@ class ImplicitTest extends FunSuite {
     assert(sortedRunners.head.task == "a")
   }
 
+  test("implicitly") {
+    case class Name(name: String)
+    implicit val implicitName = Name("Fred Flintstone")
+    assert(implicitly[Name] == implicitName)
+  }
+
   test("package object") {
     val message = "test"
     assert(packMessage(message) == s"Message packed: $message")
