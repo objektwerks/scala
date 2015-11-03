@@ -25,6 +25,13 @@ class PatternMatchTest extends FunSuite {
     assert(byType("10") == "string: 10")
   }
 
+  test("tuple match") {
+    def byTuple(t: (Int, Int)): Int = t match {
+      case (a, b) => a + b
+    }
+    assert(byTuple((1, 2)) == 3)
+  }
+
   test("or match") {
     def isTrue(a: Any) = a match {
       case 0 | "" => false
