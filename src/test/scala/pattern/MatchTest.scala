@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
 
-class PatternMatchTest extends FunSuite {
+class MatchTest extends FunSuite {
   test("variable match") {
     case class Order(product: String, quantity: Int)
     def byVariable(order: Order): (String, Int) = order match {
