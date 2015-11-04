@@ -1,6 +1,7 @@
 package collection
 
 import org.scalatest.FunSuite
+import types.I
 
 import scala.collection.immutable.ListMap
 import scala.collection.parallel.immutable.{ParMap, ParSeq, ParSet, ParRange}
@@ -418,5 +419,11 @@ class CollectionTest extends FunSuite {
       (a, b) <- List(1, 2, 3) zip List(4, 5, 6)
     } yield a + b
     assert(zippedNumbers == List(5, 7, 9))
+  }
+
+  test("as java") {
+    import scala.collection.JavaConverters._
+    val list = List(1, 2, 3).asJava
+    assert(list.size == 3)
   }
 }
