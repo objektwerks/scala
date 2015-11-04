@@ -421,9 +421,10 @@ class CollectionTest extends FunSuite {
     assert(zippedNumbers == List(5, 7, 9))
   }
 
-  test("as java") {
+  test("as java, as scala") {
     import scala.collection.JavaConverters._
     val list = List(1, 2, 3).asJava
     assert(list.size == 3)
+    assert(list.asScala.sum == 6)
   }
 }
