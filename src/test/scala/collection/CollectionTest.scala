@@ -305,6 +305,43 @@ class CollectionTest extends FunSuite {
     assert((buffer -= 1) == mutable.ListBuffer())
   }
 
+  test("string builder") {
+    val builder = new StringBuilder
+    builder.append("a")
+    builder.append("b")
+    builder.append("c")
+    assert(builder.toString() == "abc")
+    assert(builder.result() == "abc")
+    assert(builder.reverse.result() == "cba")
+  }
+
+  test("range") {
+    assert((1 until 10) == Range(1, 10, 1))
+    assert((10 until 1 by -1) == Range(10, 1, -1))
+    assert((1 to 10) == Range.inclusive(1, 10, 1))
+  }
+
+  test("par set") {
+    val set = ParSet(1 to 1000000:_*)
+    assert(set.sum == 1784293664)
+  }
+
+  test("par map") {
+    val m = for (i <- 1 to 1000000) yield (i , i)
+    val map = ParMap(m:_*)
+    assert(map.values.sum == 1784293664)
+  }
+
+  test("par seq") {
+    val seq = ParSeq(1 to 1000000:_*)
+    assert(seq.sum == 1784293664)
+  }
+
+  test("par range") {
+    val range = ParRange(1, 1000000, 1, inclusive = true)
+    assert(range.sum == 1784293664)
+  }
+
   test("foreach") {
     val map = Map("a" -> 1, "b" -> 2, "c" -> 3)
     map.foreach(t => assert(t._1.length == 1 && t._2 > 0))
@@ -381,42 +418,5 @@ class CollectionTest extends FunSuite {
       (a, b) <- List(1, 2, 3) zip List(4, 5, 6)
     } yield a + b
     assert(zippedNumbers == List(5, 7, 9))
-  }
-
-  test("string builder") {
-    val builder = new StringBuilder
-    builder.append("a")
-    builder.append("b")
-    builder.append("c")
-    assert(builder.toString() == "abc")
-    assert(builder.result() == "abc")
-    assert(builder.reverse.result() == "cba")
-  }
-
-  test("range") {
-    assert((1 until 10) == Range(1, 10, 1))
-    assert((10 until 1 by -1) == Range(10, 1, -1))
-    assert((1 to 10) == Range.inclusive(1, 10, 1))
-  }
-
-  test("par set") {
-    val set = ParSet(1 to 1000000:_*)
-    assert(set.sum == 1784293664)
-  }
-
-  test("par map") {
-    val m = for (i <- 1 to 1000000) yield (i , i)
-    val map = ParMap(m:_*)
-    assert(map.values.sum == 1784293664)
-  }
-
-  test("par seq") {
-    val seq = ParSeq(1 to 1000000:_*)
-    assert(seq.sum == 1784293664)
-  }
-
-  test("par range") {
-    val range = ParRange(1, 1000000, 1, inclusive = true)
-    assert(range.sum == 1784293664)
   }
 }
