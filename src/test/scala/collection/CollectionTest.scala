@@ -1,7 +1,6 @@
 package collection
 
 import org.scalatest.FunSuite
-import types.I
 
 import scala.collection.immutable.ListMap
 import scala.collection.parallel.immutable.{ParMap, ParSeq, ParSet, ParRange}
@@ -170,6 +169,11 @@ class CollectionTest extends FunSuite {
     assert(3 == (set :\ 0)(_ + _))
     assert(set.size == 2 && set.contains(1) && set.contains(2))
     assert(set.empty.isEmpty)
+    val a = Set(1, 2, 3,4, 5, 6)
+    val b = Set(3, 4, 7, 8, 9, 10)
+    assert(a.intersect(b) == Set(3, 4))
+    assert(a.union(b) == Set(5, 10, 1, 6, 9, 2, 7, 3, 8, 4))
+    assert(a.diff(b) == Set(5, 1, 6, 2))
   }
 
   test("sorted set") {
