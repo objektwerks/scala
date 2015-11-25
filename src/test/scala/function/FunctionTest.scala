@@ -96,7 +96,7 @@ class FunctionTest extends FunSuite {
   }
 
   test("curry") {
-    def multiply(x: Int)(y: Int) = x * y
+    def multiply(x: Int) = (y: Int) => x * y
     assert(multiply(3)(3) == 9)
   }
 
