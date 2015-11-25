@@ -6,7 +6,7 @@ import org.scalatest.FunSuite
 trait C
 trait B
 trait A { // A has-a B and C
-def b: B
+  def b: B
   def c: C
 }
 case class D(b: B, c: C)  // D has-a B and C
@@ -16,7 +16,7 @@ sealed trait P
 final case class Q(q: Any) extends P
 final case class R(r: Any) extends P
 trait O {  // O has-a Q or R
-def p: P
+  def p: P
 }
 final case class H(b: B) extends P  // O is-a H or I, and H has-a B and I has-a C
 final case class I(c: C) extends P
