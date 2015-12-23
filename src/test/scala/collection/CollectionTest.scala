@@ -3,8 +3,8 @@ package collection
 import org.scalatest.FunSuite
 
 import scala.collection.immutable.ListMap
-import scala.collection.parallel.immutable.{ParMap, ParSeq, ParSet, ParRange}
-import scala.collection.{mutable, SortedMap, SortedSet}
+import scala.collection.parallel.immutable.{ParMap, ParRange, ParSeq, ParSet}
+import scala.collection.{SortedMap, SortedSet, mutable}
 
 class CollectionTest extends FunSuite {
   test("list") {
