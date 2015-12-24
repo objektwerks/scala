@@ -121,7 +121,7 @@ class FutureTest extends FunSuite {
   }
 
   test("future andThen") {
-    val future: Future[Int] = Future(Integer.parseInt("1")) andThen { case Success(result) => println(s"side-effecting andThen output: $result") }
+    val future = Future(Integer.parseInt("1")) andThen { case Success(result) => assert(result == 1) }
     future onComplete {
       case Success(result) => assert(result == 1)
       case Failure(failure) => throw failure
@@ -154,8 +154,8 @@ class FutureTest extends FunSuite {
 
   test("async") {
     val future = async {
-      val futureOne: Future[Int] = async { 1 }
-      val futureTwo: Future[Int] = async { 2 }
+      val futureOne = async { 1 }
+      val futureTwo = async { 2 }
       await(futureOne) + await(futureTwo)
     }
     future onComplete {
