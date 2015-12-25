@@ -1,3 +1,3 @@
-Scala Fundamentals
-------------------
->The purpose of this project is to test Scala funcdamentals.
+Scala
+-----
+>The purpose of this project is to prototype and test Scala funcdamentals.
