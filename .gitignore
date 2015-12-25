@@ -5,4 +5,5 @@ project/target/
 .settings
 .classpath
 .project
+.cache-tests
 .DS_Store
