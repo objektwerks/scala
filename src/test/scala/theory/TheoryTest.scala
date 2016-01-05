@@ -10,7 +10,7 @@ trait Semigroup[F] {
 
 trait Monoid[F] extends Semigroup[F] {
   def zero: F
-  def idIdentity(x: F): Boolean = append(zero, x) == x
+  def identity(x: F): Boolean = append(zero, x) == x
 }
 
 trait Functor[F[_]] {
@@ -102,7 +102,7 @@ class TheoryTest extends FunSuite {
     assert(adderMonoid.append(1, 1) == 2)
     assert(adderMonoid.zero == 0)
     assert(adderMonoid.isAssociative(1, 2, 3))
-    assert(adderMonoid.idIdentity(1))
+    assert(adderMonoid.identity(1))
   }
 
   test("is idempotent") {
