@@ -5,12 +5,10 @@ import theory.Theory._
 
 trait Semigroup[A] {
   def append(x: A, y: A): A
-  def isAssociative(x: A, y: A, z: A): Boolean = append(append(x, y), z) == append(x, append(y, z))
 }
 
 trait Monoid[A] extends Semigroup[A] {
   def zero: A
-  def identity(x: A): Boolean = append(zero, x) == x
 }
 
 trait Functor[F[_]] {
@@ -74,8 +72,6 @@ class TheoryTest extends FunSuite {
   test("monoid") {
     assert(adderMonoid.append(1, 1) == 2)
     assert(adderMonoid.zero == 0)
-    assert(adderMonoid.isAssociative(1, 2, 3))
-    assert(adderMonoid.identity(1))
   }
 
   test("is associative") {
