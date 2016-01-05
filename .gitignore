@@ -7,3 +7,4 @@ project/target/
 .project
 .cache-tests
 .DS_Store
+/bin/
