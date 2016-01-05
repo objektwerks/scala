@@ -70,8 +70,8 @@ object Theory {
 
 class TheoryTest extends FunSuite {
   test("monoid") {
-    assert(adderMonoid.append(1, 1) == 2)
     assert(adderMonoid.zero == 0)
+    assert(adderMonoid.append(1, 1) == 2)
   }
 
   test("is associative") {
