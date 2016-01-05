@@ -1,8 +1,5 @@
 package theory
 
-import org.scalatest.FunSuite
-import theory.Theory._
-
 trait Semigroup[A] {
   def append(x: A, y: A): A
 }
@@ -68,7 +65,11 @@ object Theory {
   }
 }
 
+import org.scalatest.FunSuite
+
 class TheoryTest extends FunSuite {
+  import theory.Theory._
+
   test("monoid") {
     assert(adderMonoid.zero == 0)
     assert(adderMonoid.append(1, 1) == 2)
