@@ -1,7 +1,7 @@
 package theory
 
 trait Semigroup[A] {
-  def append(x: A, y: A): A
+  def append(x: A, y: => A): A
 }
 
 trait Monoid[A] extends Semigroup[A] {
@@ -27,7 +27,7 @@ trait Monad[F[_]] extends Functor[F] {
 object Theory {
   val adderMonoid = new Monoid[Int] {
     override def zero: Int = 0
-    override def append(x: Int, y: Int): Int = x + y
+    override def append(x: Int, y: => Int): Int = x + y
   }
 
   val listFunctor = new Functor[List] {
