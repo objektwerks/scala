@@ -3,14 +3,14 @@ package theory
 import org.scalatest.FunSuite
 import theory.Theory._
 
-trait Semigroup[F] {
-  def append(x: F, y: F): F
-  def isAssociative(x: F, y: F, z: F): Boolean = append(append(x, y), z) == append(x, append(y, z))
+trait Semigroup[A] {
+  def append(x: A, y: A): A
+  def isAssociative(x: A, y: A, z: A): Boolean = append(append(x, y), z) == append(x, append(y, z))
 }
 
-trait Monoid[F] extends Semigroup[F] {
-  def zero: F
-  def identity(x: F): Boolean = append(zero, x) == x
+trait Monoid[A] extends Semigroup[A] {
+  def zero: A
+  def identity(x: A): Boolean = append(zero, x) == x
 }
 
 trait Functor[F[_]] {
@@ -55,18 +55,18 @@ object Theory {
     override def flatMap[A, B](oa: Option[A])(f: (A) => Option[B]): Option[B] = oa flatMap f
   }
 
-  def isIdempotent[T](op: T => T, x: T): Boolean = {
-    val f = op
-    val g = op compose op
-    f(x) == g(x)
+  def isAssociative[T](op: (T, T) => T, x: T, y: T, z: T): Boolean = {
+    op(op(x, y), z) == op(x, op(y, z))
   }
 
   def isCommutative[T](op: (T, T) => T, x: T, y: T): Boolean = {
     op(x, y) == op(y, x)
   }
 
-  def isAssociative[T](op: (T, T) => T, x: T, y: T, z: T): Boolean = {
-    op(op(x, y), z) == op(x, op(y, z))
+  def isIdempotent[T](op: T => T, x: T): Boolean = {
+    val f = op
+    val g = op compose op
+    f(x) == g(x)
   }
 }
 
@@ -78,11 +78,9 @@ class TheoryTest extends FunSuite {
     assert(adderMonoid.identity(1))
   }
 
-  test("is idempotent") {
-    def toUpper(s: String): String = s.toUpperCase
-    def increment(i: Int) = i + 1
-    assert(isIdempotent(toUpper, "AbCdEfG"))
-    assert(!isIdempotent(increment, 0))
+  test("is associative") {
+    assert(isAssociative[Int](_ + _, 1, 2, 3))
+    assert(!isAssociative[Double](_ / _, 1, 2, 3))
   }
 
   test("is commutative") {
@@ -90,9 +88,11 @@ class TheoryTest extends FunSuite {
     assert(!isCommutative[String](_ + _, "a", "b"))
   }
 
-  test("is associative") {
-    assert(isAssociative[Int](_ + _, 1, 2, 3))
-    assert(!isAssociative[Double](_ / _, 1, 2, 3))
+  test("is idempotent") {
+    def toUpper(s: String): String = s.toUpperCase
+    def increment(i: Int) = i + 1
+    assert(isIdempotent(toUpper, "AbCdEfG"))
+    assert(!isIdempotent(increment, 0))
   }
 
   test("functor") {
