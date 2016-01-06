@@ -12,16 +12,16 @@ trait Functor[F[_]] {
   def map[A, B](fa: F[A])(f: A => B): F[B]
 }
 
-trait Applicative[F[_]] extends Functor[F] {
-  def point[A](a: => A): F[A]
-  def apply[A, B](fa: F[A])(f: F[A => B]): F[B]
-  override def map[A, B](fa: F[A])(f: A => B): F[B] = apply(fa)(point(f))
-}
-
 trait Monad[F[_]] extends Functor[F] {
   def point[A](a: => A): F[A]
   def flatten[A](ffa: F[F[A]]): F[A]
   def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B]
+}
+
+trait Applicative[F[_]] extends Functor[F] {
+  def point[A](a: => A): F[A]
+  def apply[A, B](fa: F[A])(f: F[A => B]): F[B]
+  override def map[A, B](fa: F[A])(f: A => B): F[B] = apply(fa)(point(f))
 }
 
 object Theory {
@@ -34,6 +34,13 @@ object Theory {
     override def map[A, B](xs: List[A])(f: A => B): List[B] = xs map f
   }
 
+  val optionMonad = new Monad[Option] {
+    override def point[A](a: => A): Option[A] = Option(a)
+    override def flatten[A](ooa: Option[Option[A]]): Option[A] = ooa flatMap identity
+    override def map[A, B](oa: Option[A])(f: (A) => B): Option[B] = oa map f
+    override def flatMap[A, B](oa: Option[A])(f: (A) => Option[B]): Option[B] = oa flatMap f
+  }
+
   val optionApplicative = new Applicative[Option] {
     override def point[A](a: => A): Option[A] = Some(a)
     override def apply[A, B](fa: Option[A])(ff: Option[A => B]): Option[B] = (fa, ff) match {
@@ -41,13 +48,6 @@ object Theory {
       case (Some(a), None) => None
       case (Some(a), Some(f)) => Some(f(a))
     }
-  }
-
-  val optionMonad = new Monad[Option] {
-    override def point[A](a: => A): Option[A] = Option(a)
-    override def flatten[A](ooa: Option[Option[A]]): Option[A] = ooa flatMap identity
-    override def map[A, B](oa: Option[A])(f: (A) => B): Option[B] = oa map f
-    override def flatMap[A, B](oa: Option[A])(f: (A) => Option[B]): Option[B] = oa flatMap f
   }
 
   def isAssociative[T](op: (T, T) => T, x: T, y: T, z: T): Boolean = {
