@@ -14,7 +14,6 @@ trait Functor[F[_]] {
 
 trait Monad[F[_]] extends Functor[F] {
   def point[A](a: => A): F[A]
-  def flatten[A](ffa: F[F[A]]): F[A]
   def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B]
 }
 
@@ -36,7 +35,6 @@ object Theory {
 
   val optionMonad = new Monad[Option] {
     override def point[A](a: => A): Option[A] = Option(a)
-    override def flatten[A](ooa: Option[Option[A]]): Option[A] = ooa flatMap identity
     override def map[A, B](oa: Option[A])(f: (A) => B): Option[B] = oa map f
     override def flatMap[A, B](oa: Option[A])(f: (A) => Option[B]): Option[B] = oa flatMap f
   }
@@ -109,10 +107,8 @@ class TheoryTest extends FunSuite {
   test("monad") {
     val option: Option[Int] = optionMonad.point(1)
     val mappedOption: Option[Int] = optionMonad.map(option)(i => i * 3)
-    val flattenedOption: Option[Int] = optionMonad.flatten(Option(option))
     val flatMappedOption: Option[Int] = optionMonad.flatMap(option)(i => Some(i))
     assert(option.get == 1)
-    assert(flattenedOption.get == 1)
     assert(mappedOption.get == 3)
     assert(flatMappedOption.get == 1)
     assert(option != mappedOption)
