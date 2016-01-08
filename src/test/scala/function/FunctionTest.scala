@@ -144,14 +144,14 @@ class FunctionTest extends FunSuite {
     val composedIncrDecr = incr compose decr
     val andThenIncrDecr = incr andThen decr
     val functions = List(incr, decr)
-    val uberFunctions = functions reduce ( _ andThen _ )
+    val uberFunction = functions reduce ( _ andThen _ )
 
     val xs = 1 to 10 toList
     val ys = xs map incr map decr
     val zs = xs map composedIncrDecr map andThenIncrDecr
     val fs = xs map ( functions reduce ( _ compose _) )
     val gs = xs map ( functions reduce ( _ andThen _) )
-    val us = xs map uberFunctions
+    val us = xs map uberFunction
     assert(xs == ys)
     assert(ys == zs)
     assert(fs == zs)
