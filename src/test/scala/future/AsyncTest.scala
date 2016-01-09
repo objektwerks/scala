@@ -3,7 +3,7 @@ package future
 import org.scalatest.FunSuite
 
 import scala.async.Async._
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
 class AsyncTest extends FunSuite {
