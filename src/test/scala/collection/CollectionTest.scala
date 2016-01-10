@@ -87,6 +87,7 @@ class CollectionTest extends FunSuite {
     assert(list.fold(0)(_ + _) == 6)
     assert(list.foldLeft(0)(_ + _) == 6)
     assert(list.foldRight(0)(_ + _) == 6)
+    assert(list.foldLeft(List[Int]())((b,a) => a :: b) == List(3, 2, 1))
 
     assert(List(2, 4, 6) === (for (i <- list) yield i * 2))
     assert(List(2, 4, 6) === (for (i <- list if i > 0) yield i * 2))
