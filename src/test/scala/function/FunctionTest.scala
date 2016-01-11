@@ -100,6 +100,12 @@ class FunctionTest extends FunSuite {
     assert(multiply(3)(3) == 9)
   }
 
+  test("curried") {
+    val sum = (x: Int, y: Int) => x + y
+    val curriedSum = sum.curried
+    assert(curriedSum(1)(2) == 3)
+  }
+
   test ("lambda") {
     val list = List(1, 2, 3, 4)
     assert(list.filter(_ % 2 == 0) == List(2, 4))
