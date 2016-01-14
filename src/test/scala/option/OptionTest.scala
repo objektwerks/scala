@@ -9,10 +9,14 @@ import scala.util.{Success, Try}
 class OptionTest extends FunSuite {
   test("option") {
     def greaterThanZero(x: Int): Option[Int] = if (x > 0) Some(x) else None
+    assert(greaterThanZero(1).get == 1)
+    assert(greaterThanZero(0).getOrElse(1) == 1)
     assert(greaterThanZero(0).isEmpty)
     assert(greaterThanZero(1).nonEmpty)
     assert(greaterThanZero(1).isDefined)
+    assert(greaterThanZero(1) collect { case n: Int => n * 3 } contains 3)
     assert(greaterThanZero(1).contains(1))
+    assert(greaterThanZero(1).count(_ > 0) == 1)
     assert(greaterThanZero(1).exists(_ > 0))
     val x = greaterThanZero(1) match {
       case Some(n) => n
@@ -25,23 +29,11 @@ class OptionTest extends FunSuite {
     assert(z == 3)
   }
 
-  test("option get & getOrElse") {
-    val some = Some(1)
-    assert(some.get == 1)
-    val none = None
-    assert(none.getOrElse(3) == 3)
-  }
-
   test("option orElse") {
     val resource: Option[String] = None
     val defaultResource: Option[String] = Some("default")
     val locatedResource: Option[String] = resource orElse defaultResource
     assert(locatedResource == defaultResource)
-  }
-
-  test("option collect") {
-    val value = Some(1)
-    value collect { case v: Int => assert(v == 1) }
   }
 
   test("option foreach") {
