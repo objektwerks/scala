@@ -10,14 +10,18 @@ class OptionTest extends FunSuite {
   test("option") {
     def greaterThanZero(x: Int): Option[Int] = if (x > 0) Some(x) else None
     assert(greaterThanZero(0).isEmpty)
+    assert(greaterThanZero(1).isDefined)
     assert(greaterThanZero(1).contains(1))
-  }
-
-  test("option isDefined & isEmpty") {
-    val some = Some("value")
-    assert(some.isDefined)
-    val none = None
-    assert(none.isEmpty)
+    assert(greaterThanZero(1).exists(_ > 0))
+    val x = greaterThanZero(1) match {
+      case Some(n) => n
+      case None => -1
+    }
+    assert(x == 1)
+    val y = greaterThanZero(1) map(n => n) getOrElse(-1)
+    assert(y == 1)
+    val z = greaterThanZero(1).fold(-1)(n => n)
+    assert(z == 1)
   }
 
   test("option get & getOrElse") {
@@ -37,11 +41,6 @@ class OptionTest extends FunSuite {
     def sum(x: Option[Int], y: Option[Int]): Option[Int] = x.flatMap(a => y.map(b => a + b))
     assert(sum(toInt("1"), toInt("2")).contains(3))
     assert(sum(toInt("1"), toInt("z")).isEmpty)
-  }
-
-  test("option exists") {
-    val number = Some(1)
-    assert(number.exists(n => n > 0))
   }
 
   test("option for") {
