@@ -70,9 +70,9 @@ class ForTest extends FunSuite {
   }
 
   test("for comprehension > if guard filter") {
-    val filteredLetters = for (l <- List("A", "B", "C", "D", "F") if l == "A") yield Some(l)
+    val filteredLetters = for (l <- List("A", "B", "C", "D", "F") if l == "A") yield l
     val filteredNumbers = for (n <- List(-2, -1, 0, 1, 2) if n > 0) yield n
-    assert(filteredLetters.head.getOrElse("Z") == "A")
+    assert(filteredLetters.head == "A")
     assert(filteredNumbers == List(1, 2))
   }
 
