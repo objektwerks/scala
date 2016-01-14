@@ -10,6 +10,7 @@ class OptionTest extends FunSuite {
   test("option") {
     def greaterThanZero(x: Int): Option[Int] = if (x > 0) Some(x) else None
     assert(greaterThanZero(0).isEmpty)
+    assert(greaterThanZero(1).nonEmpty)
     assert(greaterThanZero(1).isDefined)
     assert(greaterThanZero(1).contains(1))
     assert(greaterThanZero(1).exists(_ > 0))
@@ -18,10 +19,10 @@ class OptionTest extends FunSuite {
       case None => -1
     }
     assert(x == 1)
-    val y = greaterThanZero(1) map(n => n) getOrElse(-1)
-    assert(y == 1)
-    val z = greaterThanZero(1).fold(-1)(n => n)
-    assert(z == 1)
+    val y = greaterThanZero(1) map(_ * 3) getOrElse(-1)
+    assert(y == 3)
+    val z = greaterThanZero(1).fold(-1)(_ * 3)
+    assert(z == 3)
   }
 
   test("option get & getOrElse") {
@@ -29,6 +30,23 @@ class OptionTest extends FunSuite {
     assert(some.get == 1)
     val none = None
     assert(none.getOrElse(3) == 3)
+  }
+
+  test("option orElse") {
+    val resource: Option[String] = None
+    val defaultResource: Option[String] = Some("default")
+    val locatedResource: Option[String] = resource orElse defaultResource
+    assert(locatedResource == defaultResource)
+  }
+
+  test("option collect") {
+    val value = Some(1)
+    value collect { case v: Int => assert(v == 1) }
+  }
+
+  test("option foreach") {
+    val values = List(Some(1), Some(2), Some(3))
+    values foreach { case Some(v) => assert(v < 4) }
   }
 
   test("option map & flatmap") {
@@ -51,23 +69,6 @@ class OptionTest extends FunSuite {
       r <- right
     } yield l + r
     assert(result.getOrElse(-1) == 2)
-  }
-
-  test("option orElse") {
-    val resource: Option[String] = None
-    val defaultResource: Option[String] = Some("default")
-    val locatedResource: Option[String] = resource orElse defaultResource
-    assert(locatedResource == defaultResource)
-  }
-
-  test("option collect") {
-    val value = Some(1)
-    value collect { case v: Int => assert(v == 1) }
-  }
-
-  test("option foreach") {
-    val values = List(Some(1), Some(2), Some(3))
-    values foreach { case Some(v) => assert(v < 4) }
   }
 
   test("option try") {
