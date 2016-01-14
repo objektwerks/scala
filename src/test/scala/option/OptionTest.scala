@@ -55,17 +55,18 @@ class OptionTest extends FunSuite {
 
   test("option for") {
     val left = Some(1)
-    val right = Some(1)
+    val right = Some(2)
     val result = for {
       l <- left
       r <- right
     } yield l + r
-    assert(result.getOrElse(-1) == 2)
+    assert(result.getOrElse(-1) == 3)
   }
 
   test("option try") {
     def parseInt(s: String): Option[Int] = Some(Integer.parseInt(s.trim))
     assert(Try(parseInt("a")).isFailure)
+    assert(Try(parseInt("1")).isSuccess)
   }
 
   test("either") {
