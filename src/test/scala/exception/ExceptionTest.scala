@@ -8,6 +8,13 @@ import scala.util.control.NonFatal
 import scala.util.{Success, Try}
 
 class ExceptionTest extends FunSuite {
+  test("try handler") {
+    val handler: PartialFunction[Throwable, Unit] = {
+      case NonFatal(error) => assert(error.getMessage.nonEmpty)
+    }
+    try "abc".toInt catch handler
+  }
+
   test("either") {
     def divide(x: Int, y: Int): Either[String, Int] = try {
       Right(x / y)
@@ -18,13 +25,13 @@ class ExceptionTest extends FunSuite {
     assert(divide(9, 0) == Left("divide by zero error"))
   }
 
-  test("option trycatch") {
+  test("try option") {
     def parseInt(s: String): Option[Int] = Some(Integer.parseInt(s.trim))
     assert(Try(parseInt("a")).isFailure)
     assert(Try(parseInt("1")).isSuccess)
   }
 
-  test("exception") {
+  test("try source") {
     def readTextFile(name: String): Try[List[String]] = {
       Try(Source.fromFile(name).getLines.toList)
     }
@@ -32,7 +39,7 @@ class ExceptionTest extends FunSuite {
     assert(readTextFile("sbt.sbt").isFailure)
   }
 
-  test("trycatch recover") {
+  test("try recover") {
     val n = for {
       i <- Try(Integer.parseInt("one")).recover { case e => 0 }
     } yield i
@@ -45,12 +52,5 @@ class ExceptionTest extends FunSuite {
     }
     assert(readTextFile("build.sbt").nonEmpty)
     assert(readTextFile("sbt.sbt").isEmpty)
-  }
-
-  test("try handler") {
-    val handler: PartialFunction[Throwable, Unit] = {
-      case NonFatal(error) => assert(error.getMessage.nonEmpty)
-    }
-    try "abc".toInt catch handler
   }
 }
