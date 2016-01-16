@@ -2,6 +2,12 @@ package implicits
 
 import org.scalatest.FunSuite
 
+object IntSyntax {
+  implicit class IntOps(val n: Int) extends AnyVal {
+    def stars = "*" * n
+  }
+}
+
 class ImplicitTest extends FunSuite {
   test("implicit conversion") {
     implicit def intToString(i: Int): String = i.toString
@@ -27,6 +33,11 @@ class ImplicitTest extends FunSuite {
     import Strings._
     assert("json".toJson == "{json}")
     assert("xml".toXml == "<xml>")
+  }
+
+  test("implicit anyval class") {
+    import IntSyntax._
+    assert(3.stars == "***")
   }
 
   test("implicit sorting") {
