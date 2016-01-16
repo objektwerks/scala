@@ -4,6 +4,7 @@ import org.scalatest.FunSuite
 
 import scala.io.Source
 import scala.util.control.Exception._
+import scala.util.control.NonFatal
 import scala.util.{Success, Try}
 
 class ExceptionTest extends FunSuite {
@@ -44,5 +45,12 @@ class ExceptionTest extends FunSuite {
     }
     assert(readTextFile("build.sbt").nonEmpty)
     assert(readTextFile("sbt.sbt").isEmpty)
+  }
+
+  test("try handler") {
+    val handler: PartialFunction[Throwable, Unit] = {
+      case NonFatal(error) => assert(error.getMessage.nonEmpty)
+    }
+    try "a".toInt catch handler
   }
 }
