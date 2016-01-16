@@ -51,6 +51,6 @@ class ExceptionTest extends FunSuite {
     val handler: PartialFunction[Throwable, Unit] = {
       case NonFatal(error) => assert(error.getMessage.nonEmpty)
     }
-    try "a".toInt catch handler
+    try "abc".toInt catch handler
   }
 }
