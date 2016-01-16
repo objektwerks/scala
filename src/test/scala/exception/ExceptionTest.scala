@@ -33,8 +33,11 @@ class ExceptionTest extends FunSuite {
       } yield x / y
     }
     assert(divide("9", "3").isSuccess)
+    assert(divide("9", "3").toOption.contains(3))
     assert(divide("9", "3").get == 3)
     assert(divide("a", "b").isFailure)
+    assert(divide("a", "b").toOption.isEmpty)
+    assert(divide("a", "b").getOrElse(-1) == -1)
   }
 
   test("try option") {
