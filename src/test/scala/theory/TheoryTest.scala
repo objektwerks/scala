@@ -68,11 +68,6 @@ import org.scalatest.FunSuite
 class TheoryTest extends FunSuite {
   import theory.Theory._
 
-  test("monoid") {
-    assert(adderMonoid.zero == 0)
-    assert(adderMonoid.append(1, 1) == 2)
-  }
-
   test("is associative") {
     assert(isAssociative[Int](_ + _, 1, 2, 3))
     assert(!isAssociative[Double](_ / _, 1, 2, 3))
@@ -88,6 +83,11 @@ class TheoryTest extends FunSuite {
     def increment(i: Int) = i + 1
     assert(isIdempotent(toUpper, "AbCdEfG"))
     assert(!isIdempotent(increment, 0))
+  }
+
+  test("monoid") {
+    assert(adderMonoid.zero == 0)
+    assert(adderMonoid.append(1, 1) == 2)
   }
 
   test("functor") {
