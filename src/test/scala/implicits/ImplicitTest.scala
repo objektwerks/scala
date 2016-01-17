@@ -2,6 +2,13 @@ package implicits
 
 import org.scalatest.FunSuite
 
+object StringConverters {
+  implicit class Ops(val s: String) {
+    def toJson = s"{$s}"
+    def toXml = s"<$s>"
+  }
+}
+
 object IntGraphics {
   implicit class Ops(val n: Int) extends AnyVal {
     def stars = "*" * n
@@ -25,13 +32,7 @@ class ImplicitTest extends FunSuite {
   }
 
   test("implicit class") {
-    object Strings {
-      implicit class EnhancedStrings(val s: String) {
-        def toJson = s"{$s}"
-        def toXml = s"<$s>"
-      }
-    }
-    import Strings._
+    import StringConverters._
     assert("json".toJson == "{json}")
     assert("xml".toXml == "<xml>")
   }
