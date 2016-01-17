@@ -2,10 +2,6 @@ package option
 
 import org.scalatest.FunSuite
 
-import scala.io.Source
-import scala.util.control.Exception._
-import scala.util.{Success, Try}
-
 class OptionTest extends FunSuite {
   test("option") {
     def greaterThanZero(x: Int): Option[Int] = if (x > 0) Some(x) else None
