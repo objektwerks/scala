@@ -2,8 +2,8 @@ package implicits
 
 import org.scalatest.FunSuite
 
-object IntOps {
-  implicit class Graphics(val n: Int) extends AnyVal {
+object IntGraphics {
+  implicit class Ops(val n: Int) extends AnyVal {
     def stars = "*" * n
     def waves = "~" * n
   }
@@ -37,7 +37,7 @@ class ImplicitTest extends FunSuite {
   }
 
   test("implicit anyval class") {
-    import IntOps._
+    import IntGraphics._
     assert(3.stars == "***")
     assert(3.waves == "~~~")
   }
