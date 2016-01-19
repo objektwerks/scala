@@ -128,6 +128,14 @@ class FutureTest extends FunSuite {
     }
   }
 
+  test("future zip") {
+    val future = Future(1) zip Future(2) map { case (x, y) => x + y }
+    future onComplete  {
+      case Success(result) => assert(result == 3)
+      case Failure(failure) => throw failure
+    }
+  }
+
   test("future recover") {
     val future = Future(Integer.parseInt("one")) recover { case t: Throwable => 0 }
     future onComplete {
@@ -144,11 +152,15 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("future zip") {
-    val future = Future(1) zip Future(2) map { case (x, y) => x + y }
-    future onComplete  {
-      case Success(result) => assert(result == 3)
-      case Failure(failure) => throw failure
+  test("future fail fast") {
+    val future = for {
+      x <- Future { println("fail fast on parsing 'one'"); Integer.parseInt("one") }
+      y <- Future { println("will never parse 2"); Integer.parseInt("2") }
+      z <- Future { println("will never parse 3"); Integer.parseInt("3") }
+    } yield (x, y, z)
+    future onComplete {
+      case Success(result) => throw new IllegalStateException("Fast fail failed!")
+      case Failure(failure) => assert(failure.getMessage.nonEmpty); println(failure)
     }
   }
 }
