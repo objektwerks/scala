@@ -159,7 +159,7 @@ class FutureTest extends FunSuite {
     } yield (x, y, z)
     future onComplete {
       case Success(result) => throw new IllegalStateException("Fail fast failed!")
-      case Failure(failure) => assert(failure.getMessage.nonEmpty); println(s"Fail fast failure: $failure")
+      case Failure(failure) => assert(failure.isInstanceOf[NumberFormatException])
     }
   }
 
@@ -168,7 +168,16 @@ class FutureTest extends FunSuite {
     val future = sequence map(_.sum)
     future onComplete {
       case Success(result) => throw new IllegalStateException("Fail fast failed!")
-      case Failure(failure) => assert(failure.getMessage.nonEmpty); println(s"Fail fast failure: $failure")
+      case Failure(failure) => assert(failure.isInstanceOf[NumberFormatException])
+    }
+  }
+
+  test("future traverse fail fast") {
+    val traversal = Future.traverse((1 to 2).toList) (i => Future(i / 0))
+    val future = traversal.map(_.sum)
+    future onComplete {
+      case Success(result) => throw new IllegalStateException("Fail fast failed!")
+      case Failure(failure) => assert(failure.isInstanceOf[ArithmeticException])
     }
   }
 }
