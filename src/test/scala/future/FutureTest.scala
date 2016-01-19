@@ -158,7 +158,16 @@ class FutureTest extends FunSuite {
       z <- Future { println("Will never parse 3."); Integer.parseInt("3") }
     } yield (x, y, z)
     future onComplete {
-      case Success(result) => throw new IllegalStateException("Fast fail failed!")
+      case Success(result) => throw new IllegalStateException("Fail fast failed!")
+      case Failure(failure) => assert(failure.getMessage.nonEmpty); println(s"Fail fast failure: $failure")
+    }
+  }
+
+  test("future sequence fail fast ") {
+    val sequence = Future.sequence(List(Future(Integer.parseInt("one")), Future(Integer.parseInt("2"))))
+    val future = sequence map(_.sum)
+    future onComplete {
+      case Success(result) => throw new IllegalStateException("Fail fast failed!")
       case Failure(failure) => assert(failure.getMessage.nonEmpty); println(s"Fail fast failure: $failure")
     }
   }
