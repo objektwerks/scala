@@ -28,7 +28,7 @@ class FutureTest extends FunSuite {
     def send(message: String): Future[String] = {
       val promise = Promise[String] ()
       ec.execute(new Runnable {
-        def run() = try {
+        override def run(): Unit = try {
           promise.success(message)
         } catch {
           case NonFatal(e) => promise.failure(e)
