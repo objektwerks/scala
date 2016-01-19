@@ -2,7 +2,6 @@ package future
 
 import org.scalatest.FunSuite
 
-import scala.async.Async._
 import scala.concurrent._
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
@@ -44,7 +43,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("dependent futures with map") {
+  test("sequential futures with map") {
     val futureOne = Future { 1 }
     val futureTwo = futureOne map { i => i + 1 }
     futureTwo onComplete {
@@ -53,7 +52,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("parallel, dependent futures with flat map") {
+  test("parallel futures with flatmap") {
     val futureOne = Future { 1 }
     val futureTwo = Future { 2 }
     val futureThree = futureOne flatMap {
@@ -68,6 +67,17 @@ class FutureTest extends FunSuite {
     }
   }
 
+  test("sequential futures with for comprehension") {
+    val future = for {
+      one <-  Future { 1 }
+      two <- Future { 2 }
+    } yield one + two
+    future onComplete {
+      case Success(result) => assert(result == 3)
+      case Failure(failure) => throw failure
+    }
+  }
+
   test("parallel futures with for comprehension") {
     val futureOne = Future { 1 }
     val futureTwo = Future { 2 }
@@ -76,17 +86,6 @@ class FutureTest extends FunSuite {
       two <- futureTwo
     } yield one + two
     futureThree onComplete {
-      case Success(result) => assert(result == 3)
-      case Failure(failure) => throw failure
-    }
-  }
-
-  test("sequential futures with for comprehension") {
-    val future = for {
-      one <-  Future { 1 }
-      two <- Future { 2 }
-    } yield one + two
-    future onComplete {
       case Success(result) => assert(result == 3)
       case Failure(failure) => throw failure
     }
@@ -112,7 +111,7 @@ class FutureTest extends FunSuite {
 
   test("future fold") {
     val futures = for (i <- 1 to 2) yield Future(i * 1)
-    val future = Future.fold(futures) (0) (_ + _) // reduce without (0) arg yields identical result
+    val future = Future.fold(futures) (0) (_ + _)
     future onComplete {
       case Success(result) => assert(result == 3)
       case Failure(failure) => throw failure
@@ -120,7 +119,7 @@ class FutureTest extends FunSuite {
   }
 
   test("future andThen") {
-    val future = Future(Integer.parseInt("1")) andThen { case Success(result) => assert(result == 1) }
+    val future = Future(Integer.parseInt("1")) andThen { case Success(i) => println("Execute 'andThen' side-effecting code!") }
     future onComplete {
       case Success(result) => assert(result == 1)
       case Failure(failure) => throw failure
@@ -136,17 +135,17 @@ class FutureTest extends FunSuite {
   }
 
   test("future recover") {
-    val future = Future(Integer.parseInt("one")) recover { case t: Throwable => 0 }
+    val future = Future(Integer.parseInt("one")) recover { case t: Throwable => 1 }
     future onComplete {
-      case Success(result) => assert(result == 0)
+      case Success(result) => assert(result == 1)
       case Failure(failure) => throw failure
     }
   }
 
   test("future fallbackTo") {
-    val future = Future(Integer.parseInt("one")) fallbackTo Future(0)
+    val future = Future(Integer.parseInt("one")) fallbackTo Future(1)
     future onComplete {
-      case Success(result) => assert(result == 0)
+      case Success(result) => assert(result == 1)
       case Failure(failure) => throw failure
     }
   }
