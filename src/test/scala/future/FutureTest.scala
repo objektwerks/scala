@@ -93,9 +93,8 @@ class FutureTest extends FunSuite {
   }
 
   test("future sequence") {
-    val listOfFutures = List(Future(1), Future(2))
-    val futureOfList = Future.sequence(listOfFutures)
-    val future = futureOfList.map(_.sum)
+    val sequence = Future.sequence(List(Future(1), Future(2)))
+    val future = sequence.map(_.sum)
     future onComplete {
       case Success(result) => assert(result == 3)
       case Failure(failure) => throw failure
@@ -103,8 +102,8 @@ class FutureTest extends FunSuite {
   }
 
   test("future traverse") {
-    val futureOfList = Future.traverse((1 to 2).toList) (i => Future(i * 1))
-    val future = futureOfList.map(_.sum)
+    val traversal = Future.traverse((1 to 2).toList) (i => Future(i * 1))
+    val future = traversal.map(_.sum)
     future onComplete {
       case Success(result) => assert(result == 3)
       case Failure(failure) => throw failure
@@ -112,8 +111,8 @@ class FutureTest extends FunSuite {
   }
 
   test("future fold") {
-    val listOfFutures = for (i <- 1 to 2) yield Future(i * 1)
-    val future = Future.fold(listOfFutures) (0) (_ + _) // reduce without (0) arg yields identical result
+    val futures = for (i <- 1 to 2) yield Future(i * 1)
+    val future = Future.fold(futures) (0) (_ + _) // reduce without (0) arg yields identical result
     future onComplete {
       case Success(result) => assert(result == 3)
       case Failure(failure) => throw failure
