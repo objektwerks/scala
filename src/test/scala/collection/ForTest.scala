@@ -21,6 +21,7 @@ class ForTest extends FunSuite {
     for (v <- set) assert(v == v)
     val map = Map(1 -> 1, 2 -> 2, 3 -> 3)
     for (k <- map.keys; v <- map.values) assert(k == k && v == v)
+    for (e <- map) assert(e._1 > 0 && e._2 > 0)
   }
 
   test("for > foreach > map") {
