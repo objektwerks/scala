@@ -37,7 +37,7 @@ class ForTest extends FunSuite {
   }
 
   test("for comprehension") {
-    val xs = List( 1,2, 3)
+    val xs = List(1, 2, 3)
     val ys = for {
       x <- xs
     } yield x * 2
@@ -49,6 +49,21 @@ class ForTest extends FunSuite {
       a <- sas
     } yield a * 2
     assert(bs == as.flatMap(_.map( _ * 2)))
+  }
+
+  test("nested for comprehensions") {
+    val xs = List(1, 2, 3)
+    val ys = List(4, 5, 6)
+    val zs = for {
+      x <- xs
+    } yield {
+      for {
+        y <- ys
+      } yield x + y
+    }
+    assert(zs == List(List(5, 6, 7), List(6, 7, 8), List(7, 8, 9)))
+    assert(zs.flatten == List(5, 6, 7, 6, 7, 8, 7, 8, 9))
+    assert(zs.flatten.sum == 63)
   }
 
   test("for comprehension > flatmap > map") {
@@ -78,9 +93,9 @@ class ForTest extends FunSuite {
   }
 
   test("for comphrension > zip") {
-    val zippedNumbers = for {
+    val xs = for {
       (a, b) <- List(1, 2, 3) zip List(4, 5, 6)
     } yield a + b
-    assert(zippedNumbers == List(5, 7, 9))
+    assert(xs == List(5, 7, 9))
   }
 }
