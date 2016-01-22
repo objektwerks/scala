@@ -51,4 +51,9 @@ class OptionTest extends FunSuite {
     assert(sum(toInt("1"), toInt("2")).contains(3))
     assert(sum(toInt("1"), toInt("z")).isEmpty)
   }
+
+  test("flatten") {
+    assert(List(Some(1), Some(2), Some(3)).flatten == List(1, 2, 3))
+    assert(List(Some(1), Some(2), Some(3)).flatten.sum == 6)
+  }
 }
