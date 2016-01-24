@@ -2,6 +2,9 @@ package option
 
 import org.scalatest.FunSuite
 
+import scala.concurrent.{Future, ExecutionContext}
+import scala.util.{Failure, Success}
+
 class OptionTest extends FunSuite {
   test("option") {
     def greaterThanZero(x: Int): Option[Int] = if (x > 0) Some(x) else None
@@ -30,14 +33,11 @@ class OptionTest extends FunSuite {
     greaterThanZero(3) foreach { v => assert(v == 3) }
   }
 
-  test("for comprehension") {
-    val left = Some(1)
-    val right = Some(2)
-    val result = for {
-      l <- left
-      r <- right
-    } yield l + r
-    assert(result.getOrElse(-1) == 3)
+  test("flatten") {
+    assert(List(Some(1), Some(2), Some(3)).flatten == List(1, 2, 3))
+    assert(List(Some(1), Some(2), Some(3)).flatten.sum == 6)
+    assert(Some(List(Some(1), Some(2), Some(3))).getOrElse(Nil).flatten == List(1, 2, 3))
+    assert(Some(List(Some(1), Some(2), Some(3))).getOrElse(Nil).flatten.sum == 6)
   }
 
   test("map > flatmap") {
@@ -52,10 +52,23 @@ class OptionTest extends FunSuite {
     assert(sum(toInt("1"), toInt("z")).isEmpty)
   }
 
-  test("flatten") {
-    assert(List(Some(1), Some(2), Some(3)).flatten == List(1, 2, 3))
-    assert(List(Some(1), Some(2), Some(3)).flatten.sum == 6)
-    assert(Some(List(Some(1), Some(2), Some(3))).getOrElse(Nil).flatten == List(1, 2, 3))
-    assert(Some(List(Some(1), Some(2), Some(3))).getOrElse(Nil).flatten.sum == 6)
+  test("for comprehension") {
+    val option = Option(List(Some(1), Some(2), Some(3)))
+    val result = for {
+      numbers <- option
+    } yield numbers.flatten.sum
+    assert(result.getOrElse(-1) == 6)
+  }
+
+  test("future") {
+    implicit val ec = ExecutionContext.global
+    val square = (x: Int) => x * x
+
+    val option = Option(List(Some(1), Some(2), Some(3)))
+    val future = Future { option }
+    future onComplete {
+      case Success(numbers) => assert(square(numbers.getOrElse(Nil).flatten.sum) == 36)
+      case Failure(failure) => throw failure
+    }
   }
 }
