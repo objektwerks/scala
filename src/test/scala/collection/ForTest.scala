@@ -66,6 +66,14 @@ class ForTest extends FunSuite {
     assert(zs.flatten.sum == 63)
   }
 
+  test("for comprehension > map") {
+    val o = Option(3)
+    val c = for {
+      x <- o map { i => i * i * i }
+    } yield x
+    assert(c.get == 27)
+  }
+
   test("for comprehension > flatmap > map") {
     val xs = List(2, 4)
     val ys = List(3, 5)
