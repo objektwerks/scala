@@ -90,6 +90,12 @@ class CollectionTest extends FunSuite {
     assert(list.foldLeft(List[Int]())( (tail, head) => head :: tail ) == List(3, 2, 1))
     assert(list.foldRight("4")( (head, tail) => head + tail ) == "1234")
     assert(list.reverse.foldLeft("4")( (tail, head) => head + tail ) == "1234")
+    val words = List("Hello, ", "world!")
+    assert(words.fold("")(_ + _) == "Hello, world!")
+    assert(words.foldLeft("")(_ + _) == "Hello, world!")
+    assert(words.foldRight("")(_ + _) == "Hello, world!")
+
+
 
     assert(List(2, 4, 6) === (for (i <- list) yield i * 2))
     assert(List(2, 4, 6) === (for (i <- list if i > 0) yield i * 2))
