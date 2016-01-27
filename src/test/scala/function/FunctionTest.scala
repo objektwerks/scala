@@ -66,7 +66,7 @@ class FunctionTest extends FunSuite {
   test("var args") {
     def add(varargs: Int*): Int = varargs.sum
     assert(add(1, 2, 3) == 6)
-    assert(add(List(1, 2, 3):_*) == 6 )
+    assert(add(List(1, 2, 3):_*) == 6)
   }
 
   test("closure") {
@@ -152,7 +152,7 @@ class FunctionTest extends FunSuite {
     val functions = List(incr, decr)
     val uberFunction = functions reduce ( _ andThen _ )
 
-    val xs = 1 to 10 toList
+    val xs = (1 to 10).toList
     val ys = xs map incr map decr
     val zs = xs map composedIncrDecr map andThenIncrDecr
     val fs = xs map ( functions reduce ( _ compose _) )
