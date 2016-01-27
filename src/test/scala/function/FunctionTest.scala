@@ -3,7 +3,6 @@ package function
 import org.scalatest.FunSuite
 
 import scala.annotation.tailrec
-import scala.language.reflectiveCalls
 import scala.util.Random
 
 class FunctionTest extends FunSuite {
