@@ -35,7 +35,7 @@ class OptionTest extends FunSuite {
 
   test("flatten") {
     assert(List(Some(1), Some(2), Some(3)).flatten == List(1, 2, 3))
-    assert(List(Some(1), Some(2), Some(3)).flatten.sum == 6)
+    assert(List(Some(1), None, Some(3)).flatten.sum == 4)
     assert(Some(List(Some(1), Some(2), Some(3))).getOrElse(Nil).flatten == List(1, 2, 3))
     assert(Some(List(Some(1), Some(2), Some(3))).getOrElse(Nil).flatten.sum == 6)
   }
