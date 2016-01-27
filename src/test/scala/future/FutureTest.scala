@@ -8,7 +8,7 @@ import scala.util.control.NonFatal
 import scala.util.{Failure, Success}
 
 class FutureTest extends FunSuite {
-  private implicit val ec = ExecutionContext.global
+  implicit val ec = ExecutionContext.global
 
   test("blocking future") {
     val future = Future { 1 }
@@ -24,7 +24,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("non-blocking future with promise") {
+  test("non-blocking promise > future") {
     def send(message: String): Future[String] = {
       val promise = Promise[String] ()
       ec.execute(new Runnable {
@@ -91,7 +91,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("future sequence") {
+  test("futures sequence") {
     val sequence = Future.sequence(List(Future(1), Future(2)))
     val future = sequence.map(_.sum)
     future onComplete {
@@ -100,7 +100,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("future traverse") {
+  test("futures traverse") {
     val traversal = Future.traverse((1 to 2).toList) (i => Future(i * 1))
     val future = traversal.map(_.sum)
     future onComplete {
@@ -109,7 +109,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("future fold") {
+  test("futures fold") {
     val futures = for (i <- 1 to 2) yield Future(i * 1)
     val future = Future.fold(futures) (0) (_ + _)
     future onComplete {
@@ -126,7 +126,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("future zip") {
+  test("futures > zip > map") {
     val future = Future(1) zip Future(2) map { case (x, y) => x + y }
     future onComplete  {
       case Success(result) => assert(result == 3)

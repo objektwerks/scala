@@ -7,7 +7,7 @@ import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
 class AsyncTest extends FunSuite {
-  private implicit val ec = ExecutionContext.global
+  implicit val ec = ExecutionContext.global
 
   test("sequential") {
     val future = async {
