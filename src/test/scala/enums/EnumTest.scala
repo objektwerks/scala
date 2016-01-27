@@ -3,7 +3,6 @@ package enums
 import org.scalatest.FunSuite
 
 object Weekday extends Enumeration {
-  type WeekDay = Value
   val Mon, Tue, Wed, Thu, Fri, Sat, Sun = Value
   def validate(weekday: Weekday.Value): Unit = {
     assert(values.contains(weekday))
