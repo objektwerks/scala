@@ -27,7 +27,7 @@ class RecursionTest extends FunSuite{
 
   test("@tailrec fibonacci") {
     val n = 39
-    val f = Fibonacci.tailrec(n)
+    val f = Fibonacci.tailRecursiveWithLoop(n)
     assert(f.equals(BigInt(63245986)))
     println(s"@tailrec fibonacci performance is constant using <= $n : $f")
   }

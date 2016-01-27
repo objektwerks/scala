@@ -9,12 +9,13 @@ object Fibonacci {
     case _ => naiveRecursive(n - 1) + naiveRecursive(n - 2)
   }
 
+  @tailrec
   def tailRecursive(n: Long, a: Long, b: Long): BigInt = n match {
     case 0 => a
     case _ => tailRecursive(n - 1, b, a + b)
   }
 
-  def tailrec(n: Long): BigInt = {
+  def tailRecursiveWithLoop(n: Long): BigInt = {
     @tailrec
     def loop(n: Long, a: Long, b: Long): BigInt = n match {
       case 0 => a
@@ -32,7 +33,9 @@ object Fibonacci {
   }
 
   def sequence(a: Int = 0, b: Int = 1): List[Int] = {
-    def build(a: Int = 0, b: Int = 1): Stream[Int] = Stream.cons(a, build(b, a + b))
+    def build(a: Int = 0, b: Int = 1): Stream[Int] = {
+      Stream.cons(a, build(b, a + b))
+    }
     build().takeWhile(_ >= 0).toList
   }
 }
