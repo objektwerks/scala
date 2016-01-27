@@ -74,7 +74,7 @@ class ForTest extends FunSuite {
     assert(c.get == 27)
   }
 
-  test("for comprehension > flatmap > map") {
+  test("for comprehension vs flatmap > map") {
     val xs = List(2, 4)
     val ys = List(3, 5)
     val forList = for (x <- xs; y <- ys) yield x * y
@@ -83,7 +83,7 @@ class ForTest extends FunSuite {
     assert(mapList == List(2 * 3, 2 * 5, 4 * 3, 4 * 5))
   }
 
-  test("for comprehension > flatmap > flatmap > map") {
+  test("for comprehension vs flatmap > flatmap > map") {
     val xs = List(2, 4)
     val ys = List(3, 5)
     val zs = List(1, 6)
