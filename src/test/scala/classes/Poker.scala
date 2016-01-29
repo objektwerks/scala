@@ -1,19 +1,6 @@
 package classes
 
-// Player
-case class Player(name : String)
-
-// Game
-sealed trait Action
-sealed trait Rule
-abstract class Game (val actions: Set[Action], val rules: Set[Rule])
-class StudPoker(actions: Set[Action], rules: Set[Rule]) extends Game (actions, rules)
-
-// Hand
-case class Pot(chips : Set[Chip])
-case class Hand(game: Game, players: Set[Player], cards : Set[Card], pot: Pot)
-
-// Card
+// Cards
 sealed trait Card
 sealed trait Suit
 trait Clubs extends Suit
@@ -33,23 +20,40 @@ case class Seven(suit: Suit) extends Card
 case class Eight(suit: Suit) extends Card
 case class Nine(suit: Suit) extends Card
 case class Ten(suit: Suit) extends Card
-
-// Deck
 case class Deck(cards: Set[Card])
 
-// Currency
-abstract class Currency(value: Double)
-class USD(value: Double) extends Currency(value)
-case class OneDollar(currency: Currency)
-case class FiveDollars(currency: Currency)
-case class TenDollars(currency: Currency)
-case class FiftyDollars(currency: Currency)
-case class OneHundredDollars(currency: Currency)
+// Money
+trait Money {
+  def value: Double
+}
+case class $1(value: Double = 1.00) extends Money
+case class $5(value: Double = 5.00) extends Money
+case class $10(value: Double = 10.00) extends Money
+case class $50(value: Double = 50.00) extends Money
+case class $100(value: Double = 100.00) extends Money
 
-// Chip
-sealed trait Chip
-case class White(value: OneDollar) extends Chip
-case class Red(value: FiveDollars) extends Chip
-case class Blue(value: TenDollars) extends Chip
-case class Green(value: FiftyDollars) extends Chip
-case class Black(value: OneHundredDollars) extends Chip
+// Chips
+sealed trait Chip {
+  def currency: Money
+}
+case class White(currency: $1) extends Chip
+case class Red(currency: $5) extends Chip
+case class Blue(currency: $10) extends Chip
+case class Green(currency: $50) extends Chip
+case class Black(currency: $100) extends Chip
+
+// Player
+case class Player(name : String)
+
+// Game
+sealed trait Action
+sealed trait Rule
+sealed trait Game {
+  def actions: Set[Action]
+  def rules: Set[Rule]
+}
+case class StudPoker(actions: Set[Action], rules: Set[Rule]) extends Game
+
+// Hand
+case class Pot(chips : Set[Chip])
+case class Hand(game: Game, players: Set[Player], deck: Deck, pot: Pot)
