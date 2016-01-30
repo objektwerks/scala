@@ -14,4 +14,9 @@ class IOTest extends FunSuite {
     val words = Source.fromInputStream(getClass.getResourceAsStream("/license.mit")).mkString.split("\\P{L}+")
     assert(words.size == 168)
   }
+
+  test("from url") {
+    val words = Source.fromURL("http://api.icndb.com/jokes/random/").mkString.split("\\P{L}+")
+    assert(words.nonEmpty)
+  }
 }
