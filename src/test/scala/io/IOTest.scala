@@ -5,8 +5,9 @@ import org.scalatest.FunSuite
 import scala.io.Source
 
 class IOTest extends FunSuite {
-  test("io") {
+  test("from input stream") {
     val license = Source.fromInputStream(getClass.getResourceAsStream("/license.mit")).mkString
-    println(license)
+    val words = license.split("\\P{L}+")
+    assert(words.size == 168)
   }
 }
