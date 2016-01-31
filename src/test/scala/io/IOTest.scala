@@ -2,7 +2,7 @@ package io
 
 import org.scalatest.FunSuite
 
-import scala.io.Source
+import scala.io.{Codec, Source}
 
 class IOTest extends FunSuite {
   val regex = "\\P{L}+"
@@ -34,7 +34,7 @@ class IOTest extends FunSuite {
   }
 
   test("from bytes") {
-    val words = Source.fromBytes(quote.getBytes("UTF-8")).mkString.split(regex)
+    val words = Source.fromBytes(quote.getBytes(Codec.UTF8.name)).mkString.split(regex)
     assert(words.size == 13)
   }
 }
