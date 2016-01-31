@@ -6,7 +6,8 @@ import scala.io.Source
 
 class IOTest extends FunSuite {
   val regex = "\\P{L}+"
-  
+  val quote = "You can avoid reality, but you cannot avoid the consequences of avoiding reality."
+
   test("from url") {
     val words = Source.fromURL("http://api.icndb.com/jokes/random/").mkString.split(regex)
     assert(words.nonEmpty)
@@ -23,20 +24,17 @@ class IOTest extends FunSuite {
   }
 
   test("from string") {
-    val string = "You can avoid reality, but you cannot avoid the consequences of avoiding reality."
-    val words = Source.fromString(string).mkString.split(regex)
+    val words = Source.fromString(quote).mkString.split(regex)
     assert(words.size == 13)
   }
 
   test("from chars") {
-    val chars = "You can avoid reality, but you cannot avoid the consequences of avoiding reality.".toCharArray
-    val words = Source.fromChars(chars).mkString.split(regex)
+    val words = Source.fromChars(quote.toCharArray).mkString.split(regex)
     assert(words.size == 13)
   }
 
   test("from bytes") {
-    val bytes = "You can avoid reality, but you cannot avoid the consequences of avoiding reality.".getBytes("UTF-8")
-    val words = Source.fromBytes(bytes).mkString.split(regex)
+    val words = Source.fromBytes(quote.getBytes("UTF-8")).mkString.split(regex)
     assert(words.size == 13)
   }
 }
