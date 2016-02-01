@@ -3,6 +3,7 @@ package sys
 import org.scalatest.FunSuite
 
 import scala.sys.SystemProperties
+import scala.sys.process.Process
 
 class SysTest extends FunSuite {
   test("system properties") {
@@ -12,5 +13,11 @@ class SysTest extends FunSuite {
     assert(properties.contains("objekt"))
     properties -= "objekt"
     assert(properties.getOrElse("objekt", "empty") == "empty")
+  }
+
+  test("process") {
+    val lines = Process("ls").lineStream
+    val file = lines find(f => f == "build.sbt")
+    assert(file.getOrElse("empty") == "build.sbt")
   }
 }
