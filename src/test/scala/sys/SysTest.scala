@@ -16,8 +16,7 @@ class SysTest extends FunSuite {
   }
 
   test("process") {
-    val lines = Process("ls").lineStream
-    val file = lines find(f => f == "build.sbt")
+    val file = Process("ls").lineStream.find(f => f == "build.sbt")
     assert(file.getOrElse("empty") == "build.sbt")
   }
 }
