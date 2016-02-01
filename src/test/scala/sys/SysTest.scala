@@ -20,5 +20,8 @@ class SysTest extends FunSuite {
     assert(file.getOrElse("empty") == "build.sbt")
     val line = Process("find build.sbt").lineStream.headOption
     assert(line.getOrElse("empty") == "build.sbt")
+    val lines = Process("cat .gitignore").lineStream.mkString.split("\\W+").groupBy(l => l).mapValues(l => l.length)
+    assert(lines.values.max == 4)
+    lines foreach println
   }
 }
