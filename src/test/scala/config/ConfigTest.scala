@@ -5,8 +5,8 @@ import org.scalatest.FunSuite
 
 class ConfigTest extends FunSuite {
   test("load") {
-    val config = ConfigFactory.load
-    assert(config.getString("app.name") == "config")
+    val config = ConfigFactory.load("test.conf")
+    assert(config.getString("app.name") == "test")
     assert(config.getString("app.db.url") == "jdbc:h2:mem:test;INIT=RUNSCRIPT FROM 'classpath:ddl.sql")
     assert(config.getString("app.db.driver") == "org.h2.Driver")
     assert(config.getString("app.http.host") == "localhost")
