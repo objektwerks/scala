@@ -46,8 +46,8 @@ class ImplicitTest extends FunSuite {
   test("implicit sorting") {
     case class Worker(task: String)
     implicit def sortedWorker: Ordering[Worker] = Ordering.by(w => w.task)
-    val workers: List[Worker] = List(Worker("c"), Worker("b"), Worker("a"))
-    val sortedWorkers: List[Worker] = workers.sorted
+    val workers = List("c", "b", "a").map(t => Worker(t))
+    val sortedWorkers = workers.sorted
     assert(sortedWorkers.head.task == "a")
   }
 
