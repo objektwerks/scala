@@ -51,6 +51,16 @@ class ImplicitTest extends FunSuite {
     assert(sortedWorkers.head.task == "a")
   }
 
+  test("implicit folding") {
+    case class Value(n: Int)
+    implicit class ValueCombiner(val v: Value) {
+      def +(other: Value): Value = Value(v.n + other.n)
+    }
+    val values = List(1, 2, 3).map(n => Value(n))
+    val combinedValue = values.foldLeft(Value(0))(_ + _)
+    assert(combinedValue.n == 6)
+  }
+
   test("implicitly") {
     case class Name(name: String)
     implicit val implicitName = Name("Fred Flintstone")
