@@ -16,6 +16,18 @@ object IntGraphics {
   }
 }
 
+case class Worker(name: String, task: String)
+object Worker {
+  implicit def defaultOrdering: Ordering[Worker] = Ordering.by(unapply)
+}
+
+case class Value(n: Int)
+object Value {
+  implicit class ValueCombiner(val v: Value) {
+    def +(other: Value): Value = Value(v.n + other.n)
+  }
+}
+
 class ImplicitTest extends FunSuite {
   test("implicit conversion") {
     implicit def intToString(i: Int): String = i.toString
@@ -44,18 +56,20 @@ class ImplicitTest extends FunSuite {
   }
 
   test("implicit sorting") {
-    case class Worker(task: String)
-    implicit def sortedWorker: Ordering[Worker] = Ordering.by(w => w.task)
-    val workers = List(Worker("c"), Worker("b"), Worker("a"))
-    val sortedWorkers = workers.sorted
-    assert(sortedWorkers.head.task == "a")
+    val workers = List(Worker("c", "z"), Worker("b", "y"), Worker("a", "x"))
+    val sorted = workers.sorted
+    val sortby = workers.sortBy(Worker.unapply)
+    val sortwith = workers.sortWith(_.name < _.name)
+    val desc = workers.sortWith(_.name > _.name)
+    val worker = Worker("a", "x")
+    assert(worker == sorted.head)
+    assert(worker == sortby.head)
+    assert(worker == sortwith.head)
+    assert(Worker("c", "z") == desc.head)
   }
 
   test("implicit folding") {
-    case class Value(n: Int)
-    implicit class ValueCombiner(val v: Value) {
-      def +(other: Value): Value = Value(v.n + other.n)
-    }
+    import Value._
     val values = List(1, 2, 3).map(n => Value(n))
     val combinedValue = values.foldLeft(Value(0))(_ + _)
     assert(combinedValue.n == 6)
