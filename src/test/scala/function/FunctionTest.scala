@@ -16,9 +16,9 @@ object Functions {
   type Sides = (Int, Int, Int)
 
   def identifyTriangle(sides: Sides): Triangle = sides match {
-    case (a, b, c) if a == b && a == c => Triangle.equilateral
-    case (a, b, c) if a == b || a == c => Triangle.isosceles
-    case (a, b, c) if a != b && a != c => Triangle.scalene
+    case (a, b, c) if a == b && c == b => Triangle.equilateral
+    case (a, b, c) if a == b || c == b => Triangle.isosceles
+    case (a, b, c) if a != b && c != b => Triangle.scalene
   }
 
   def selectByIndex(source: List[Int], index: Int): Int = {
