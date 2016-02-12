@@ -222,9 +222,9 @@ class FunctionTest extends FunSuite {
   test("is intersectable") {
     val xs = 1 to 10 toList
     val ys = 1 to 100 toList
-    val x = isIntersectable(xs, ys)
-    val y = isIntersectable(ys, xs)
-    assert(x)
-    assert(!y)
+    val yes = isIntersectable(xs, ys)
+    val no = isIntersectable(ys, xs)
+    assert(yes)
+    assert(!no)
   }
 }
