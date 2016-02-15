@@ -7,7 +7,7 @@ object Bank {
   def deposit(credit: Account, amount: Double): Try[Transaction] = Try(Deposit(credit, amount))
   def withdrawl(debit: Account, amount: Double): Try[Transaction] = Try(Withdrawl(debit, amount))
   def transfer(debit: Account, credit: Account, amount: Double): Try[Transaction] = Try(Transfer(debit, credit, amount))
-  implicit def orderAccountsByName: Ordering[Account] = Ordering.by(_.number)
+  implicit def accountOrdering: Ordering[Account] = Ordering.by(_.number)
 }
 case class Bank(number: String)
 case class Account(number: String, balance: Double)
