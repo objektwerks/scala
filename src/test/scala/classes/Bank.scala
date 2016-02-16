@@ -28,6 +28,7 @@ case class MarketAccount(number: String, opened: LocalDate, closed: LocalDate, b
 trait Transaction {
   def on: LocalDateTime
   def amount: Double
+  implicit def ordering: Ordering[Transaction] = Ordering.by(_.on)
 }
 case class Deposit(on: LocalDateTime, amount: Double, credit: Account) extends Transaction
 case class Withdrawl(on: LocalDateTime, amount: Double, debit: Account) extends Transaction
