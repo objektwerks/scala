@@ -7,15 +7,28 @@ import scala.util.Try
 object Bank {
   def list(): Set[Account] = Set[Account]()
   def enquiry(number: String): Option[Account] = None
-  def deposit(credit: Account, amount: Double): Try[Transaction] = Try(Deposit(credit, amount))
-  def withdrawl(debit: Account, amount: Double): Try[Transaction] = Try(Withdrawl(debit, amount))
-  def transfer(debit: Account, credit: Account, amount: Double): Try[Transaction] = Try(Transfer(debit, credit, amount))
-  implicit def accountOrdering: Ordering[Account] = Ordering.by(_.number)
+  def deposit(amount: Double, credit: Account): Try[Transaction] = Try(Deposit(LocalDate.now(), amount, credit))
+  def withdrawl(amount: Double, debit: Account): Try[Transaction] = Try(Withdrawl(LocalDate.now(), amount, debit))
+  def transfer(amount: Double, debit: Account, credit: Account): Try[Transaction] = Try(Transfer(LocalDate.now(), amount, debit, credit))
+  implicit def ordering: Ordering[Bank] = Ordering.by(_.number)
 }
 case class Bank(number: String, accounts: Set[Account])
-case class Account(number: String, opened: LocalDate, closed: LocalDate, balance: Double)
 
-trait Transaction
-case class Deposit(credit: Account, amount: Double) extends Transaction
-case class Withdrawl(debit: Account, amount: Double) extends Transaction
-case class Transfer(debit: Account, credit: Account, ammount: Double) extends Transaction
+trait Account {
+  def number: String
+  def opened: LocalDate
+  def closed: LocalDate
+  def balance: Double
+  implicit def ordering: Ordering[Account] = Ordering.by(_.number)
+}
+case class CheckingAccount(number: String, opened: LocalDate, closed: LocalDate, balance: Double) extends Account
+case class SavingsAccount(number: String, opened: LocalDate, closed: LocalDate, balance: Double) extends Account
+case class MarketAccount(number: String, opened: LocalDate, closed: LocalDate, balance: Double) extends Account
+
+trait Transaction {
+  def on: LocalDate
+  def amount: Double
+}
+case class Deposit(on: LocalDate, amount: Double, credit: Account) extends Transaction
+case class Withdrawl(on: LocalDate, amount: Double, debit: Account) extends Transaction
+case class Transfer(on: LocalDate, amount: Double, debit: Account, credit: Account) extends Transaction
