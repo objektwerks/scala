@@ -3,13 +3,14 @@ package classes
 import scala.util.Try
 
 object Bank {
+  def list(): Set[Account] = Set[Account]()
   def enquiry(number: String): Option[Account] = None
   def deposit(credit: Account, amount: Double): Try[Transaction] = Try(Deposit(credit, amount))
   def withdrawl(debit: Account, amount: Double): Try[Transaction] = Try(Withdrawl(debit, amount))
   def transfer(debit: Account, credit: Account, amount: Double): Try[Transaction] = Try(Transfer(debit, credit, amount))
   implicit def accountOrdering: Ordering[Account] = Ordering.by(_.number)
 }
-case class Bank(number: String)
+case class Bank(number: String, accounts: Set[Account])
 case class Account(number: String, balance: Double)
 
 trait Transaction
