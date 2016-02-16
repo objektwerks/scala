@@ -1,5 +1,7 @@
 package classes
 
+import java.time.LocalDate
+
 import scala.util.Try
 
 object Bank {
@@ -11,7 +13,7 @@ object Bank {
   implicit def accountOrdering: Ordering[Account] = Ordering.by(_.number)
 }
 case class Bank(number: String, accounts: Set[Account])
-case class Account(number: String, balance: Double)
+case class Account(number: String, opened: LocalDate, closed: LocalDate, balance: Double)
 
 trait Transaction
 case class Deposit(credit: Account, amount: Double) extends Transaction
