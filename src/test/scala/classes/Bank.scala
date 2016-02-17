@@ -27,6 +27,7 @@ case class MarketAccount(number: String, opened: LocalDate, closed: LocalDate, b
 
 case class Balance(balance: Double) {
   implicit def +(other: Balance): Balance = Balance(balance + other.balance)
+  implicit def -(other: Balance): Balance = Balance(balance - other.balance)
 }
 
 trait Transaction {
