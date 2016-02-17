@@ -28,6 +28,7 @@ case class MarketAccount(number: String, opened: LocalDate, closed: LocalDate, b
 case class Balance(balance: Double) {
   implicit def +(other: Balance): Balance = Balance(balance + other.balance)
   implicit def -(other: Balance): Balance = Balance(balance - other.balance)
+  implicit def ++(balances: List[Balance]): Balance = balances.foldLeft(Balance(0.0))(_ + _)
 }
 
 trait Transaction {
@@ -41,4 +42,6 @@ case class Transfer(on: LocalDateTime, amount: Amount, debit: Account, credit: A
 
 case class Amount(amount: Double) {
   implicit def +(other: Amount): Amount = Amount(amount + other.amount)
+  implicit def -(other: Amount): Amount = Amount(amount - other.amount)
+  implicit def ++(amounts: List[Amount]): Amount = amounts.foldLeft(Amount(0.0))(_ + _)
 }
