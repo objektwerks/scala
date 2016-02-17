@@ -1,6 +1,6 @@
 package classes
 
-import java.time.{LocalDateTime, LocalDate}
+import java.time.{LocalDate, LocalDateTime, ZoneOffset}
 
 import scala.util.Try
 
@@ -28,7 +28,7 @@ case class MarketAccount(number: String, opened: LocalDate, closed: LocalDate, b
 trait Transaction {
   def on: LocalDateTime
   def amount: Amount
-  implicit def ordering: Ordering[Transaction] = Ordering.by(_.on)
+  implicit def ordering: Ordering[Transaction] = Ordering.by(_.on.atZone(ZoneOffset.UTC).toEpochSecond)
 }
 case class Deposit(on: LocalDateTime, amount: Amount, credit: Account) extends Transaction
 case class Withdrawl(on: LocalDateTime, amount: Amount, debit: Account) extends Transaction
