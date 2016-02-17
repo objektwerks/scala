@@ -18,18 +18,12 @@ trait Account {
   def number: String
   def opened: LocalDate
   def closed: LocalDate
-  def balance: Balance
+  def balance: Amount
   implicit def ordering: Ordering[Account] = Ordering.by(_.number)
 }
-case class CheckingAccount(number: String, opened: LocalDate, closed: LocalDate, balance: Balance) extends Account
-case class SavingsAccount(number: String, opened: LocalDate, closed: LocalDate, balance: Balance) extends Account
-case class MarketAccount(number: String, opened: LocalDate, closed: LocalDate, balance: Balance) extends Account
-
-case class Balance(balance: Double) {
-  implicit def +(other: Balance): Balance = Balance(balance + other.balance)
-  implicit def -(other: Balance): Balance = Balance(balance - other.balance)
-  implicit def ++(balances: List[Balance]): Balance = balances.foldLeft(Balance(0.0))(_ + _)
-}
+case class CheckingAccount(number: String, opened: LocalDate, closed: LocalDate, balance: Amount) extends Account
+case class SavingsAccount(number: String, opened: LocalDate, closed: LocalDate, balance: Amount) extends Account
+case class MarketAccount(number: String, opened: LocalDate, closed: LocalDate, balance: Amount) extends Account
 
 trait Transaction {
   def on: LocalDateTime
