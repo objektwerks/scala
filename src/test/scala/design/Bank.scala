@@ -1,4 +1,4 @@
-package classes
+package design
 
 import java.time.{LocalDate, LocalDateTime, ZoneOffset}
 
