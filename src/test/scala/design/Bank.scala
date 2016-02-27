@@ -7,9 +7,9 @@ import scala.util.Try
 object Bank {
   def list(): Set[Account] = Set[Account]()
   def enquiry(number: String): Option[Account] = None
-  def deposit(amount: Amount, credit: Account): Try[Transaction] = Try(Deposit(LocalDateTime.now(), amount, credit))
-  def withdrawl(amount: Amount, debit: Account): Try[Transaction] = Try(Withdrawl(LocalDateTime.now(), amount, debit))
-  def transfer(amount: Amount, debit: Account, credit: Account): Try[Transaction] = Try(Transfer(LocalDateTime.now(), amount, debit, credit))
+  def deposit(amount: Amount, credit: Account): Try[Transaction] = Try(Deposit(LocalDateTime.now, amount, credit))
+  def withdrawl(amount: Amount, debit: Account): Try[Transaction] = Try(Withdrawl(LocalDateTime.now, amount, debit))
+  def transfer(amount: Amount, debit: Account, credit: Account): Try[Transaction] = Try(Transfer(LocalDateTime.now, amount, debit, credit))
   implicit def ordering: Ordering[Bank] = Ordering.by(_.number)
 }
 case class Bank(number: String, accounts: Set[Account])
