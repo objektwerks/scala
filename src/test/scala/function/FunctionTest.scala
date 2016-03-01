@@ -213,7 +213,9 @@ class FunctionTest extends FunSuite {
     }
     val xs = List.range(1, 10)
     val ys = List.range(1, 20)
+    val zs = List.range(30, 40)
     assert(intersection(xs, ys) == xs.intersect(ys))
     assert(intersection(ys, xs) == ys.intersect(xs))
+    assert(intersection(ys, zs) == ys.intersect(zs))
   }
 }
