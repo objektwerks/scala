@@ -207,13 +207,13 @@ class FunctionTest extends FunSuite {
     assert(z.isEmpty)
   }
 
-  test("intersects") {
-    def intersects(source: List[Int], target: List[Int]): Boolean = {
-      source == source.intersect(target)
+  test("intersection") {
+    def intersection(source: List[Int], target: List[Int]): List[Int] = {
+      for (s <- source if target.contains(s)) yield s
     }
     val xs = List.range(1, 10)
-    val ys = List.range(1, 100)
-    assert(intersects(xs, ys))
-    assert(!intersects(ys, xs))
+    val ys = List.range(1, 20)
+    assert(intersection(xs, ys) == xs.intersect(ys))
+    assert(intersection(ys, xs) == ys.intersect(xs))
   }
 }
