@@ -5,10 +5,10 @@ sealed trait Card {
   def suit: Suit
 }
 sealed trait Suit
-trait Clubs extends Suit
-trait Diamonds extends Suit
-trait Hearts extends Suit
-trait Spades extends Suit
+sealed trait Clubs extends Suit
+sealed trait Diamonds extends Suit
+sealed trait Hearts extends Suit
+sealed trait Spades extends Suit
 case class Ace(suit: Suit) extends Card
 case class King(suit: Suit) extends Card
 case class Queen(suit: Suit) extends Card
@@ -25,24 +25,24 @@ case class Ten(suit: Suit) extends Card
 case class Deck(cards: Set[Card])
 
 // Money
-trait Money {
+sealed trait Money {
   def value: Double
 }
-case class $1(value: Double = 1.00) extends Money
-case class $5(value: Double = 5.00) extends Money
 case class $10(value: Double = 10.00) extends Money
 case class $50(value: Double = 50.00) extends Money
 case class $100(value: Double = 100.00) extends Money
+case class $500(value: Double = 500.00) extends Money
+case class $1000(value: Double = 1000.00) extends Money
 
 // Chips
 sealed trait Chip {
-  def currency: Money
+  def value: Money
 }
-case class White(currency: $1) extends Chip
-case class Red(currency: $5) extends Chip
-case class Blue(currency: $10) extends Chip
-case class Green(currency: $50) extends Chip
-case class Black(currency: $100) extends Chip
+case class White(value: $10) extends Chip
+case class Red(value: $50) extends Chip
+case class Blue(value: $100) extends Chip
+case class Green(value: $500) extends Chip
+case class Black(value: $1000) extends Chip
 
 // Player
 case class Player(name : String)
