@@ -25,14 +25,19 @@ case class Ten(suit: Suit) extends Card
 case class Deck(cards: Set[Card])
 
 // Money
-sealed trait Money {
-  def value: Double
+case class Value(value: Double) {
+  implicit def +(other: Value): Value = Value(value + other.value)
+  implicit def -(other: Value): Value = Value(value - other.value)
+  implicit def ++(values: List[Value]): Value = values.foldLeft(Value(0.0))(_ + _)
 }
-case class $10(value: Double = 10.00) extends Money
-case class $50(value: Double = 50.00) extends Money
-case class $100(value: Double = 100.00) extends Money
-case class $500(value: Double = 500.00) extends Money
-case class $1000(value: Double = 1000.00) extends Money
+sealed trait Money {
+  def value: Value
+}
+case class $10(value: Value = Value(10.00)) extends Money
+case class $50(value: Value = Value(50.00)) extends Money
+case class $100(value: Value = Value(100.00)) extends Money
+case class $500(value: Value = Value(500.00)) extends Money
+case class $1000(value: Value = Value(1000.00)) extends Money
 
 // Chips
 sealed trait Chip {
