@@ -61,6 +61,8 @@ sealed trait Game {
 }
 case class StudPoker(actions: Set[Action], rules: Set[Rule]) extends Game
 
-// Hand
+// Pot
 case class Pot(chips : Set[Chip])
+
+// Hand
 case class Hand(game: Game, players: Set[Player], deck: Deck, pot: Pot)
