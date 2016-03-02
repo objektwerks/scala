@@ -36,13 +36,13 @@ case class $1000(value: Double = 1000.00) extends Money
 
 // Chips
 sealed trait Chip {
-  def value: Money
+  def money: Money
 }
-case class White(value: $10) extends Chip
-case class Red(value: $50) extends Chip
-case class Blue(value: $100) extends Chip
-case class Green(value: $500) extends Chip
-case class Black(value: $1000) extends Chip
+case class White(money: $10) extends Chip
+case class Red(money: $50) extends Chip
+case class Blue(money: $100) extends Chip
+case class Green(money: $500) extends Chip
+case class Black(money: $1000) extends Chip
 
 // Player
 case class Player(name : String)
