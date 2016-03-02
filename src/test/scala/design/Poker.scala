@@ -1,7 +1,9 @@
 package design
 
 // Cards
-sealed trait Card
+sealed trait Card {
+  def suit: Suit
+}
 sealed trait Suit
 trait Clubs extends Suit
 trait Diamonds extends Suit
