@@ -49,11 +49,17 @@ case class Blue(money: $100) extends Chip
 case class Green(money: $500) extends Chip
 case class Black(money: $1000) extends Chip
 
+// Dealer
+case class Dealter(name: String)
+
 // Player
 case class Player(name : String)
 
 // Game
-sealed trait Action
+sealed trait Action {
+  def shuffle(cards: Set[Card])
+  def deal(cards: Set[Card])
+}
 sealed trait Rule
 sealed trait Game {
   def actions: Set[Action]
