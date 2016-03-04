@@ -55,17 +55,21 @@ case class Dealter(name: String)
 // Player
 case class Player(name : String)
 
-// Game
-sealed trait Action {
+// Actions
+sealed trait Actions {
   def shuffle(cards: Set[Card])
   def deal(cards: Set[Card])
 }
-sealed trait Rule
+
+// Rules
+sealed trait Rules
+
+// Game
 sealed trait Game {
-  def actions: Set[Action]
-  def rules: Set[Rule]
+  def actions: Actions
+  def rules: Rules
 }
-case class StudPoker(actions: Set[Action], rules: Set[Rule]) extends Game
+case class StudPoker(actions: Actions, rules: Rules) extends Game
 
 // Pot
 case class Pot(chips : Set[Chip])
