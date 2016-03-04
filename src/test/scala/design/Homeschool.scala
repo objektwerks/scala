@@ -10,4 +10,8 @@ case class Subject(name: String, description: String)
 
 case class Assignment(subject: Subject, description: String)
 
-case class Task(student: Student, assignment: Assignment, assigned: LocalDateTime = LocalDateTime.now, completed: Option[LocalDateTime])
+case class Task(student: Student,
+                assignment: Assignment,
+                assigned: LocalDateTime = LocalDateTime.now,
+                completed: Option[LocalDateTime],
+                result: Option[String])
