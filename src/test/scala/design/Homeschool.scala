@@ -2,10 +2,12 @@ package design
 
 import java.time.{LocalDateTime, LocalDate}
 
-case class Student(name: String, grades: Set[Grade])
+case class Student(name: String)
 
-case class Grade(year: Int, school: String, from: LocalDate, to: Option[LocalDate], courses: Set[Course])
+case class Grade(student: Student, year: Int, from: LocalDate = LocalDate.now, to: Option[LocalDate])
 
-case class Course(name: String, tasks: Set[Task])
+case class Subject(name: String, description: String)
 
-case class Task(task: String, assigned: LocalDateTime, completed: Option[LocalDateTime])
+case class Assignment(subject: Subject, description: String)
+
+case class Task(student: Student, assignment: Assignment, assigned: LocalDateTime = LocalDateTime.now, completed: Option[LocalDateTime])
