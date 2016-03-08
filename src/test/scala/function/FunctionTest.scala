@@ -86,8 +86,10 @@ class FunctionTest extends FunSuite {
   }
 
   test("partially applied") {
-    def multiplier(multiplier: Int) = (i: Int) => multiplier * i
-    val multiplyByFive = multiplier(5)
+    def multiplier(x: Int, y: Int) = x * y
+    val product = multiplier _
+    val multiplyByFive = multiplier(5, _: Int)
+    assert(product(5, 20) == 100)
     assert(multiplyByFive(20) == 100)
   }
 
