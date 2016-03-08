@@ -132,7 +132,7 @@ class FunctionTest extends FunSuite {
   test("tailrec") {
     @tailrec
     def factorial(n: Int, acc: Int = 1): Int = n match {
-      case i if i <= 0 => acc
+      case i if i < 1 => acc
       case _ => factorial(n - 1, acc * n)
     }
     assert(factorial(9) == 362880)
