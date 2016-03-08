@@ -123,7 +123,7 @@ class FunctionTest extends FunSuite {
 
   test("recursion") {
     def factorial(n: Int): Int = n match {
-      case i if i <= 0 => 1
+      case i if i < 1 => 1
       case _ => n * factorial(n - 1)
     }
     assert(factorial(3) == 6)
