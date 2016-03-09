@@ -21,6 +21,8 @@ class CollectionTest extends FunSuite {
     assert((0 /: list)(_ + _) == 6)
     assert(6 == (list :\ 0)(_ + _))
 
+    assert(list(2) == 3) // select by index
+
     assert(list == List(1, 1, 2, 2, 3, 3).distinct)
     assert(list == (List(1) union List(2, 3)))
     assert(list == (List(-2, -1, 0, 1, 2, 3) intersect List(1, 2, 3, 4, 5, 6)))
