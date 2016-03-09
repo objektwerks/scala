@@ -192,7 +192,7 @@ class FunctionTest extends FunSuite {
   test("select by index") {
     def selectByIndex(source: List[Int], index: Int): Option[Int] = {
       @tailrec
-      def loop(source: List[Int], index: Int, acc: Int = 1): Option[Int] = source match {
+      def loop(source: List[Int], index: Int, acc: Int = 0): Option[Int] = source match {
         case Nil => None
         case head :: tail => if (acc == index) Some(head) else loop(tail, index, acc + 1)
       }
@@ -204,7 +204,7 @@ class FunctionTest extends FunSuite {
     val x = selectByIndex(xs, 5)
     val y = selectByIndex(ys, 5)
     val z = selectByIndex(zs, 5)
-    assert(x.get == 5)
+    assert(x.get == xs(5))
     assert(y.isEmpty)
     assert(z.isEmpty)
   }
