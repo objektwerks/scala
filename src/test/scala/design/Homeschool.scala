@@ -2,6 +2,7 @@ package design
 
 import java.time.{LocalDate, LocalDateTime}
 
+import design.Chores.Chores
 import design.Exercises.Exercises
 import design.Meals.Meals
 
@@ -20,6 +21,13 @@ case class Task(student: Student,
                 assigned: LocalDateTime = LocalDateTime.now,
                 completed: Option[LocalDateTime],
                 result: Option[String])
+
+object Chores extends Enumeration {
+  type Chores = Value
+  val dust, clean = Value
+}
+
+case class Chore(student: Student, chore: Chores, completed: LocalDate = LocalDate.now)
 
 object Exercises extends Enumeration {
   type Exercises = Value
