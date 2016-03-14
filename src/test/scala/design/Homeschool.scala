@@ -30,7 +30,7 @@ object Chores extends Enumeration {
 
 object ChoreTargets extends Enumeration {
   type ChoreTargets = Value
-  val bathroom, bedroom, livingroom, den, garage, kitchen, microwave, oven, refrigerator = Value
+  val bathroom, bedroom, clothes, den, livingroom, garage, kitchen, microwave, oven, refrigerator = Value
 }
 
 case class Chore(student: Student, chore: Chores, target: ChoreTargets, assigned: LocalDate = LocalDate.now, completed: Boolean = false)
