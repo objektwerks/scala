@@ -9,7 +9,7 @@ import scala.concurrent.duration._
 
 case class Student(name: String)
 
-case class Grade(student: Student, year: Int, from: LocalDate = LocalDate.now, to: Option[LocalDate])
+case class Grade(student: Student, year: Int, from: LocalDate, to: Option[LocalDate])
 
 case class Subject(name: String, description: String)
 
@@ -17,22 +17,22 @@ case class Assignment(subject: Subject, description: String)
 
 case class Task(student: Student,
                 assignment: Assignment,
-                assigned: LocalDateTime = LocalDateTime.now,
+                assigned: LocalDateTime,
                 completed: Option[LocalDateTime],
                 result: Option[String])
 
-case class Chore(student: Student, chore: String, assigned: LocalDate = LocalDate.now, completed: Option[LocalDate])
+case class Chore(student: Student, chore: String, assigned: LocalDate, completed: Option[LocalDate])
 
 object Exercises extends Enumeration {
   type Exercises = Value
   val aerobics, cycling, running, swimming, walking, weights = Value
 }
 
-case class Exercise(student: Student, exercise: Exercises, duration: Duration)
+case class Exercise(student: Student, exercise: Exercises, completed: LocalDate, duration: Duration)
 
 object Meals extends Enumeration {
   type Meals = Value
   val breakfast, lunch, dinner, snack = Value
 }
 
-case class Meal(student: Student, meal: Meals, description: String)
+case class Meal(student: Student, meal: Meals, description: String, consumed: LocalDateTime)
