@@ -20,10 +20,10 @@ case class Task(student: Student,
 
 case class Category(category: String)
 
-case class Value(category: Category, value: String)
+case class Type(category: Category, value: String)
 
-case class Chore(student: Student, chore: Value, assigned: LocalDate, completed: Option[LocalDate])
+case class Chore(student: Student, chore: Type, assigned: LocalDate, completed: Option[LocalDate])
 
-case class Exercise(student: Student, exercise: Value, completed: LocalDate, duration: Duration)
+case class Exercise(student: Student, exercise: Type, completed: LocalDate, duration: Duration)
 
-case class Meal(student: Student, meal: Value, description: String, consumed: LocalDateTime)
+case class Meal(student: Student, meal: Type, description: String, consumed: LocalDateTime)
