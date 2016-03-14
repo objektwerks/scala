@@ -2,7 +2,6 @@ package design
 
 import java.time.{LocalDate, LocalDateTime}
 
-import design.Exercises.Exercises
 import design.Meals.Meals
 
 import scala.concurrent.duration._
@@ -23,12 +22,7 @@ case class Task(student: Student,
 
 case class Chore(student: Student, chore: String, assigned: LocalDate, completed: Option[LocalDate])
 
-object Exercises extends Enumeration {
-  type Exercises = Value
-  val aerobics, cycling, running, swimming, walking, weights = Value
-}
-
-case class Exercise(student: Student, exercise: Exercises, completed: LocalDate, duration: Duration)
+case class Exercise(student: Student, exercise: String, completed: LocalDate, duration: Duration)
 
 object Meals extends Enumeration {
   type Meals = Value
