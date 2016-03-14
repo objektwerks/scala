@@ -2,10 +2,8 @@ package design
 
 import java.time.{LocalDate, LocalDateTime}
 
-import design.Chores.Chores
 import design.Exercises.Exercises
 import design.Meals.Meals
-import design.ChoreTargets.ChoreTargets
 
 import scala.concurrent.duration._
 
@@ -23,24 +21,14 @@ case class Task(student: Student,
                 completed: Option[LocalDateTime],
                 result: Option[String])
 
-object Chores extends Enumeration {
-  type Chores = Value
-  val clean, dust, vacuum, wash = Value
-}
-
-object ChoreTargets extends Enumeration {
-  type ChoreTargets = Value
-  val bathroom, bedroom, clothes, den, livingroom, garage, kitchen, microwave, oven, refrigerator = Value
-}
-
-case class Chore(student: Student, chore: Chores, target: ChoreTargets, assigned: LocalDate = LocalDate.now, completed: Boolean = false)
+case class Chore(student: Student, chore: String, assigned: LocalDate = LocalDate.now, completed: Option[LocalDate])
 
 object Exercises extends Enumeration {
   type Exercises = Value
   val aerobics, cycling, running, swimming, walking, weights = Value
 }
 
-case class Exercise(student: Student, exercise: Exercises, duration: Duration, description: String)
+case class Exercise(student: Student, exercise: Exercises, duration: Duration)
 
 object Meals extends Enumeration {
   type Meals = Value
