@@ -21,6 +21,7 @@ class IOTest extends FunSuite {
   test("from input stream") {
     val words = Source.fromInputStream(getClass.getResourceAsStream("/license.mit")).mkString.split(regex)
     assert(words.size == 168)
+    assert(toWordCount(words).size == 115)
   }
 
   test("from string") {
@@ -36,5 +37,9 @@ class IOTest extends FunSuite {
   test("from bytes") {
     val words = Source.fromBytes(quote.getBytes(Codec.UTF8.name)).mkString.split(regex)
     assert(words.size == 13)
+  }
+
+  def toWordCount(words: Array[String]): Map[String, Int] = {
+    words.groupBy((word:String) => word).mapValues(_.length)
   }
 }
