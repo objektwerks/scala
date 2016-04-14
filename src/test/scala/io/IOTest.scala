@@ -42,7 +42,7 @@ class IOTest extends FunSuite {
   test("grouped") {
     val list = Source.fromInputStream(getClass.getResourceAsStream("/license.mit")).mkString.split(regex).toList
     assert(list.size == 168)
-    val words = list.grouped(21).toList
+    val words = list.grouped(list.length / 8).toList
     assert(words.size == 8)
   }
 
