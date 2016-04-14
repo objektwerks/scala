@@ -39,6 +39,13 @@ class IOTest extends FunSuite {
     assert(words.size == 13)
   }
 
+  test("grouped") {
+    val list = Source.fromInputStream(getClass.getResourceAsStream("/license.mit")).mkString.split(regex).toList
+    assert(list.size == 168)
+    val words = list.grouped(21).toList
+    assert(words.size == 8)
+  }
+
   def toWordCount(words: Array[String]): Map[String, Int] = {
     words.groupBy((word: String) => word.toLowerCase).mapValues(_.length)
   }
