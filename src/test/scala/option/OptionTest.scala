@@ -2,8 +2,8 @@ package option
 
 import org.scalatest.FunSuite
 
-import scala.concurrent.{Future, ExecutionContext}
-import scala.util.{Failure, Success}
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success, Try}
 
 class OptionTest extends FunSuite {
   test("option") {
@@ -40,10 +40,9 @@ class OptionTest extends FunSuite {
     assert(Some(List(Some(1), Some(2), Some(3))).getOrElse(Nil).flatten.sum == 6)
   }
 
-  test("map > flatmap") {
-    def toInt(s: String): Option[Int] = if(s matches "\\d+") Some(s.toInt) else None
-    val strings = List("1", "2", "3")
-    assert(strings.map(toInt) == List(Some(1), Some(2), Some(3)))
+  test("flatmap") {
+    def toInt(s: String): Option[Int] = Try { s.toInt }.toOption
+    val strings = List("1", "2", "3", "four")
     assert(strings.flatMap(toInt) == List(1, 2, 3))
     assert(strings.flatMap(toInt).sum == 6)
 
