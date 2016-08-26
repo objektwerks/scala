@@ -12,8 +12,8 @@ libraryDependencies ++= {
 }
 scalacOptions ++= Seq(
   "-language:postfixOps",
-  "-language:implicitConversions",
   "-language:reflectiveCalls",
+  "-language:implicitConversions",
   "-language:higherKinds",
   "-feature",
   "-Ywarn-unused-import",
@@ -27,4 +27,3 @@ scalacOptions ++= Seq(
 )
 fork in test := true
 javaOptions += "-server -Xss1m -Xmx2g"
-logLevel := Level.Info
