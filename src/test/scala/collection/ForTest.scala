@@ -26,7 +26,7 @@ class ForTest extends FunSuite {
 
   test("for > foreach > map") {
     val xs = List(1, 2)
-    var forList = mutable.ListBuffer[Int]()
+    val forList = mutable.ListBuffer[Int]()
     for (x <- xs) {
       forList += (x * 2)
     }

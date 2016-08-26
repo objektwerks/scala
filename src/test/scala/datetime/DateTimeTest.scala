@@ -62,19 +62,5 @@ class DateTimeTest extends FunSuite {
     val d = Duration.of(33, ChronoUnit.SECONDS)
     val t = LocalTime.of(3, 3, 0).plus(d)
     assert(t == LocalTime.parse("03:03:33"))
-    val from = LocalDateTime.now
-    val to = LocalDateTime.now.plusHours(3).plusMinutes(6)
-    assert(toDuration(from, to) == "Hours: 3, Minutes: 6, Seconds: 0, Millis: 0")
-  }
-
-  def toDuration(from: LocalDateTime, to: LocalDateTime): String = {
-    var temp = LocalDateTime.from(from)
-    val hours = temp.until(to, ChronoUnit.HOURS)
-    temp = temp.plusHours(hours)
-    val minutes = temp.until(to, ChronoUnit.MINUTES)
-    temp = temp.plusMinutes(minutes)
-    val seconds = temp.until(to, ChronoUnit.SECONDS)
-    val millis = temp.until(to, ChronoUnit.MILLIS)
-    s"Hours: $hours, Minutes: $minutes, Seconds: $seconds, Millis: $millis"
   }
 }
