@@ -1,3 +1,3 @@
 Scala
 -----
->The purpose of this project is to prototype and test Scala features.
+>This project tests Scala features.
