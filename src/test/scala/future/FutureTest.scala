@@ -4,8 +4,7 @@ import org.scalatest.FunSuite
 
 import scala.concurrent._
 import scala.concurrent.duration._
-import scala.util.control.NonFatal
-import scala.util.{Failure, Success}
+import scala.util.{Failure, Success, Try}
 
 class FutureTest extends FunSuite {
   implicit val ec = ExecutionContext.global
@@ -27,13 +26,8 @@ class FutureTest extends FunSuite {
   test("non-blocking promise > future") {
     def send(message: String): Future[String] = {
       val promise = Promise[String] ()
-      ec.execute(new Runnable {
-        override def run(): Unit = try {
-          promise.success(message)
-        } catch {
-          case NonFatal(e) => promise.failure(e)
-        }
-      })
+      val fn = new Thread(() => Try(promise.success(message)).recover { case e => promise.failure(e) } )
+      ec.execute(fn)
       promise.future
     }
     val future = send("Hello world!")
@@ -103,15 +97,6 @@ class FutureTest extends FunSuite {
   test("futures traverse") {
     val traversal = Future.traverse((1 to 2).toList) (i => Future(i * 1))
     val future = traversal.map(_.sum)
-    future onComplete {
-      case Success(result) => assert(result == 3)
-      case Failure(failure) => throw failure
-    }
-  }
-
-  test("futures fold") {
-    val futures = for (i <- 1 to 2) yield Future(i * 1)
-    val future = Future.fold(futures) (0) (_ + _)
     future onComplete {
       case Success(result) => assert(result == 3)
       case Failure(failure) => throw failure
