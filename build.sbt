@@ -5,7 +5,7 @@ scalaVersion := "2.12.0-RC1"
 ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 libraryDependencies ++= {
   Seq(
-    "org.scalatest" % "scalatest_2.11" % "3.0.0" % "test"
+    "org.scalatest" % "scalatest_2.12.0-RC1" % "3.0.0" % "test"
   )
 }
 scalacOptions ++= Seq(
