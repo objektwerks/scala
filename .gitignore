@@ -1,13 +1,13 @@
 target/
 project/project/
 project/target/
-.ensime
-.ensime_cache/
 .idea
 build
 .classpath
 .project
 .settings
-org.scala-ide.sdt.core/META-INF/MANIFEST.MF
-org.scala-ide.sdt.update-site/site.xml
+.cache*
+.scala_dependencies
+.ensime
+.ensime_cache/
 .DS_Store
