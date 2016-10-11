@@ -84,8 +84,8 @@ class TypesTest extends FunSuite {
     type User = String
     type Age = Int
     val users:  Map[User, Age] =  Map("john" -> 21, "jane" -> 19)
-    assert(users.get("john").get == 21)
-    assert(users.get("jane").get == 19)
+    assert(users("john") == 21)
+    assert(users("jane") == 19)
   }
 
   test("duck typing") {
