@@ -1,6 +1,6 @@
 Scala
 -----
->This project tests Scala features. xxx
+>This project tests Scala features.
 
 Warning
 -------
