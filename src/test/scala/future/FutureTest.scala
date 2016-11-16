@@ -116,6 +116,12 @@ class FutureTest extends FunSuite {
     Future(3) filter { value => value == 3 } foreach { x => assert(x == 3) }
   }
 
+  test("fold") {
+    val futures = List(Future(1), Future(2))
+    val future = Future.foldLeft(futures)(0){ (acc, num) => acc + num }
+    future foreach { x => assert(x == 3) }
+  }
+
   test("foreach") {
     Future(3) foreach { x => assert(x == 3) }
   }
