@@ -9,13 +9,13 @@ import scala.util.{Failure, Success, Try}
 class FutureTest extends FunSuite {
   implicit val ec = ExecutionContext.global
 
-  test("blocking future") {
+  test("blocking") {
     val future = Future { 1 }
     val result = Await.result(future, 1 second)
     assert(result == 1)
   }
 
-  test("non-blocking future") {
+  test("non-blocking") {
     val future = Future { 1 }
     future onComplete {
       case Success(result) => assert(result == 1)
@@ -23,7 +23,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("non-blocking promise > future") {
+  test("non-blocking promise") {
     def send(message: String): Future[String] = {
       val promise = Promise[String] ()
       val fn = new Thread(() => Try(promise.success(message)).recover { case e => promise.failure(e) } )
@@ -37,7 +37,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("sequential futures with map") {
+  test("sequential map") {
     val futureOne = Future { 1 }
     val futureTwo = futureOne map { i => i + 1 }
     futureTwo onComplete {
@@ -46,7 +46,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("parallel futures with flatmap") {
+  test("parallel flatmap") {
     val futureOne = Future { 1 }
     val futureTwo = Future { 2 }
     val futureThree = futureOne flatMap {
@@ -61,7 +61,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("sequential futures with for comprehension") {
+  test("sequential for") {
     val future = for {
       one <-  Future { 1 }
       two <- Future { 2 }
@@ -72,7 +72,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("parallel futures with for comprehension") {
+  test("parallel for") {
     val futureOne = Future { 1 }
     val futureTwo = Future { 2 }
     val futureThree = for {
@@ -85,7 +85,13 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("futures sequence") {
+  test("foreach") {
+    Future { 3 } foreach {
+      x => assert(x == 3)
+    }
+  }
+
+  test("sequence") {
     val sequence = Future.sequence(List(Future(1), Future(2)))
     val future = sequence.map(_.sum)
     future onComplete {
@@ -94,7 +100,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("futures traverse") {
+  test("traverse") {
     val traversal = Future.traverse((1 to 2).toList) (i => Future(i * 1))
     val future = traversal.map(_.sum)
     future onComplete {
@@ -103,7 +109,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("future andThen") {
+  test("andThen") {
     val future = Future(Integer.parseInt("1")) andThen { case Success(i) => println("Execute 'andThen' side-effecting code!") }
     future onComplete {
       case Success(result) => assert(result == 1)
@@ -111,7 +117,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("futures > zip > map") {
+  test("zip map") {
     val future = Future(1) zip Future(2) map { case (x, y) => x + y }
     future onComplete  {
       case Success(result) => assert(result == 3)
@@ -119,7 +125,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("future recover") {
+  test("recover") {
     val future = Future(Integer.parseInt("one")) recover { case t: Throwable => 1 }
     future onComplete {
       case Success(result) => assert(result == 1)
@@ -127,7 +133,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("future fallbackTo") {
+  test("fallbackTo") {
     val future = Future(Integer.parseInt("one")) fallbackTo Future(1)
     future onComplete {
       case Success(result) => assert(result == 1)
@@ -135,7 +141,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("future fail fast") {
+  test("fail fast") {
     val future = for {
       x <- Future { Integer.parseInt("one") }
       y <- Future { Integer.parseInt("2") }
@@ -147,7 +153,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("future sequence fail fast ") {
+  test("sequence fail fast ") {
     val sequence = Future.sequence(List(Future(Integer.parseInt("one")), Future(Integer.parseInt("2"))))
     val future = sequence map(_.sum)
     future onComplete {
@@ -156,7 +162,7 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("future traverse fail fast") {
+  test("traverse fail fast") {
     val traversal = Future.traverse((1 to 2).toList) (i => Future(i / 0))
     val future = traversal.map { i => println(s"Never executes: $i"); i.sum }
     future onComplete {
