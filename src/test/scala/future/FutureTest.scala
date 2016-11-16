@@ -85,6 +85,18 @@ class FutureTest extends FunSuite {
     }
   }
 
+  test("collect") {
+    val future = Future { 3 }
+    future collect { case value => assert(value == 3) }
+  }
+
+  test("filter") {
+    val future = Future { 3 } filter { value => value == 3 }
+    future foreach {
+      x => assert(x == 3)
+    }
+  }
+
   test("foreach") {
     Future { 3 } foreach {
       x => assert(x == 3)
@@ -138,6 +150,13 @@ class FutureTest extends FunSuite {
     future onComplete {
       case Success(result) => assert(result == 1)
       case Failure(failure) => throw failure
+    }
+  }
+
+  test("fromTry") {
+    val future = Future.fromTry(Try(Integer.parseInt("3")))
+    future foreach {
+      x => assert(x == 3)
     }
   }
 
