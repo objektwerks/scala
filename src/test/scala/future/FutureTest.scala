@@ -85,21 +85,15 @@ class FutureTest extends FunSuite {
     }
   }
 
-  test("collect") {
-    val future = Future { 3 }
-    future collect { case value => assert(value == 3) }
-  }
-
-  test("filter") {
-    val future = Future { 3 } filter { value => value == 3 }
-    future foreach {
-      x => assert(x == 3)
-    }
-  }
-
-  test("foreach") {
-    Future { 3 } foreach {
-      x => assert(x == 3)
+  test("fail fast") {
+    val future = for {
+      x <- Future { Integer.parseInt("one") }
+      y <- Future { Integer.parseInt("2") }
+      z <- Future { Integer.parseInt("3") }
+    } yield (x, y, z)
+    future onComplete {
+      case Success(result) => throw new IllegalStateException("Fail fast failed!")
+      case Failure(failure) => assert(failure.isInstanceOf[NumberFormatException])
     }
   }
 
@@ -118,6 +112,57 @@ class FutureTest extends FunSuite {
     future onComplete {
       case Success(result) => assert(result == 3)
       case Failure(failure) => throw failure
+    }
+  }
+
+  test("sequence fail fast ") {
+    val sequence = Future.sequence(List(Future(Integer.parseInt("one")), Future(Integer.parseInt("2"))))
+    val future = sequence map(_.sum)
+    future onComplete {
+      case Success(result) => throw new IllegalStateException("Fail fast failed!")
+      case Failure(failure) => assert(failure.isInstanceOf[NumberFormatException])
+    }
+  }
+
+  test("traverse fail fast") {
+    val traversal = Future.traverse((1 to 2).toList) (i => Future(i / 0))
+    val future = traversal.map { i => println(s"Never executes: $i"); i.sum }
+    future onComplete {
+      case Success(result) => throw new IllegalStateException("Fail fast failed!")
+      case Failure(failure) => assert(failure.isInstanceOf[ArithmeticException])
+    }
+  }
+
+  test("collect") {
+    val future = Future { 3 }
+    future collect { case value => assert(value == 3) }
+  }
+
+  test("filter") {
+    val future = Future { 3 } filter { value => value == 3 }
+    future foreach {
+      x => assert(x == 3)
+    }
+  }
+
+  test("foreach") {
+    Future { 3 } foreach {
+      x => assert(x == 3)
+    }
+  }
+
+  test("fallbackTo") {
+    val future = Future(Integer.parseInt("one")) fallbackTo Future(1)
+    future onComplete {
+      case Success(result) => assert(result == 1)
+      case Failure(failure) => throw failure
+    }
+  }
+
+  test("fromTry") {
+    val future = Future.fromTry(Try(Integer.parseInt("3")))
+    future foreach {
+      x => assert(x == 3)
     }
   }
 
@@ -150,52 +195,6 @@ class FutureTest extends FunSuite {
     future onComplete {
       case Success(result) => assert(result == 1)
       case Failure(failure) => throw failure
-    }
-  }
-
-
-  test("fallbackTo") {
-    val future = Future(Integer.parseInt("one")) fallbackTo Future(1)
-    future onComplete {
-      case Success(result) => assert(result == 1)
-      case Failure(failure) => throw failure
-    }
-  }
-
-  test("fromTry") {
-    val future = Future.fromTry(Try(Integer.parseInt("3")))
-    future foreach {
-      x => assert(x == 3)
-    }
-  }
-
-  test("fail fast") {
-    val future = for {
-      x <- Future { Integer.parseInt("one") }
-      y <- Future { Integer.parseInt("2") }
-      z <- Future { Integer.parseInt("3") }
-    } yield (x, y, z)
-    future onComplete {
-      case Success(result) => throw new IllegalStateException("Fail fast failed!")
-      case Failure(failure) => assert(failure.isInstanceOf[NumberFormatException])
-    }
-  }
-
-  test("sequence fail fast ") {
-    val sequence = Future.sequence(List(Future(Integer.parseInt("one")), Future(Integer.parseInt("2"))))
-    val future = sequence map(_.sum)
-    future onComplete {
-      case Success(result) => throw new IllegalStateException("Fail fast failed!")
-      case Failure(failure) => assert(failure.isInstanceOf[NumberFormatException])
-    }
-  }
-
-  test("traverse fail fast") {
-    val traversal = Future.traverse((1 to 2).toList) (i => Future(i / 0))
-    val future = traversal.map { i => println(s"Never executes: $i"); i.sum }
-    future onComplete {
-      case Success(result) => throw new IllegalStateException("Fail fast failed!")
-      case Failure(failure) => assert(failure.isInstanceOf[ArithmeticException])
     }
   }
 }
