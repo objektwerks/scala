@@ -10,17 +10,13 @@ class FutureTest extends FunSuite {
   implicit val ec = ExecutionContext.global
 
   test("blocking") {
-    val future = Future { 1 }
+    val future = Future(1)
     val result = Await.result(future, 1 second)
     assert(result == 1)
   }
 
   test("non-blocking") {
-    val future = Future { 1 }
-    future onComplete {
-      case Success(result) => assert(result == 1)
-      case Failure(failure) => throw failure
-    }
+    Future(1) foreach { x => assert(x == 1) }
   }
 
   test("non-blocking promise") {
@@ -31,10 +27,7 @@ class FutureTest extends FunSuite {
       promise.future
     }
     val future = send("Hello world!")
-    future onComplete {
-      case Success(message) => assert(message == "Hello world!")
-      case Failure(failure) => throw failure
-    }
+    future foreach { m => assert(m == "Hello world!")}
   }
 
   test("sequential map") {
