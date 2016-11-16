@@ -33,10 +33,7 @@ class FutureTest extends FunSuite {
   test("sequential map") {
     val futureOne = Future { 1 }
     val futureTwo = futureOne map { i => i + 1 }
-    futureTwo onComplete {
-      case Success(result) => assert(result == 2)
-      case Failure(failure) => throw failure
-    }
+    futureTwo foreach { x => assert(x == 2) }
   }
 
   test("parallel flatmap") {
@@ -48,10 +45,7 @@ class FutureTest extends FunSuite {
           two => one + two
         }
     }
-    futureThree onComplete {
-      case Success(result) => assert(result == 3)
-      case Failure(failure) => throw failure
-    }
+    futureThree foreach { x => assert(x == 3) }
   }
 
   test("sequential for") {
@@ -59,10 +53,7 @@ class FutureTest extends FunSuite {
       one <-  Future { 1 }
       two <- Future { 2 }
     } yield one + two
-    future onComplete {
-      case Success(result) => assert(result == 3)
-      case Failure(failure) => throw failure
-    }
+    future foreach { x => assert(x == 3) }
   }
 
   test("parallel for") {
@@ -72,10 +63,7 @@ class FutureTest extends FunSuite {
       one <- futureOne
       two <- futureTwo
     } yield one + two
-    futureThree onComplete {
-      case Success(result) => assert(result == 3)
-      case Failure(failure) => throw failure
-    }
+    futureThree foreach { x => assert(x == 3) }
   }
 
   test("fail fast") {
@@ -93,19 +81,13 @@ class FutureTest extends FunSuite {
   test("sequence") {
     val sequence = Future.sequence(List(Future(1), Future(2)))
     val future = sequence.map(_.sum)
-    future onComplete {
-      case Success(result) => assert(result == 3)
-      case Failure(failure) => throw failure
-    }
+    future foreach { x => assert(x == 3) }
   }
 
   test("traverse") {
     val traversal = Future.traverse((1 to 2).toList) (i => Future(i * 1))
     val future = traversal.map(_.sum)
-    future onComplete {
-      case Success(result) => assert(result == 3)
-      case Failure(failure) => throw failure
-    }
+    future foreach { x => assert(x == 3) }
   }
 
   test("sequence fail fast ") {
