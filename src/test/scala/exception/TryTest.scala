@@ -7,22 +7,12 @@ import scala.util.control.Exception._
 import scala.util.control.NonFatal
 import scala.util.{Try, Success}
 
-class ExceptionTest extends FunSuite {
+class TryTest extends FunSuite {
   test("try catch handler") {
     val handler: PartialFunction[Throwable, Unit] = {
       case NonFatal(error) => assert(error.getMessage.nonEmpty)
     }
     try "abc".toInt catch handler
-  }
-
-  test("either") {
-    def divide(x: Int, y: Int): Either[String, Int] = try {
-      Right(x / y)
-    } catch {
-      case t: Throwable => Left("divide by zero error")
-    }
-    assert(divide(9, 3) == Right(3))
-    assert(divide(9, 0) == Left("divide by zero error"))
   }
 
   test("try") {
