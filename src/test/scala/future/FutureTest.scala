@@ -164,4 +164,8 @@ class FutureTest extends FunSuite {
   test("flatten") {
     Future { Future { 1 } }.flatten foreach { x => assert(x == 1) }
   }
+
+  test("zipWith") {
+    Future("My average is:").zipWith(Future(100.0)) { case (label, average) => s"$label $average" } foreach { answer => assert(answer == "My average is: 100.0") }
+  }
 }
