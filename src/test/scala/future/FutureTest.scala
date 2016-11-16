@@ -134,67 +134,38 @@ class FutureTest extends FunSuite {
   }
 
   test("collect") {
-    val future = Future { 3 }
-    future collect { case value => assert(value == 3) }
+    Future(3) collect { case value => assert(value == 3) }
   }
 
   test("filter") {
-    val future = Future { 3 } filter { value => value == 3 }
-    future foreach {
-      x => assert(x == 3)
-    }
+    Future(3) filter { value => value == 3 } foreach { x => assert(x == 3) }
   }
 
   test("foreach") {
-    Future { 3 } foreach {
-      x => assert(x == 3)
-    }
+    Future(3) foreach { x => assert(x == 3) }
   }
 
   test("fallbackTo") {
-    val future = Future(Integer.parseInt("one")) fallbackTo Future(1)
-    future onComplete {
-      case Success(result) => assert(result == 1)
-      case Failure(failure) => throw failure
-    }
+    Future(Integer.parseInt("one")) fallbackTo Future(1) foreach { x => assert(x == 1) }
   }
 
   test("fromTry") {
-    val future = Future.fromTry(Try(Integer.parseInt("3")))
-    future foreach {
-      x => assert(x == 3)
-    }
+    Future.fromTry(Try(Integer.parseInt("3"))) foreach { x => assert(x == 3) }
   }
 
   test("andThen") {
-    val future = Future(Integer.parseInt("1")) andThen { case Success(i) => println("Execute 'andThen' side-effecting code!") }
-    future onComplete {
-      case Success(result) => assert(result == 1)
-      case Failure(failure) => throw failure
-    }
+    Future(Integer.parseInt("1")) andThen { case Success(i) => println("Execute 'andThen' side-effecting code!") } foreach { x => assert(x == 1) }
   }
 
   test("zip map") {
-    val future = Future(1) zip Future(2) map { case (x, y) => x + y }
-    future onComplete  {
-      case Success(result) => assert(result == 3)
-      case Failure(failure) => throw failure
-    }
+    Future(1) zip Future(2) map { case (x, y) => x + y } foreach { x => assert(x == 3) }
   }
 
   test("recover") {
-    val future = Future(Integer.parseInt("one")) recover { case t: Throwable => 1 }
-    future onComplete {
-      case Success(result) => assert(result == 1)
-      case Failure(failure) => throw failure
-    }
+    Future(Integer.parseInt("one")) recover { case t: Throwable => 1 } foreach { x => assert(x == 1) }
   }
 
   test("recoverWith") {
-    val future = Future(Integer.parseInt("one")) recoverWith { case t: Throwable => Future { 1 } }
-    future onComplete {
-      case Success(result) => assert(result == 1)
-      case Failure(failure) => throw failure
-    }
+    Future(Integer.parseInt("one")) recoverWith { case t: Throwable => Future { 1 } } foreach { x => assert(x == 1) }
   }
 }
