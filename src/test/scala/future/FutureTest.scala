@@ -143,4 +143,9 @@ class FutureTest extends FunSuite {
   test("recoverWith") {
     Future(Integer.parseInt("one")) recoverWith { case t: Throwable => Future { 1 } } foreach { x => assert(x == 1) }
   }
+
+  test("transform") {
+    Future(Integer.parseInt("1")) transform( result => result + 2, failure => new Exception("failure", failure)) foreach { x => assert(x == 3) }
+    Future(Integer.parseInt("one")) transform( result => result + 2, failure => new Exception("failure", failure)) foreach { x => assert(x != 3) }
+  }
 }
