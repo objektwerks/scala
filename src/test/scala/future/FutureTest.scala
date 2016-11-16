@@ -161,6 +161,17 @@ class FutureTest extends FunSuite {
     Future(Integer.parseInt("one")) transform( result => result + 2, failure => new Exception("failure", failure)) foreach { x => assert(x != 3) }
   }
 
+  test("transformWith") {
+    Future { Integer.parseInt("1") } transformWith {
+      case Success(result) => Future { result }
+      case Failure(failure) => Future { -1 }
+    } foreach { x => assert(x == 1) }
+    Future { Integer.parseInt("one") } transformWith {
+      case Success(result) => Future { result }
+      case Failure(failure) => Future { -1 }
+    } foreach { x => assert(x == -1) }
+  }
+
   test("flatten") {
     Future { Future { 1 } }.flatten foreach { x => assert(x == 1) }
   }
