@@ -145,6 +145,15 @@ class FutureTest extends FunSuite {
     }
   }
 
+  test("recoverWith") {
+    val future = Future(Integer.parseInt("one")) recoverWith { case t: Throwable => Future { 1 } }
+    future onComplete {
+      case Success(result) => assert(result == 1)
+      case Failure(failure) => throw failure
+    }
+  }
+
+
   test("fallbackTo") {
     val future = Future(Integer.parseInt("one")) fallbackTo Future(1)
     future onComplete {
