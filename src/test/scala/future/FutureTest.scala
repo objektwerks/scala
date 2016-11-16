@@ -125,7 +125,7 @@ class FutureTest extends FunSuite {
   test("reduce") {
     val futures = List(Future(1), Future(2))
     val future = Future.reduceLeft(futures){ (acc, num) => acc + num }
-    future.foreach(x => assert(x ==3))
+    future foreach { x => assert(x == 3) }
   }
 
   test("foreach") {
