@@ -73,7 +73,7 @@ class FutureTest extends FunSuite {
       z <- Future { Integer.parseInt("3") }
     } yield (x, y, z)
     future onComplete {
-      case Success(result) => throw new IllegalStateException("Fail fast failed!")
+      case Success(result) => throw new IllegalStateException(s"Fail fast failed: $result")
       case Failure(failure) => assert(failure.isInstanceOf[NumberFormatException])
     }
   }
@@ -94,7 +94,7 @@ class FutureTest extends FunSuite {
     val sequence = Future.sequence(List(Future(Integer.parseInt("one")), Future(Integer.parseInt("2"))))
     val future = sequence map(_.sum)
     future onComplete {
-      case Success(result) => throw new IllegalStateException("Fail fast failed!")
+      case Success(result) => throw new IllegalStateException(s"Fail fast failed: $result")
       case Failure(failure) => assert(failure.isInstanceOf[NumberFormatException])
     }
   }
@@ -103,7 +103,7 @@ class FutureTest extends FunSuite {
     val traversal = Future.traverse((1 to 2).toList) (i => Future(i / 0))
     val future = traversal.map { i => println(s"Never executes: $i"); i.sum }
     future onComplete {
-      case Success(result) => throw new IllegalStateException("Fail fast failed!")
+      case Success(result) => throw new IllegalStateException(s"Fail fast failed: $result")
       case Failure(failure) => assert(failure.isInstanceOf[ArithmeticException])
     }
   }
@@ -141,7 +141,7 @@ class FutureTest extends FunSuite {
   }
 
   test("andThen") {
-    Future(Integer.parseInt("1")) andThen { case Success(i) => println("Execute 'andThen' side-effecting code!") } foreach { x => assert(x == 1) }
+    Future(Integer.parseInt("1")) andThen { case Success(_) => println("Execute 'andThen' side-effecting code!") } foreach { x => assert(x == 1) }
   }
 
   test("zip map") {
@@ -149,11 +149,11 @@ class FutureTest extends FunSuite {
   }
 
   test("recover") {
-    Future(Integer.parseInt("one")) recover { case t: Throwable => 1 } foreach { x => assert(x == 1) }
+    Future(Integer.parseInt("one")) recover { case _ => 1 } foreach { x => assert(x == 1) }
   }
 
   test("recoverWith") {
-    Future(Integer.parseInt("one")) recoverWith { case t: Throwable => Future { 1 } } foreach { x => assert(x == 1) }
+    Future(Integer.parseInt("one")) recoverWith { case _ => Future { 1 } } foreach { x => assert(x == 1) }
   }
 
   test("transform") {
@@ -164,11 +164,11 @@ class FutureTest extends FunSuite {
   test("transformWith") {
     Future { Integer.parseInt("1") } transformWith {
       case Success(result) => Future { result }
-      case Failure(failure) => Future { -1 }
+      case Failure(_) => Future { -1 }
     } foreach { x => assert(x == 1) }
     Future { Integer.parseInt("one") } transformWith {
       case Success(result) => Future { result }
-      case Failure(failure) => Future { -1 }
+      case Failure(_) => Future { -1 }
     } foreach { x => assert(x == -1) }
   }
 
