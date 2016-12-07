@@ -1,7 +1,7 @@
 name := "scala"
 organization := "objektwerks"
 version := "1.0"
-scalaVersion := "2.12.0"
+scalaVersion := "2.12.1"
 ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 libraryDependencies ++= {
   Seq(
