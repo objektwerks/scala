@@ -4,16 +4,21 @@ import org.scalatest.{FunSuite, Matchers}
 
 case class Worker(name: String, task: String)
 object Worker {
-  implicit def defaultOrdering: Ordering[Worker] = Ordering.by(unapply)
+  implicit def defaultOrdering: Ordering[Worker] = Ordering.by(_.name)
 }
 
 class SortingTest extends FunSuite with Matchers {
-  test("sorted") {
-    val list = List(3, 2, 1)
-    list.sorted shouldBe List(1, 2, 3)
+  test("sorting") {
+    val unsorted = List(2, 3, 1)
+    val asc = unsorted.sorted
+    val desc = List(3, 2, 1)
+    asc shouldBe asc
+    unsorted.sortBy(i => i) shouldBe asc
+    unsorted.sortWith(_ > _) shouldBe desc
+    desc.sortWith(_ < _) == asc
   }
 
-  test("implicit sorting") {
+  test("ordering") {
     val unsorted = List(Worker("c", "z"), Worker("a", "x"), Worker("b", "y"))
     val sorted = unsorted.sorted
     val sortby = unsorted.sortBy(Worker.unapply)
