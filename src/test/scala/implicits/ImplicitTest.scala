@@ -18,7 +18,7 @@ object IntGraphics {
 
 case class Worker(name: String, task: String)
 object Worker {
-  implicit def defaultOrdering: Ordering[Worker] = Ordering.by(unapply)
+  implicit def defaultOrdering: Ordering[Worker] = Ordering.by(_.name)
 }
 
 case class Value(n: Int)
