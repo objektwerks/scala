@@ -55,17 +55,9 @@ class ImplicitTest extends FunSuite {
     assert(3.waves == "~~~")
   }
 
-  test("implicit sorting") {
-    val workers = List(Worker("c", "z"), Worker("b", "y"), Worker("a", "x"))
-    val sorted = workers.sorted
-    val sortby = workers.sortBy(Worker.unapply)
-    val sortwith = workers.sortWith(_.name < _.name)
-    val desc = workers.sortWith(_.name > _.name)
-    val worker = Worker("a", "x")
-    assert(worker == sorted.head)
-    assert(worker == sortby.head)
-    assert(worker == sortwith.head)
-    assert(Worker("c", "z") == desc.head)
+  test("implicit ordering") {
+    val unsorted = List(Worker("c", "z"), Worker("b", "y"), Worker("a", "x"))
+    assert(unsorted.sorted.head == Worker("a", "x"))
   }
 
   test("implicit folding") {
