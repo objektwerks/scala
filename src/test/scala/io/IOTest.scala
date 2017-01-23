@@ -15,35 +15,35 @@ class IOTest extends FunSuite {
 
   test("from file") {
     val words = Source.fromFile("./LICENSE").mkString.split(regex)
-    assert(words.size == 168)
+    assert(words.length == 168)
   }
 
   test("from input stream") {
     val words = Source.fromInputStream(getClass.getResourceAsStream("/license.mit")).mkString.split(regex)
-    assert(words.size == 168)
-    assert(toWordCount(words).size == 95)
+    assert(words.length == 168)
+    assert(toWordCount(words).length == 95)
   }
 
   test("from string") {
     val words = Source.fromString(quote).mkString.split(regex)
-    assert(words.size == 13)
+    assert(words.length == 13)
   }
 
   test("from chars") {
     val words = Source.fromChars(quote.toCharArray).mkString.split(regex)
-    assert(words.size == 13)
+    assert(words.length == 13)
   }
 
   test("from bytes") {
     val words = Source.fromBytes(quote.getBytes(Codec.UTF8.name)).mkString.split(regex)
-    assert(words.size == 13)
+    assert(words.length == 13)
   }
 
   test("grouped") {
     val list = Source.fromInputStream(getClass.getResourceAsStream("/license.mit")).mkString.split(regex).toList
-    assert(list.size == 168)
+    assert(list.length == 168)
     val words = list.grouped(list.length / 8).toList
-    assert(words.size == 8)
+    assert(words.length == 8)
   }
 
   def toWordCount(words: Array[String]): Map[String, Int] = {
