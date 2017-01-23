@@ -21,7 +21,7 @@ class IOTest extends FunSuite {
   test("from input stream") {
     val words = Source.fromInputStream(getClass.getResourceAsStream("/license.mit")).mkString.split(regex)
     assert(words.length == 168)
-    assert(toWordCount(words).length == 95)
+    assert(toWordCount(words).size == 95)
   }
 
   test("from string") {
