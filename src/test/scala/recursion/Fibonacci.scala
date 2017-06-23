@@ -33,9 +33,9 @@ object Fibonacci {
   }
 
   def sequence(a: Int = 0, b: Int = 1): List[Int] = {
-    def build(a: Int = 0, b: Int = 1): Stream[Int] = {
+    def build(a: Int, b: Int): Stream[Int] = {
       Stream.cons(a, build(b, a + b))
     }
-    build().takeWhile(_ >= 0).toList
+    build(a, b).takeWhile(_ >= 0).toList
   }
 }

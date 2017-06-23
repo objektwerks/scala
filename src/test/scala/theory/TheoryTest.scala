@@ -43,7 +43,7 @@ object Theory {
     override def point[A](a: => A): Option[A] = Some(a)
     override def apply[A, B](fa: Option[A])(ff: Option[A => B]): Option[B] = (fa, ff) match {
       case (None, _) => None
-      case (Some(a), None) => None
+      case (Some(_), None) => None
       case (Some(a), Some(f)) => Some(f(a))
     }
   }

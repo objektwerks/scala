@@ -46,7 +46,7 @@ class TryTest extends FunSuite {
 
   test("try recover") {
     val n = for {
-      i <- Try(Integer.parseInt("one")).recover { case e => 0 }
+      i <- Try(Integer.parseInt("one")).recover { case _ => 0 }
     } yield i
     assert(n == Success(0))
   }

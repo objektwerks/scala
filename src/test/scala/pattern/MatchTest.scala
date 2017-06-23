@@ -88,7 +88,7 @@ class MatchTest extends FunSuite {
   test("alias match") {
     case class Stock(symbol: String, price: Double)
     def isPriceHigher(yesterday: Stock, today: Stock): Boolean = today match {
-      case s @ Stock(_, price) if yesterday.symbol == today.symbol => s.price > yesterday.price
+      case s @ Stock(_, _) if yesterday.symbol == today.symbol => s.price > yesterday.price
     }
     val yesterday = Stock("XYZ", 1.11)
     val today = Stock("XYZ", 3.33)
