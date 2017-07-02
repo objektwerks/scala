@@ -9,9 +9,10 @@ Informational Interview Questions
 
 2. Please elaborate on your experience with Python and Scala, including number of years.
 
-3. What is a coding tool you've started learning or recently learned and why & how did you go about learning it.
+3. What is a coding tool you've started learning or recently learned and why and how did you go about learning it.
 
 4. Elaborate on your level of expertise in relational database management system (RDBMS).
+
  
 Deal-Breaker Questions
 ----------------------
