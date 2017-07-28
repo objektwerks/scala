@@ -12,12 +12,20 @@ import org.scalatest.FunSuite
         }
   */
 class RecursionTest extends FunSuite {
-  test("structural recursion") {
-    def increment(count: Int, acc: Int = 0): Int = count match {
+  test("recursive int accumulator") {
+    def sum(number: Int, acc: Int = 0): Int = number match {
       case 0 => acc
-      case n => increment(n - 1, acc + n)
+      case n => sum(n - 1, acc + n)
     }
-    assert(increment(3) == 6)
+    assert(sum(3) == 6)
+  }
+
+  test("recursive list accumulator") {
+    def sum(numbers: List[Int]): Int = numbers match {
+      case Nil => 0
+      case head :: tail => head + sum(tail)
+    }
+    assert(sum(List(1, 2, 3)) == 6)
   }
 
   test("non tail callable factorial") {
