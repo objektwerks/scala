@@ -2,7 +2,24 @@ package recursion
 
 import org.scalatest.FunSuite
 
-class RecursionTest extends FunSuite{
+/**
+  * Structural Recursion Template:
+  *
+  * def name(count: Int): Result =
+        count match {
+          case 0 => resultBase
+          case n => resultUnit add name(n-1)
+        }
+  */
+class RecursionTest extends FunSuite {
+  test("structural recursion") {
+    def increment(count: Int, acc: Int = 0): Int = count match {
+      case 0 => acc
+      case n => increment(n - 1, acc + n)
+    }
+    assert(increment(3) == 6)
+  }
+
   test("non tail callable factorial") {
     assert(Factorial.nonTailCallable(4) == 24)
   }
