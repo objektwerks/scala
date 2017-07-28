@@ -33,11 +33,20 @@ class RecursionTest extends FunSuite {
   }
 
   test("non tail callable factorial") {
-    assert(Factorial.nonTailCallable(4) == 24)
+    def factorial(n: Long): Long = n match {
+      case i if i < 1 => 1
+      case _ => n * factorial(n - 1)
+    }
+    assert(factorial(4) == 24)
   }
 
-  test("tail callable factorial") {
-    assert(Factorial.tailCallable(4) == 24)
+  test("@tailrec factorial") {
+    @tailrec
+    def factorial(n: Long, acc: Long = 1): Long = n match {
+      case i if i < 1 => acc
+      case _ => factorial(n - 1, acc * n)
+    }
+    assert(factorial(4) == 24)
   }
 
   test("naive recursive fibonacci") {
