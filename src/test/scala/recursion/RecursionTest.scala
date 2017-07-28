@@ -33,6 +33,12 @@ class RecursionTest extends FunSuite {
     assert(sum(list) == list.sum)
   }
 
+  test("non tail callable list sum") {
+    def sum(numbers: List[Int]): Int = if (numbers.isEmpty) 0 else numbers.head + sum(numbers.tail)
+    val list = List(1, 2, 3)
+    assert(sum(list) == list.sum)
+  }
+
   test("non tail callable factorial") {
     def factorial(n: Long): Long = n match {
       case i if i < 1 => 1
