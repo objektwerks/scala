@@ -33,13 +33,13 @@ class RecursionTest extends FunSuite {
     assert(sum(list) == list.sum)
   }
 
-  test("non tail callable list sum") {
+  test("non tail recursive list sum") {
     def sum(numbers: List[Int]): Int = if (numbers.isEmpty) 0 else numbers.head + sum(numbers.tail)
     val list = List(1, 2, 3)
     assert(sum(list) == list.sum)
   }
 
-  test("non tail callable factorial") {
+  test("non tail recursive factorial") {
     def factorial(n: Long): Long = n match {
       case i if i < 1 => 1
       case _ => n * factorial(n - 1)
@@ -56,7 +56,7 @@ class RecursionTest extends FunSuite {
     assert(factorial(4) == 24)
   }
 
-  test("naive recursive fibonacci") {
+  test("non tail recursive fibonacci") {
     def fibonacci(n: Long): BigInt = n match {
       case 0 | 1 => n
       case _ => fibonacci(n - 1) + fibonacci(n - 2)
@@ -79,7 +79,7 @@ class RecursionTest extends FunSuite {
     println(s"Tail recursive fibonacci performance is constant using <= $n : $f")
   }
 
-  test("@tailrec fibonacci with inner loop") {
+  test("@tailrec fibonacci with inner def loop") {
     def fibonacci(n: Long): BigInt = {
       @tailrec
       def loop(n: Long, a: Long, b: Long): BigInt = n match {
@@ -120,7 +120,7 @@ class RecursionTest extends FunSuite {
     println("Fibonacci sequence: " + sequence)
   }
 
-  test("recursive split sum") {
+  test("non tail recursive split sum") {
     def sum(ints: IndexedSeq[Int]): Int = {
       if (ints.size <= 1)
         ints.headOption getOrElse 0
