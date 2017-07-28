@@ -4,15 +4,6 @@ import org.scalatest.FunSuite
 
 import scala.annotation.tailrec
 
-/**
-  * Structural Recursion Template:
-  *
-  * def name(count: Int): Result =
-        count match {
-          case 0 => resultBase
-          case n => resultUnit add name(n-1)
-        }
-  */
 class RecursionTest extends FunSuite {
   test("@tailrec int sum") {
     @tailrec
