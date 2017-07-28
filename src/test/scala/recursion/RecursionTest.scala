@@ -14,7 +14,7 @@ import scala.annotation.tailrec
         }
   */
 class RecursionTest extends FunSuite {
-  test("recursive int accumulator") {
+  test("@tailrec int accumulator") {
     @tailrec
     def sum(number: Int, acc: Int = 0): Int = number match {
       case 0 => acc
@@ -73,7 +73,7 @@ class RecursionTest extends FunSuite {
     println("Fibonacci sequence: " + sequence)
   }
 
-  test("split recursive sum") {
+  test("recursive split sum") {
     def sum(ints: IndexedSeq[Int]): Int = {
       if (ints.size <= 1)
         ints.headOption getOrElse 0
