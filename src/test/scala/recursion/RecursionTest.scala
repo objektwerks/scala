@@ -2,6 +2,8 @@ package recursion
 
 import org.scalatest.FunSuite
 
+import scala.annotation.tailrec
+
 /**
   * Structural Recursion Template:
   *
@@ -13,6 +15,7 @@ import org.scalatest.FunSuite
   */
 class RecursionTest extends FunSuite {
   test("recursive int accumulator") {
+    @tailrec
     def sum(number: Int, acc: Int = 0): Int = number match {
       case 0 => acc
       case n => sum(n - 1, acc + n)
