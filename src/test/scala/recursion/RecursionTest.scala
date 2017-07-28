@@ -6,7 +6,7 @@ import scala.annotation.tailrec
 import scala.util.control.TailCalls.{TailRec, done, tailcall}
 
 class RecursionTest extends FunSuite {
-  test("structural recursion") {
+  test("non-tailrec structural recursion") {
     def build(count: Int, value: Int): List[Int] = count match {
       case 0 => Nil
       case n => value :: build(n - 1, value)
@@ -33,13 +33,13 @@ class RecursionTest extends FunSuite {
     assert(sum(list) == list.sum)
   }
 
-  test("non tail recursive list sum") {
+  test("non-tailrec list sum") {
     def sum(numbers: List[Int]): Int = if (numbers.isEmpty) 0 else numbers.head + sum(numbers.tail)
     val list = List(1, 2, 3)
     assert(sum(list) == list.sum)
   }
 
-  test("non tail recursive factorial") {
+  test("non-tailrec factorial") {
     def factorial(n: Long): Long = n match {
       case i if i < 1 => 1
       case _ => n * factorial(n - 1)
@@ -56,7 +56,7 @@ class RecursionTest extends FunSuite {
     assert(factorial(4) == 24)
   }
 
-  test("non tail recursive fibonacci") {
+  test("non-tailrec fibonacci") {
     def fibonacci(n: Long): BigInt = n match {
       case 0 | 1 => n
       case _ => fibonacci(n - 1) + fibonacci(n - 2)
@@ -94,7 +94,7 @@ class RecursionTest extends FunSuite {
     println(s"@tailrec fibonacci performance is constant using <= $n : $f")
   }
 
-  test("tailcalls fibonacci") {
+  test("tailcall fibonacci") {
     def fibonacci(n: Long): TailRec[Long] = {
       if (n < 2) done(n)
       else for {
@@ -120,7 +120,7 @@ class RecursionTest extends FunSuite {
     println("Fibonacci sequence: " + sequence)
   }
 
-  test("non tail recursive split sum") {
+  test("non-tailrec split sum") {
     def sum(ints: IndexedSeq[Int]): Int = {
       if (ints.size <= 1)
         ints.headOption getOrElse 0
