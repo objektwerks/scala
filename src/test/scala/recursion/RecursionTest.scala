@@ -14,7 +14,7 @@ import scala.annotation.tailrec
         }
   */
 class RecursionTest extends FunSuite {
-  test("@tailrec int accumulator") {
+  test("@tailrec int sum") {
     @tailrec
     def sum(number: Int, acc: Int = 0): Int = number match {
       case 0 => acc
@@ -23,12 +23,14 @@ class RecursionTest extends FunSuite {
     assert(sum(3) == 6)
   }
 
-  test("recursive list sum") {
-    def sum(numbers: List[Int]): Int = numbers match {
-      case Nil => 0
-      case head :: tail => head + sum(tail)
+  test("@tailrec list sum") {
+    @tailrec
+    def sum(numbers: List[Int], acc: Int = 0): Int = numbers match {
+      case Nil => acc
+      case head :: tail => sum(tail, acc + head)
     }
-    assert(sum(List(1, 2, 3)) == 6)
+    val list = List(1, 2, 3)
+    assert(sum(list) == list.sum)
   }
 
   test("non tail callable factorial") {
