@@ -5,6 +5,14 @@ import org.scalatest.FunSuite
 import scala.annotation.tailrec
 
 class RecursionTest extends FunSuite {
+  test("structural recursion") {
+    def build(count: Int, value: Int): List[Int] = count match {
+      case 0 => Nil
+      case n => value :: build(n - 1, value)
+    }
+    assert(build(3, 3) == List(3, 3, 3))
+  }
+
   test("@tailrec int sum") {
     @tailrec
     def sum(number: Int, acc: Int = 0): Int = number match {
