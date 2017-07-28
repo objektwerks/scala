@@ -23,7 +23,7 @@ class RecursionTest extends FunSuite {
     assert(sum(3) == 6)
   }
 
-  test("recursive list accumulator") {
+  test("recursive list sum") {
     def sum(numbers: List[Int]): Int = numbers match {
       case Nil => 0
       case head :: tail => head + sum(tail)
