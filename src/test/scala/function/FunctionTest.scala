@@ -37,8 +37,8 @@ class FunctionTest extends FunSuite {
 
   test("def match") {
     def sum(xs: List[Int]): Int = xs match {
-      case head :: tail => head + sum(tail)
       case Nil => 0
+      case head :: tail => head + sum(tail)
     }
     assert(sum(List(1, 2, 3)) == 6)
   }
