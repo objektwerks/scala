@@ -57,7 +57,7 @@ class ImplicitTest extends FunSuite {
 
   test("implicit ordering") {
     val unsorted = List(Worker("c", "z"), Worker("b", "y"), Worker("a", "x"))
-    assert(unsorted.sorted.head == Worker("a", "x"))
+    assert(unsorted.sorted.min == Worker("a", "x"))
   }
 
   test("implicit folding") {
