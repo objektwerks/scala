@@ -3,6 +3,7 @@ package collection
 import org.scalatest.FunSuite
 
 import scala.collection.mutable
+import scala.concurrent.{ExecutionContext, Future}
 
 class ForTest extends FunSuite {
   test("foreach") {
@@ -101,10 +102,17 @@ class ForTest extends FunSuite {
     assert(filteredNumbers == List(1, 2))
   }
 
-  test("for comphrension > zip") {
+  test("for comprehension > zip") {
     val xs = for {
       (a, b) <- List(1, 2, 3) zip List(4, 5, 6)
     } yield a + b
     assert(xs == List(5, 7, 9))
+  }
+
+  test("for comprehension with recover") {
+    implicit val ec = ExecutionContext.global
+    val future = Future(Integer.parseInt("one"))
+    val result = ( for { i <- future } yield i ).recover { case _: Throwable => -1 }
+    result foreach { x => assert(x == -1) }
   }
 }

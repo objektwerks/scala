@@ -152,6 +152,12 @@ class FutureTest extends FunSuite {
     Future(Integer.parseInt("one")) recover { case _ => 1 } foreach { x => assert(x == 1) }
   }
 
+  test("for comprehension with recover") {
+    val future = Future(Integer.parseInt("one"))
+    val result = ( for { i <- future } yield i ).recover { case _: Throwable => -1 }
+    result foreach { x => assert(x == -1) }
+  }
+
   test("recoverWith") {
     Future(Integer.parseInt("one")) recoverWith { case _ => Future { 1 } } foreach { x => assert(x == 1) }
   }
