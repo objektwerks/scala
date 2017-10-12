@@ -28,7 +28,7 @@ class FunctionTest extends FunSuite {
     assert(isEven(2))
   }
 
-  test("def body") {
+  test("def block") {
     def isOdd(i: Int): Boolean = {
       i % 2 != 0
     }
