@@ -4,9 +4,7 @@ import org.scalatest.FunSuite
 
 object Weekday extends Enumeration {
   val Mon, Tue, Wed, Thu, Fri, Sat, Sun = Value
-  def validate(weekday: Weekday.Value): Unit = {
-    assert(values.contains(weekday))
-  }
+  def validate(weekday: Weekday.Value): Unit = assert(values.contains(weekday))
 }
 
 object Month {
@@ -24,23 +22,21 @@ object Month {
   case object Nov extends Enum
   case object Dec extends Enum
   val values = Seq(Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec)
-  def validate(month: Enum): Unit = {
-    assert(values.contains(month))
-  }
+  def validate(month: Enum): Unit = assert(values.contains(month))
 }
 
 class EnumTest extends FunSuite {
+  test("scala enum") {
+    Weekday.values.foreach(_ => Weekday.validate(_))
+  }
+
+  test("adt scala enum") {
+    Month.values.foreach(Month.validate(_))
+  }
+
   test("java enum") {
     assert(Light.valueOf("green") == Light.green)
     assert(Light.valueOf("yellow") == Light.yellow)
     assert(Light.valueOf("red") == Light.red)
-  }
-
-  test("scala enum") {
-    Weekday.values.foreach(v => Weekday.validate(_))
-  }
-
-  test("alternative scala enum") {
-    Month.values.foreach(Month.validate(_))
   }
 }
