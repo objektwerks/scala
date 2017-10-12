@@ -10,17 +10,20 @@ import scala.util._
 class SyncAsyncTest extends FunSuite with Matchers {
   test("sync / async") {
     val futureA = Future("a")
+
     def futureB(a: String): Future[String] = Future {
       /*throw new Exception("b failed");*/ a + "b"
     }
+
     def futureC(a: String): Future[String] = Future {
       /*throw new Exception("c failed");*/ a + "c"
     }
+
     def futureD(bTry: Try[String], cTry: Try[String]) = Future {
       val bLog = if(bTry.isFailure) " b failed" else ""
       val cLog = if(cTry.isFailure) " c failed" else ""
 
-      val result = for{
+      val result = for {
         b <- bTry
         c <- cTry
       } yield b + c +"d"
