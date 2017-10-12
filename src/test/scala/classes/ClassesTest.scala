@@ -33,7 +33,6 @@ class ClassesTest extends FunSuite {
         case p: Porsche => assert(p.drive == "driving" && p.sound == "prrrr")
         case c: Corvette => assert(c.drive == "driving" && c.sound == "woosh")
         case m: Maserati => assert(m.drive == "driving" && m.sound == "grrrr")
-        case _ => throw new IllegalArgumentException("Not a car!")
       }
     }
   }
