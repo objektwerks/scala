@@ -7,20 +7,17 @@ import scala.util.control.TailCalls.{TailRec, done, tailcall}
 
 class RecursionTest extends FunSuite {
   test("non-tailrec structural recursion") {
-    def build(count: Int, value: Int): List[Int] = count match {
+    def buildIntList(count: Int, component: Int): List[Int] = count match {
       case 0 => Nil
-      case n => value :: build(n - 1, value)
+      case n => component :: buildIntList(n - 1, component)
     }
-    assert(build(3, 3) == List(3, 3, 3))
+    assert(buildIntList(3, 3) == List(3, 3, 3))
   }
 
-  test("@tailrec int sum") {
-    @tailrec
-    def sum(number: Int, acc: Int = 0): Int = number match {
-      case 0 => acc
-      case n => sum(n - 1, acc + n)
-    }
-    assert(sum(3) == 6)
+  test("non-tailrec list sum") {
+    def sum(numbers: List[Int]): Int = if (numbers.isEmpty) 0 else numbers.head + sum(numbers.tail)
+    val list = List(1, 2, 3)
+    assert(sum(list) == list.sum)
   }
 
   test("@tailrec list sum") {
@@ -29,12 +26,6 @@ class RecursionTest extends FunSuite {
       case Nil => acc
       case head :: tail => sum(tail, acc + head)
     }
-    val list = List(1, 2, 3)
-    assert(sum(list) == list.sum)
-  }
-
-  test("non-tailrec list sum") {
-    def sum(numbers: List[Int]): Int = if (numbers.isEmpty) 0 else numbers.head + sum(numbers.tail)
     val list = List(1, 2, 3)
     assert(sum(list) == list.sum)
   }
