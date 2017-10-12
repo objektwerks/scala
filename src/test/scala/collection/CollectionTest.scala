@@ -97,8 +97,6 @@ class CollectionTest extends FunSuite {
     assert(words.foldLeft("")(_ + _) == "Hello, world!")
     assert(words.foldRight("")(_ + _) == "Hello, world!")
 
-
-
     assert(List(2, 4, 6) === (for (i <- list) yield i * 2))
     assert(List(2, 4, 6) === (for (i <- list if i > 0) yield i * 2))
     assert(list.forall(_ > 0))
