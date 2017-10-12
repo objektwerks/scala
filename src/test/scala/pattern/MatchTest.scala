@@ -45,33 +45,23 @@ class MatchTest extends FunSuite {
 
   test("case class match") {
     case class Person(name: String)
-    def isPerson(p: Person): String = p match {
+    def byPerson(p: Person): String = p match {
       case Person("John") => "Mr. " + p.name
       case Person("Jane") => "Ms. " + p.name
-      case _ => "Mr. Nobody"
+      case Person(name) => s"Mr. $name"
     }
-    assert(isPerson(Person("John")) == "Mr. John")
-    assert(isPerson(Person("Jane")) == "Ms. Jane")
-    assert(isPerson(Person("Jake")) == "Mr. Nobody")
+    assert(byPerson(Person("John")) == "Mr. John")
+    assert(byPerson(Person("Jane")) == "Ms. Jane")
+    assert(byPerson(Person("Jake")) == "Mr. Jake")
   }
 
   test("list match") {
-    def byList(xs: List[Int]): Int = xs match {
+    def sum(xs: List[Int]): Int = xs match {
       case Nil => 0
       case head :: tail => head + tail.sum
     }
-    assert(byList(Nil) == 0)
-    assert(byList(List(1, 2, 3)) == 6)
-  }
-
-  test("wild card case class match") {
-    case class Order(number: Int, item: String)
-    def order(o: Order): String = o match {
-      case Order(_, "chicken soup") => o.number + " " + o.item
-      case Order(_, _) => "we're out of that"
-    }
-    assert(order(Order(10, "chicken soup")) == "10 chicken soup")
-    assert(order(Order(0, "")) == "we're out of that")
+    assert(sum(Nil) == 0)
+    assert(sum(List(1, 2, 3)) == 6)
   }
 
   test("guarded match") {
