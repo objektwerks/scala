@@ -113,7 +113,7 @@ class FutureTest extends FunSuite {
   }
 
   test("filter") {
-    Future(3) filter { value => value == 3 } foreach { x => assert(x == 3) }
+    Future(3) filter { _ == 3 } foreach { x => assert(x == 3) }
   }
 
   test("fold") {
