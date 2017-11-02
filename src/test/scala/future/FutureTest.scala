@@ -144,6 +144,14 @@ class FutureTest extends FunSuite {
     Future(Integer.parseInt("1")) andThen { case Success(_) => println("Execute 'andThen' side-effecting code!") } foreach { x => assert(x == 1) }
   }
 
+  test("failed") {
+    Future.failed[Exception](new Exception("failed")).foreach { e => assert(e.getMessage == "failed") }
+  }
+
+  test("successful") {
+    Future.successful[Int](3).foreach { x => assert(x == 3) }
+  }
+
   test("zip map") {
     Future(1) zip Future(2) map { case (x, y) => x + y } foreach { x => assert(x == 3) }
   }
