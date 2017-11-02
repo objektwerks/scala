@@ -116,13 +116,13 @@ class FutureTest extends FunSuite {
     Future(3) filter { _ == 3 } foreach { x => assert(x == 3) }
   }
 
-  test("fold") {
+  test("foldLeft") {
     val futures = List(Future(1), Future(2))
     val future = Future.foldLeft(futures)(0){ (acc, num) => acc + num }
     future foreach { x => assert(x == 3) }
   }
 
-  test("reduce") {
+  test("reduceLeft") {
     val futures = List(Future(1), Future(2))
     val future = Future.reduceLeft(futures){ (acc, num) => acc + num }
     future foreach { x => assert(x == 3) }
