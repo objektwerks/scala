@@ -28,7 +28,7 @@ class OptionTest extends FunSuite {
     assert(x == 3)
     val y = greaterThanZero(1) map(_ * 3) getOrElse(-1)
     assert(y == 3)
-    val z = greaterThanZero(1).fold(-1)(_ * 3)
+    val z = greaterThanZero(1).fold(1)(_ * 3)
     assert(z == 3)
     greaterThanZero(3) foreach { v => assert(v == 3) }
   }
