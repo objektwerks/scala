@@ -41,7 +41,7 @@ class OptionTest extends FunSuite {
   }
 
   test("flatmap") {
-    def toInt(s: String): Option[Int] = Try { s.toInt }.toOption
+    def toInt(s: String): Option[Int] = Try(s.toInt).toOption
     val strings = List("1", "2", "3", "four")
     assert(strings.flatMap(toInt) == List(1, 2, 3))
     assert(strings.flatMap(toInt).sum == 6)
