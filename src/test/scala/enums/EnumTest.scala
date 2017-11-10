@@ -30,7 +30,7 @@ class EnumTest extends FunSuite {
     Weekday.values.foreach(_ => Weekday.validate(_))
   }
 
-  test("adt scala enum") {
+  test("scala adt enum") {
     Month.values.foreach(Month.validate(_))
   }
 
