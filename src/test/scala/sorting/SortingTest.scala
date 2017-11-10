@@ -12,7 +12,7 @@ class SortingTest extends FunSuite with Matchers {
     val unsorted = List(2, 3, 1)
     val asc = unsorted.sorted
     val desc = List(3, 2, 1)
-    asc shouldBe asc
+    asc shouldBe List(1, 2, 3)
     unsorted.sortBy(i => i) shouldBe asc
     unsorted.sortWith(_ > _) shouldBe desc
     desc.sortWith(_ < _) == asc
