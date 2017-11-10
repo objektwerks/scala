@@ -4,6 +4,7 @@ import java.time.{LocalDate, LocalDateTime, ZoneOffset}
 
 import scala.util.Try
 
+case class Bank(number: String, accounts: Set[Account])
 object Bank {
   def list(): Set[Account] = Set[Account]()
   def deposit(amount: Amount, credit: Account): Try[Transaction] = Try(Deposit(LocalDateTime.now, amount, credit))
@@ -11,7 +12,6 @@ object Bank {
   def transfer(amount: Amount, debit: Account, credit: Account): Try[Transaction] = Try(Transfer(LocalDateTime.now, amount, debit, credit))
   implicit def ordering: Ordering[Bank] = Ordering.by(_.number)
 }
-case class Bank(number: String, accounts: Set[Account])
 
 trait Account {
   def number: String
