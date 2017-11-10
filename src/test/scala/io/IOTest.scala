@@ -9,8 +9,8 @@ class IOTest extends FunSuite {
   val quote = "You can avoid reality, but you cannot avoid the consequences of avoiding reality."
 
   test("from url") {
-    val words = Source.fromURL("http://api.icndb.com/jokes/random/").mkString.split(regex)
-    assert(words.nonEmpty)
+    val jokes = Source.fromURL("http://api.icndb.com/jokes/random/").mkString.split(regex)
+    assert(jokes.nonEmpty)
   }
 
   test("from file") {
