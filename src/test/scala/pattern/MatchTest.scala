@@ -77,12 +77,12 @@ class MatchTest extends FunSuite {
 
   test("alias match") {
     case class Stock(symbol: String, price: Double)
-    def isPriceHigher(yesterday: Stock, today: Stock): Boolean = today match {
-      case s @ Stock(_, _) if yesterday.symbol == today.symbol => s.price > yesterday.price
+    def isPriceHigher(today: Stock, yesterday: Stock): Boolean = today match {
+      case t @ Stock(_, _) if today.symbol == yesterday.symbol => t.price > yesterday.price
     }
     val yesterday = Stock("XYZ", 1.11)
     val today = Stock("XYZ", 3.33)
-    assert(isPriceHigher(yesterday, today))
+    assert(isPriceHigher(today, yesterday))
   }
 
   test("regex match") {
