@@ -1,10 +1,10 @@
 name := "scala"
 organization := "objektwerks"
 version := "0.1-SNAPSHOT"
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.5"
 libraryDependencies ++= {
   Seq(
-    "org.scalatest" % "scalatest_2.12" % "3.0.4" % "test",
+    "org.scalatest" % "scalatest_2.12" % "3.0.5" % "test",
     "org.scala-lang.modules" % "scala-async_2.12" % "0.9.7" % "test",
     "org.scala-lang.modules" % "scala-parser-combinators_2.12" % "1.0.6" % "test"
   )
