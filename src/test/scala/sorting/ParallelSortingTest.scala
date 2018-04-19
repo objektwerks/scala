@@ -25,8 +25,7 @@ class ParallelSortingTest extends FunSuite with Matchers {
       r <- rightFuture
     } yield (l ++ r).sorted
 
-    val sortedArray = Await.result(sortedFuture, 1 second)
-    sortedArray
+    Await.result(sortedFuture, 1 second)
   }
 
   def parSort(array: Array[Int]): Array[Int] = {
