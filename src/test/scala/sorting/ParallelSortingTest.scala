@@ -2,19 +2,20 @@ package sorting
 
 import org.scalatest.{FunSuite, Matchers}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
-import scala.util.Random.nextInt
-
 class ParallelSortingTest extends FunSuite with Matchers {
   test("parallel sort") {
+    import scala.util.Random.nextInt
+
     val array = Array.fill(100)(nextInt)
     array.length shouldBe 100
     parallelSort(array) shouldEqual parSort(array)
   }
 
   def parallelSort(array: Array[Int]): Array[Int] = {
+    import scala.concurrent.ExecutionContext.Implicits.global
+    import scala.concurrent.duration._
+    import scala.concurrent.{Await, Future}
+
     val (left, right) = array.splitAt(array.length / 2)
 
     val leftFuture = Future { left.sorted }
@@ -29,9 +30,12 @@ class ParallelSortingTest extends FunSuite with Matchers {
   }
 
   def parSort(array: Array[Int]): Array[Int] = {
+    import java.util
+
     val parArray = array.par
     val sortedArray = new Array[Int](parArray.length)
     parArray.copyToArray(sortedArray)
-    parallelSort(sortedArray)
+    util.Arrays.parallelSort(sortedArray)
+    sortedArray
   }
 }
