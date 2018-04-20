@@ -11,12 +11,12 @@ class ParallelSortingTest extends FunSuite with Matchers {
     parallelSort(array) shouldEqual parSort(array)
   }
 
-  def parallelSort(array: Array[Int]): Array[Int] = {
+  def parallelSort[A](seq: Seq[A])(implicit ordering: Ordering[A]): Seq[A] = {
     import scala.concurrent.ExecutionContext.Implicits.global
     import scala.concurrent.duration._
     import scala.concurrent.{Await, Future}
 
-    val (left, right) = array.splitAt(array.length / 2)
+    val (left, right) = seq.splitAt(seq.length / 2)
 
     val leftFuture = Future { left.sorted }
     val rightFuture = Future { right.sorted }
