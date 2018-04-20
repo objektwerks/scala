@@ -5,19 +5,19 @@ import org.scalatest.{FunSuite, Matchers}
 class ParallelSortingTest extends FunSuite with Matchers {
   import scala.util.Random.nextInt
 
-  val array = Array.fill(1000000)(nextInt)
-  array.length shouldBe 1000000
+  val randomArray = Array.fill(1000000)(nextInt)
+  randomArray.length shouldBe 1000000
 
   test("scala parallel sort") {
-    scalaParallelSort(array)
+    scalaParallelSort(randomArray)
   }
 
   test("java parallel sort") {
-    javaParallelSort(array)
+    javaParallelSort(randomArray)
   }
 
   test("scala parallel sort equals java parallel sort") {
-    scalaParallelSort(array) shouldEqual javaParallelSort(array)
+    scalaParallelSort(randomArray) shouldEqual javaParallelSort(randomArray)
   }
 
   def scalaParallelSort[A](seq: Seq[A])(implicit ordering: Ordering[A]): Seq[A] = {
