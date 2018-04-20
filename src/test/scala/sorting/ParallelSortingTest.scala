@@ -3,15 +3,24 @@ package sorting
 import org.scalatest.{FunSuite, Matchers}
 
 class ParallelSortingTest extends FunSuite with Matchers {
-  test("parallel sort") {
-    import scala.util.Random.nextInt
+  import scala.util.Random.nextInt
 
-    val array = Array.fill(100)(nextInt)
-    array.length shouldBe 100
-    parallelSort(array) shouldEqual parSort(array)
+  val array = Array.fill(1000000)(nextInt)
+  array.length shouldBe 1000000
+
+  test("scala parallel sort") {
+    scalaParallelSort(array)
   }
 
-  def parallelSort[A](seq: Seq[A])(implicit ordering: Ordering[A]): Seq[A] = {
+  test("java parallel sort") {
+    javaParallelSort(array)
+  }
+
+  test("scala parallel sort equals java parallel sort") {
+    scalaParallelSort(array) shouldEqual javaParallelSort(array)
+  }
+
+  def scalaParallelSort[A](seq: Seq[A])(implicit ordering: Ordering[A]): Seq[A] = {
     import scala.concurrent.ExecutionContext.Implicits.global
     import scala.concurrent.duration._
     import scala.concurrent.{Await, Future}
@@ -29,7 +38,7 @@ class ParallelSortingTest extends FunSuite with Matchers {
     Await.result(sortedFuture, 1 second)
   }
 
-  def parSort(array: Array[Int]): Array[Int] = {
+  def javaParallelSort(array: Array[Int]): Array[Int] = {
     import java.util
 
     util.Arrays.parallelSort(array)
