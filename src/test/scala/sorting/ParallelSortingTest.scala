@@ -32,10 +32,7 @@ class ParallelSortingTest extends FunSuite with Matchers {
   def parSort(array: Array[Int]): Array[Int] = {
     import java.util
 
-    val parArray = array.par
-    val sortedArray = new Array[Int](parArray.length)
-    parArray.copyToArray(sortedArray)
-    util.Arrays.parallelSort(sortedArray)
-    sortedArray
+    util.Arrays.parallelSort(array)
+    array
   }
 }
