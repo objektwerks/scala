@@ -9,15 +9,14 @@ case class Heading(weight: Int, text: String) {
     s"$newLine$tabs$weight. $text"
   }
 }
+
 case class Node(heading: Heading, children: List[Node])
+
 object Node {
-  def printNode(node: Node): String = {
-    def printNodes(nodes: List[Node], acc: String): String = nodes match {
-      case Nil => acc
-      case head :: tail =>
-        printNodes(tail, acc + head.heading.indent)
-    }
-    printNodes(node.children, node.heading.indent)
+  def printNode(node: Node, acc: String): String = node match {
+    case Node(heading, children) => if (children.nonEmpty)
+      printNode(children.head, acc + heading.indent)
+    else acc
   }
 }
 
@@ -27,10 +26,11 @@ class HtmlRecursionTest extends FunSuite {
       List(Node(Heading(3, "The Finch"),
         List(Node(Heading(3, "The Swan"),
           List(Node(Heading(2, "Habitats"),
-            List(Node(Heading(3, "Wetlands"), List.empty[Node])))))))))))
+            List(Node(Heading(3, "Wetlands"),
+              List.empty[Node])))))))))))
 
   test("html recursion") {
     import Node._
-    println(printNode(doc))
+    println(printNode(doc, ""))
   }
 }
