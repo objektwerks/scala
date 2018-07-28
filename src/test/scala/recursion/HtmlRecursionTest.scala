@@ -22,7 +22,7 @@ object Node {
 
 class HtmlRecursionTest extends FunSuite {
   val doc = Node(Heading(1, 0, "All about Birds"),
-    List(Node(Heading(2, 1, "Kinds of Birds"),
+    List(Node(Heading(1, 1, "Kinds of Birds"),
       List(Node(Heading(1, 2, "The Finch"),
         List(Node(Heading(2, 2, "The Swan"),
           List(Node(Heading(2, 1, "Habitats"),
