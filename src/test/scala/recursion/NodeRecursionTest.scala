@@ -12,13 +12,14 @@ case class Heading(weight: Int, text: String) {
   }
 }
 
-case class Node(heading: Heading, children: List[Node])
-
-object Node {
-  @tailrec
-  def toOutline(node: Node, acc: String = ""): String = node match {
-    case Node(heading, children) if children.isEmpty => acc + heading.indent
-    case Node(heading, children) => toOutline(children.head, acc + heading.indent)
+case class Node(heading: Heading, children: List[Node]) {
+  def toOutline: String = {
+    @tailrec
+    def loop(node: Node, acc: String): String = node match {
+      case Node(h, c) if c.isEmpty => acc + h.indent
+      case Node(h, t) => loop(t.head, acc + h.indent)
+    }
+    loop(this, "")
   }
 }
 
@@ -31,7 +32,7 @@ class NodeRecursionTest extends FunSuite {
             List(Node(Heading(1, "2. Habitats"),
               List(Node(Heading(2, "1. Wetlands"),
                 List.empty[Node])))))))))))
-    val outline = Node.toOutline(node)
+    val outline = node.toOutline
     assert(outline.nonEmpty)
     println(outline)
   }
