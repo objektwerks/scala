@@ -16,9 +16,9 @@ case class Node(heading: Heading, children: List[Node])
 
 object Node {
   @tailrec
-  def toStructuredString(node: Node, acc: String = ""): String = node match {
+  def toOutline(node: Node, acc: String = ""): String = node match {
     case Node(heading, children) if children.isEmpty => acc + heading.indent
-    case Node(heading, children) => toStructuredString(children.head, acc + heading.indent)
+    case Node(heading, children) => toOutline(children.head, acc + heading.indent)
   }
 }
 
@@ -32,7 +32,7 @@ class NodeRecursionTest extends FunSuite {
               List.empty[Node])))))))))))
 
   test("node print") {
-    val result = Node.toStructuredString(doc)
+    val result = Node.toOutline(doc)
     assert(result.nonEmpty)
     println(result)
   }
