@@ -30,7 +30,7 @@ class HtmlRecursionTest extends FunSuite {
             List(Node(Heading(2, "1. Wetlands"),
               List.empty[Node])))))))))))
 
-  test("html recursion") {
+  test("node print") {
     val result = Node.print(doc, "")
     assert(result.nonEmpty)
     println(result)
