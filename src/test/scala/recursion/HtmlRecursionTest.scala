@@ -13,10 +13,10 @@ case class Heading(weight: Int, text: String) {
 case class Node(heading: Heading, children: List[Node])
 
 object Node {
-  def printNode(node: Node, acc: String): String = node match {
+  def print(node: Node, acc: String): String = node match {
     case Node(heading, children) =>
       if (children.nonEmpty)
-        printNode(children.head, acc + heading.indent)
+        print(children.head, acc + heading.indent)
       else acc + heading.indent
   }
 }
@@ -31,8 +31,7 @@ class HtmlRecursionTest extends FunSuite {
               List.empty[Node])))))))))))
 
   test("html recursion") {
-    import Node._
-    val result = printNode(doc, "")
+    val result = Node.print(doc, "")
     assert(result.nonEmpty)
     println(result)
   }
