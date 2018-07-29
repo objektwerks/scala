@@ -14,9 +14,10 @@ case class Node(heading: Heading, children: List[Node])
 
 object Node {
   def printNode(node: Node, acc: String): String = node match {
-    case Node(heading, children) => if (children.nonEmpty)
-      printNode(children.head, acc + heading.indent)
-    else acc + heading.indent
+    case Node(heading, children) =>
+      if (children.nonEmpty)
+        printNode(children.head, acc + heading.indent)
+      else acc + heading.indent
   }
 }
 
