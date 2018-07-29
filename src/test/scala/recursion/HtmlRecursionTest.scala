@@ -2,11 +2,11 @@ package recursion
 
 import org.scalatest.FunSuite
 
-case class Heading(indention: Int, weight: Int, text: String) {
+case class Heading(weight: Int, text: String) {
   def indent: String = {
     val newLine = "\n"
-    val tabs = "\t" * indention
-    s"$newLine$tabs$weight. $text"
+    val tabs = "\t" * weight
+    s"$newLine$tabs$text"
   }
 }
 
@@ -22,12 +22,12 @@ object Node {
 }
 
 class HtmlRecursionTest extends FunSuite {
-  val doc = Node(Heading(0, 1, "All about Birds"),
-    List(Node(Heading(1, 1, "Kinds of Birds"),
-      List(Node(Heading(2, 1, "The Finch"),
-        List(Node(Heading(2, 2, "The Swan"),
-          List(Node(Heading(1, 2, "Habitats"),
-            List(Node(Heading(2, 1, "Wetlands"),
+  val doc = Node(Heading(0, "1. All about Birds"),
+    List(Node(Heading(1, "1. Kinds of Birds"),
+      List(Node(Heading(2, "1. The Finch"),
+        List(Node(Heading(2, "2. The Swan"),
+          List(Node(Heading(1, "2. Habitats"),
+            List(Node(Heading(2, "1. Wetlands"),
               List.empty[Node])))))))))))
 
   test("html recursion") {
