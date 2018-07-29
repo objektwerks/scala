@@ -23,7 +23,7 @@ object Node {
 }
 
 class NodeRecursionTest extends FunSuite {
-  val doc = Node(Heading(0, "1. All about Birds"),
+  val node = Node(Heading(0, "1. All about Birds"),
     List(Node(Heading(1, "1. Kinds of Birds"),
       List(Node(Heading(2, "1. The Finch"),
         List(Node(Heading(2, "2. The Swan"),
@@ -32,8 +32,8 @@ class NodeRecursionTest extends FunSuite {
               List.empty[Node])))))))))))
 
   test("node print") {
-    val result = Node.toOutline(doc)
-    assert(result.nonEmpty)
-    println(result)
+    val outline = Node.toOutline(node)
+    assert(outline.nonEmpty)
+    println(outline)
   }
 }
