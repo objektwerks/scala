@@ -17,7 +17,7 @@ case class Node(heading: Heading, children: List[Node]) {
     @tailrec
     def loop(node: Node, outline: String): String = node match {
       case Node(h, c) if c.isEmpty => outline + h.indent
-      case Node(h, t) => loop(t.head, outline + h.indent)
+      case Node(h, c) => loop(c.head, outline + h.indent)
     }
     loop(this, "")
   }
