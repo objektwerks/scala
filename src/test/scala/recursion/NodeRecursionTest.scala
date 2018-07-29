@@ -2,6 +2,8 @@ package recursion
 
 import org.scalatest.FunSuite
 
+import scala.annotation.tailrec
+
 case class Heading(weight: Int, text: String) {
   def indent: String = {
     val newLine = "\n"
@@ -13,15 +15,14 @@ case class Heading(weight: Int, text: String) {
 case class Node(heading: Heading, children: List[Node])
 
 object Node {
-  def print(node: Node, acc: String): String = node match {
-    case Node(heading, children) =>
-      if (children.nonEmpty)
-        print(children.head, acc + heading.indent)
-      else acc + heading.indent
+  @tailrec
+  def toStructuredString(node: Node, acc: String): String = node match {
+    case Node(heading, children) if children.isEmpty => acc + heading.indent
+    case Node(heading, children) => toStructuredString(children.head, acc + heading.indent)
   }
 }
 
-class HtmlRecursionTest extends FunSuite {
+class NodeRecursionTest extends FunSuite {
   val doc = Node(Heading(0, "1. All about Birds"),
     List(Node(Heading(1, "1. Kinds of Birds"),
       List(Node(Heading(2, "1. The Finch"),
@@ -31,7 +32,7 @@ class HtmlRecursionTest extends FunSuite {
               List.empty[Node])))))))))))
 
   test("node print") {
-    val result = Node.print(doc, "")
+    val result = Node.toStructuredString(doc, "")
     assert(result.nonEmpty)
     println(result)
   }
