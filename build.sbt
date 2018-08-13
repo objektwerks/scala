@@ -6,7 +6,7 @@ libraryDependencies ++= {
   Seq(
     "org.scalatest" % "scalatest_2.12" % "3.0.5" % "test",
     "org.scala-lang.modules" % "scala-async_2.12" % "0.9.7" % "test",
-    "org.scala-lang.modules" % "scala-parser-combinators_2.12" % "1.0.6" % "test"
+    "org.scala-lang.modules" % "scala-parser-combinators_2.12" % "1.1.1" % "test"
   )
 }
 scalacOptions ++= Seq(
