@@ -52,7 +52,7 @@ class RecursionTest extends FunSuite {
       case 0 | 1 => n
       case _ => fibonacci(n - 1) + fibonacci(n - 2)
     }
-    val n = 34
+    val n = 34L
     val f = fibonacci(n)
     assert(f.equals(BigInt(5702887)))
     println(s"Naive recursive fibonacci performance slows dramtically using > $n : $f")
@@ -64,7 +64,7 @@ class RecursionTest extends FunSuite {
       case 0 => a
       case _ => fibonacci(n - 1, b, a + b)
     }
-    val n = 39
+    val n = 39L
     val f = fibonacci(n, 0, 1)
     assert(f.equals(BigInt(63245986)))
     println(s"Tail recursive fibonacci performance is constant using <= $n : $f")
@@ -79,7 +79,7 @@ class RecursionTest extends FunSuite {
       }
       loop(n, 0, 1)
     }
-    val n = 39
+    val n = 39L
     val f = fibonacci(n)
     assert(f.equals(BigInt(63245986)))
     println(s"@tailrec fibonacci performance is constant using <= $n : $f")
@@ -93,7 +93,7 @@ class RecursionTest extends FunSuite {
         y <- tailcall(fibonacci(n - 2))
       } yield x + y
     }
-    val n = 13
+    val n = 13L
     val f = fibonacci(n).result
     assert(f == 233)
     println(s"@tailcalls ( trampolining ) fibonacci performance is horrible: $n : $f")

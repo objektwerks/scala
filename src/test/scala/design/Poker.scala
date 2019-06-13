@@ -57,8 +57,8 @@ case class Player(name : String)
 
 // Actions
 sealed trait Actions {
-  def shuffle(cards: Set[Card])
-  def deal(cards: Set[Card])
+  def shuffle(cards: Set[Card]): Set[Card]
+  def deal(cards: Set[Card]): Set[Card]
 }
 
 // Rules

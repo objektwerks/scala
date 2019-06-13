@@ -22,7 +22,7 @@ class FutureTest extends FunSuite {
   test("non-blocking promise") {
     def send(message: String): Future[String] = {
       val promise = Promise[String] ()
-      val fn = new Thread(() => Try(promise.success(message)).recover { case e => promise.failure(e) } )
+      val fn = new Thread(() => promise.success(message))
       ec.execute(fn)
       promise.future
     }

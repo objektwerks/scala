@@ -17,7 +17,7 @@ class Person(val first: String, val last: String, val initial: String) {
 class Square { def apply(n: Int): Int = n * n }
 object Cube { def apply(n: Int): Int = n * n * n }
 
-class Timestamp(val seconds: Long)
+class Timestamp(val seconds: Int)
 object Timestamp {
   def apply(hours: Int, minutes: Int, seconds: Int): Timestamp = {
     new Timestamp( (hours * 60 * 60) + (minutes * 60) + seconds )

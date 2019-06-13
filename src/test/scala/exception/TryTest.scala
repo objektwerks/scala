@@ -10,7 +10,7 @@ import scala.util.{Try, Success}
 class TryTest extends FunSuite {
   test("try catch handler") {
     val handler: PartialFunction[Throwable, Unit] = {
-      case NonFatal(error) => assert(error.getMessage.nonEmpty)
+      case NonFatal(error) => assert(error.getMessage.nonEmpty); ()
     }
     try "abc".toInt catch handler
   }
@@ -38,7 +38,7 @@ class TryTest extends FunSuite {
 
   test("try source") {
     def readTextFile(name: String): Try[List[String]] = {
-      Try(Source.fromFile(name).getLines.toList)
+      Try( Source.fromFile(name).getLines.toList )
     }
     assert(readTextFile("build.sbt").isSuccess)
     assert(readTextFile("sbt.sbt").isFailure)
@@ -53,7 +53,7 @@ class TryTest extends FunSuite {
 
   test("all catch") {
     def readTextFile(name: String): Option[List[String]] = {
-      allCatch.opt(Source.fromFile(name).getLines.toList)
+      allCatch.opt( Source.fromFile(name).getLines.toList )
     }
     assert(readTextFile("build.sbt").nonEmpty)
     assert(readTextFile("sbt.sbt").isEmpty)
