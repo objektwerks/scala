@@ -3,6 +3,7 @@ package zspace
 import org.scalatest.{FunSuite, Matchers}
 
 /**
+  * Write a function that takes three sides of a triangle and answers if it's equilateral, isosceles, or scalene.
   * equilateral = all 3 sides equal
   * isosceles = 2 sides equal
   * scalene = 0 sides equal
