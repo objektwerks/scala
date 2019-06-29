@@ -56,7 +56,7 @@ class ImplicitTest extends FunSuite {
   }
 
   test("implicit ordering") {
-    val unsorted = List(Worker("c", "z"), Worker("b", "y"), Worker("a", "x"))
+    val unsorted = List(Worker("c", "zspace"), Worker("b", "y"), Worker("a", "x"))
     assert(unsorted.sorted.min == Worker("a", "x"))
   }
 

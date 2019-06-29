@@ -48,7 +48,7 @@ class OptionTest extends FunSuite {
 
     def sum(x: Option[Int], y: Option[Int]): Option[Int] = x.flatMap(i => y.map(j => i + j))
     assert(sum(toInt("1"), toInt("2")).contains(3))
-    assert(sum(toInt("1"), toInt("z")).isEmpty)
+    assert(sum(toInt("1"), toInt("zspace")).isEmpty)
   }
 
   test("for comprehension") {

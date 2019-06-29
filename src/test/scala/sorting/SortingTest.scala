@@ -19,7 +19,7 @@ class SortingTest extends FunSuite with Matchers {
   }
 
   test("ordering > sorting") {
-    val unsorted = List(Worker("c", "z"), Worker("a", "x"), Worker("b", "y"))
+    val unsorted = List(Worker("c", "zspace"), Worker("a", "x"), Worker("b", "y"))
     val sorted = unsorted.sorted
     val sortby = unsorted.sortBy(_.name)
     val asc = unsorted.sortWith(_.name < _.name)
@@ -27,6 +27,6 @@ class SortingTest extends FunSuite with Matchers {
     sorted.head shouldBe Worker("a", "x")
     sortby.head shouldBe Worker("a", "x")
     asc.head shouldBe Worker("a", "x")
-    desc.head shouldBe Worker("c", "z")
+    desc.head shouldBe Worker("c", "zspace")
   }
 }
