@@ -84,9 +84,6 @@ class CollectionTest extends FunSuite {
     assert(List("abc").flatMap(_.toUpperCase) == List('A', 'B', 'C'))
     assert(list.flatMap(i => toList(i)) == List(0, 1, 2, 1, 2, 3, 2, 3, 4))
 
-    assert(list.fold(0)(_ + _) == 6)
-    assert(list.foldLeft(0)(_ + _) == 6)
-    assert(list.foldRight(0)(_ + _) == 6)
     assert(list.foldLeft(List[Int]())( (tail, head) => head :: tail ) == List(3, 2, 1))
     val words = List("Hello, ", "world!")
     assert(words.fold("")(_ + _) == "Hello, world!")
@@ -117,14 +114,10 @@ class CollectionTest extends FunSuite {
     assert(list.product == 6)
 
     assert(list == List.range(1, 4))
-    assert(list.reduce(_ + _) == 6)
-    assert(list.reduceLeft(_ + _) == 6)
     assert(list.reduceLeftOption(_ + _).get == 6)
-    assert(list.reduceRight(_ + _) == 6)
     assert(list.reduceRightOption(_ + _).get == 6)
     assert(list == List(3, 2, 1).reverse)
 
-    assert(list sameElements List(1, 2, 3))
     assert(list.segmentLength(_ > 0, 0) == 3)
 
     assert(list == List(3, 2, 1).sortBy(i => i))
