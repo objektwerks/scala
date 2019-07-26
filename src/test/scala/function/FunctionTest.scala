@@ -1,15 +1,9 @@
 package function
 
-import function.Triangle.Triangle
 import org.scalatest.FunSuite
 
 import scala.annotation.tailrec
 import scala.util.Random
-
-object Triangle extends Enumeration {
-  type Triangle = Value
-  val equilateral, isosceles, scalene = Value
-}
 
 class FunctionTest extends FunSuite {
   test("literal") {
@@ -173,20 +167,6 @@ class FunctionTest extends FunSuite {
     assert(fs == zs)
     assert(gs == fs)
     assert(us == gs)
-  }
-
-  test("identify triangle") {
-    def identifyTriangle(sides: (Int, Int, Int)): Triangle = sides match {
-      case (a, b, c) if a == b && c == b => Triangle.equilateral
-      case (a, b, c) if a == b || c == b => Triangle.isosceles
-      case (a, b, c) if a != b && c != b => Triangle.scalene
-    }
-    val equilateral = identifyTriangle((3, 3, 3))
-    val isosceles = identifyTriangle((3, 3, 2))
-    val scalene = identifyTriangle((3, 2, 1))
-    assert(equilateral == Triangle.equilateral)
-    assert(isosceles == Triangle.isosceles)
-    assert(scalene == Triangle.scalene)
   }
 
   test("select by index") {

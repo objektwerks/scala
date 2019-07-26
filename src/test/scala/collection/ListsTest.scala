@@ -1,4 +1,4 @@
-package zspace
+package collection
 
 import org.scalatest.{FunSuite, Matchers}
 

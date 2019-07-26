@@ -1,4 +1,4 @@
-package zspace
+package function
 
 import org.scalatest.{FunSuite, Matchers}
 
@@ -8,11 +8,6 @@ import org.scalatest.{FunSuite, Matchers}
   * isosceles = 2 sides equal
   * scalene = 0 sides equal
   */
-object Triangles extends Enumeration {
-  type Triangles = Value
-  val equilateral, isoceles, scalene = Value
-}
-
 case class Triangle(a: Int, b: Int, c: Int) {
   import Triangles._
 
@@ -23,15 +18,20 @@ case class Triangle(a: Int, b: Int, c: Int) {
   }
 }
 
+object Triangles extends Enumeration {
+  type Triangles = Value
+  val equilateral, isoceles, scalene = Value
+}
+
 class TrianglesTest extends FunSuite with Matchers {
   test("determine kinds of triangles") {
-    val equilateral = Triangle(3, 3, 3)
+    val equilateral = function.Triangle(3, 3, 3)
     equilateral.kind shouldBe Triangles.equilateral
 
-    val isosceles = Triangle(3, 6, 3)
+    val isosceles = function.Triangle(3, 6, 3)
     isosceles.kind shouldBe Triangles.isoceles
 
-    val scalene = Triangle(3, 6, 9)
+    val scalene = function.Triangle(3, 6, 9)
     scalene.kind shouldBe Triangles.scalene
   }
 }
