@@ -1,4 +1,4 @@
-package design
+package classes
 
 // Cards
 sealed trait Card {
