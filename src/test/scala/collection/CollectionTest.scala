@@ -3,7 +3,8 @@ package collection
 import org.scalatest.FunSuite
 
 import scala.collection.immutable.ListMap
-import scala.collection.parallel.immutable.{ParMap, ParRange, ParSeq, ParSet}
+import scala.collection.parallel.immutable.ParRange
+import scala.collection.parallel.{ParMap, ParSeq, ParSet}
 import scala.collection.{SortedMap, SortedSet, mutable}
 
 class CollectionTest extends FunSuite {
@@ -18,13 +19,11 @@ class CollectionTest extends FunSuite {
     assert(list == List(1, 2) :+ 3)
     assert(list == List(1) ++ List(2, 3))
     assert(list == List(1) ++: List(2, 3))
-    assert((0 /: list)(_ + _) == 6)
-    assert(6 == (list :\ 0)(_ + _))
 
     assert(list(2) == 3) // select by index
 
     assert(list == List(1, 1, 2, 2, 3, 3).distinct)
-    assert(list == (List(1) union List(2, 3)))
+    assert(list == (List(1) concat List(2, 3)))
     assert(list == (List(-2, -1, 0, 1, 2, 3) intersect List(1, 2, 3, 4, 5, 6)))
 
     assert(list.length == 3 && list.size == 3)
@@ -46,7 +45,7 @@ class CollectionTest extends FunSuite {
     assert(list.lastIndexWhere(_ > 2) == 2)
 
     assert(list.collect { case i if i % 2 == 0 => i } == List(2))
-    assert(list.collectFirst { case i if i % 2 == 0 => i } == Some(2))
+    assert(list.collectFirst { case i if i % 2 == 0 => i }.contains(2))
     assert(list.contains(1))
     assert(list.containsSlice(List(2, 3)))
     assert(list.startsWith(List(1, 2)))
@@ -68,7 +67,6 @@ class CollectionTest extends FunSuite {
     assert(list.minBy(_ * 2) == 1)
     assert(list.max == 3)
     assert(list.maxBy(_ * 2) == 3)
-    assert(list.aggregate(0)(_ + _, _ + _) == 6)
 
     assert(list.filter(_ > 1) == List(2, 3))
     assert(list.filter(_ > 1).map(_ * 2) == List(4, 6))
@@ -90,8 +88,6 @@ class CollectionTest extends FunSuite {
     assert(list.foldLeft(0)(_ + _) == 6)
     assert(list.foldRight(0)(_ + _) == 6)
     assert(list.foldLeft(List[Int]())( (tail, head) => head :: tail ) == List(3, 2, 1))
-    assert(list.foldRight("4")( (head, tail) => head + tail ) == "1234")
-    assert(list.reverse.foldLeft("4")( (tail, head) => head + tail ) == "1234")
     val words = List("Hello, ", "world!")
     assert(words.fold("")(_ + _) == "Hello, world!")
     assert(words.foldLeft("")(_ + _) == "Hello, world!")
@@ -110,7 +106,6 @@ class CollectionTest extends FunSuite {
     assert(list.indexWhere(_ > 2) == 2)
     assert(list.indices.length == 3)
     for (i <- 0 to 2) assert(list.isDefinedAt(i))
-    assert(list.hasDefiniteSize)
 
     assert("123" == list.mkString)
 
@@ -118,7 +113,7 @@ class CollectionTest extends FunSuite {
     assert(list.patch(0, List(4, 5, 6), 3) == List(4, 5, 6))
     assert((List[Int](2), List[Int](1, 3)) == list.partition(_ % 2 == 0))
     assert(list.permutations.toList == List(List(1, 2, 3), List(1, 3, 2), List(2, 1, 3), List(2, 3, 1), List(3, 1, 2), List(3, 2, 1)))
-    assert(list.prefixLength(_ > 0) == 3)
+    assert(list.segmentLength(_ > 0) == 3)
     assert(list.product == 6)
 
     assert(list == List.range(1, 4))
@@ -127,9 +122,7 @@ class CollectionTest extends FunSuite {
     assert(list.reduceLeftOption(_ + _).get == 6)
     assert(list.reduceRight(_ + _) == 6)
     assert(list.reduceRightOption(_ + _).get == 6)
-    assert(list.repr == list)
     assert(list == List(3, 2, 1).reverse)
-    assert(list.reverseMap(_ * 2) == List(6, 4, 2))
 
     assert(list sameElements List(1, 2, 3))
     assert(list.segmentLength(_ > 0, 0) == 3)
@@ -157,7 +150,7 @@ class CollectionTest extends FunSuite {
     assert((1 to 100).map(_ % 10).filter(_ > 5).sum == 300) // strict, slowest
     assert((1 to 100).view.map(_ % 10).filter(_ > 5).sum == 300)  // non-strict, fast
     assert((1 to 100).iterator.map(_ % 10).filter(_ > 5).sum == 300)  // non-strict, fastest
-    assert((1 to 100).toStream.map(_ % 10).filter(_ > 5).sum == 300)  // non-strict, fastest
+    assert((1 to 100).to(LazyList).map(_ % 10).filter(_ > 5).sum == 300)  // non-strict, fastest
 
     assert((List[Int](1, 3),List[Int](2, 4)) == List((1, 2), (3, 4)).unzip)
     assert(List((1,3), (2,4)) == (List(1, 2) zip List(3, 4)))
@@ -174,8 +167,6 @@ class CollectionTest extends FunSuite {
     assert(set == (Set(-1, 0, 1, 2) & Set(1, 2, 3, 4)))
     assert(Set(-1, 0) == (Set(-1, 0, 1, 2) &~ Set(1, 2, 3, 4)))
     assert(Set(3, 4) == (Set(1, 2, 3, 4) &~ Set(-1, 0, 1, 2)))
-    assert((0 /: set)(_ + _) == 3)
-    assert(3 == (set :\ 0)(_ + _))
     assert(set.size == 2 && set.contains(1) && set.contains(2))
     assert(set.empty.isEmpty)
     val a = Set(1, 2, 3,4, 5, 6)
@@ -206,18 +197,13 @@ class CollectionTest extends FunSuite {
   test("map") {
     val map = Map(1 -> 1, 2 -> 2)
     assert(map(1) == 1)
-    assert(map.get(2).get == 2)
+    assert(map(2) == 2)
     assert(map.getOrElse(3, -1) == -1)
     assert(map.contains(1))
     assert(map == Map(1 -> 1) + (2 -> 2))
     assert(map == Map(1 -> 1, 2 -> 2, 3 -> 3) - 3)
     assert(map == Map(1 -> 1) ++ Map(2 -> 2))
     assert(map == Map(1 -> 1, 2 -> 2, 3 -> 3, 4 -> 4) -- List(3, 4))
-    assert((0 /: map.keys)(_ + _) == 3)
-    assert(3 == (map.keys :\ 0)(_ + _))
-    assert((0 /: map.values)(_ + _) == 3)
-    assert(3 == (map.values :\ 0)(_ + _))
-    assert(map.size == 2 && map(1) == 1 && map(2) == 2)
     assert(map.keySet == Set(1, 2) && map.values.toSet == Set(1, 2))
     assert(map.empty.isEmpty)
   }
@@ -256,8 +242,7 @@ class CollectionTest extends FunSuite {
     assert(vector === Vector(1) :+ 2)
     assert(vector === Vector(1) ++ Vector(2))
     assert(vector === Vector(1) ++: Vector(2))
-    assert((0 /: vector)(_ + _) == 3)
-    assert(3 == (vector :\ 0)(_ + _))
+    assert(3 == (vector foldRight 0)(_ + _))
   }
 
   test("array") {
@@ -268,12 +253,11 @@ class CollectionTest extends FunSuite {
     assert(array === Array(1) :+ 2)
     assert(array === Array(1) ++ Array(2))
     assert(array === Array(1) ++: Array(2))
-    assert((0 /: array)(_ + _) == 3)
-    assert(3 == (array :\ 0)(_ + _))
+    assert(3 == (array foldRight 0)(_ + _))
   }
 
-  test("stream") {
-    val numberOfEvens = (1 to 100).toStream.count(_ % 2 == 0)
+  test("lazyList") {
+    val numberOfEvens = (1 to 100).to(LazyList).count(_ % 2 == 0)
     assert(numberOfEvens == 50)
   }
 
@@ -357,7 +341,7 @@ class CollectionTest extends FunSuite {
   }
 
   test("as java, as scala") {
-    import scala.collection.JavaConverters._
+    import scala.jdk.CollectionConverters._
     val list = List(1, 2, 3).asJava
     assert(list.size == 3)
     assert(list.asScala.sum == 6)

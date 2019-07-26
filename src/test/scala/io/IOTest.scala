@@ -2,6 +2,7 @@ package io
 
 import org.scalatest.FunSuite
 
+import scala.collection.MapView
 import scala.io.{Codec, Source}
 
 class IOTest extends FunSuite {
@@ -46,7 +47,7 @@ class IOTest extends FunSuite {
     assert(words.length == 8)
   }
 
-  def toWordCountMap(words: Array[String]): Map[String, Int] = {
-    words.groupBy((word: String) => word.toLowerCase).mapValues(_.length)
+  def toWordCountMap(words: Array[String]): MapView[String, Int] = {
+    words.groupBy((word: String) => word.toLowerCase).view.mapValues(_.length)
   }
 }

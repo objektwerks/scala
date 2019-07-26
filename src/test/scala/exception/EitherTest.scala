@@ -13,6 +13,5 @@ class EitherTest extends FunSuite {
     assert(divide(9, 3).exists(_ == 3))
     assert(divide(9, 3).getOrElse(-1) == 3)
     assert(divide(9, 3).map(_ * 3).getOrElse(-1) == 9)
-    assert(divide(9, 3).map(_ * 3).right.get == 9)
   }
 }

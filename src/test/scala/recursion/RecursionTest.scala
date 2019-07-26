@@ -101,8 +101,8 @@ class RecursionTest extends FunSuite {
 
   test("fibonacci sequence generator") {
     def fibonacci(a: Int = 0, b: Int = 1): List[Int] = {
-      def build(a: Int, b: Int): Stream[Int] = {
-        Stream.cons(a, build(b, a + b))
+      def build(a: Int, b: Int): LazyList[Int] = {
+        LazyList.cons(a, build(b, a + b))
       }
       build(a, b).takeWhile(_ >= 0).toList
     }

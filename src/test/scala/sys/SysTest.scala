@@ -18,13 +18,13 @@ class SysTest extends FunSuite {
   }
 
   test("process") {
-    val file = Process("ls").lineStream.find(file => file == "build.sbt")
+    val file = Process("ls").lazyLines.find(file => file == "build.sbt")
     assert(file.getOrElse("empty") == "build.sbt")
 
-    val line = Process("find build.sbt").lineStream.headOption
+    val line = Process("find build.sbt").lazyLines.headOption
     assert(line.getOrElse("empty") == "build.sbt")
 
-    val lines = Process("cat .gitignore").lineStream
+    val lines = Process("cat .gitignore").lazyLines
     assert(lines.length == 5)
   }
 }
