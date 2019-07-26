@@ -1,3 +1,3 @@
 Scala
 -----
->This project tests Scala features using Scala 2.12.
+>This project tests Scala 2.13 features.
