@@ -13,5 +13,9 @@ class EitherTest extends FunSuite {
     assert(divide(9, 3).exists(_ == 3))
     assert(divide(9, 3).getOrElse(-1) == 3)
     assert(divide(9, 3).map(_ * 3).getOrElse(-1) == 9)
+    divide(3, 0) match {
+      case Right(_) => throw new Exception("Should be divide by zero error.")
+      case Left(error) => assert(error.isInstanceOf[Throwable])
+    }
   }
 }
