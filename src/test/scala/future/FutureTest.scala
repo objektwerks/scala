@@ -39,12 +39,7 @@ class FutureTest extends FunSuite {
   test("parallel flatmap") {
     val futureOne = Future { 1 }
     val futureTwo = Future { 2 }
-    val futureThree = futureOne flatMap {
-      one =>
-        futureTwo map {
-          two => one + two
-        }
-    }
+    val futureThree = futureOne flatMap { one => futureTwo map { two => one + two } }
     futureThree foreach { x => assert(x == 3) }
   }
 
