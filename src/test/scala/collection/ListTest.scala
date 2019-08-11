@@ -1,13 +1,10 @@
 package collection
 
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, Matchers}
 
-import scala.collection.immutable.ListMap
-import scala.collection.parallel.immutable.ParRange
-import scala.collection.parallel.{ParMap, ParSeq, ParSet}
-import scala.collection.{SortedMap, SortedSet, mutable}
+import scala.collection.mutable
 
-class CollectionTest extends FunSuite {
+class ListTest extends FunSuite with Matchers {
   test("list") {
     def toList(v: Int) = List(v - 1, v, v + 1)
     val list = List(1, 2, 3)
@@ -136,7 +133,7 @@ class CollectionTest extends FunSuite {
     assert(list.sum == 6)
 
     assert(List(Set(1, 2), Set(3, 4), Set(5, 6)).transpose == List(List(1, 3, 5),
-                                                                   List(2, 4, 6)))
+      List(2, 4, 6)))
     assert(List(1, 2, 1) == list.updated(index = 2, elem = 1))
     assert(List(2, 4, 6) == list.withFilter(_ > 0).map(_ * 2))
 
@@ -151,143 +148,6 @@ class CollectionTest extends FunSuite {
     assert(List((1,0), (2,1), (3,2)) == list.zipWithIndex)
   }
 
-  test("set") {
-    val set = Set(1, 2)
-    assert(set == Set(1) + 2)
-    assert(set == Set(1, 2, 3) - 3)
-    assert(set == Set(1) ++ Set(2))
-    assert(set == Set(1, 2, 3, 4) -- List(3, 4))
-    assert(set == (Set(-1, 0, 1, 2) & Set(1, 2, 3, 4)))
-    assert(Set(-1, 0) == (Set(-1, 0, 1, 2) &~ Set(1, 2, 3, 4)))
-    assert(Set(3, 4) == (Set(1, 2, 3, 4) &~ Set(-1, 0, 1, 2)))
-    assert(set.size == 2 && set.contains(1) && set.contains(2))
-    assert(set.empty.isEmpty)
-    val a = Set(1, 2, 3,4, 5, 6)
-    val b = Set(3, 4, 7, 8, 9, 10)
-    assert(a.intersect(b) == Set(3, 4))
-    assert(a.union(b) == Set(5, 10, 1, 6, 9, 2, 7, 3, 8, 4))
-    assert(a.diff(b) == Set(5, 1, 6, 2))
-  }
-
-  test("sorted set") {
-    val set = SortedSet(3, 2, 1)
-    val list = set.toIndexedSeq
-    assert(list(0) == 1)
-    assert(list(1) == 2)
-    assert(list(2) == 3)
-  }
-
-  test("mutable set") {
-    val set = mutable.Set(1, 2)
-    assert((set += 3) == Set(1, 2, 3))
-    assert((set -= 3) == Set(1, 2))
-    assert((set -= 2) == Set(1))
-    assert((set -= 1) == Set())
-    assert((set ++= List(1, 2)) == Set(1, 2))
-    assert((set --= List(1, 2)) == Set())
-  }
-
-  test("map") {
-    val map = Map(1 -> 1, 2 -> 2)
-    assert(map(1) == 1)
-    assert(map(2) == 2)
-    assert(map.getOrElse(3, -1) == -1)
-    assert(map.contains(1))
-    assert(map == Map(1 -> 1) + (2 -> 2))
-    assert(map == Map(1 -> 1, 2 -> 2, 3 -> 3) - 3)
-    assert(map == Map(1 -> 1) ++ Map(2 -> 2))
-    assert(map == Map(1 -> 1, 2 -> 2, 3 -> 3, 4 -> 4) -- List(3, 4))
-    assert(map.keySet == Set(1, 2) && map.values.toSet == Set(1, 2))
-    assert(map.empty.isEmpty)
-  }
-
-  test("list map") {
-    val map = ListMap(3 -> 3, 2 -> 2, 1 -> 1)
-    val list = map.keys.toIndexedSeq
-    assert(list(0) == 3)
-    assert(list(1) == 2)
-    assert(list(2) == 1)
-  }
-
-  test("sorted map") {
-    val map = SortedMap(3 -> 3, 2 -> 2, 1 -> 1)
-    val list = map.keys.toIndexedSeq
-    assert(list(0) == 1)
-    assert(list(1) == 2)
-    assert(list(2) == 3)
-  }
-
-  test("mutable map") {
-    val map = mutable.Map(1 -> 1, 2 -> 2)
-    assert((map += 3 -> 3) == Map(1 -> 1, 2 -> 2, 3 -> 3))
-    assert((map -= 3) == Map(1 -> 1, 2 -> 2))
-    assert((map -= 2) == Map(1 -> 1))
-    assert((map -= 1) == Map())
-    assert((map ++= List(1 -> 1, 2 -> 2)) == Map(1 -> 1, 2 -> 2))
-    assert((map --= List(1, 2)) == Map())
-  }
-
-  test("vector") {
-    val vector = Vector(1, 2)
-    assert(vector.length == 2 && vector(0) == 1 && vector(1) == 2)
-    assert(vector.reverse === Vector(2, 1))
-    assert(vector === 1 +: Vector(2))
-    assert(vector === Vector(1) :+ 2)
-    assert(vector === Vector(1) ++ Vector(2))
-    assert(vector === Vector(1) ++: Vector(2))
-    assert(3 == (vector foldRight 0)(_ + _))
-  }
-
-  test("array") {
-    val array = Array(1, 2)
-    assert(array.length == 2 && array(0) == 1 && array(1) == 2)
-    assert(array.reverse === Array(2, 1))
-    assert(array === 1 +: Array(2))
-    assert(array === Array(1) :+ 2)
-    assert(array === Array(1) ++ Array(2))
-    assert(array === Array(1) ++: Array(2))
-    assert(3 == (array foldRight 0)(_ + _))
-  }
-
-  test("lazyList") {
-    val numberOfEvens = (1 to 100).to(LazyList).count(_ % 2 == 0)
-    assert(numberOfEvens == 50)
-  }
-
-  test("tuple") {
-    val cityStateZip = ("placida", "florida", 33946)
-    assert(cityStateZip._1 == "placida" && cityStateZip._2 == "florida"  && cityStateZip._3 == 33946)
-    val (first, last, age) = ("fred", "flintstone", 99)
-    assert(first == "fred" && last == "flintstone" && age == 99)
-  }
-
-  test("fifo queue") {
-    val queue = mutable.Queue(1, 2)
-    queue enqueue  3
-    assert(3 == queue.last)
-    assert(queue.dequeue() == 1)
-    assert(queue.dequeue() == 2)
-    assert(queue.dequeue() == 3)
-    assert(queue.isEmpty)
-  }
-
-  test("lifo stack") {
-    val stack = mutable.Stack(2, 1)
-    stack push 3
-    assert(3 == stack.pop)
-    assert(2 == stack.pop)
-    assert(1 == stack.pop)
-    assert(stack.isEmpty)
-  }
-
-  test("array buffer") {
-    val buffer = mutable.ArrayBuffer(1, 2)
-    assert((buffer += 3) == mutable.ArrayBuffer(1, 2, 3))
-    assert((buffer -= 3) == mutable.ArrayBuffer(1, 2))
-    assert((buffer -= 2) == mutable.ArrayBuffer(1))
-    assert((buffer -= 1) == mutable.ArrayBuffer())
-  }
-
   test("list buffer") {
     val buffer = mutable.ListBuffer(1, 2)
     assert((buffer += 3) == mutable.ListBuffer(1, 2, 3))
@@ -296,47 +156,8 @@ class CollectionTest extends FunSuite {
     assert((buffer -= 1) == mutable.ListBuffer())
   }
 
-  test("string builder") {
-    val builder = new StringBuilder
-    builder.append("a")
-    builder.append("b")
-    builder.append("c")
-    assert(builder.toString() == "abc")
-    assert(builder.result() == "abc")
-    assert(builder.reverse.result() == "cba")
-  }
-
-  test("range") {
-    assert((1 until 10) == Range(1, 10, 1))
-    assert((10 until 1 by -1) == Range(10, 1, -1))
-    assert((1 to 10) == Range.inclusive(1, 10, 1))
-  }
-
-  test("par set") {
-    val set = ParSet(1 to 1000000:_*)
-    assert(set.sum == 1784293664)
-  }
-
-  test("par map") {
-    val m = for (i <- 1 to 1000000) yield (i , i)
-    val map = ParMap(m:_*)
-    assert(map.values.sum == 1784293664)
-  }
-
-  test("par seq") {
-    val seq = ParSeq(1 to 1000000:_*)
-    assert(seq.sum == 1784293664)
-  }
-
-  test("par range") {
-    val range = ParRange(1, 1000000, 1, inclusive = true)
-    assert(range.sum == 1784293664)
-  }
-
-  test("as java, as scala") {
-    import scala.jdk.CollectionConverters._
-    val list = List(1, 2, 3).asJava
-    assert(list.size == 3)
-    assert(list.asScala.sum == 6)
+  test("lazy list") {
+    val numberOfEvens = (1 to 100).to(LazyList).count(_ % 2 == 0)
+    assert(numberOfEvens == 50)
   }
 }

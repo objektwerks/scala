@@ -2,8 +2,6 @@ package types
 
 import org.scalatest.FunSuite
 
-import scala.language.reflectiveCalls
-
 // Variance
 trait Relative
 class Parent extends Relative
