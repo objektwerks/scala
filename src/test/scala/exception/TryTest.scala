@@ -5,9 +5,11 @@ import org.scalatest.FunSuite
 import scala.io.Source
 import scala.util.control.Exception._
 import scala.util.control.NonFatal
-import scala.util.{Success, Try}
+import scala.util.{Success, Try, Using}
 
 class TryTest extends FunSuite {
+  def lines(file: String): Try[Seq[String]] = Using(Source.fromFile(file)) { source => source.getLines.toSeq }
+
   test("try catch handler") {
     val handler: PartialFunction[Throwable, Unit] = {
       case NonFatal(error) => assert(error.getMessage.nonEmpty); ()
@@ -31,17 +33,14 @@ class TryTest extends FunSuite {
   }
 
   test("try option") {
-    def parseInt(s: String): Option[Int] = Some(Integer.parseInt(s.trim))
-    assert(Try(parseInt("a")).isFailure)
-    assert(Try(parseInt("1")).isSuccess)
+    def parseInt(s: String): Option[Int] = Try(s.toInt).toOption
+    assert(parseInt("a").isEmpty)
+    assert(parseInt("1").isDefined)
   }
 
   test("try source") {
-    def readTextFile(name: String): Try[List[String]] = {
-      Try( Source.fromFile(name).getLines.toList )
-    }
-    assert(readTextFile("build.sbt").isSuccess)
-    assert(readTextFile("sbt.sbt").isFailure)
+    assert(lines("build.sbt").isSuccess)
+    assert(lines("sbt.sbt").isFailure)
   }
 
   test("try recover") {
@@ -52,10 +51,7 @@ class TryTest extends FunSuite {
   }
 
   test("all catch") {
-    def readTextFile(name: String): Option[List[String]] = {
-      allCatch.opt( Source.fromFile(name).getLines.toList )
-    }
-    assert(readTextFile("build.sbt").nonEmpty)
-    assert(readTextFile("sbt.sbt").isEmpty)
+    assert(allCatch.opt( "1".toInt ).nonEmpty)
+    assert(allCatch.opt( "one".toInt ).isEmpty)
   }
 }
