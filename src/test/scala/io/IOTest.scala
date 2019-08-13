@@ -4,6 +4,7 @@ import org.scalatest.FunSuite
 
 import scala.collection.MapView
 import scala.io.{Codec, Source}
+import scala.util.{Try, Using}
 
 class IOTest extends FunSuite {
   val regex = "\\P{L}+"
@@ -47,7 +48,14 @@ class IOTest extends FunSuite {
     assert(words.length == 8)
   }
 
+  test("file to lines") {
+    assert(fileToLines("build.sbt").isSuccess)
+    assert(fileToLines("sbt.sbt").isFailure)
+  }
+
   def toWordCountMap(words: Array[String]): MapView[String, Int] = {
     words.groupBy((word: String) => word.toLowerCase).view.mapValues(_.length)
   }
+
+  def fileToLines(file: String): Try[Seq[String]] = Using(Source.fromFile(file)) { source => source.getLines.toSeq }
 }

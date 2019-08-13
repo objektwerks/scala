@@ -8,7 +8,7 @@ import scala.util.control.NonFatal
 import scala.util.{Success, Try, Using}
 
 class TryTest extends FunSuite {
-  def lines(file: String): Try[Seq[String]] = Using(Source.fromFile(file)) { source => source.getLines.toSeq }
+  def fileToLines(file: String): Try[Seq[String]] = Using(Source.fromFile(file)) { source => source.getLines.toSeq }
 
   test("try catch handler") {
     val handler: PartialFunction[Throwable, Unit] = {
@@ -38,9 +38,9 @@ class TryTest extends FunSuite {
     assert(parseInt("1").isDefined)
   }
 
-  test("try source") {
-    assert(lines("build.sbt").isSuccess)
-    assert(lines("sbt.sbt").isFailure)
+  test("try using") {
+    assert(fileToLines("build.sbt").isSuccess)
+    assert(fileToLines("sbt.sbt").isFailure)
   }
 
   test("try recover") {
