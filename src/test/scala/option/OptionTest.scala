@@ -19,7 +19,6 @@ class OptionTest extends FunSuite {
     assert(greaterThanZero(1).count(_ > 0) == 1)
     assert(greaterThanZero(1).exists(_ > 0))
     assert(greaterThanZero(1).filter(_ > 0) contains 1)
-    assert(greaterThanZero(1).filterNot(_ > 0) isEmpty)
     assert(greaterThanZero(1).forall(_ > 0))
     val x = greaterThanZero(1) match {
       case Some(n) => n * 3
