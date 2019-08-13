@@ -8,7 +8,7 @@ class Corvette extends Car { override def sound: String = "woosh" }
 class Maserati extends Car { override def sound: String = "grrrr" }
 object Owner { def startEngines: Set[Car] = Set(new Porsche, new Corvette, new Maserati) }
 
-class Person(val first: String, val last: String, val initial: String) {
+class Name(val first: String, val last: String, val initial: String) {
   def this(first: String, last: String) {
     this(first, last, "")
   }
@@ -38,8 +38,8 @@ class ClassesTest extends FunSuite {
   }
 
   test("constructors") {
-    val primary = new Person("fred", "flintstone", "r")
-    val secondary = new Person("barney", "rebel")
+    val primary = new Name("fred", "flintstone", "r")
+    val secondary = new Name("barney", "rebel")
     assert(primary.initial.nonEmpty)
     assert(secondary.initial.isEmpty)
   }
