@@ -25,6 +25,6 @@ class SysTest extends FunSuite {
     assert(line.getOrElse("empty") == "build.sbt")
 
     val lines = Process("cat .gitignore").lazyLines
-    assert(lines.length == 5)
+    assert(lines.length == 6)
   }
 }
