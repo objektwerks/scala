@@ -132,8 +132,7 @@ class ListTest extends FunSuite with Matchers {
     assert((List[Int](1, 2), List[Int](3)) == list.splitAt(2))
     assert(list.sum == 6)
 
-    assert(List(Set(1, 2), Set(3, 4), Set(5, 6)).transpose == List(List(1, 3, 5),
-      List(2, 4, 6)))
+    assert(List(Set(1, 2), Set(3, 4), Set(5, 6)).transpose == List(List(1, 3, 5), List(2, 4, 6)))
     assert(List(1, 2, 1) == list.updated(index = 2, elem = 1))
     assert(List(2, 4, 6) == list.withFilter(_ > 0).map(_ * 2))
 
