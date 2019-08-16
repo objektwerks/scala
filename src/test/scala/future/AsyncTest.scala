@@ -3,22 +3,16 @@ package future
 import org.scalatest.FunSuite
 
 import scala.async.Async._
-import scala.concurrent.ExecutionContext
-import scala.util.{Failure, Success}
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class AsyncTest extends FunSuite {
-  implicit val ec = ExecutionContext.global
-
   test("sequential") {
     val future = async {
       val futureOne = async { 1 }
       val futureTwo = async { 2 }
       await(futureOne) + await(futureTwo)
     }
-    future onComplete {
-      case Success(result) => assert(result == 3)
-      case Failure(failure) => throw failure
-    }
+    future foreach { _ == 3 }
   }
 
   test("parallel") {
@@ -27,9 +21,6 @@ class AsyncTest extends FunSuite {
     val futureThree = async {
       await(futureOne) + await(futureTwo)
     }
-    futureThree onComplete {
-      case Success(result) => assert(result == 3)
-      case Failure(failure) => throw failure
-    }
+    futureThree foreach { _ == 3 }
   }
 }
