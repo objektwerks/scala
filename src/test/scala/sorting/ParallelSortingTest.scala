@@ -2,11 +2,10 @@ package sorting
 
 import org.scalatest.{FunSuite, Matchers}
 
-class ParallelSortingTest extends FunSuite with Matchers {
-  import scala.util.Random.nextInt
+import scala.util.Random.nextInt
 
+class ParallelSortingTest extends FunSuite with Matchers {
   val randomArray = Array.fill(10000)(nextInt)
-  randomArray.length shouldBe 10000
 
   test("scala parallel sort") {
     scalaParallelSort(randomArray)
