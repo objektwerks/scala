@@ -1,4 +1,4 @@
-package types
+package classes
 
 import org.scalatest.FunSuite
 
