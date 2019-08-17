@@ -2,6 +2,7 @@ package pattern
 
 import org.scalatest.FunSuite
 
+import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 import scala.util.matching.Regex
 
@@ -56,9 +57,10 @@ class MatchTest extends FunSuite {
   }
 
   test("list match") {
-    def sum(xs: List[Int]): Int = xs match {
-      case Nil => 0
-      case head :: tail => head + tail.sum
+    @tailrec
+    def sum(numbers: List[Int], acc: Int = 0): Int = numbers match {
+      case Nil => acc
+      case head :: tail => sum(tail, acc + head)
     }
     assert(sum(Nil) == 0)
     assert(sum(List(1, 2, 3)) == 6)
