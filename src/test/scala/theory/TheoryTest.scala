@@ -35,8 +35,8 @@ object Theory {
 
   val optionMonad = new Monad[Option] {
     override def point[A](a: => A): Option[A] = Option(a)
-    override def map[A, B](oa: Option[A])(f: (A) => B): Option[B] = oa map f
-    override def flatMap[A, B](oa: Option[A])(f: (A) => Option[B]): Option[B] = oa flatMap f
+    override def map[A, B](oa: Option[A])(f: A => B): Option[B] = oa map f
+    override def flatMap[A, B](oa: Option[A])(f: A => Option[B]): Option[B] = oa flatMap f
   }
 
   val optionApplicative = new Applicative[Option] {
