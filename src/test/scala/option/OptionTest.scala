@@ -23,11 +23,11 @@ class OptionTest extends FunSuite {
 
     assert(greaterThanZero(1).exists(_ > 0))
     assert(greaterThanZero(1).filter(_ > 0) contains 1)
+
     assert(greaterThanZero(1).forall(_ > 0))
     greaterThanZero(3) foreach { v => assert(v == 3) }
 
     assert(greaterThanZero(1).fold(1)(_ * 3) == 3)
-
   }
 
   test("match") {
