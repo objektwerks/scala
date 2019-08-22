@@ -2,8 +2,8 @@ Scala
 -----
 >This project tests Scala 2.13 features.
 
-Scala Environment
------------------
+Environment
+-----------
 1. **Git Service:** Ideally, your client would establish a company Github ( https://github.com/features ) account. Other Git services are available as well. Alternatively, I suspect a Github service can be set up internally. GitLab is another nice option.
 2. **IDE:** Roughly 80% of developers in the Scala space use Jetbrains Intellij IDEA ( https://www.jetbrains.com/idea/ ). The community edition is free. The ultimate edition is subscription based. The Scala Eclipse IDE is a poor alternative.
 3. **Scala Build Tool:** Known as SBT ( https://www.scala-sbt.org/1.x/docs/index.html ), it’s a build and dependency management tool that can do so much more via plugins. It’s similar to Maven and Gradle, but Scala focused. It’s a must have.
