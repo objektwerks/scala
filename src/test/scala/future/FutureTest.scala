@@ -167,7 +167,7 @@ class FutureTest extends FunSuite {
         i <- future
       } yield i
       ).recover { case _: Throwable => -1 }
-    result foreach {  i => assert(i == -1) }
+    result foreach { i => assert(i == -1) }
   }
 
   test("transform") {
