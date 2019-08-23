@@ -1,6 +1,6 @@
 Scala
 -----
->This project tests Scala 2.13 features and details a fundamental Scala development environment.
+>This project contains Scala 2.13 feature tests. It also details a foundational Scala development environment.
 
 Environment
 -----------
@@ -26,10 +26,11 @@ Environment
 10. **CI/CD:** Known as continuous integration and deployment. Using a tool like Jenkins ( https://jenkins.io ), a team can
  set up a build project for each project housed in a Git repository. Based on a schedule, Jenkins will aperiodically pull
  a Git repository, rebuild the project, run tests and package it using SBT. This is basic continuous integration. Using
- Jenkins components, build pipelines can be built. Continuous deployment is controversial topic, but available. Github and
- Gitlab have CI/CD features as well.
+ Jenkins components, build pipelines can be constructed. Continuous deployment is controversial topic, but available. Github
+ and Gitlab have CI/CD features as well.
 11. **Kanban Board:** Github, for each repository, provides a free Kanban Board that allows developers to manage project tasks.
- Other agile software exists, but is typically overkill. Gitlab also provides a Kanban Board for each repository.
-12. **Laptop:** Scala developers use an 15" MacBookPro or Linux laptop, configured with 16GB+.
+ Gitlab also provides a Kanban Board for each repository. Other agile software exists, but is considered overkill by growing
+ number of developers.
+12. **Laptop:** Scala developers typically use a MacBookPro or Linux laptop, configured with 16GB+.
 13. **Homebrew:** The ultimate software package manager for Apple OSX ( https://brew.sh ).
 14. **Pathfinder:** The ultimate file system browser for Apple OSX ( https://cocoatech.com/#/ ).
