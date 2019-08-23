@@ -22,7 +22,7 @@ Environment
  or across the country.
 8. **VPN:** Secure VPN provides developers with outside access to a corporate development network.
 9. **Local Services:** It’s often convenient to build Scala integrations tests against local services, such a Kafka, Cassandra
- or any other Big Data service. The same integrations tests can be run in a properly configured CI/CD environment ( see below ).
+ or any other ( Big Data ) service. The same integrations tests can be run in a properly configured CI/CD environment ( see below ).
 10. **CI/CD:** Known as continuous integration and deployment. Using a tool like Jenkins ( https://jenkins.io ), a team can
  set up a build project for each project housed in a Git repository. Based on a schedule, Jenkins will aperiodically pull
  a Git repository, rebuild the project, run tests and package it using SBT. This is basic continuous integration. Using
