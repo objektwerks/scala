@@ -4,7 +4,7 @@ Scala
 
 Environment
 -----------
-1. **Git Service:** Establish a Github ( https://github.com/features ) account. Github is a nice alternative.
+1. **Git Service:** Establish a Github ( https://github.com/features ) account. Gitlab is a nice alternative.
 2. **IDE:** Roughly 80% of developers in the Scala space use Jetbrains Intellij IDEA ( https://www.jetbrains.com/idea/ ).
  The community edition is free. The ultimate edition is subscription based. The Scala Eclipse IDE is a poor alternative.
  VS Code with Metals is another option.
@@ -26,9 +26,9 @@ Environment
  set up a build project for each project housed in a Git repository. Based on a schedule, Jenkins will aperiodically pull
  a Git repository, rebuild the project, run tests and package it using SBT. This is basic continuous integration. Using
  Jenkins components, build pipelines can be built. Continuous deployment is controversial topic, but available. Github and
- GitLab have CI/CD features as well.
+ Gitlab have CI/CD features as well.
 11. **Kanban Board:** Github, for each repository, provides a free Kanban Board that allows developers to manage project tasks.
- Other agile software exists, but is typically overkill. GitLab also provides a Kanban Board for each repository.
+ Other agile software exists, but is typically overkill. Gitlab also provides a Kanban Board for each repository.
 12. **Laptop:** Scala developers use an 15" MacBookPro or Linux laptop, configured with 16GB+.
 13. **Homebrew:** The ultimate software package manager for Apple OSX ( https://brew.sh ).
 14. **Pathfinder:** The ultimate file system browser for Apple OSX ( https://cocoatech.com/#/ ).
