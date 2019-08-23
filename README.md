@@ -16,7 +16,7 @@ Environment
 5. **Scala REPL:** The Scala REPL allows Scala developers to write code in a Unix/Windows terminal. Some Scala developers
  use it a lot, while others never do. It’s a nice tool to use for quick prototypes. It requires the installation of 
  Scala ( https://www.scala-lang.org/download/ ).
-6. **Scala Spark REPL:** The Scala Spark REPL, is a specialized version of the Scala REPL that allows a developer to write
+6. **Scala Spark REPL:** The Scala Spark REPL, is a specialized version of the Scala REPL that allows Scala-Spark developers to write
  Spark code in a Unix/Windows terminal. It requires the local installation of Spark ( https://spark.apache.org/releases/spark-release-2-4-3.html ).
 7. **Slack:** A live messaging tool ( https://slack.com ) that allows developers to communicate ( quietly ) in the same room or across the country.
 8. **VPN:** Secure VPN provides developers with outside access to a corporate development network.
