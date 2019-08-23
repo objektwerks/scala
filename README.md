@@ -29,7 +29,7 @@ Environment
  Jenkins components, build pipelines can be constructed. Continuous deployment is controversial topic, but available. Github
  and Gitlab have CI/CD features as well.
 11. **Kanban Board:** Github, for each repository, provides a free Kanban Board that allows developers to manage project tasks.
- Gitlab also provides a Kanban Board for each repository. Other agile tools exist, but is considered overkill by growing
+ Gitlab also provides a Kanban Board for each repository. Other agile tools exist, but is considered overkill by a growing
  number of developers. Atlassian ( https://www.atlassian.com ) provides one such set of agile tools.
 12. **Laptop:** Scala developers typically use a MacBookPro or Linux laptop, configured with 16GB+.
 13. **Homebrew:** The ultimate software package manager for Apple OSX ( https://brew.sh ).
