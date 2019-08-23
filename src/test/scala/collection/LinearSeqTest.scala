@@ -4,9 +4,10 @@ import org.scalatest.{FunSuite, Matchers}
 
 import scala.collection.mutable
 
-class ListTest extends FunSuite with Matchers {
+class LinearSeqTest extends FunSuite with Matchers {
+  def toList(v: Int) = List(v - 1, v, v + 1)
+
   test("list") {
-    def toList(v: Int) = List(v - 1, v, v + 1)
     val list = List(1, 2, 3)
 
     assert(list == 1 :: 2 :: 3 :: Nil)
@@ -147,16 +148,16 @@ class ListTest extends FunSuite with Matchers {
     assert(List((1,0), (2,1), (3,2)) == list.zipWithIndex)
   }
 
+  test("lazy list") {
+    val numberOfEvens = (1 to 100).to(LazyList).count(_ % 2 == 0)
+    assert(numberOfEvens == 50)
+  }
+
   test("list buffer") {
     val buffer = mutable.ListBuffer(1, 2)
     assert((buffer += 3) == mutable.ListBuffer(1, 2, 3))
     assert((buffer -= 3) == mutable.ListBuffer(1, 2))
     assert((buffer -= 2) == mutable.ListBuffer(1))
     assert((buffer -= 1) == mutable.ListBuffer())
-  }
-
-  test("lazy list") {
-    val numberOfEvens = (1 to 100).to(LazyList).count(_ % 2 == 0)
-    assert(numberOfEvens == 50)
   }
 }
