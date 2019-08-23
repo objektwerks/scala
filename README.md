@@ -18,7 +18,8 @@ Environment
  Scala ( https://www.scala-lang.org/download/ ).
 6. **Scala Spark REPL:** The Scala Spark REPL, is a specialized version of the Scala REPL that allows Scala-Spark developers to write
  Spark code in a Unix/Windows terminal. It requires the local installation of Spark ( https://spark.apache.org/releases/spark-release-2-4-3.html ).
-7. **Slack:** A live messaging tool ( https://slack.com ) that allows developers to communicate ( quietly ) in the same room or across the country.
+7. **Slack:** A messaging-collaboration tool ( https://slack.com ) that allows developers to communicate ( quietly ) in the same room
+ or across the country.
 8. **VPN:** Secure VPN provides developers with outside access to a corporate development network.
 9. **Local Services:** It’s often convenient to build Scala integrations tests against local services, such a Kafka, Cassandra
  or any other Big Data service. The same integrations tests can be run in a properly configured CI/CD environment ( see below ).
