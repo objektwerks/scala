@@ -1,6 +1,6 @@
 package enums
 
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, Matchers}
 
 import scala.collection.immutable.SortedMap
 
@@ -13,7 +13,7 @@ object Weekday extends Enumeration {
   val Sat = Value(6, "Sat")
   val Sun = Value(7, "Sun")
   val map = SortedMap[Int, Value](Mon.id -> Mon, Tue.id -> Tue, Wed.id -> Wed, Thu.id -> Thu, Fri.id -> Fri, Sat.id -> Sat, Sun.id -> Sun)
-  def validate(weekday: Weekday.Value): Unit = assert(values.contains(weekday))
+  def validate(weekday: Weekday.Value): Boolean = values.contains(weekday)
 }
 
 object Month extends Enumeration {
@@ -31,23 +31,23 @@ object Month extends Enumeration {
   val Dec = Value(12, "Dec")
   val map = SortedMap[Int, Value](Jan.id -> Jan, Feb.id -> Feb, Mar.id -> Mar, Apr.id -> Apr, May.id -> May, Jun.id -> Jun,
                                   Jul.id -> Jul, Aug.id -> Aug, Sep.id -> Sep, Oct.id -> Oct, Nov.id -> Nov, Dec.id -> Dec)
-  def validate(month: Month.Value): Unit = assert(values.contains(month))
+  def validate(month: Month.Value): Boolean = values.contains(month)
 
 }
-class EnumTest extends FunSuite {
+class EnumTest extends FunSuite with Matchers {
   test("scala enum") {
-    Weekday.values.foreach(weekday => Weekday.validate(weekday))
+    Weekday.values.foreach(weekday => Weekday.validate(weekday) shouldBe true)
     Weekday.values.foreach(println)
     Weekday.map.foreach(println)
 
-    Month.values.foreach(month => Month.validate(month))
+    Month.values.foreach(month => Month.validate(month) shouldBe true)
     Month.values.foreach(println)
     Month.map.foreach(println)
   }
 
   test("java enum") {
-    assert(Light.valueOf("green") == Light.green)
-    assert(Light.valueOf("yellow") == Light.yellow)
-    assert(Light.valueOf("red") == Light.red)
+    Light.valueOf("green") shouldEqual Light.green
+    Light.valueOf("yellow") shouldEqual Light.yellow
+    Light.valueOf("red") shouldEqual Light.red
   }
 }
