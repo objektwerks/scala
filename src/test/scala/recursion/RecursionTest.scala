@@ -1,23 +1,23 @@
 package recursion
 
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, Matchers}
 
 import scala.annotation.tailrec
 import scala.util.control.TailCalls.{TailRec, done, tailcall}
 
-class RecursionTest extends FunSuite {
+class RecursionTest extends FunSuite with Matchers {
   test("non-tailrec structural recursion") {
     def buildIntList(count: Int, component: Int): List[Int] = count match {
       case 0 => Nil
       case n => component :: buildIntList(n - 1, component)
     }
-    assert(buildIntList(3, 3) == List(3, 3, 3))
+    buildIntList(3, 3) shouldEqual List(3, 3, 3)
   }
 
   test("non-tailrec list sum") {
     def sum(numbers: List[Int]): Int = if (numbers.isEmpty) 0 else numbers.head + sum(numbers.tail)
     val list = List(1, 2, 3)
-    assert(sum(list) == list.sum)
+    sum(list) shouldEqual list.sum
   }
 
   test("@tailrec list sum") {
@@ -27,7 +27,7 @@ class RecursionTest extends FunSuite {
       case head :: tail => sum(tail, acc + head)
     }
     val list = List(1, 2, 3)
-    assert(sum(list) == list.sum)
+    sum(list) shouldEqual list.sum
   }
 
   test("non-tailrec factorial") {
@@ -35,7 +35,7 @@ class RecursionTest extends FunSuite {
       case i if i < 1 => 1
       case _ => n * factorial(n - 1)
     }
-    assert(factorial(4) == 24)
+    factorial(4) shouldEqual 24
   }
 
   test("@tailrec factorial") {
@@ -44,7 +44,7 @@ class RecursionTest extends FunSuite {
       case i if i < 1 => acc
       case _ => factorial(n - 1, acc * n)
     }
-    assert(factorial(4) == 24)
+    factorial(4) shouldEqual 24
   }
 
   test("non-tailrec fibonacci") {
@@ -54,7 +54,7 @@ class RecursionTest extends FunSuite {
     }
     val n = 34L
     val f = fibonacci(n)
-    assert(f.equals(BigInt(5702887)))
+    f.equals(BigInt(5702887)) shouldBe true
     println(s"Naive recursive fibonacci performance slows dramtically using > $n : $f")
   }
 
@@ -66,7 +66,7 @@ class RecursionTest extends FunSuite {
     }
     val n = 39L
     val f = fibonacci(n, 0, 1)
-    assert(f.equals(BigInt(63245986)))
+    f.equals(BigInt(63245986)) shouldBe true
     println(s"Tail recursive fibonacci performance is constant using <= $n : $f")
   }
 
@@ -81,7 +81,7 @@ class RecursionTest extends FunSuite {
     }
     val n = 39L
     val f = fibonacci(n)
-    assert(f.equals(BigInt(63245986)))
+    f.equals(BigInt(63245986)) shouldBe true
     println(s"@tailrec fibonacci performance is constant using <= $n : $f")
   }
 
@@ -95,7 +95,7 @@ class RecursionTest extends FunSuite {
     }
     val n = 13L
     val f = fibonacci(n).result
-    assert(f == 233)
+    f shouldEqual 233
     println(s"@tailcalls ( trampolining ) fibonacci performance is horrible: $n : $f")
   }
 
@@ -107,7 +107,7 @@ class RecursionTest extends FunSuite {
       build(a, b).takeWhile(_ >= 0).toList
     }
     val sequence = fibonacci()
-    assert(sequence.size == 47)
+    sequence.size shouldEqual 47
     println("Fibonacci sequence: " + sequence)
   }
 
@@ -122,6 +122,6 @@ class RecursionTest extends FunSuite {
     }
     val range = Range(1, 1000000)
     val total = sum(range)
-    assert(total == 1783293664)
+    total shouldEqual 1783293664
   }
 }
