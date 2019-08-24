@@ -6,7 +6,8 @@ Environment
 -----------
 > The following items are commonplace in successful Scala shops.
 
-1. **Git Service:** Establish a Github ( https://github.com/features ) account. Gitlab is a nice alternative.
+1. **Git:** Establish a Github ( https://github.com/features ) account. Gitlab ( https://about.gitlab.com ) is a
+ nice alternative. Both Github and Gitlab can be installed on an internal network.
 2. **IDE:** Roughly 80% of developers in the Scala space use Jetbrains Intellij IDEA ( https://www.jetbrains.com/idea/ ).
  The community edition is free. The ultimate edition is subscription based. The Scala Eclipse IDE ( http://scala-ide.org )
  is a poor alternative, IMHO. VS Code with Metals is a young and upcoming lightweight option. To each his/her own.;)
