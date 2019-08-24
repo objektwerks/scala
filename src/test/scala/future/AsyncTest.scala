@@ -1,18 +1,18 @@
 package future
 
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, Matchers}
 
 import scala.async.Async._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class AsyncTest extends FunSuite {
+class AsyncTest extends FunSuite with Matchers {
   test("sequential") {
     val future = async {
       val futureOne = async { 1 }
       val futureTwo = async { 2 }
       await(futureOne) + await(futureTwo)
     }
-    future foreach { _ == 3 }
+    future foreach { i => i shouldEqual 3 }
   }
 
   test("parallel") {
@@ -21,6 +21,6 @@ class AsyncTest extends FunSuite {
     val futureThree = async {
       await(futureOne) + await(futureTwo)
     }
-    futureThree foreach { _ == 3 }
+    futureThree foreach { i => i shouldEqual 3 }
   }
 }
