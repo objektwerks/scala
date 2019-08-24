@@ -42,9 +42,9 @@ class IndexedSeqTest extends FunSuite with Matchers {
     val queue = mutable.Queue(1, 2)
     queue enqueue 3
     3 shouldEqual queue.last
-    queue.dequeue() shouldEqual 1
-    queue.dequeue() shouldEqual 2
-    queue.dequeue() shouldEqual 3
+    queue.dequeue shouldEqual 1
+    queue.dequeue shouldEqual 2
+    queue.dequeue shouldEqual 3
     queue.isEmpty shouldBe true
   }
 
