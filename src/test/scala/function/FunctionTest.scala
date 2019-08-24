@@ -1,32 +1,32 @@
 package function
 
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, Matchers}
 
 import scala.annotation.tailrec
 import scala.util.Random
 
-class FunctionTest extends FunSuite {
+class FunctionTest extends FunSuite with Matchers {
   test("literal") {
     val add = (x: Int, y: Int) => x + y
-    assert(add(3, 3) == 6)
+    add(3, 3) shouldEqual 6
 
     val multiply = (x: Int, y: Int) => x * y: Int
-    assert(multiply(3, 3) == 9)
+    multiply(3, 3) shouldEqual 9
 
     val subtract: (Int, Int) => Int = (x, y) => x - y
-    assert(subtract(9, 3) == 6)
+    subtract(9, 3) shouldEqual 6
   }
 
   test("def expression") {
     def isEven(i: Int): Boolean = i % 2 == 0
-    assert(isEven(2))
+    isEven(2) shouldBe true
   }
 
   test("def block") {
     def isOdd(i: Int): Boolean = {
       i % 2 != 0
     }
-    assert(isOdd(3))
+    isOdd(3) shouldBe true
   }
 
   test("def match") {
@@ -34,7 +34,7 @@ class FunctionTest extends FunSuite {
       case Nil => 0
       case head :: tail => head + sum(tail)
     }
-    assert(sum(List(1, 2, 3)) == 6)
+    sum(List(1, 2, 3)) shouldEqual 6
   }
 
   test("def returning a function") {
@@ -42,49 +42,49 @@ class FunctionTest extends FunSuite {
       greeting + ", " + name + "!"
     }
     val hello = greeting("Hello")
-    assert(hello("John") == "Hello, John!")
+    hello("John") shouldEqual "Hello, John!"
   }
 
   test("call by value") {
     def callByValue(r: Long): (Long, Long) = (r, r)
     val (r1, r2) = callByValue(Random.nextLong())
-    assert(r1 == r2)
+    r1 shouldEqual r2
   }
 
   test("call by name") {
     def callByName(r: => Long): (Long, Long) = (r, r)
     val (r1, r2) = callByName(Random.nextLong())
-    assert(r1 != r2)
+    r1 should not equal r2
   }
 
   test("default args") {
     def multiply(x: Int, y: Int = 1): Int = x * y
-    assert(multiply(1) == 1)
+    multiply(1) shouldEqual 1
   }
 
   test("var args") {
     def add(varargs: Int*): Int = varargs.sum
-    assert(add(1, 2, 3) == 6)
-    assert(add(List(1, 2, 3):_*) == 6)
+    add(1, 2, 3) shouldEqual 6
+    add(List(1, 2, 3):_*) shouldEqual 6
   }
 
   test("closure") {
     val legalDrinkingAge = 21
     def isLegallyOldEnoughToDrink(age: Int): Boolean = age >= legalDrinkingAge
-    assert(isLegallyOldEnoughToDrink(22))
+    isLegallyOldEnoughToDrink(22) shouldBe true
   }
 
   test("higher order") {
     def square(f: Int => Int, i: Int) = f(i)
-    assert(square((x: Int) => x * x, 2) == 4)
+    square((x: Int) => x * x, 2) shouldEqual 4
   }
 
   test("partially applied") {
     def multiplier(x: Int, y: Int) = x * y
     val product = multiplier _
     val multiplyByFive = multiplier(5, _: Int)
-    assert(product(5, 20) == 100)
-    assert(multiplyByFive(20) == 100)
+    product(5, 20) shouldEqual 100
+    multiplyByFive(20) shouldEqual 100
   }
 
   test("partial function") {
@@ -92,27 +92,27 @@ class FunctionTest extends FunSuite {
       def apply(d: Int) = 2 / d
       def isDefinedAt(d: Int): Boolean = d <= 0
     }
-    assert(fraction(2) == 1)
-    assert(fraction.isDefinedAt(-42))
+    fraction(2) shouldEqual 1
+    fraction.isDefinedAt(-42) shouldBe true
   }
 
   test("curry") {
     def multiply(x: Int) = (y: Int) => x * y
-    assert(multiply(3)(3) == 9)
+    multiply(3)(3) shouldEqual 9
 
     def add(x: Int)(y: Int): Int = x + y
-    assert(add(1)(2) == 3)
+    add(1)(2) shouldEqual 3
   }
 
   test("curried") {
     val sum = (x: Int, y: Int) => x + y
     val curriedSum = sum.curried
-    assert(curriedSum(1)(2) == 3)
+    curriedSum(1)(2) shouldEqual 3
   }
 
   test ("lambda") {
     val list = List(1, 2, 3, 4)
-    assert(list.filter(_ % 2 == 0) == List(2, 4))
+    list.filter(_ % 2 == 0) shouldEqual List(2, 4)
   }
 
   test("recursion") {
@@ -120,7 +120,7 @@ class FunctionTest extends FunSuite {
       case i if i < 1 => 1
       case _ => n * factorial(n - 1)
     }
-    assert(factorial(3) == 6)
+    factorial(3) shouldEqual 6
   }
 
   test("tailrec") {
@@ -129,7 +129,7 @@ class FunctionTest extends FunSuite {
       case i if i < 1 => acc
       case _ => factorial(n - 1, acc * n)
     }
-    assert(factorial(9) == 362880)
+    factorial(9) shouldEqual 362880
   }
 
   test("impure function") {
@@ -138,14 +138,14 @@ class FunctionTest extends FunSuite {
       println(sum) // Simulating side-effecting IO
       sum
     }
-    add(1, 2)
+    add(1, 2) shouldEqual 3
   }
 
   test("pure function") {
     def add(x: Int, y: Int): Int = {
       x + y // No side-effecting IO.
     }
-    add(1, 2)
+    add(1, 2) shouldEqual 3
   }
 
   test("compose > andThen") {
@@ -162,11 +162,11 @@ class FunctionTest extends FunSuite {
     val fs = xs map ( incrDecrAsList reduce ( _ compose _) )
     val gs = xs map ( incrDecrAsList reduce ( _ andThen _) )
     val us = xs map incrDecrAsListWithReduce
-    assert(xs == ys)
-    assert(ys == zs)
-    assert(fs == zs)
-    assert(gs == fs)
-    assert(us == gs)
+    xs shouldEqual ys
+    ys shouldEqual zs
+    fs shouldEqual zs
+    gs shouldEqual fs
+    us shouldEqual gs
   }
 
   test("select by index") {
@@ -184,9 +184,9 @@ class FunctionTest extends FunSuite {
     val x = selectByIndex(xs, 5)
     val y = selectByIndex(ys, 5)
     val z = selectByIndex(zs, 5)
-    assert(x.get == xs(5))
-    assert(y.isEmpty)
-    assert(z.isEmpty)
+    x.get shouldEqual xs(5)
+    y.isEmpty shouldBe true
+    z.isEmpty shouldBe true
   }
 
   test("intersection") {
@@ -196,8 +196,8 @@ class FunctionTest extends FunSuite {
     val xs = List.range(1, 10)
     val ys = List.range(1, 20)
     val zs = List.range(30, 40)
-    assert(intersection(xs, ys) == xs.intersect(ys))
-    assert(intersection(ys, xs) == ys.intersect(xs))
-    assert(intersection(ys, zs) == ys.intersect(zs))
+    intersection(xs, ys) shouldEqual xs.intersect(ys)
+    intersection(ys, xs) shouldEqual ys.intersect(xs)
+    intersection(ys, zs) shouldEqual ys.intersect(zs)
   }
 }
