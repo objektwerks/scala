@@ -63,9 +63,9 @@ object Theory {
   }
 }
 
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, Matchers}
 
-class TheoryTest extends FunSuite {
+class TheoryTest extends FunSuite with Matchers {
   import theory.Theory._
 
   test("monoid") {
@@ -84,34 +84,34 @@ class TheoryTest extends FunSuite {
     val option: Option[Int] = optionMonad.point(1)
     val mappedOption: Option[Int] = optionMonad.map(option)(i => i * 3)
     val flatMappedOption: Option[Int] = optionMonad.flatMap(option)(i => Some(i))
-    assert(option.get == 1)
-    assert(mappedOption.get == 3)
-    assert(flatMappedOption.get == 1)
-    assert(option != mappedOption)
-    assert(option == flatMappedOption)
+    option.get shouldEqual 1
+    mappedOption.get shouldEqual 3
+    flatMappedOption.get shouldEqual 1
+    (option != mappedOption) shouldBe true
+    option shouldEqual flatMappedOption
   }
 
   test("applicative") {
     val option: Option[Int] = optionApplicative.point(1)
     val mappedOption: Option[Int] = optionApplicative.map(option)(i => i * 3)
-    assert(option.get == 1)
-    assert(mappedOption.get == 3)
+    option.get shouldEqual 1
+    mappedOption.get shouldEqual 3
   }
 
   test("is associative") {
-    assert(isAssociative[Int](_ + _, 1, 2, 3))
-    assert(!isAssociative[Double](_ / _, 1, 2, 3))
+    isAssociative[Int](_ + _, 1, 2, 3) shouldBe true
+    !isAssociative[Double](_ / _, 1, 2, 3) shouldBe true
   }
 
   test("is commutative") {
-    assert(isCommutative[Int](_ + _, 3, 6))
-    assert(!isCommutative[String](_ + _, "a", "b"))
+    isCommutative[Int](_ + _, 3, 6) shouldBe true
+    !isCommutative[String](_ + _, "a", "b") shouldBe true
   }
 
   test("is idempotent") {
     def toUpper(s: String): String = s.toUpperCase
     def increment(i: Int) = i + 1
-    assert(isIdempotent(toUpper, "AbCdEfG"))
-    assert(!isIdempotent(increment, 0))
+    isIdempotent(toUpper, "AbCdEfG") shouldBe true
+    !isIdempotent(increment, 0) shouldBe true
   }
 }
