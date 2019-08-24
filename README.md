@@ -11,7 +11,7 @@ Environment
 2. **IDE:** Roughly 80% of developers in the Scala space use Jetbrains Intellij IDEA ( https://www.jetbrains.com/idea/ ).
  The community edition is free, while the ultimate edition is subscription based. The Scala Eclipse IDE ( http://scala-ide.org )
  is a poor alternative, IMHO. VS Code with Metals is a young and upcoming lightweight option. To each his/her own.;)
-3. **Scala Build Tool:** Known as SBT ( https://www.scala-sbt.org/1.x/docs/index.html ), it’s a build and dependency
+3. **SBT:** Also known as Scala Build Tool ( https://www.scala-sbt.org/1.x/docs/index.html ), SBT is a build and dependency
  management tool that can do so much more via plugins. It’s similar to Maven and Gradle, but Scala focused. It’s a must have!
 4. **Maven Repository:** SBT requires network access to the public Maven Repository ( https://mvnrepository.com ) to obtain
  versioned libraries. A continually updated copy of the public Maven Repository can be set up and maintained internally via
@@ -19,7 +19,7 @@ Environment
 5. **Scala REPL:** The Scala REPL allows Scala developers to write code in a Unix/Windows terminal. Some Scala developers
  use it a lot, while others never do. It’s a nice tool to use for quick prototypes. It requires the local installation of 
  Scala ( https://www.scala-lang.org/download/ ).
-6. **Scala Spark REPL:** The Scala Spark REPL, is a specialized version of the Scala REPL that allows Scala-Spark developers to write
+6. **Spark REPL:** The Scala Spark REPL, is a specialized version of the Scala REPL that allows Scala-Spark developers to write
  Spark code in a Unix/Windows terminal. It requires the local installation of Spark ( https://spark.apache.org/releases/spark-release-2-4-3.html ).
 7. **Slack:** A messaging-collaboration tool ( https://slack.com ) that allows developers to communicate ( quietly ) in the same room
  or across the country.
@@ -31,7 +31,7 @@ Environment
  rebuild the project, run tests and package it using SBT. This is basic continuous integration. Using Jenkins components,
  build pipelines and stages can be constructed as well. Continuous deployment is a controversial topic, but available. Github
  and Gitlab have CI/CD services as well.
-11. **Kanban Board:** Github, for each repository, provides a free Kanban Board that allows developers to manage project tasks.
+11. **Agile:** Github, for each repository, provides a free Kanban Board that allows developers to manage project tasks.
  Gitlab also provides a Kanban Board for each repository. Other agile tools exist, but are considered overkill by a growing
  number of developers. Atlassian ( https://www.atlassian.com ) provides a popular ( yet overly robust ) set of agile tools.
 12. **Laptop:** Scala developers typically use a MacBook Pro, configured with a 15" screen and 16GB+. Today's developers
