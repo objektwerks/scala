@@ -8,11 +8,11 @@ class ParallelSortingTest extends FunSuite with Matchers {
   val randomArray = Array.fill(10000)(nextInt)
 
   test("scala parallel sort") {
-    scalaParallelSort(randomArray)
+    scalaParallelSort(randomArray) shouldEqual randomArray.sorted
   }
 
   test("java parallel sort") {
-    javaParallelSort(randomArray)
+    javaParallelSort(randomArray) shouldEqual randomArray.sorted
   }
 
   test("scala parallel sort equals java parallel sort") {
