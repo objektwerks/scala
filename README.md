@@ -26,11 +26,12 @@ Environment
 10. **CI/CD:** Known as continuous integration and deployment. Using a tool like Jenkins ( https://jenkins.io ), a team can
  set up a build project for each project housed in a Git repository. Based on a schedule, Jenkins will pull a Git repository,
  rebuild the project, run tests and package it using SBT. This is basic continuous integration. Using Jenkins components,
- build pipelines can be constructed. Continuous deployment is a controversial topic, but available. Github and Gitlab have
- CI/CD features as well.
+ build pipelines and stages can be constructed. Continuous deployment is a controversial topic, but available. Github and Gitlab
+ have CI/CD features as well.
 11. **Kanban Board:** Github, for each repository, provides a free Kanban Board that allows developers to manage project tasks.
  Gitlab also provides a Kanban Board for each repository. Other agile tools exist, but are considered overkill by a growing
  number of developers. Atlassian ( https://www.atlassian.com ) provides a popular set of agile tools.
-12. **Laptop:** Scala developers typically use a MacBook Pro or Linux laptop, configured with 16GB+.
+12. **Laptop:** Scala developers typically use a MacBook Pro or Linux laptop, configured with 16GB+. Today's developers
+must be mobile, able to work anywhere at anytime.
 13. **Homebrew:** The ultimate software package manager for Apple OSX ( https://brew.sh ).
 14. **Pathfinder:** The ultimate file system browser for Apple OSX ( https://cocoatech.com/#/ ).
