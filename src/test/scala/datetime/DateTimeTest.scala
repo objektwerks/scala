@@ -3,64 +3,64 @@ package datetime
 import java.time._
 import java.time.temporal.ChronoUnit
 
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, Matchers}
 
-class DateTimeTest extends FunSuite {
+class DateTimeTest extends FunSuite with Matchers {
   test("local date") {
     val d1 = LocalDate.of(2014, 1, 1)
     val d2 = LocalDate.of(2014, Month.JANUARY, 1)
     val d3 = LocalDate.ofYearDay(2014, 1)
-    assert(d1 == d2)
-    assert(d1 == d3)
-    assert(d2 == d3)
-    assert(!d1.isLeapYear)
-    assert(d1.lengthOfMonth == 31)
-    assert(d1.lengthOfYear == 365)
-    assert(d1.plusDays(12).getDayOfMonth == 13)
-    assert(d1.minusDays(1).getDayOfMonth == 31)
-    assert(d1.plusMonths(2).getMonthValue == 3)
-    assert(d1.minusMonths(1).getMonth == Month.DECEMBER)
-    assert(d1.plusYears(1).getYear == 2015)
-    assert(d1.minusYears(1).getYear == 2013)
-    assert(d1.withDayOfMonth(3).getDayOfMonth == 3)
-    assert(d1.withMonth(3).getMonthValue == 3)
-    assert(d1.withYear(2013).getYear == 2013)
-    assert(LocalDate.of(2014, 1, 3).isAfter(LocalDate.of(2014, 1, 1)))
-    assert(LocalDate.of(2014, 1, 1).isBefore(LocalDate.of(2014, 1, 3)))
-    assert(d1 == LocalDate.parse("2014-01-01"))
+    d1 shouldEqual d2
+    d1 shouldEqual d3
+    d2 shouldEqual d3
+    !d1.isLeapYear shouldBe true
+    d1.lengthOfMonth shouldEqual 31
+    d1.lengthOfYear shouldEqual 365
+    d1.plusDays(12).getDayOfMonth shouldEqual 13
+    d1.minusDays(1).getDayOfMonth shouldEqual 31
+    d1.plusMonths(2).getMonthValue shouldEqual 3
+    d1.minusMonths(1).getMonth shouldEqual Month.DECEMBER
+    d1.plusYears(1).getYear shouldEqual 2015
+    d1.minusYears(1).getYear shouldEqual 2013
+    d1.withDayOfMonth(3).getDayOfMonth shouldEqual 3
+    d1.withMonth(3).getMonthValue shouldEqual 3
+    d1.withYear(2013).getYear shouldEqual 2013
+    LocalDate.of(2014, 1, 3).isAfter(LocalDate.of(2014, 1, 1))
+    LocalDate.of(2014, 1, 1).isBefore(LocalDate.of(2014, 1, 3))
+    d1 shouldEqual LocalDate.parse("2014-01-01")
   }
 
   test("local time") {
     val t1 = LocalTime.of(3, 3)
     val t2 = LocalTime.of(3, 3, 0)
     val t3 = LocalTime.of(3, 3, 0, 0)
-    assert(t1 == t2)
-    assert(t1 == t3)
-    assert(t2 == t3)
-    assert(t1.plusHours(6).getHour == 9)
-    assert(t1.minusHours(2).getHour == 1)
-    assert(t1.plusMinutes(30).getMinute == 33)
-    assert(t1.minusMinutes(2).getMinute == 1)
-    assert(t1.withHour(9).getHour == 9)
-    assert(t1.withMinute(33).getMinute == 33)
-    assert(t1 == LocalTime.parse("03:03:00"))
+    t1 shouldEqual t2
+    t1 shouldEqual t3
+    t2 shouldEqual t3
+    t1.plusHours(6).getHour shouldEqual 9
+    t1.minusHours(2).getHour shouldEqual 1
+    t1.plusMinutes(30).getMinute shouldEqual 33
+    t1.minusMinutes(2).getMinute shouldEqual 1
+    t1.withHour(9).getHour shouldEqual 9
+    t1.withMinute(33).getMinute shouldEqual 33
+    t1 shouldEqual LocalTime.parse("03:03:00")
   }
 
   test("time zone") {
     val cst = ZonedDateTime.now(ZoneId.of("US/Central"))
     val est = ZonedDateTime.now(ZoneId.of("US/Eastern"))
-    assert(est.getHour - cst.getHour == 1)
+    est.getHour - cst.getHour shouldEqual 1
   }
 
   test("period") {
     val p = Period.of(3, 3, 3)
     val d = LocalDate.of(2013, 3, 3).plus(p)
-    assert(d == LocalDate.parse("2016-06-06"))
+    d shouldEqual LocalDate.parse("2016-06-06")
   }
 
   test("duration") {
     val d = Duration.of(33, ChronoUnit.SECONDS)
     val t = LocalTime.of(3, 3, 0).plus(d)
-    assert(t == LocalTime.parse("03:03:33"))
+    t shouldEqual LocalTime.parse("03:03:33")
   }
 }
