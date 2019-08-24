@@ -1,6 +1,6 @@
 package classes
 
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, Matchers}
 
 abstract class Car { def drive: String = "driving"; def sound: String }
 class Porsche extends Car { override def sound: String = "prrrr" }
@@ -15,6 +15,7 @@ class Name(val first: String, val last: String, val initial: String) {
 }
 
 class Square { def apply(n: Int): Int = n * n }
+
 object Cube { def apply(n: Int): Int = n * n * n }
 
 class Timestamp(val seconds: Int)
@@ -24,15 +25,20 @@ object Timestamp {
   }
 }
 
-class ClassesTest extends FunSuite {
+class ClassesTest extends FunSuite with Matchers {
   test("classes with inheritence") {
     val cars = Owner.startEngines
     for (car <- cars) {
-      assert(car.sound.nonEmpty)
+      car.sound.nonEmpty shouldBe true
       car match {
-        case p: Porsche => assert(p.drive == "driving" && p.sound == "prrrr")
-        case c: Corvette => assert(c.drive == "driving" && c.sound == "woosh")
-        case m: Maserati => assert(m.drive == "driving" && m.sound == "grrrr")
+        case p: Porsche =>
+          p.drive shouldEqual "driving"
+          p.sound shouldEqual "prrrr"
+        case c: Corvette => c.drive shouldEqual "driving"
+          c.sound shouldEqual "woosh"
+        case m: Maserati =>
+          m.drive shouldEqual "driving"
+          m.sound shouldEqual "grrrr"
       }
     }
   }
@@ -40,20 +46,22 @@ class ClassesTest extends FunSuite {
   test("constructors") {
     val primary = new Name("fred", "flintstone", "r")
     val secondary = new Name("barney", "rebel")
-    assert(primary.initial.nonEmpty)
-    assert(secondary.initial.isEmpty)
+    primary.initial.nonEmpty shouldBe true
+    secondary.initial.isEmpty shouldBe true
   }
 
   test("class apply") {
     val square = new Square()
-    assert(square(2) == 4)
+    square(2) shouldEqual 4
+    square.apply(3) shouldEqual 9
   }
 
   test("object apply") {
-    assert(Cube(2) == 8)
+    Cube(2) shouldEqual 8
+    Cube.apply(3) shouldEqual 27
   }
 
   test("companion object") {
-    assert(Timestamp(1, 1, 1).seconds == 3661)
+    Timestamp(1, 1, 1).seconds shouldEqual 3661
   }
 }
