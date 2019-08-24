@@ -7,13 +7,15 @@ import scala.collection.mutable
 class IndexedSeqTest extends FunSuite with Matchers {
   test("vector") {
     val vector = Vector(1, 2)
-    assert(vector.length == 2 && vector(0) == 1 && vector(1) == 2)
-    assert(vector.reverse === Vector(2, 1))
-    assert(vector === 1 +: Vector(2))
-    assert(vector === Vector(1) :+ 2)
-    assert(vector === Vector(1) ++ Vector(2))
-    assert(vector === Vector(1) ++: Vector(2))
-    assert(3 == (vector foldRight 0)(_ + _))
+    vector.length shouldEqual 2
+    vector(0) shouldEqual 1
+    vector(1) shouldEqual 2
+    vector.reverse shouldEqual Vector(2, 1)
+    vector shouldEqual 1 +: Vector(2)
+    vector shouldEqual Vector(1) :+ 2
+    vector shouldEqual Vector(1) ++ Vector(2)
+    vector shouldEqual Vector(1) ++: Vector(2)
+    3 shouldEqual (vector foldRight 0)(_ + _)
   }
 
   test("array") {
@@ -38,21 +40,21 @@ class IndexedSeqTest extends FunSuite with Matchers {
 
   test("queue") {
     val queue = mutable.Queue(1, 2)
-    queue enqueue  3
-    assert(3 == queue.last)
-    assert(queue.dequeue() == 1)
-    assert(queue.dequeue() == 2)
-    assert(queue.dequeue() == 3)
-    assert(queue.isEmpty)
+    queue enqueue 3
+    3 shouldEqual queue.last
+    queue.dequeue() shouldEqual 1
+    queue.dequeue() shouldEqual 2
+    queue.dequeue() shouldEqual 3
+    queue.isEmpty shouldBe true
   }
 
   test("stack") {
     val stack = mutable.Stack(2, 1)
     stack push 3
-    assert(3 == stack.pop)
-    assert(2 == stack.pop)
-    assert(1 == stack.pop)
-    assert(stack.isEmpty)
+    3 shouldEqual stack.pop
+    2 shouldEqual stack.pop
+    1 shouldEqual stack.pop
+    stack.isEmpty shouldBe true
   }
 
   test("string builder") {
@@ -60,14 +62,14 @@ class IndexedSeqTest extends FunSuite with Matchers {
     builder.append("a")
     builder.append("b")
     builder.append("c")
-    assert(builder.toString() == "abc")
-    assert(builder.result() == "abc")
-    assert(builder.reverse.result() == "cba")
+    builder.toString shouldEqual "abc"
+    builder.result shouldEqual "abc"
+    builder.reverse.result shouldEqual "cba"
   }
 
   test("range") {
-    assert((1 until 10) == Range(1, 10, 1))
-    assert((10 until 1 by -1) == Range(10, 1, -1))
-    assert((1 to 10) == Range.inclusive(1, 10, 1))
+    (1 until 10) shouldEqual Range(1, 10, 1)
+    (10 until 1 by -1) shouldEqual Range(10, 1, -1)
+    (1 to 10) shouldEqual Range.inclusive(1, 10, 1)
   }
 }
