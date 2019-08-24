@@ -38,3 +38,4 @@ Environment
  must be mobile, capable of working anywhere at anytime. Linux laptops are slowly gaining traction.
 13. **Homebrew:** The ultimate software package manager for Apple OSX ( https://brew.sh ).
 14. **Pathfinder:** The ultimate file system browser for Apple OSX ( https://cocoatech.com/#/ ).
+15. **Linux:** The world literally runs on Linux. So having access to a Linux server is ideal.
