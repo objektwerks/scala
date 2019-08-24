@@ -1,13 +1,13 @@
 package exception
 
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, Matchers}
 
 import scala.io.Source
 import scala.util.control.Exception._
 import scala.util.control.NonFatal
 import scala.util.{Success, Try, Using}
 
-class TryTest extends FunSuite {
+class TryTest extends FunSuite with Matchers {
   def divide(x: String, y: String): Try[Int] = {
     for {
       x <- Try(x.toInt)
@@ -21,39 +21,39 @@ class TryTest extends FunSuite {
 
   test("try catch handler") {
     val handler: PartialFunction[Throwable, Unit] = {
-      case NonFatal(error) => assert(error.getMessage.nonEmpty); ()
+      case NonFatal(error) => error.getMessage.nonEmpty shouldBe true; ()
     }
     try "abc".toInt catch handler
   }
 
   test("try") {
-    assert(divide("9", "3").isSuccess)
-    assert(divide("9", "3").toOption.contains(3))
-    assert(divide("9", "3").get == 3)
-    assert(divide("a", "b").isFailure)
-    assert(divide("a", "b").toOption.isEmpty)
-    assert(divide("a", "b").getOrElse(-1) == -1)
+    divide("9", "3").isSuccess shouldBe true
+    divide("9", "3").toOption.contains(3) shouldBe true
+    divide("9", "3").get shouldEqual 3
+    divide("a", "b").isFailure shouldBe true
+    divide("a", "b").toOption.isEmpty shouldBe true
+    divide("a", "b").getOrElse(-1) shouldEqual -1
   }
 
   test("try option") {
-    assert(parseInt("a").isEmpty)
-    assert(parseInt("1").isDefined)
+    parseInt("a").isEmpty shouldBe true
+    parseInt("1").isDefined shouldBe true
   }
 
   test("try using") {
-    assert(fileToLines("build.sbt").isSuccess)
-    assert(fileToLines("sbt.sbt").isFailure)
+    fileToLines("build.sbt").isSuccess shouldBe true
+    fileToLines("sbt.sbt").isFailure shouldBe true
   }
 
   test("try recover") {
     val i = for {
       i <- Try("one".toInt).recover { case _ => 0 }
     } yield i
-    assert(i == Success(0))
+    i shouldEqual Success(0)
   }
 
   test("all catch") {
-    assert(allCatch.opt("1".toInt).nonEmpty)
-    assert(allCatch.opt("one".toInt).isEmpty)
+    allCatch.opt("1".toInt).nonEmpty shouldBe true
+    allCatch.opt("one".toInt).isEmpty shouldBe true
   }
 }
