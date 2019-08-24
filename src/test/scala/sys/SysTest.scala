@@ -1,30 +1,30 @@
 package sys
 
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, Matchers}
 
 import scala.sys.SystemProperties
 import scala.sys.process.Process
 
-class SysTest extends FunSuite {
+class SysTest extends FunSuite with Matchers {
   test("system properties") {
     val properties = new SystemProperties
-    assert(properties.contains("java.runtime.name"))
+    properties.contains("java.runtime.name") shouldBe true
 
     properties += ("objekt" -> "werks")
-    assert(properties.contains("objekt"))
+    properties.contains("objekt") shouldBe true
 
     properties -= "objekt"
-    assert(properties.getOrElse("objekt", "empty") == "empty")
+    properties.getOrElse("objekt", "empty") shouldEqual "empty"
   }
 
   test("process") {
     val file = Process("ls").lazyLines.find(file => file == "build.sbt")
-    assert(file.getOrElse("empty") == "build.sbt")
+    file.getOrElse("empty") shouldEqual "build.sbt"
 
     val line = Process("find build.sbt").lazyLines.headOption
-    assert(line.getOrElse("empty") == "build.sbt")
+    line.getOrElse("empty") shouldEqual "build.sbt"
 
     val lines = Process("cat .gitignore").lazyLines
-    assert(lines.length == 6)
+    lines.length shouldEqual 6
   }
 }
