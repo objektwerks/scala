@@ -12,10 +12,10 @@ Environment
  The community edition is free, while the ultimate edition is subscription based. The Scala Eclipse IDE ( http://scala-ide.org )
  is a poor alternative, IMHO. VS Code with Metals is a young and upcoming lightweight option. To each his/her own.;)
 3. **Scala Build Tool:** Known as SBT ( https://www.scala-sbt.org/1.x/docs/index.html ), it’s a build and dependency
- management tool that can do so much more via plugins. It’s similar to Maven and Gradle, but Scala focused. It’s a must have.
+ management tool that can do so much more via plugins. It’s similar to Maven and Gradle, but Scala focused. It’s a must have!
 4. **Maven Repository:** SBT requires network access to the public Maven Repository ( https://mvnrepository.com ) to obtain
  versioned libraries. A continually updated copy of the public Maven Repository can be set up and maintained internally via
- products like Nexus and JFrog Artifactory.
+ products like Nexus ( https://www.sonatype.com/nexus-repository-sonatype ) and JFrog Artifactory ( https://jfrog.com/artifactory/ ).
 5. **Scala REPL:** The Scala REPL allows Scala developers to write code in a Unix/Windows terminal. Some Scala developers
  use it a lot, while others never do. It’s a nice tool to use for quick prototypes. It requires the installation of 
  Scala ( https://www.scala-lang.org/download/ ).
