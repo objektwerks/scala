@@ -1,10 +1,10 @@
 Scala
 -----
->This project contains Scala 2.13 feature tests. It also details a foundational Scala development environment.
+>This project contains Scala 2.13 feature tests.
 
 Environment
 -----------
-> The following items are commonplace in successful Scala shops.
+> The following list details commonplace items found in successful Scala shops.
 
 1. **Git:** Establish a Github ( https://github.com/features ) account. Gitlab ( https://about.gitlab.com ) is a
  nice alternative. Both Github and Gitlab can be installed on an internal network.
