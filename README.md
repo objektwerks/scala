@@ -10,7 +10,7 @@ Environment
  nice alternative. Both Github and Gitlab can be installed on an internal network.
 2. **IDE:** Roughly 80% of developers in the Scala space use Jetbrains Intellij IDEA ( https://www.jetbrains.com/idea/ ).
  The community edition is free, while the ultimate edition is subscription based. The Scala Eclipse IDE ( http://scala-ide.org )
- is a poor alternative, IMHO. VS Code with Metals is a young and upcoming lightweight option. To each his or her own.;)
+ is a distant alternative. VS Code with Metals is a young and upcoming lightweight option. To each his or her own.;)
 3. **SBT:** Also known as Scala Build Tool ( https://www.scala-sbt.org/1.x/docs/index.html ), SBT is a build and dependency
  management tool that can do so much more via plugins. It’s similar to Maven and Gradle, but Scala focused. It’s a must have!
 4. **Maven Repository:** SBT requires network access to the public Maven repository ( https://mvnrepository.com ) to obtain
