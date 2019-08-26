@@ -31,7 +31,7 @@ Environment
  set up a build project for each project housed in a Git repository. Based on a schedule, Jenkins will pull a Git repository,
  rebuild the project, run tests and package it using SBT. This is basic continuous integration. Using Jenkins components,
  pipelines and stages can be constructed as well. Continuous deployment is a controversial topic, but available. Github
- and Gitlab have CI/CD services as well.
+ and Gitlab provide CI/CD services as well.
 11. **Agile:** Github provides a free Kanban Board for each repository, allowing developers to manage project tasks.
  Gitlab also provides a Kanban Board for each repository. Other agile tools exist, but are considered overkill by a growing
  number of developers. Atlassian ( https://www.atlassian.com ) provides a popular ( yet overly robust ) set of agile tools.
