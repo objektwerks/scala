@@ -24,7 +24,7 @@ Environment
  Spark code in a Unix or Windows terminal. It requires the local installation of Spark ( https://spark.apache.org/releases/spark-release-2-4-3.html ).
 7. **Slack:** A messaging-collaboration tool ( https://slack.com ) that allows developers to communicate ( quietly ) in the same room
  or across the country.
-8. **VPN:** Secure VPN provides developers with external access to a ( corporate ) development network.
+8. **VPN:** Secure VPN provides developers with external access to a private, or internal, development network.
 9. **Local Services:** It’s often convenient to build Scala prototypes and integration tests against local services, such a Kafka,
  Cassandra or any other ( Big Data ) service. The same integration tests can be run in a properly configured CI/CD environment.
 10. **CI/CD:** Known as continuous integration and deployment. Using a tool like Jenkins ( https://jenkins.io ), a team can
