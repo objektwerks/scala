@@ -10,13 +10,13 @@ class IOTest extends FunSuite with Matchers {
   val quote = "You can avoid reality, but you cannot avoid the consequences of avoiding reality."
 
   test("from url") {
-    val jokes = Source.fromURL("http://api.icndb.com/jokes/random/", Codec.UTF8.name).mkString.split("\\W+")
-    jokes.nonEmpty shouldBe true
+    val jokes = Using( Source.fromURL("http://api.icndb.com/jokes/random/", Codec.UTF8.name) ) { source => source.mkString.split("\\W+") }
+    jokes.get.nonEmpty shouldBe true
   }
 
   test("from file") {
-    val words = Source.fromFile("./LICENSE", Codec.UTF8.name).mkString.split("\\W+")
-    words.length shouldEqual 169
+    val words = Using( Source.fromFile("./LICENSE", Codec.UTF8.name) ) { source => source.mkString.split("\\W+") }
+    words.get.length shouldEqual 169
   }
 
   test("from input stream") {

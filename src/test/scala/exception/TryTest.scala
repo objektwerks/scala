@@ -15,7 +15,7 @@ class TryTest extends FunSuite with Matchers {
     } yield x / y
   }
 
-  def fileToLines(file: String): Try[Seq[String]] = Using(Source.fromFile(file, Codec.UTF8.name)) { source => source.getLines.toSeq }
+  def fileToLines(file: String): Try[Seq[String]] = Using( Source.fromFile(file, Codec.UTF8.name) ) { source => source.getLines.toSeq }
 
   def parseInt(s: String): Option[Int] = Try(s.toInt).toOption
 
