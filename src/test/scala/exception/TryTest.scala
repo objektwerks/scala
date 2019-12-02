@@ -2,7 +2,7 @@ package exception
 
 import org.scalatest.{FunSuite, Matchers}
 
-import scala.io.Source
+import scala.io.{Codec, Source}
 import scala.util.control.Exception._
 import scala.util.control.NonFatal
 import scala.util.{Success, Try, Using}
@@ -15,7 +15,7 @@ class TryTest extends FunSuite with Matchers {
     } yield x / y
   }
 
-  def fileToLines(file: String): Try[Seq[String]] = Using(Source.fromFile(file)) { source => source.getLines.toSeq }
+  def fileToLines(file: String): Try[Seq[String]] = Using(Source.fromFile(file, Codec.UTF8.name)) { source => source.getLines.toSeq }
 
   def parseInt(s: String): Option[Int] = Try(s.toInt).toOption
 

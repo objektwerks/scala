@@ -10,17 +10,17 @@ class IOTest extends FunSuite with Matchers {
   val quote = "You can avoid reality, but you cannot avoid the consequences of avoiding reality."
 
   test("from url") {
-    val jokes = Source.fromURL("http://api.icndb.com/jokes/random/").mkString.split("\\W+")
+    val jokes = Source.fromURL("http://api.icndb.com/jokes/random/", Codec.UTF8.name).mkString.split("\\W+")
     jokes.nonEmpty shouldBe true
   }
 
   test("from file") {
-    val words = Source.fromFile("./LICENSE").mkString.split("\\W+")
+    val words = Source.fromFile("./LICENSE", Codec.UTF8.name).mkString.split("\\W+")
     words.length shouldEqual 169
   }
 
   test("from input stream") {
-    val words = Source.fromInputStream(getClass.getResourceAsStream("/license.mit")).mkString.split("\\W+")
+    val words = Source.fromInputStream(getClass.getResourceAsStream("/license.mit"), Codec.UTF8.name).mkString.split("\\W+")
     words.length shouldEqual 169
     toWordCountMap(words).size shouldEqual 96
   }
@@ -36,12 +36,12 @@ class IOTest extends FunSuite with Matchers {
   }
 
   test("from bytes") {
-    val words = Source.fromBytes(quote.getBytes(Codec.UTF8.name)).mkString.split("\\W+")
+    val words = Source.fromBytes(quote.getBytes(Codec.UTF8.name), Codec.UTF8.name).mkString.split("\\W+")
     words.length shouldEqual 13
   }
 
   test("grouped") {
-    val list = Source.fromInputStream(getClass.getResourceAsStream("/license.mit")).mkString.split("\\W+").toList
+    val list = Source.fromInputStream(getClass.getResourceAsStream("/license.mit"), Codec.UTF8.name).mkString.split("\\W+").toList
     list.length shouldEqual 169
 
     val words = list.grouped(list.length / 8).toList
@@ -57,5 +57,5 @@ class IOTest extends FunSuite with Matchers {
     words.groupBy((word: String) => word.toLowerCase).view.mapValues(_.length)
   }
 
-  def fileToLines(file: String): Try[Seq[String]] = Using(Source.fromFile(file)) { source => source.getLines.toSeq }
+  def fileToLines(file: String): Try[Seq[String]] = Using(Source.fromFile(file, Codec.UTF8.name)) { source => source.getLines.toSeq }
 }
