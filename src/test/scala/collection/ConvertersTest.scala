@@ -17,8 +17,8 @@ class ConvertersTest extends FunSuite with Matchers {
     arrayList.add(1)
     arrayList.add(2)
     arrayList.add(3)
-    val asScalaList = arrayList.asScala
-    asScalaList.size shouldEqual 3
-    asScalaList.sum shouldEqual 6
+    val asScalaBuffer = arrayList.asScala
+    asScalaBuffer.size shouldEqual 3
+    asScalaBuffer.sum shouldEqual 6
   }
 }
