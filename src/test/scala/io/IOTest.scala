@@ -7,20 +7,21 @@ import scala.io.{Codec, Source}
 import scala.util.{Try, Using}
 
 class IOTest extends FunSuite with Matchers {
+  val utf8 = Codec.UTF8.name
   val quote = "You can avoid reality, but you cannot avoid the consequences of avoiding reality."
 
   test("from url") {
-    val jokes = Using( Source.fromURL("http://api.icndb.com/jokes/random/", Codec.UTF8.name) ) { source => source.mkString.split("\\W+") }
+    val jokes = Using( Source.fromURL("http://api.icndb.com/jokes/random/", utf8) ) { source => source.mkString.split("\\W+") }
     jokes.get.nonEmpty shouldBe true
   }
 
   test("from file") {
-    val words = Using( Source.fromFile("./LICENSE", Codec.UTF8.name) ) { source => source.mkString.split("\\W+") }
+    val words = Using( Source.fromFile("./LICENSE", utf8) ) { source => source.mkString.split("\\W+") }
     words.get.length shouldEqual 169
   }
 
   test("from input stream") {
-    val words = Source.fromInputStream(getClass.getResourceAsStream("/license.mit"), Codec.UTF8.name).mkString.split("\\W+")
+    val words = Source.fromInputStream(getClass.getResourceAsStream("/license.mit"), utf8).mkString.split("\\W+")
     words.length shouldEqual 169
     toWordCountMap(words).size shouldEqual 96
   }
@@ -36,12 +37,12 @@ class IOTest extends FunSuite with Matchers {
   }
 
   test("from bytes") {
-    val words = Source.fromBytes(quote.getBytes(Codec.UTF8.name), Codec.UTF8.name).mkString.split("\\W+")
+    val words = Source.fromBytes(quote.getBytes(utf8), utf8).mkString.split("\\W+")
     words.length shouldEqual 13
   }
 
   test("grouped") {
-    val list = Source.fromInputStream(getClass.getResourceAsStream("/license.mit"), Codec.UTF8.name).mkString.split("\\W+").toList
+    val list = Source.fromInputStream(getClass.getResourceAsStream("/license.mit"), utf8).mkString.split("\\W+").toList
     list.length shouldEqual 169
 
     val words = list.grouped(list.length / 8).toList
@@ -57,5 +58,5 @@ class IOTest extends FunSuite with Matchers {
     words.groupBy((word: String) => word.toLowerCase).view.mapValues(_.length)
   }
 
-  def fileToLines(file: String): Try[Seq[String]] = Using(Source.fromFile(file, Codec.UTF8.name)) { source => source.getLines.toSeq }
+  def fileToLines(file: String): Try[Seq[String]] = Using(Source.fromFile(file, utf8)) { source => source.getLines.toSeq }
 }
