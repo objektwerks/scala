@@ -19,9 +19,9 @@ class MatchTest extends FunSuite with Matchers {
 
   test("type match") {
     def byType(t: Any): String = t match {
-      case i:Int => s"integer: $i"
-      case d:Double => s"double: $d"
-      case s:String => s"string: $s"
+      case i: Int => s"integer: $i"
+      case d: Double => s"double: $d"
+      case s: String => s"string: $s"
     }
     byType(1) shouldEqual "integer: 1"
     byType(1.0) shouldEqual "double: 1.0"
@@ -41,8 +41,8 @@ class MatchTest extends FunSuite with Matchers {
       case _ => true
     }
     isTrue(1) shouldBe true
-    !isTrue(0) shouldBe true
-    !isTrue("") shouldBe true
+    isTrue(0) shouldBe false
+    isTrue("") shouldBe false
   }
 
   test("case class match") {
@@ -57,7 +57,7 @@ class MatchTest extends FunSuite with Matchers {
     byPerson(Person("Jake")) shouldEqual "Mr. Jake"
   }
 
-  test("list match") {
+  test("tailrec sum match") {
     @tailrec
     def sum(numbers: List[Int], acc: Int = 0): Int = numbers match {
       case Nil => acc
