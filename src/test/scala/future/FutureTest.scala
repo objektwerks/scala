@@ -164,7 +164,7 @@ class FutureTest extends FunSuite with Matchers {
       for {
         i <- future
       } yield i
-      ).recover { case _: Throwable => -1 }
+    ).recover { case _: Throwable => -1 }
     result foreach { i => i shouldEqual -1 }
   }
 
