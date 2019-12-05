@@ -37,7 +37,7 @@ class FunctionTest extends FunSuite with Matchers {
     sum(List(1, 2, 3)) shouldEqual 6
   }
 
-  test("def returning a function") {
+  test("currying") {
     def greeting(greeting: String) = (name: String) => {
       greeting + ", " + name + "!"
     }
