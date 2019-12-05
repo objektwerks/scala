@@ -11,8 +11,8 @@ object StringConverters {
 
 object IntGraphics {
   implicit class Ops(val n: Int) extends AnyVal {
-    def stars = "*" * n
-    def waves = "~" * n
+    def stars: String = "*" * n
+    def waves: String = "~" * n
   }
 }
 
