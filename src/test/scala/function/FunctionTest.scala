@@ -97,7 +97,7 @@ class FunctionTest extends FunSuite with Matchers {
   }
 
   test("curry") {
-    def multiply(x: Int) = (y: Int) => x * y
+    def multiply(x: Int): Int => Int = (y: Int) => x * y
     multiply(3)(3) shouldEqual 9
 
     def add(x: Int)(y: Int): Int = x + y
