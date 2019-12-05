@@ -38,7 +38,7 @@ class FunctionTest extends FunSuite with Matchers {
   }
 
   test("currying") {
-    def greeting(greeting: String) = (name: String) => {
+    def greeting(greeting: String): String => String = (name: String) => {
       greeting + ", " + name + "!"
     }
     val hello = greeting("Hello")
