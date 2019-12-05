@@ -115,7 +115,7 @@ class FunctionTest extends FunSuite with Matchers {
     list.filter(_ % 2 == 0) shouldEqual List(2, 4)
   }
 
-  test("recursion") {
+  test("non-tailrec") {
     def factorial(n: Int): Int = n match {
       case i if i < 1 => 1
       case _ => n * factorial(n - 1)
