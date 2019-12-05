@@ -80,7 +80,7 @@ class FunctionTest extends FunSuite with Matchers {
   }
 
   test("partially applied") {
-    def multiplier(x: Int, y: Int) = x * y
+    def multiplier(x: Int, y: Int): Int = x * y
     val product = multiplier _
     val multiplyByFive = multiplier(5, _: Int)
     product(5, 20) shouldEqual 100
