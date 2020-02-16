@@ -4,7 +4,7 @@ Scala
 
 Environment
 -----------
-> The following list details commonplace items found in successful Scala shops.
+> The following list details commonplace items found in productive Scala shops.
 
 1. **Git:** Establish a Github ( https://github.com/features ) account. Gitlab ( https://about.gitlab.com ) is a
  nice alternative. Both Github and Gitlab can be installed on an internal network.
