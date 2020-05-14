@@ -41,7 +41,7 @@ val str = sumTailRec(zs)
 val strcheck = zs.sum
 
 @tailrec
-def sum(xs: List[Int], acc: Int = 0): Int = xs match {
+final def sum(xs: List[Int], acc: Int = 0): Int = xs match {
   case Nil => acc
   case head :: tail => sum(tail, acc + head)
 }
@@ -49,7 +49,7 @@ val str2 = sum(zs)
 val str2check = zs.sum
 
 @tailrec
-def product(xs: List[Int], acc: Int = 1): Int = xs match {
+final def product(xs: List[Int], acc: Int = 1): Int = xs match {
   case Nil => acc
   case head :: tail => product(tail, acc * head)
 }
@@ -57,7 +57,7 @@ val ptr = product(zs)
 val ptrcheck = zs.product
 
 @tailrec
-def reverse[A](list: List[A], acc: List[A] = List.empty[A]): List[A] = list match {
+final def reverse[A](list: List[A], acc: List[A] = List.empty[A]): List[A] = list match {
   case Nil => acc
   case head :: tail => reverse(tail, head :: acc)
 }
@@ -82,7 +82,7 @@ val isInList1 = isListAinListB((5 to 15).toList, (1 to 20).toList)
 val isInList2 = isListAinListB((10 to 30).toList, (15 to 50).toList)
 
 @tailrec
-def intersectLists[A](listA: List[A],
+final def intersectLists[A](listA: List[A],
                       listB: List[A],
                       acc: List[A] = List.empty[A]): List[A] =
   listA match {

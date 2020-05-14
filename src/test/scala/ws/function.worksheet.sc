@@ -77,7 +77,7 @@ def map[A, B](f: A => B)(xs: Seq[A]): Seq[B] = xs map f
 val mapResult = map(square)(List(1, 2, 3))
 
 @tailrec
-def factorial(n: Int, acc: Int = 1): Int = n match {
+final def factorial(n: Int, acc: Int = 1): Int = n match {
   case i if i < 1 => acc
   case _ => factorial(n - 1, acc * n)
 }
