@@ -35,8 +35,7 @@ Environment
 11. **Agile:** Github provides a free Kanban Board for each repository, allowing developers to manage project tasks.
  Gitlab also provides a Kanban Board for each repository. Other agile tools exist, but are considered overkill by a growing
  number of developers. Atlassian ( https://www.atlassian.com ) provides a popular ( yet overly robust ) set of agile tools.
-12. **Laptop:** Scala developers typically use a MacBook Pro, configured with a 15" screen and 32GB of RAM. Today's developers
- must be mobile, capable of working anywhere at anytime. Linux laptops are slowly gaining traction.
+12. **Laptop:** Scala developers typically use a MacBook Pro, configured with a 15" screen, 32GB of RAM and **Admin** rights. Today's developers must be mobile, capable of working anywhere at anytime. Interestingly, Linux laptops are slowly gaining traction.
 13. **Homebrew:** The ultimate software package manager for Apple OSX ( https://brew.sh ).
 14. **Pathfinder:** The ultimate file system browser for Apple OSX ( https://cocoatech.com/#/ ).
 15. **Linux:** The world literally runs on Linux. So having access to a Linux server is ideal.
