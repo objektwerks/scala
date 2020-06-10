@@ -3,9 +3,10 @@ package datetime
 import java.time._
 import java.time.temporal.ChronoUnit
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class DateTimeTest extends FunSuite with Matchers {
+class DateTimeTest extends AnyFunSuite with Matchers {
   test("local date") {
     val d1 = LocalDate.of(2014, 1, 1)
     val d2 = LocalDate.of(2014, Month.JANUARY, 1)
