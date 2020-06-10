@@ -1,10 +1,11 @@
 package collection
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.collection.mutable
 
-class IndexedSeqTest extends FunSuite with Matchers {
+class IndexedSeqTest extends AnyFunSuite with Matchers {
   test("vector") {
     val vector = Vector(1, 2)
     vector.length shouldEqual 2

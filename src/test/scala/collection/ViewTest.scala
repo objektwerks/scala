@@ -1,8 +1,9 @@
 package collection
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class ViewTest extends FunSuite with Matchers {
+class ViewTest extends AnyFunSuite with Matchers {
   test("view") {
     val vector = Vector(1, 2, 3)
     val view = vector.view

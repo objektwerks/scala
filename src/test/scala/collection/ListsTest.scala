@@ -1,6 +1,7 @@
 package collection
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.annotation.tailrec
 import scala.util.Try
@@ -38,7 +39,7 @@ object Lists {
     }
 }
 
-class ListsTest extends FunSuite with Matchers {
+class ListsTest extends AnyFunSuite with Matchers {
   import Lists._
 
   test("find nth element from end of list") {

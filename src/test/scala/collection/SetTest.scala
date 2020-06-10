@@ -1,10 +1,11 @@
 package collection
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.collection.{SortedSet, mutable}
 
-class SetTest extends FunSuite with Matchers {
+class SetTest extends AnyFunSuite with Matchers {
   test("set") {
     val set = Set(1, 2)
     set shouldEqual Set(1) + 2

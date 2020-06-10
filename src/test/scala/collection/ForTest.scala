@@ -1,11 +1,12 @@
 package collection
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 
-class ForTest extends FunSuite with Matchers {
+class ForTest extends AnyFunSuite with Matchers {
   test("foreach") {
     val map = Map("a" -> 1, "b" -> 2, "c" -> 3)
     map.foreach( t => t._2 should be > 0 )

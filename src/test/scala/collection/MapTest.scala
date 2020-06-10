@@ -1,11 +1,12 @@
 package collection
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.collection.immutable.ListMap
 import scala.collection.{SortedMap, mutable}
 
-class MapTest extends FunSuite with Matchers {
+class MapTest extends AnyFunSuite with Matchers {
   test("map") {
     val map = Map(1 -> 1, 2 -> 2)
     map(1) shouldEqual 1

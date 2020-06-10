@@ -1,10 +1,11 @@
 package collection
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.collection.mutable
 
-class LinearSeqTest extends FunSuite with Matchers {
+class LinearSeqTest extends AnyFunSuite with Matchers {
   def toList(i: Int): List[Int] = List(i - 1, i, i + 1)
 
   test("list") {

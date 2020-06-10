@@ -1,10 +1,11 @@
 package collection
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.jdk.CollectionConverters._
 
-class ConvertersTest extends FunSuite with Matchers {
+class ConvertersTest extends AnyFunSuite with Matchers {
   test("asJava") {
     val asJavaList = List(1, 2, 3).asJava
     asJavaList.size shouldEqual 3

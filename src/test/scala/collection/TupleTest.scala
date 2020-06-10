@@ -1,6 +1,7 @@
 package collection
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 case class CityStateZip(city: String, state: String, zip: Int) {
   def tupled: (String, String, Int) = (city, state, zip)
@@ -11,7 +12,7 @@ case class KeyValue(key: Int, value: Int) {
 }
 
 
-class TupleTest extends FunSuite with Matchers {
+class TupleTest extends AnyFunSuite with Matchers {
   test("tupled") {
     val (city, state, zip) = CityStateZip("placida", "florida", 33946).tupled
     city shouldEqual "placida"

@@ -1,11 +1,12 @@
 package collection
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.collection.parallel.immutable.ParRange
 import scala.collection.parallel.{ParMap, ParSeq, ParSet}
 
-class ParallelTest extends FunSuite with Matchers {
+class ParallelTest extends AnyFunSuite with Matchers {
   test("par set") {
     val set = ParSet(1 to 1000000:_*)
     set.sum shouldEqual 1784293664
