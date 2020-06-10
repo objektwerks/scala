@@ -1,6 +1,7 @@
 package enums
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.collection.immutable.SortedMap
 
@@ -34,7 +35,7 @@ object Month extends Enumeration {
   def validate(month: Month.Value): Boolean = values.contains(month)
 
 }
-class EnumTest extends FunSuite with Matchers {
+class EnumTest extends AnyFunSuite with Matchers {
   test("scala enum") {
     Weekday.values.foreach(weekday => Weekday.validate(weekday) shouldBe true)
     Weekday.values.foreach(println)
