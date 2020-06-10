@@ -1,12 +1,13 @@
 package pattern
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 import scala.util.matching.Regex
 
-class MatchTest extends FunSuite with Matchers {
+class MatchTest extends AnyFunSuite with Matchers {
   test("variable match") {
     case class Order(product: String, quantity: Int)
     def byVariable(order: Order): (String, Int) = order match {
