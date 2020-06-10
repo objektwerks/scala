@@ -1,11 +1,12 @@
 package sys
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.sys.SystemProperties
 import scala.sys.process.Process
 
-class SysTest extends FunSuite with Matchers {
+class SysTest extends AnyFunSuite with Matchers {
   test("system properties") {
     val properties = new SystemProperties
     properties.contains("java.runtime.name") shouldBe true
