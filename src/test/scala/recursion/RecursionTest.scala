@@ -1,11 +1,12 @@
 package recursion
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.annotation.tailrec
 import scala.util.control.TailCalls.{TailRec, done, tailcall}
 
-class RecursionTest extends FunSuite with Matchers {
+class RecursionTest extends AnyFunSuite with Matchers {
   test("non-tailrec structural recursion") {
     def buildIntList(count: Int, component: Int): List[Int] = count match {
       case 0 => Nil
