@@ -1,12 +1,13 @@
 package future
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.async.Async._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class AsyncTest extends FunSuite with Matchers {
+class AsyncTest extends AnyFunSuite with Matchers {
   test("sequential") {
     val future: Future[Int] = async {
       val futureOne: Future[Int] = async { 1 }

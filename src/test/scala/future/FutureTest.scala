@@ -1,13 +1,14 @@
 package future
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future, Promise}
 import scala.util.{Failure, Success, Try}
 
-class FutureTest extends FunSuite with Matchers {
+class FutureTest extends AnyFunSuite with Matchers {
   test("blocking") {
     Await.result(Future(1), 1 second) shouldEqual 1
   }
