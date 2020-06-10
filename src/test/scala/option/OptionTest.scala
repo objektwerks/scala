@@ -1,10 +1,11 @@
 package option
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.util.Try
 
-class OptionTest extends FunSuite with Matchers {
+class OptionTest extends AnyFunSuite with Matchers {
   def greaterThanZero(x: Int): Option[Int] = if (x > 0) Some(x) else None
 
   test("option") {
