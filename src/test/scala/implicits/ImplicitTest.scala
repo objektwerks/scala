@@ -1,6 +1,7 @@
 package implicits
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 object StringConverters {
   implicit class Ops(val s: String) {
@@ -28,7 +29,7 @@ object Value {
   }
 }
 
-class ImplicitTest extends FunSuite with Matchers {
+class ImplicitTest extends AnyFunSuite with Matchers {
   test("implicit parameter") {
     implicit val item = "beers"
     def order(number: Int) (implicit item: String): String = {
