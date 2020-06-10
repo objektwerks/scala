@@ -1,10 +1,11 @@
 package exception
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.util.Try
 
-class EitherTest extends FunSuite with Matchers {
+class EitherTest extends AnyFunSuite with Matchers {
   def divide(x: Int, y: Int): Either[Throwable, Int] = Try(x / y).toEither
 
   test("either") {

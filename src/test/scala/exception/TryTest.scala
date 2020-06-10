@@ -1,13 +1,14 @@
 package exception
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.io.{Codec, Source}
 import scala.util.control.Exception._
 import scala.util.control.NonFatal
 import scala.util.{Success, Try, Using}
 
-class TryTest extends FunSuite with Matchers {
+class TryTest extends AnyFunSuite with Matchers {
   def divide(x: String, y: String): Try[Int] = {
     for {
       x <- Try(x.toInt)
