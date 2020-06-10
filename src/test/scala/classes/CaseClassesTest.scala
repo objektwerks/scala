@@ -1,6 +1,7 @@
 package classes
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 sealed trait Animal { def speak: String }
 case class Tiger(speach: String) extends Animal { override def speak: String = speach }
@@ -11,7 +12,7 @@ case object ZooKeeper { def openCages: Set[Animal] = Set(Tiger("prrrr"), Panther
 case class Meter(value: Double) extends AnyVal { def toFeet: Foot = Foot(value * 0.3048) }
 case class Foot(value: Double) extends AnyVal { def toMeter: Meter = Meter(value / 0.3048) }
 
-class CaseClassesTest extends FunSuite with Matchers {
+class CaseClassesTest extends AnyFunSuite with Matchers {
   test("case classes") {
     val animals = ZooKeeper.openCages
     for(animal <- animals) {

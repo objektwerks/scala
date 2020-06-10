@@ -1,6 +1,7 @@
 package classes
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 abstract class Car { def drive: String = "driving"; def sound: String }
 class Porsche extends Car { override def sound: String = "prrrr" }
@@ -25,7 +26,7 @@ object Timestamp {
   }
 }
 
-class ClassesTest extends FunSuite with Matchers {
+class ClassesTest extends AnyFunSuite with Matchers {
   test("classes with inheritence") {
     val cars = Owner.startEngines
     for (car <- cars) {

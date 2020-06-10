@@ -1,6 +1,7 @@
 package classes
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 // Variance
 trait Relative
@@ -47,7 +48,7 @@ object Rational {
       (y.numerator.toDouble / y.denominator.toDouble) )
 }
 
-class TypesTest extends FunSuite with Matchers {
+class TypesTest extends AnyFunSuite with Matchers {
   test("variance") {
     val covariant: Covariant[Parent] = new Covariant[Child](new Child())
     val contravariant: Contravariant[Child, Parent] = new Contravariant[Child, Parent](new Parent())
