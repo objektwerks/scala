@@ -63,9 +63,10 @@ object Theory {
   }
 }
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class TheoryTest extends FunSuite with Matchers {
+class TheoryTest extends AnyFunSuite with Matchers {
   import theory.Theory._
 
   test("monoid") {
