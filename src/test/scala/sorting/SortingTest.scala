@@ -1,6 +1,7 @@
 package sorting
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 case class Worker(name: String, task: String)
 
@@ -8,7 +9,7 @@ object Worker {
   implicit def workerOrdering: Ordering[Worker] = Ordering.by(unapply)
 }
 
-class SortingTest extends FunSuite with Matchers {
+class SortingTest extends AnyFunSuite with Matchers {
   test("sorting") {
     val unsorted = List(2, 3, 1)
     val asc = unsorted.sorted
