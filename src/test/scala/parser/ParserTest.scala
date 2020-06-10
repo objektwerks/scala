@@ -1,6 +1,7 @@
 package parser
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.util.parsing.combinator.RegexParsers
 
@@ -17,7 +18,7 @@ class ExprParser extends RegexParsers {
   def operator: Parser[Any] = "+" | "-" | "*" | "/"
 }
 
-class ParserTest extends FunSuite with Matchers {
+class ParserTest extends AnyFunSuite with Matchers {
   test("find all in") {
     val regex = "am".r
     val source = "I am, I am, said he."
