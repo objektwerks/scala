@@ -1,11 +1,12 @@
 package function
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.annotation.tailrec
 import scala.util.Random
 
-class FunctionTest extends FunSuite with Matchers {
+class FunctionTest extends AnyFunSuite with Matchers {
   test("literal") {
     val add = (x: Int, y: Int) => x + y
     add(3, 3) shouldEqual 6
