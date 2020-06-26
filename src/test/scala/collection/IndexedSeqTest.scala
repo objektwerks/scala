@@ -43,18 +43,18 @@ class IndexedSeqTest extends AnyFunSuite with Matchers {
     val queue = mutable.Queue(1, 2)
     queue enqueue 3
     3 shouldEqual queue.last
-    queue.dequeue shouldEqual 1
-    queue.dequeue shouldEqual 2
-    queue.dequeue shouldEqual 3
+    queue.dequeue() shouldEqual 1
+    queue.dequeue() shouldEqual 2
+    queue.dequeue() shouldEqual 3
     queue.isEmpty shouldBe true
   }
 
   test("stack") {
     val stack = mutable.Stack(2, 1)
     stack push 3
-    3 shouldEqual stack.pop
-    2 shouldEqual stack.pop
-    1 shouldEqual stack.pop
+    3 shouldEqual stack.pop()
+    2 shouldEqual stack.pop()
+    1 shouldEqual stack.pop()
     stack.isEmpty shouldBe true
   }
 
@@ -64,8 +64,8 @@ class IndexedSeqTest extends AnyFunSuite with Matchers {
     builder.append("b")
     builder.append("c")
     builder.toString shouldEqual "abc"
-    builder.result shouldEqual "abc"
-    builder.reverse.result shouldEqual "cba"
+    builder.result() shouldEqual "abc"
+    builder.reverse.result() shouldEqual "cba"
   }
 
   test("range") {

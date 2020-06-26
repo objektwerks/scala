@@ -1,7 +1,7 @@
 name := "scala"
 organization := "objektwerks"
 version := "0.1-SNAPSHOT"
-scalaVersion := "2.13.2"
+scalaVersion := "2.13.3"
 libraryDependencies ++= {
   Seq(
     "org.scala-lang.modules" %% "scala-async" % "0.10.0" % Test,
@@ -14,5 +14,6 @@ scalacOptions ++= Seq(
   "-language:postfixOps",
   "-language:reflectiveCalls",
   "-language:implicitConversions",
-  "-language:higherKinds"
+  "-language:higherKinds",
+  "-Xasync"
 )

@@ -30,7 +30,7 @@ class ParserTest extends AnyFunSuite with Matchers {
     val source = "I love cats, and cats love me."
     val replacement = "tigers"
     (source length) shouldEqual 30
-    (regex replaceAllIn(source, replacement) length) shouldEqual 34
+    (regex.replaceAllIn(source, replacement).length) shouldEqual 34
   }
 
   test("pattern match") {

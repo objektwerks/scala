@@ -6,7 +6,7 @@ import org.scalatest.matchers.should.Matchers
 import scala.util.Random.nextInt
 
 class ParallelSortingTest extends AnyFunSuite with Matchers {
-  val randomArray = Array.fill(10000)(nextInt)
+  val randomArray = Array.fill(10000)(nextInt())
 
   test("scala parallel sort") {
     scalaParallelSort(randomArray) shouldEqual randomArray.sorted

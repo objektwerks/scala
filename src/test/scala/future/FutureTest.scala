@@ -170,8 +170,8 @@ class FutureTest extends AnyFunSuite with Matchers {
   }
 
   test("transform") {
-    Future(Integer.parseInt("1")) transform(i => i + 2, failure => new Exception("failure", failure)) foreach { i => i shouldEqual 3 }
-    Future(Integer.parseInt("one")) transform(i => i + 2, failure => new Exception("failure", failure)) foreach { i => i should not equal 3 }
+    Future(Integer.parseInt("1")).transform(i => i + 2, failure => new Exception("failure", failure)) foreach { i => i shouldEqual 3 }
+    Future(Integer.parseInt("one")).transform(i => i + 2, failure => new Exception("failure", failure)) foreach { i => i should not equal 3 }
   }
 
   test("transformWith") {

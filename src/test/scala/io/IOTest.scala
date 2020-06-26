@@ -59,5 +59,5 @@ class IOTest extends AnyFunSuite with Matchers {
     words.groupBy((word: String) => word.toLowerCase).view.mapValues(_.length)
   }
 
-  def fileToLines(file: String): Try[Seq[String]] = Using( Source.fromFile(file, utf8) ) { source => source.getLines.toSeq }
+  def fileToLines(file: String): Try[Seq[String]] = Using( Source.fromFile(file, utf8) ) { source => source.getLines().toSeq }
 }
