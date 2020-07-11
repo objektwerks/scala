@@ -1,4 +1,37 @@
-import scala.language.higherKinds
+
+package ammonite
+package $file.src.test.scala.ws
+import _root_.ammonite.interp.api.InterpBridge.{
+  value => interp
+}
+import _root_.ammonite.interp.api.InterpBridge.value.{
+  exit
+}
+import _root_.ammonite.interp.api.IvyConstructor.{
+  ArtifactIdExt,
+  GroupIdExt
+}
+import _root_.ammonite.runtime.tools.{
+  browse,
+  grep,
+  time,
+  tail
+}
+import _root_.ammonite.repl.tools.{
+  desugar,
+  source
+}
+import _root_.ammonite.main.Router.{
+  doc,
+  main
+}
+import _root_.ammonite.repl.tools.Util.{
+  pathScoptRead
+}
+
+
+object `state.transformer`{
+/*<script>*/import scala.language.higherKinds
 
 class IO[A] private (codeblock: => A) {
   def run = codeblock
@@ -54,3 +87,8 @@ val sumOp: StateT[IO, Value, Int] = for {
 
 val result: IO[(Value, Int)] = sumOp.run(Value(1))
 val (value, sum) = result.run
+/*</script>*/ /*<generated>*/
+def $main() = { scala.Iterator[String]() }
+  override def toString = "state$u002Etransformer"
+  /*</generated>*/
+}
