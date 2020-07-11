@@ -1,5 +1,3 @@
-import scala.language.higherKinds
-
 trait Applicative[F[_]] {
   def point[A](a: => A): F[A]
   def apply[A, B](fa: F[A])(f: F[A => B]): F[B]
