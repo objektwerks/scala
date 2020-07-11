@@ -17,10 +17,10 @@ val isDefinedAt = divideExt.isDefinedAt(3)
 val isDefinedAtZero = divideExt.isDefinedAt(0)
 
 val isEven: PartialFunction[Int, String] = {
-  case x if x % 2 == 0 => x + " is even"
+  case x if x % 2 == 0 => s"$x is even"
 }
 val isOdd: PartialFunction[Int, String] = {
-  case x if x % 2 == 1 => x + " is odd"
+  case x if x % 2 == 1 => s"$x is odd"
 }
 val even = 1 to 3 collect isEven
 val odd = 1 to 3 collect isOdd
