@@ -4,7 +4,6 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 import scala.annotation.tailrec
-import scala.util.control.TailCalls.{TailRec, done, tailcall}
 
 class RecursionTest extends AnyFunSuite with Matchers {
   test("non-tailrec structural recursion") {
@@ -87,6 +86,8 @@ class RecursionTest extends AnyFunSuite with Matchers {
   }
 
   test("tailcall fibonacci") {
+    import scala.util.control.TailCalls.{TailRec, done, tailcall}
+
     def fibonacci(n: Long): TailRec[Long] = {
       if (n < 2) done(n)
       else for {
