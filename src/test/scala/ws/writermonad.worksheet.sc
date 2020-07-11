@@ -33,4 +33,4 @@ val writer = for {
   hr <- h(gr)
 } yield hr
 
-val compiler = f(100).flatMap { fr => g(fr).flatMap { gr => h(gr).map { hr => hr } } }
+f(100).flatMap { fr => g(fr).flatMap { gr => h(gr).map { hr => hr } } }
