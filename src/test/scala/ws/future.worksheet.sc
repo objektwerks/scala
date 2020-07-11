@@ -2,11 +2,10 @@ import scala.annotation.tailrec
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-import scala.language.postfixOps
 import scala.util.{Failure, Success}
 
 @tailrec
-def factorial(n: Int, acc: Int = 1): Int = n match {
+final def factorial(n: Int, acc: Int = 1): Int = n match {
   case i if i < 1 => acc
   case _ => factorial(n - 1, acc * n)
 }
