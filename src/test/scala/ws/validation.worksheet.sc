@@ -33,4 +33,4 @@ import Validators._
 
 val person = Person("Fred", "")
 val violations = person.validate
-val isInvalid = violations.nonEmpty
+violations.nonEmpty
