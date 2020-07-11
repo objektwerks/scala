@@ -1,5 +1,3 @@
-import scala.language.higherKinds
-
 trait Semigroup[A] {
   def append(x: A, y: => A): A
 }
@@ -13,5 +11,5 @@ val addMonoid = new Monoid[Int] {
   override def append(x: Int, y: => Int): Int = x + y
 }
 
-val zero = addMonoid.zero
-val append = addMonoid.append(1, 1)
+addMonoid.zero
+addMonoid.append(1, 2)
