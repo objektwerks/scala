@@ -25,6 +25,7 @@ import SpeechBehavior._
 import SpeechSyntax._
 
 val cat = Cat("Jerry")
-val meow = cat.speak
+cat.speak
+
 val dog = Dog("Bruiser")
-val ruff = dog.speak
+dog.speak
