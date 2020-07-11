@@ -1,5 +1,3 @@
-import scala.language.higherKinds
-
 trait Monad[F[_]] {
   def point[A](a: => A): F[A]
   def map[A, B](fa: F[A])(f: A => B): F[B]
@@ -13,8 +11,8 @@ val optionMonad = new Monad[Option] {
 }
 
 val point = optionMonad.point(1)
-val map = optionMonad.map(point)(i => i * 3)
-val flatMap = optionMonad.flatMap(point)(i => Some(i))
+optionMonad.map(point)(i => i * 3)
+optionMonad.flatMap(point)(i => Some(i))
 
 case class Value[A](private val a: A) {
   def flatMap[B](f: A => Value[B]): Value[B] = f(a)
@@ -30,4 +28,4 @@ val sum = for {
   j <- two
   k <- three
 } yield i + j + k
-val six = sum.get
+sum.get
