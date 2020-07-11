@@ -19,10 +19,10 @@ case class Triangle(a: Int, b: Int, c: Int) {
 }
 
 val equilateral = Triangle(3, 3, 3)
-val e = equilateral.kind == Triangles.equilateral
+equilateral.kind == Triangles.equilateral
 
 val isosceles = Triangle(3, 6, 3)
-val i = isosceles.kind == Triangles.isoceles
+isosceles.kind == Triangles.isoceles
 
 val scalene = Triangle(3, 6, 9)
-val s = scalene.kind == Triangles.scalene
+scalene.kind == Triangles.scalene
