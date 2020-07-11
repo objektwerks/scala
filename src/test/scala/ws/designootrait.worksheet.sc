@@ -1,7 +1,5 @@
 import java.time.LocalDateTime
 
-import scala.language.implicitConversions
-
 case class Bank(number: Int, members: Set[Member])
 case class Member(number: Int, accounts: Set[Account])
 
