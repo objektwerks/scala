@@ -11,8 +11,8 @@ implicit class StringOps(val value: String) {
     if (value.nonEmpty) value.length >= length else false
 }
 
-val isLessThan = "abc" < "abcd"
-val isLessThanEqual = "def" <= "def" && "def" <= "defg"
-val isEqual = "xyz" === 3
-val isGreaterThan = "mnlop" > 3
-val isGreaterThanEqual = "def" >= 3 && "defg" >= 3
+"abc" < "abcd"
+"def" <= "def" && "def" <= "defg"
+"xyz" === 3
+"mnlop" > 3
+"def" >= 3 && "defg" >= 3

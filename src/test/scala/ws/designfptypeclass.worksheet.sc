@@ -41,7 +41,8 @@ val checking = Account(Checking, 1, Amount(100.0))
 val savings = Account(Savings, 2, Amount(100.0))
 val member = Member(1, Set(checking, savings))
 val bank = Bank(1, Set(member))
+
 val transaction = executeUnitOfWork(checking, savings, DefaultTransaction)
-val deposited = transaction._1
-val transferred = transaction._2
-val withdrawn = transaction._3
+transaction._1
+transaction._2
+transaction._3

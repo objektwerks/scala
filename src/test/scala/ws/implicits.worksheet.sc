@@ -30,5 +30,5 @@ object Value {
 }
 import Value._
 val values = List(3, 2, 1).map(n => Value(n))
-val combinedValue = values.foldLeft(Value(0))(_ + _)
-val sorted = values.sorted
+values.foldLeft(Value(0))(_ + _)
+values.sorted

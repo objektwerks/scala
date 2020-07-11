@@ -44,6 +44,6 @@ val member = Member(1, Set(checking, savings))
 val bank = Bank(1, Set(member))
 
 import Transaction._
-val deposited = execute(Deposit(checking, Amount(10.00)))
-val transferred = execute(Transfer(checking, savings, Amount(10.00)))
-val withdrawn = execute(Withdraw(checking, Amount(10.00)))
+execute(Deposit(checking, Amount(10.00)))
+execute(Transfer(checking, savings, Amount(10.00)))
+execute(Withdraw(checking, Amount(10.00)))

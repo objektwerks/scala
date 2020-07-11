@@ -14,4 +14,4 @@ val optionApplicative = new Applicative[Option] {
 }
 
 val point = optionApplicative.point(1)
-val map = optionApplicative.map(point)(i => i * 3)
+optionApplicative.map(point)(i => i * 3)

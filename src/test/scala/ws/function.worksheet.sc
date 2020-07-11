@@ -52,36 +52,36 @@ val (three, six) = (3, 6)
 val sumTupled = sum.tupled
 val sumTupledApply = sumTupled.apply((three, six))
 val tuple = (3, 6, 9)
-val tupleCopy = tuple.copy(13, 15, 18)
+tuple.copy(13, 15, 18)
 
 val partialFunction = new PartialFunction[Int, Int] {
   def apply(i: Int): Int = i * 2
   def isDefinedAt(i: Int): Boolean = i != 0
 }
-val apply = partialFunction(2)
-val isDefinedAt = partialFunction.isDefinedAt(42)
-val isDefinedAtZero = partialFunction.isDefinedAt(0)
-val mapList = List(0, 1, 2) map partialFunction
-val collectList = List(0, 1, 2) collect partialFunction
-val noCats = List(42, "cat") collect { case i: Int => partialFunction(i) }
+partialFunction(2)
+partialFunction.isDefinedAt(42)
+partialFunction.isDefinedAt(0)
+List(0, 1, 2) map partialFunction
+List(0, 1, 2) collect partialFunction
+List(42, "cat") collect { case i: Int => partialFunction(i) }
 
 def higherOrderFunction(f: (Int, Int) => Int,
                         g: (Int, Int) => Int)
                        (x: Int, y: Int): (Int, Int) = (f(x, y), g(x, y))
-val hof = higherOrderFunction(sum, product)(3, 3)
+higherOrderFunction(sum, product)(3, 3)
 
 def filter[A](p: A => Boolean)(xs: Seq[A]): Seq[A] = xs filter p
-val evens = filter(isEven)(List(1, 2, 3, 4))
+filter(isEven)(List(1, 2, 3, 4))
 
 def map[A, B](f: A => B)(xs: Seq[A]): Seq[B] = xs map f
-val mapResult = map(square)(List(1, 2, 3))
+map(square)(List(1, 2, 3))
 
 @tailrec
 final def factorial(n: Int, acc: Int = 1): Int = n match {
   case i if i < 1 => acc
   case _ => factorial(n - 1, acc * n)
 }
-val recursion = factorial(9)
+factorial(9)
 
 val incr = (n: Int) => n + 1
 val decr = (n: Int) => n - 1

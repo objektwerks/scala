@@ -1,4 +1,37 @@
-import java.time.LocalDateTime
+
+package ammonite
+package $file.src.test.scala.ws
+import _root_.ammonite.interp.api.InterpBridge.{
+  value => interp
+}
+import _root_.ammonite.interp.api.InterpBridge.value.{
+  exit
+}
+import _root_.ammonite.interp.api.IvyConstructor.{
+  ArtifactIdExt,
+  GroupIdExt
+}
+import _root_.ammonite.runtime.tools.{
+  browse,
+  grep,
+  time,
+  tail
+}
+import _root_.ammonite.repl.tools.{
+  desugar,
+  source
+}
+import _root_.ammonite.main.Router.{
+  doc,
+  main
+}
+import _root_.ammonite.repl.tools.Util.{
+  pathScoptRead
+}
+
+
+object `design.oo.inheritance`{
+/*<script>*/import java.time.LocalDateTime
 
 import scala.language.implicitConversions
 
@@ -40,6 +73,10 @@ val savings = Savings(2, Amount(100.0))
 val member = Member(1, Set(checking, savings))
 val bank = Bank(1, Set(member))
 
-checking.deposit(Amount(10.00))
-checking.transfer(Amount(10.00), savings)
-savings.withdraw(Amount(10.00))
+val deposited = checking.deposit(Amount(10.00))
+val transferred = checking.transfer(Amount(10.00), savings)
+val withdrawn = savings.withdraw(Amount(10.00))/*</script>*/ /*<generated>*/
+def $main() = { scala.Iterator[String]() }
+  override def toString = "design$u002Eoo$u002Einheritance"
+  /*</generated>*/
+}
