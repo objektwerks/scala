@@ -1,3 +1,10 @@
+/*
+  No access is allowed to the class Value:
+   1) constructor arg (number: Int)
+  Bidirectional access is allowed between class and object Value:
+   1) private val
+   2) private def
+*/
 class Value(number: Int) {
   private val privateNumber = number
 
@@ -20,11 +27,3 @@ object Value {
 
 val value = Value(3)
 val double = Value.double(value)
-
-/*
-  No access is allowed to the class Value:
-   1) constructor arg (number: Int)
-  Bidirectional access is allowed between class and object Value:
-   1) private val
-   2) private def
-*/
