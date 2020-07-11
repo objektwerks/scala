@@ -45,11 +45,13 @@ class OptionTest extends AnyFunSuite with Matchers {
 
   test("flatmap") {
     def toInt(s: String): Option[Int] = Try(s.toInt).toOption
+
     val strings = List("1", "2", "3", "four")
     strings.flatMap(toInt) shouldEqual List(1, 2, 3)
     strings.flatMap(toInt).sum shouldEqual 6
 
     def sum(x: Option[Int], y: Option[Int]): Option[Int] = x.flatMap(i => y.map(j => i + j))
+    
     sum(toInt("1"), toInt("2")).contains(3) shouldBe true
     sum(toInt("1"), toInt("zspace")).isEmpty shouldBe true
   }
