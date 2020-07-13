@@ -1,19 +1,18 @@
 // Data
-val xs = (1 to 100).toArray[Int]
+val data = (1 to 10).toArray[Int]
 
 // O(n) - Linear Time
 def linearTime(array: Array[Int]): Int = {
-  array.foreach { i =>
-    require(i > -1)
+  var length = 0
+  array.foreach { _ =>
+    length = length + 1
   }
-  array.length
+  length
 }
-
-linearTime(xs)
+linearTime(data)
 
 // O(1) - Constant Time
 def constantTime(array: Array[Int]): Int = {
   array(0)
 }
-
-constantTime(xs)
+constantTime(data)
