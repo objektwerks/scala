@@ -1,3 +1,5 @@
+import scala.annotation.tailrec
+
 // O(1) - Constant Time
 def constantTime(array: Array[Int]): Int = {
   array(0)
@@ -25,3 +27,11 @@ def quadraticTime(): Array[Array[Int]] = {
   matrix
 }
 quadraticTime()
+
+// O(2^N) - Exponential Times
+@tailrec
+final def factorial(n: Int, acc: Int = 1): Int = n match {
+  case i if i < 1 => acc
+  case _ => factorial(n - 1, acc * n)
+}
+factorial(9)
