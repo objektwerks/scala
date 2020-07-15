@@ -19,7 +19,7 @@ linearTime((1 to 10).toArray[Int])
 // O(log N) - Binary Search
 case class Value(number: Int)
 implicit def ordering: Ordering[Value] = Ordering.by(_.number)
-val values = List( Value(3), Value(2), Value(1) )
+val values = List( Value(10), Value(9), Value(8), Value(7), Value(6), Value(5), Value(4), Value(3), Value(3), Value(2), Value(1) )
 values.sorted
 values.sorted.search(Value(3))
 
