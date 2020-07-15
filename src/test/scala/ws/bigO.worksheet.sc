@@ -29,12 +29,15 @@ def quadraticTime(): Array[Array[Int]] = {
 quadraticTime()
 
 // O(2^N) - Exponential Time
-@tailrec
-final def factorial(n: Int, acc: Int = 1): Int = n match {
-  case i if i < 1 => acc
-  case _ => factorial(n - 1, acc * n)
+def fibonacci(n: Long): BigInt = {
+  @tailrec
+  def loop(n: Long, a: Long, b: Long): BigInt = n match {
+    case 0 => a
+    case _ => loop(n - 1, b, a + b)
+  }
+  loop(n, 0, 1)
 }
-factorial(9)
+fibonacci(39)
 
 // O(N!) - Factorial Time
 @tailrec
