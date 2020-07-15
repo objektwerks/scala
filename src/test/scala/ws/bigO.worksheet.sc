@@ -16,6 +16,13 @@ def linearTime(array: Array[Int]): Int = {
 }
 linearTime((1 to 10).toArray[Int])
 
+// O(log N) - Binary Search
+case class Value(number: Int)
+implicit def ordering: Ordering[Value] = Ordering.by(_.number)
+val values = List( Value(3), Value(2), Value(1) )
+values.sorted
+values.sorted.search(Value(3))
+
 // O(n^2) - Quadratic Time
 def quadraticTime(): Array[Array[Int]] = {
   val matrix = Array.ofDim[Int](3, 3)
