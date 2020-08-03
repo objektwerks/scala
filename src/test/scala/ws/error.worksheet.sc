@@ -34,3 +34,13 @@ toIntWithOption("a").getOrElse(0)
 toIntWithEither("a").getOrElse(0)
 
 Try("a".toInt).getOrElse(0)
+
+val leftEither: Either[String, String] = Left("error")
+for {
+  value <- leftEither
+} yield value.toUpperCase()
+
+val rightEither: Either[String, String] = Right("success")
+for {
+  value <- rightEither
+} yield value.toUpperCase()
