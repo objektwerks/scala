@@ -23,7 +23,7 @@ val xml = "xml".toXml
 // Ordering
 case class Value(number: Int)
 object Value {
-  implicit class ValueCombiner(val value: Value) {
+  implicit class Ops(val value: Value) {
     def +(other: Value): Value = Value(value.number + other.number)
   }
   implicit def ordering: Ordering[Value] = Ordering.by(_.number)
