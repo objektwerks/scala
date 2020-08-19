@@ -21,11 +21,24 @@ object Types {
     def apply[A <: Natural, B <: Natural](implicit lt: <[A, B]) = lt
   }
 
+  trait <=[A <: Natural, B <: Natural]
+  object <= {
+    implicit def lte[B <: Natural]: <=[_0, Next[B]] = new <=[_0, Next[B]] {}
+    implicit def ltex[A <: Natural, B <: Natural](implicit lte: <=[A, B]): <=[Next[A], Next[B]] = new <=[Next[A], Next[B]] {}
+    def apply[A <: Natural, B <: Natural](implicit lt: <[A, B]) = lt
+  }
+
   def main(args: Array[String]): Unit = {
     println(show( <[_0, _1] ))
     println(show( <[_0, _2] ))
     println(show( <[_0, _3] ))
     println(show( <[_1, _2]) )
     println(show( <[_2, _3]) )
+
+    println(show( <=[_0, _1] ))
+    println(show( <=[_0, _2] ))
+    println(show( <=[_0, _3] ))
+    println(show( <=[_1, _2]) )
+    println(show( <=[_2, _3]) )
   }
 }
