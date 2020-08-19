@@ -34,7 +34,7 @@ object Types {
   }
 
   def main(args: Array[String]): Unit = {
-    println( show( List(1, 2, 3)) )
+    println( show( List(1, 2, 3) ) )
 
     println( show( <[_0, _1] ) )
     println( show( <[_0, _2] ) )

@@ -30,7 +30,7 @@ object <= {
   def apply[A <: Natural, B <: Natural](implicit ilte: <=[A, B]) = ilte
 }
 
-println( show( List(1, 2, 3)) )
+println( show( List(1, 2, 3) ) )
 
 println( show( <[_0, _1] ) )
 println( show( <[_0, _2] ) )
