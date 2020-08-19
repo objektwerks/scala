@@ -1,15 +1,14 @@
 import scala.reflect.runtime.universe._
 
 def show[T](value: T)(implicit tag: TypeTag[T]) = tag.toString.replace("package.object", s"${value.toString}")
-println(show(List(1, 2, 3)))
 
 trait Natural
 class _0 extends Natural
-class Successor[N <: Natural] extends Natural
+class Next[N <: Natural] extends Natural
 
-type _1 = Successor[_0]
-type _2 = Successor[_1]
-type _3 = Successor[_2]
+type _1 = Next[_0]
+type _2 = Next[_1]
+type _3 = Next[_2]
 
 trait <[A <: Natural, B <: Natural]
 object < {
@@ -31,15 +30,17 @@ object <= {
   def apply[A <: Natural, B <: Natural](implicit ilte: <=[A, B]) = ilte
 }
 
-println(show( <[_0, _1] ))
-println(show( <[_0, _2] ))
-println(show( <[_0, _3] ))
-println(show( <[_1, _2]) )
-println(show( <[_2, _3]) )
+println( show( List(1, 2, 3)) )
 
-println(show( <=[_0, _1] ))
-println(show( <=[_0, _2] ))
-println(show( <=[_0, _3] ))
-println(show( <=[_1, _2]) )
-println(show( <=[_1, _3]) )
-println(show( <=[_2, _3]) )
+println( show( <[_0, _1] ) )
+println( show( <[_0, _2] ) )
+println( show( <[_0, _3] ) )
+println( show( <[_1, _2]) )
+println( show( <[_2, _3]) )
+
+println( show( <=[_0, _1] ) )
+println( show( <=[_0, _2] ) ) 
+println( show( <=[_0, _3] ) )
+println( show( <=[_1, _2]) )
+println( show( <=[_1, _3]) )
+println( show( <=[_2, _3]) )

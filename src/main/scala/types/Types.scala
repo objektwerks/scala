@@ -4,7 +4,6 @@ object Types {
   import scala.reflect.runtime.universe._
 
   def show[T](value: T)(implicit tag: TypeTag[T]) = tag.toString.replace("types.Types", s"${value.toString}")
-  println(show(List(1, 2, 3)))
 
   trait Natural
   class _0 extends Natural
@@ -35,17 +34,19 @@ object Types {
   }
 
   def main(args: Array[String]): Unit = {
-    println(show( <[_0, _1] ))
-    println(show( <[_0, _2] ))
-    println(show( <[_0, _3] ))
-    println(show( <[_1, _2]) )
-    println(show( <[_2, _3]) )
+    println( show( List(1, 2, 3)) )
 
-    println(show( <=[_0, _1] ))
-    println(show( <=[_0, _2] ))
-    println(show( <=[_0, _3] ))
-    println(show( <=[_1, _2]) )
-    println(show( <=[_1, _3]) )
-    println(show( <=[_2, _3]) )
+    println( show( <[_0, _1] ) )
+    println( show( <[_0, _2] ) )
+    println( show( <[_0, _3] ) )
+    println( show( <[_1, _2]) )
+    println( show( <[_2, _3]) )
+
+    println( show( <=[_0, _1] ) )
+    println( show( <=[_0, _2] ) ) 
+    println( show( <=[_0, _3] ) )
+    println( show( <=[_1, _2]) )
+    println( show( <=[_1, _3]) )
+    println( show( <=[_2, _3]) )
   }
 }
