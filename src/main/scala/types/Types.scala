@@ -15,22 +15,24 @@ object Types {
 
   trait <[A <: Natural, B <: Natural]
   object < {
+    def apply[A <: Natural, B <: Natural](implicit ilt: <[A, B]) = ilt
+
     implicit def lt[B <: Natural]: <[_0, Next[B]] = new <[_0, Next[B]] {}
     implicit def ltx[A <: Natural, B <: Natural](implicit ilt: <[A, B]): <[Next[A], Next[B]] = {
       assert(ilt != null)
       new <[Next[A], Next[B]] {}
     }
-    def apply[A <: Natural, B <: Natural](implicit ilt: <[A, B]) = ilt
   }
 
   trait <=[A <: Natural, B <: Natural]
   object <= {
+    def apply[A <: Natural, B <: Natural](implicit ilte: <=[A, B]) = ilte
+
     implicit def lte[B <: Natural]: <=[_0, Next[B]] = new <=[_0, Next[B]] {}
     implicit def ltex[A <: Natural, B <: Natural](implicit ilte: <=[A, B]): <=[Next[A], Next[B]] = {
       assert(ilte != null)
       new <=[Next[A], Next[B]] {}
     }
-    def apply[A <: Natural, B <: Natural](implicit ilte: <=[A, B]) = ilte
   }
 
   def main(args: Array[String]): Unit = {
