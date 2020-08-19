@@ -39,14 +39,15 @@ object Types {
     println( show( <[_0, _1] ) )
     println( show( <[_0, _2] ) )
     println( show( <[_0, _3] ) )
-    println( show( <[_1, _2]) )
-    println( show( <[_2, _3]) )
+    println( show( <[_1, _2] ) )
+    println( show( <[_1, _3] ) )
+    println( show( <[_2, _3] ) )
 
     println( show( <=[_0, _1] ) )
     println( show( <=[_0, _2] ) ) 
     println( show( <=[_0, _3] ) )
-    println( show( <=[_1, _2]) )
-    println( show( <=[_1, _3]) )
-    println( show( <=[_2, _3]) )
+    println( show( <=[_1, _2] ) )
+    println( show( <=[_1, _3] ) )
+    println( show( <=[_2, _3] ) )
   }
 }
