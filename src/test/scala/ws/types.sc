@@ -14,21 +14,21 @@ type _3 = Successor[_2]
 trait <[A <: Natural, B <: Natural]
 object < {
   implicit def lt[B <: Natural]: <[_0, Next[B]] = new <[_0, Next[B]] {}
-  implicit def ltx[A <: Natural, B <: Natural](implicit lt: <[A, B]): <[Next[A], Next[B]] = {
-    println(lt)
+  implicit def ltx[A <: Natural, B <: Natural](implicit ilt: <[A, B]): <[Next[A], Next[B]] = {
+    println(ilt)
     new <[Next[A], Next[B]] {}
   }
-  def apply[A <: Natural, B <: Natural](implicit lt: <[A, B]) = lt
+  def apply[A <: Natural, B <: Natural](implicit ilt: <[A, B]) = ilt
 }
 
 trait <=[A <: Natural, B <: Natural]
 object <= {
   implicit def lte[B <: Natural]: <=[_0, Next[B]] = new <=[_0, Next[B]] {}
-  implicit def ltex[A <: Natural, B <: Natural](implicit lte: <=[A, B]): <=[Next[A], Next[B]] = {
-    println(lte)
+  implicit def ltex[A <: Natural, B <: Natural](implicit ilte: <=[A, B]): <=[Next[A], Next[B]] = {
+    println(ilte)
     new <=[Next[A], Next[B]] {}
   }
-  def apply[A <: Natural, B <: Natural](implicit lt: <[A, B]) = lt
+  def apply[A <: Natural, B <: Natural](implicit ilte: <=[A, B]) = ilte
 }
 
 println(show( <[_0, _1] ))
@@ -41,6 +41,5 @@ println(show( <=[_0, _1] ))
 println(show( <=[_0, _2] ))
 println(show( <=[_0, _3] ))
 println(show( <=[_1, _2]) )
+println(show( <=[_1, _3]) )
 println(show( <=[_2, _3]) )
-
-println("test")
