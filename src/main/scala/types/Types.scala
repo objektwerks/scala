@@ -35,24 +35,26 @@ object Types {
     }
   }
 
-  trait +[A <: Natural, B <: Natural, S <: Natural]
+  trait +[A <: Natural, B <: Natural] { type Result <: Natural }
   object + {
-    def apply[A <: Natural, B <: Natural, S <: Natural](implicit plus: +[A, B, S]): +[A, B, S] = plus
+    type Plus[A <: Natural, B <: Natural, S <: Natural] = +[A, B] { type Result = S }
+    
+    def apply[A <: Natural, B <: Natural](implicit plus: +[A, B]): +[A, B] = plus
 
-    implicit val zero = new +[_0, _0, _0] {}
+    implicit val zero = new +[_0, _0] { type Result = _0 }
 
-    implicit def AplusZeqA[A <: Natural](implicit lt: _0 < A): +[_0, A, A] = {
+    implicit def AplusZeqA[A <: Natural](implicit lt: _0 < A): +[_0, A] = {
       assert(lt != null)
-      new +[_0, A, A] {}
+      new +[_0, A] { type Result = A }
     }
-    implicit def ZplusAeqA[A <: Natural](implicit lt: _0 < A): +[A, _0, A] = {
+    implicit def ZplusAeqA[A <: Natural](implicit lt: _0 < A): +[A, _0] = {
       assert(lt != null)
-      new +[A, _0, A] {}
+      new +[A, _0] { type Result = A }
     }
 
-    implicit def plusx[A <: Natural, B <: Natural, S <: Natural](implicit plus: +[A, B, S]): +[Next[A], Next[B], Next[Next[S]]] = {
+    implicit def plusx[A <: Natural, B <: Natural, S <: Natural](implicit plus: Plus[A, B, S]): Plus[Next[A], Next[B], Next[Next[S]]] = {
       assert(plus != null)
-      new +[Next[A], Next[B], Next[Next[S]]] {}
+      new +[Next[A], Next[B]] { type Result = Next[Next[S]] }
     }
   }
 
@@ -76,8 +78,7 @@ object Types {
     println( show( <=[_1, _3] ) )
     println( show( <=[_2, _3] ) )
 
-    // plus
-    // val three: +[_1, _2, _3] = +.apply
-    // println( show( three ) )
+    // plus ... compiler error
+   // println( show( +.apply[_1, _2] ) )
   }
 }
