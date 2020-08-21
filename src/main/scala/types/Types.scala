@@ -81,6 +81,6 @@ object Types {
     println( show( <=[_2, _3] ) )
 
     // plus ... illegal start of simple expression scalameta compiler error
-    // println( show(  +.apply[_1, _2] ) )
+    // println( show( +.apply[_1, _2] ) )
   }
 }
