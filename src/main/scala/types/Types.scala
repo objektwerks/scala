@@ -40,6 +40,20 @@ object Types {
     def apply[A <: Natural, B <: Natural, S <: Natural](implicit plus: +[A, B, S]): +[A, B, S] = plus
 
     implicit val zero = new +[_0, _0, _0] {}
+
+    implicit def AplusZeqA[A <: Natural](implicit lt: _0 < A): +[_0, A, A] = {
+      assert(lt != null)
+      new +[_0, A, A] {}
+    }
+    implicit def ZplusAeqA[A <: Natural](implicit lt: _0 < A): +[A, _0, A] = {
+      assert(lt != null)
+      new +[A, _0, A] {}
+    }
+
+    implicit def plusx[A <: Natural, B <: Natural, S <: Natural](implicit plus: +[A, B, S]): +[Next[A], Next[B], Next[Next[S]]] = {
+      assert(plus != null)
+      new +[Next[A], Next[B], Next[Next[S]]] {}
+    }
   }
 
   def main(args: Array[String]): Unit = {
@@ -61,5 +75,9 @@ object Types {
     println( show( <=[_1, _2] ) )
     println( show( <=[_1, _3] ) )
     println( show( <=[_2, _3] ) )
+
+    // plus
+    // val three: +[_1, _2, _3] = +.apply
+    // println( show( three ) )
   }
 }
