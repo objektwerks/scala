@@ -35,17 +35,18 @@ object <= {
 trait +[A <: Natural, B <: Natural] { type Result <: Natural }
 object + {
   type Plus[A <: Natural, B <: Natural, S <: Natural] = +[A, B] { type Result = S }
-  
-  def apply[A <: Natural, B <: Natural](implicit plus: +[A, B]): +[A, B] = plus
 
   implicit val zero = new +[_0, _0] { type Result = _0 }
   implicit val one = new +[_0, _1] { type Result = _1 }
   implicit val two = new +[_0, _2] { type Result = _2 }
-  
+
+  def apply[A <: Natural, B <: Natural](implicit plus: +[A, B]): +[A, B] = plus
+ 
   implicit def AplusZeqA[A <: Natural](implicit lt: _0 < A): +[_0, A] = {
     assert(lt != null)
     new +[_0, A] { type Result = A }
   }
+
   implicit def ZplusAeqA[A <: Natural](implicit lt: _0 < A): +[A, _0] = {
     assert(lt != null)
     new +[A, _0] { type Result = A }
