@@ -35,9 +35,18 @@ object Types {
     }
   }
 
+  trait +[A <: Natural, B <: Natural, S <: Natural]
+  object + {
+    def apply[A <: Natural, B <: Natural, S <: Natural](implicit plus: +[A, B, S]): +[A, B, S] = plus
+
+    implicit val zero = new +[_0, _0, _0] {}
+  }
+
   def main(args: Array[String]): Unit = {
+    // show
     println( show( List(1, 2, 3) ) )
 
+    // less than
     println( show( <[_0, _1] ) )
     println( show( <[_0, _2] ) )
     println( show( <[_0, _3] ) )
@@ -45,6 +54,7 @@ object Types {
     println( show( <[_1, _3] ) )
     println( show( <[_2, _3] ) )
 
+    // less than equal
     println( show( <=[_0, _1] ) )
     println( show( <=[_0, _2] ) ) 
     println( show( <=[_0, _3] ) )
