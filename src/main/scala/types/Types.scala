@@ -62,25 +62,25 @@ object Types {
 
   def main(args: Array[String]): Unit = {
     // show
-    println( show( List(1, 2, 3) ) )
+    println( "List(1, 2, 3) > " + show( List(1, 2, 3) ) )
 
     // less than
-    println( show( <[_0, _1] ) )
-    println( show( <[_0, _2] ) )
-    println( show( <[_0, _3] ) )
-    println( show( <[_1, _2] ) )
-    println( show( <[_1, _3] ) )
-    println( show( <[_2, _3] ) )
+    println( "0 < 1 > " + show( <[_0, _1] ) )
+    println( "0 < 2 > " + show( <[_0, _2] ) )
+    println( "0 < 3 > " + show( <[_0, _3] ) )
+    println( "1 < 2 > " + show( <[_1, _2] ) )
+    println( "1 < 3 > " + show( <[_1, _3] ) )
+    println( "2 < 3 > " + show( <[_2, _3] ) )
 
     // less than equals
-    println( show( <=[_0, _1] ) )
-    println( show( <=[_0, _2] ) ) 
-    println( show( <=[_0, _3] ) )
-    println( show( <=[_1, _2] ) )
-    println( show( <=[_1, _3] ) )
-    println( show( <=[_2, _3] ) )
+    println( "0 <= 1 > " + show( <=[_0, _1] ) )
+    println( "0 <= 2 > " + show( <=[_0, _2] ) ) 
+    println( "0 <= 3 > " + show( <=[_0, _3] ) )
+    println( "1 <= 2 > " + show( <=[_1, _2] ) )
+    println( "1 <= 3 > " + show( <=[_1, _3] ) )
+    println( "2 <= 3 > " + show( <=[_2, _3] ) )
 
-    // plus ... illegal start of simple expression scalameta compiler error
-    // println( show( +.apply[_1, _2] ) )
+    // plus ... illegal start of simple expression scalameta compiler error ... yet it compiles and runs!
+    println( "1 + 2 > " + show( +.apply[_1, _2] ) )
   }
 }
