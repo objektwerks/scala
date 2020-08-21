@@ -39,7 +39,9 @@ object + {
   def apply[A <: Natural, B <: Natural](implicit plus: +[A, B]): +[A, B] = plus
 
   implicit val zero = new +[_0, _0] { type Result = _0 }
-
+  implicit val one = new +[_0, _1] { type Result = _1 }
+  implicit val two = new +[_0, _2] { type Result = _2 }
+  
   implicit def AplusZeqA[A <: Natural](implicit lt: _0 < A): +[_0, A] = {
     assert(lt != null)
     new +[_0, A] { type Result = A }
@@ -74,5 +76,5 @@ println( show( <=[_1, _2] ) )
 println( show( <=[_1, _3] ) )
 println( show( <=[_2, _3] ) )
 
-// plus ... compiler error
+// plus ... illegal start of simple expression scalameta compiler error
 // println( show( +.apply[_1, _2] ) )
