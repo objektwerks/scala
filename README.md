@@ -2,6 +2,14 @@ Scala
 -----
 >This project contains Scala 2.13 feature tests.
 
+Test
+----
+* sbt clean test
+
+Run
+---
+* sbt clean compile run
+
 Environment
 -----------
 > The following list details commonplace items found in productive Scala shops.
