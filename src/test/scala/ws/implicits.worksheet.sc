@@ -33,6 +33,7 @@ val values = List(3, 2, 1).map(n => Value(n))
 values.foldLeft(Value(0))(_ + _)
 values.sorted
 
+// Types and more implicit extensions
 sealed trait Animal
 case class Cat(name: String) extends Animal
 case class Dog(name: String) extends Animal
