@@ -1,17 +1,16 @@
-trait Sum[T] {
-  def sum(list: List[T]): T
+trait Combiner[T] {
+  def combine(list: List[T]): T
 }
 
-implicit object IntSum extends Sum[Int] {
-  def sum(list: List[Int]): Int = list.sum
+implicit object IntCombiner extends Combiner[Int] {
+  def combine(list: List[Int]): Int = list.sum
 }
 
-implicit object StringSum extends Sum[String] {
-  def sum(list: List[String]): String = list.mkString("")
+implicit object StringCombiner extends Combiner[String] {
+  def combine(list: List[String]): String = list.mkString("")
 }
 
-def sumList[T](list: List[T])(implicit implementor: Sum[T]): T =
-  implementor.sum(list)
+def combineList[T](list: List[T])(implicit combiner: Combiner[T]): T = combiner.combine(list)
 
-sumList(List(1, 2, 3)) 
-sumList(List("Scala ", "is ", "awesome!"))
+combineList(List(1, 2, 3)) 
+combineList(List("Scala ", "is ", "awesome!"))
