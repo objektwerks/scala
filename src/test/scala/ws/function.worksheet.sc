@@ -113,13 +113,13 @@ caseExpression(1)
 caseExpression(1.0)
 caseExpression("1")
 
-def diff(previous: Double, current: Double): Int = {
+def diffByPercentage(previous: Double, current: Double): Int = {
   val dividend = current - previous
   val divisor = ( current + previous ) / 2
   val delta = Math.abs( dividend / divisor ) * 100
   delta.round.toInt
 }
 
-diff(70.0, 75.0)
-diff(75.0, 70.0)
-diff(75.0, 80.0)
+diffByPercentage(70.0, 75.0)
+diffByPercentage(75.0, 70.0)
+diffByPercentage(75.0, 80.0)
