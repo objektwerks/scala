@@ -122,3 +122,4 @@ def diff(previous: Double, current: Double): Int = {
 
 diff(70.0, 75.0)
 diff(75.0, 70.0)
+diff(75.0, 80.0)
