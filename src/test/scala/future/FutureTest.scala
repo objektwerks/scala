@@ -155,6 +155,11 @@ class FutureTest extends AnyFunSuite with Matchers {
     Future(Integer.parseInt("one")) recover { case _ => 1 } foreach { i => i shouldEqual 1 }
   }
 
+  test("recover > map > recover") {
+    Future(Integer.parseInt("one")).map{ i => i * 3 }.recover{ case _ => -1 }.foreach{ i => i shouldEqual -1 }
+    Future(Integer.parseInt("1")).map{ i => i * 3 }.recover{ case _ => -1 }.foreach{ i => i shouldEqual 3 }
+ }
+
   test("recoverWith") {
     Future(Integer.parseInt("one")) recoverWith { case _ => Future(1) } foreach { i => i shouldEqual 1 }
   }
