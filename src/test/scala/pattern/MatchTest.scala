@@ -80,12 +80,13 @@ class MatchTest extends AnyFunSuite with Matchers {
   }
 
   test("alias match") {
-    case class Stock(symbol: String, price: Double)
+    final case class Stock(symbol: String, price: Double)
     def isPriceHigher(today: Stock, yesterday: Stock): Boolean = today match {
       case t @ Stock(_, _) if t.symbol == yesterday.symbol => t.price > yesterday.price
+      case _ => false
     }
-    val yesterday = Stock("XYZ", 1.11)
     val today = Stock("XYZ", 3.33)
+    val yesterday = Stock("XYZ", 1.11)
     isPriceHigher(today, yesterday) shouldBe true
   }
 

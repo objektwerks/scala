@@ -18,7 +18,7 @@ class IOTest extends AnyFunSuite with Matchers {
 
   test("from file") {
     val words = Using( Source.fromFile("./LICENSE", utf8) ) { source => source.mkString.split("\\W+") }
-    words.get.length shouldEqual 169
+    words.get.length shouldEqual 1427
   }
 
   test("from input stream") {
