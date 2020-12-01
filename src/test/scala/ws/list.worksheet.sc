@@ -75,11 +75,11 @@ val findElements = (1 to 10).toList
 findElementReverseRight(findElements, 4)
 findElementReverseRight(findElements, 15)
 
-def isListAinListB[A](listA: List[A], listB: List[A]): Boolean = {
-  listA.count(a => listB.contains(a)) == listA.length
+def doesListAcontainListB[A](listA: List[A], listB: List[A]): Boolean = {
+  listB.count(b => listA.contains(b)) == listB.length
 }
-isListAinListB((5 to 15).toList, (1 to 20).toList)
-isListAinListB((10 to 30).toList, (15 to 50).toList)
+doesListAcontainListB( listA = (1 to 20).toList, listB = (5 to 15).toList )
+doesListAcontainListB( listA = (15 to 50).toList, listB = (10 to 30).toList )
 
 @tailrec
 final def intersectLists[A](listA: List[A],
