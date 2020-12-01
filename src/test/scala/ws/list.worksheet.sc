@@ -63,17 +63,17 @@ final def reverse[A](list: List[A], acc: List[A] = List.empty[A]): List[A] = lis
 }
 reverse( (1 to 10).toList )
 
-def findElementReverseRight[A](list: List[A], element: Int): Option[A] = {
+def findNthElementFromRight[A](list: List[A], nthElement: Int): Option[A] = {
   @tailrec
   def reverse(list: List[A], acc: List[A] = List.empty[A]): List[A] = list match {
     case Nil => acc
     case head :: tail => reverse(tail, head :: acc)
   }
-  Try { reverse(list)(element - 1) }.toOption
+  Try { reverse(list)(nthElement - 1) }.toOption
 }
 val findElements = (1 to 10).toList
-findElementReverseRight(findElements, 4)
-findElementReverseRight(findElements, 15)
+findNthElementFromRight(findElements, 4)
+findNthElementFromRight(findElements, 15)
 
 def doesListAcontainListB[A](listA: List[A], listB: List[A]): Boolean = {
   listB.count(b => listA.contains(b)) == listB.length
