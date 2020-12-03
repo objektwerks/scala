@@ -69,14 +69,21 @@ class MatchTest extends AnyFunSuite with Matchers {
   }
 
   test("guarded match") {
-    val buffer = ArrayBuffer[String]()
+    val m3m5 = ArrayBuffer[String]()
+    val m3 = ArrayBuffer[String]()
+    val m5 = ArrayBuffer[String]()
+    val none = ArrayBuffer[String]()
     1 until 100 foreach {
-      case i if i % 3 == 0 && i % 5 == 0 => buffer += s"$i -> m3 & m5"
-      case i if i % 3 == 0 => buffer += s"$i -> m3"
-      case i if i % 5 == 0 => buffer += s"$i -> m5"
-      case i => buffer += i.toString
+      case i if i % 3 == 0 && i % 5 == 0 => m3m5 += s"$i -> m3 & m5"
+      case i if i % 3 == 0 => m3 += s"$i -> m3"
+      case i if i % 5 == 0 => m5 += s"$i -> m5"
+      case i => none += i.toString
     }
-    buffer.size shouldEqual 99
+    assert( m3m5.size == 6 )
+    assert( m3.size == 27 )
+    assert( m5.size == 13 )
+    assert( none.size == 53 )
+    assert( m3m5.size + m3.size + m5.size + none.size == 99)
   }
 
   test("alias match") {
