@@ -3,8 +3,6 @@ package option
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.util.Try
-
 class OptionTest extends AnyFunSuite with Matchers {
   def greaterThanZero(x: Int): Option[Int] = if (x > 0) Some(x) else None
 
@@ -44,7 +42,7 @@ class OptionTest extends AnyFunSuite with Matchers {
   }
 
   test("flatmap") {
-    def toInt(s: String): Option[Int] = Try(s.toInt).toOption
+    def toInt(s: String): Option[Int] = s.toIntOption
 
     val strings = List("1", "2", "3", "four")
     strings.flatMap(toInt) shouldEqual List(1, 2, 3)

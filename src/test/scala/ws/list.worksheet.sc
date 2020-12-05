@@ -16,7 +16,7 @@ zs.reduce(_ + _) // List[Int] can't be empty!
 zs.scan(0)(_ + _)
 zs.sum
 
-def toInt(s: String): Option[Int] = Try(s.toInt).toOption
+def toInt(s: String): Option[Int] = s.toIntOption
 val ss = List("1", "2", "3", "four")
 ss.map(toInt)
 ss.flatMap(toInt)

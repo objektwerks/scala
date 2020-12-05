@@ -9,16 +9,16 @@ import scala.util.control.NonFatal
 import scala.util.{Success, Try, Using}
 
 class TryTest extends AnyFunSuite with Matchers {
-  def divide(x: String, y: String): Try[Int] = {
+  def divide(x: String, y: String): Option[Int] = {
     for {
-      x <- Try(x.toInt)
-      y <- Try(y.toInt)
+      x <- x.toIntOption
+      y <- y.toIntOption
     } yield x / y
   }
 
   def fileToLines(file: String): Try[Seq[String]] = Using( Source.fromFile(file, Codec.UTF8.name) ) { source => source.getLines().toSeq }
 
-  def parseInt(s: String): Option[Int] = Try(s.toInt).toOption
+  def parseInt(s: String): Option[Int] = s.toIntOption
 
   test("try catch handler") {
     val handler: PartialFunction[Throwable, Unit] = {
@@ -28,11 +28,11 @@ class TryTest extends AnyFunSuite with Matchers {
   }
 
   test("try") {
-    divide("9", "3").isSuccess shouldBe true
-    divide("9", "3").toOption.contains(3) shouldBe true
+    divide("9", "3").nonEmpty shouldBe true
+    divide("9", "3").contains(3) shouldBe true
     divide("9", "3").get shouldEqual 3
-    divide("a", "b").isFailure shouldBe true
-    divide("a", "b").toOption.isEmpty shouldBe true
+    divide("a", "b").isEmpty shouldBe true
+    divide("a", "b").isEmpty shouldBe true
     divide("a", "b").getOrElse(-1) shouldEqual -1
   }
 

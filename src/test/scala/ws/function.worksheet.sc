@@ -1,5 +1,5 @@
 import scala.annotation.tailrec
-import scala.util.{Random, Try}
+import scala.util.Random
 
 val isEven = (x: Int) => x % 2 == 0
 List(1, 2, 3, 4, 5, 6).filter(isEven)
@@ -9,7 +9,7 @@ List(1, 2, 3, 4).map(square)
 val eta = square _
 eta(3)
 
-def toInt(s: String): Option[Int] = Try(s.toInt).toOption
+def toInt(s: String): Option[Int] = s.toIntOption
 List("1", "2", "3", "four").flatMap(toInt).sum
 
 def callByValue(nextRandomInt: Int): (Int, Int) = (nextRandomInt, nextRandomInt)

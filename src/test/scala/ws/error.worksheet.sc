@@ -4,7 +4,7 @@ def toIntWithTry(s: String): Try[Int] = Try(s.toInt)
 
 def toIntWithEither(s: String): Either[Throwable, Int] = Try(s.toInt).toEither
 
-def toIntWithOption(s: String): Option[Int] = Try(s.toInt).toOption
+def toIntWithOption(s: String): Option[Int] = s.toIntOption
 
 val xs = List("1", "2", "3", "four")
 

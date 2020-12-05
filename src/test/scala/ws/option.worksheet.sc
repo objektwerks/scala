@@ -1,5 +1,3 @@
-import scala.util.Try
-
 def isPositive(i: Int): Option[Int] =
   if (i > 0) Some(i) else None
 
@@ -17,7 +15,7 @@ isPositive(1).filter(_ > 0)
 isPositive(1).filterNot(_ > 0)
 isPositive(1).forall(_ > 0)
 
-def toInt(s: String): Option[Int] = Try(s.toInt).toOption
+def toInt(s: String): Option[Int] = s.toIntOption
 val xs = List("1", "2", "3", "four")
 xs.map(toInt)
 xs.flatMap(toInt)
