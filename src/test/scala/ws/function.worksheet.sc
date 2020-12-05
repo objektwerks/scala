@@ -1,5 +1,6 @@
 import scala.annotation.tailrec
 import scala.util.Random
+import scala.util.chaining._
 
 val isEven = (x: Int) => x % 2 == 0
 List(1, 2, 3, 4, 5, 6).filter(isEven)
@@ -94,6 +95,8 @@ xs map incr map decr
 xs map incrComposeDecr
 xs map incrAndThenDecr
 xs map incrComposeDecr map incrAndThenDecr
+
+2.pipe(square) == 4
 
 def timer[A](codeblock: => A): (A, Double) = {
   val startTime = System.nanoTime

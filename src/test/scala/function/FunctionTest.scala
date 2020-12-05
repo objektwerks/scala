@@ -5,6 +5,7 @@ import org.scalatest.matchers.should.Matchers
 
 import scala.annotation.tailrec
 import scala.util.Random
+import scala.util.chaining._
 
 class FunctionTest extends AnyFunSuite with Matchers {
   test("literal") {
@@ -160,8 +161,8 @@ class FunctionTest extends AnyFunSuite with Matchers {
     val xs = (1 to 10).toList
     val ys = xs map incr map decr
     val zs = xs map incrComposeDecr map incrAndThenDecr
-    val fs = xs map ( incrDecrAsList reduce ( _ compose _) )
-    val gs = xs map ( incrDecrAsList reduce ( _ andThen _) )
+    val fs = xs map ( incrDecrAsList reduce ( _ compose _ ) )
+    val gs = xs map ( incrDecrAsList reduce ( _ andThen _ ) )
     val us = xs map incrDecrAsListWithReduce
     xs shouldEqual ys
     ys shouldEqual zs
@@ -169,6 +170,11 @@ class FunctionTest extends AnyFunSuite with Matchers {
     gs shouldEqual fs
     us shouldEqual gs
   }
+
+  test("pipe") {
+    val square = (n: Int) => n * n
+    assert( 2.pipe(square) == 4 )
+  } 
 
   test("select by index") {
     def selectByIndex(source: List[Int], index: Int): Option[Int] = {
