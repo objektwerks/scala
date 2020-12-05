@@ -18,12 +18,10 @@ def linearTime(array: Array[Int]): Int = {
 linearTime((1 to 10).toArray[Int])
 
 // O(log N) - Binary Search
-case class Value(number: Int)
-implicit def ordering: Ordering[Value] = Ordering.by(_.number)
-val buffer = ArrayBuffer[Value]()
-for ( i <- 1 to 10 ) buffer.addOne( Value(i) )
-buffer.search(Value(3)).insertionPoint
-
+case class Number(number: Int)
+implicit def ordering: Ordering[Number] = Ordering.by(_.number)
+val list = List( Number(1), Number(2), Number(3) )
+list.indexOf( Number(3) )
 
 // O(n^2) - Quadratic Time
 def quadraticTime(): Array[Array[Int]] = {
