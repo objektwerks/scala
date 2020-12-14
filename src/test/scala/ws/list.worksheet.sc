@@ -50,9 +50,10 @@ zs.sum
 
 @tailrec
 final def product(xs: List[Int], acc: Int = 1): Int = xs match {
-  case Nil => acc
+  case Nil => 0
   case head :: tail => product(tail, acc * head)
 }
+product(Nil)
 product(zs)
 zs.product
 
