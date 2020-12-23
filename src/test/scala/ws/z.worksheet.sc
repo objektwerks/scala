@@ -1,7 +1,7 @@
 import scala.annotation.tailrec
 
 /*
-  1. Fibonacci Sequece.
+  1. Fibonacci Sequence.
 */
 
 def fibonacci(n: Long): Long = {
@@ -22,7 +22,7 @@ val ns = Array("3", "6", "9", "four")
 fibonacci(ns)
 
 /*
-  2. Reverse String.
+  2. Reverse Strings.
 */
 
 @tailrec
@@ -35,7 +35,7 @@ reverse( Array(1, 2, 3).toList )
 reverse( Array("Hello", "World").toList )
 
 /*
-  3. Prime Numbers
+  3. Prime Numbers.
 */
 
 def isPrime(n: Int): Boolean = {
