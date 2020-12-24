@@ -7,7 +7,6 @@ import scala.annotation.tailrec
   Input: Array("13", "26", "39", "four")
   Output: Map(13L -> 233L, 26L -> 121393L, 39L -> 63245986L)
 */
-
 def fibonacci(n: Long): Long = {
   @tailrec
   def loop(n: Long, a: Long, b: Long): Long = n match {
@@ -29,7 +28,6 @@ fibonacci( Array("13", "26", "39", "four") )
   Input: Array("Hello", "World"), Array(1, 2, 3)
   Output: Array("World", "Hello"), Array(3, 2, 1)
 */
-
 @tailrec
 final def reverse[A](list: List[A], acc: List[A] = List.empty[A]): List[A] = list match {
   case Nil => acc
@@ -44,7 +42,6 @@ reverse( Array(1, 2, 3).toList )
   Input: Array("3", "5", "11", "21")
   Output: Map(3 -> true, 5 -> true, 11 -> true, 21 -> false)
 */
-
 def isPrime(n: Int): Boolean = {
   @tailrec
   def loop(current: Int): Boolean = {
