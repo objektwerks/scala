@@ -53,9 +53,9 @@ def isPrime(n: Int): Boolean = {
   if (n == -1 || n == 0 || n == 1) false else loop(2)
 }
 
-def isPrime(ns: Array[String]): Array[(Int, Boolean)] = {
+def isPrime(ns: Array[String]): Map[Int, Boolean] = {
   def toInt(s: String): Option[Int] = s.toIntOption
-  ns.flatMap( n => toInt(n) ).map( n => (n, isPrime(n) ) )
+  ns.flatMap( n => toInt(n) ).map( n => (n, isPrime(n) ) ).toMap
 }
 
 isPrime( Array("3", "5", "11", "15") )
