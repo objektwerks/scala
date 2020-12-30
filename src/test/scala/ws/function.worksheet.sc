@@ -84,6 +84,16 @@ final def factorial(n: Int, acc: Int = 1): Int = n match {
 }
 factorial(9)
 
+def fibonacci(n: Long): Long = {
+  @tailrec
+  def loop(n: Long, a: Long, b: Long): Long = n match {
+    case 0 => a
+    case _ => loop(n - 1, b, a + b)
+  }
+  loop(n, 0, 1)
+}
+fibonacci(39)
+
 val incr = (n: Int) => n + 1
 val decr = (n: Int) => n - 1
 val incrComposeDecr = incr compose decr
