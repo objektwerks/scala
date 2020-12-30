@@ -146,21 +146,3 @@ def diffAsPercentage(previous: Double, current: Double): Int = {
 diffAsPercentage(70.0, 75.0)
 diffAsPercentage(75.0, 70.0)
 diffAsPercentage(75.0, 80.0)
-
-def selectByIndex(source: List[Int], index: Int): Option[Int] = {
-  @tailrec
-  def loop(source: List[Int], index: Int, acc: Int = 0): Option[Int] = source match {
-    case Nil => None
-    case head :: tail => if (acc == index) Some(head) else loop(tail, index, acc + 1)
-  }
-  loop(source, index)
-}
-val ts = 1 to 10 toList
-val ys = List[Int]()
-val zs = List(1, 2, 3, 4)
-val x = selectByIndex(ts, 5)
-x.get == ts(5)
-val y = selectByIndex(ys, 5)
-y.isEmpty == true
-val z = selectByIndex(zs, 5)
-z.isEmpty == true

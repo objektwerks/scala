@@ -101,3 +101,21 @@ val listB = (5 to 15).toList
 val intersectListsResult = intersectLists(listA, listB)
 val intersectSdkResult = listA intersect listB
 val intersectListsAndSdkAssert = intersectListsResult == intersectSdkResult
+
+def selectByIndex(source: List[Int], index: Int): Option[Int] = {
+  @tailrec
+  def loop(source: List[Int], index: Int, acc: Int = 0): Option[Int] = source match {
+    case Nil => None
+    case head :: tail => if (acc == index) Some(head) else loop(tail, index, acc + 1)
+  }
+  loop(source, index)
+}
+val ts = 1 to 10 toList
+val us = List[Int]()
+val vs = List(1, 2, 3, 4)
+val x = selectByIndex(ts, 5)
+x.get == ts(5)
+val y = selectByIndex(us, 5)
+y.isEmpty == true
+val z = selectByIndex(vs, 5)
+z.isEmpty == true
