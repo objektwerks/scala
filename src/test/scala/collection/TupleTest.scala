@@ -11,7 +11,6 @@ case class KeyValue(key: Int, value: Int) {
   def tupled: (Int, Int) = (key, value)
 }
 
-
 class TupleTest extends AnyFunSuite with Matchers {
   test("tupled") {
     val (city, state, zip) = CityStateZip("placida", "florida", 33946).tupled
