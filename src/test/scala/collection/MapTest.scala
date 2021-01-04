@@ -3,6 +3,7 @@ package collection
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
+import scala.collection.concurrent
 import scala.collection.immutable.ListMap
 import scala.collection.{SortedMap, mutable}
 
@@ -46,5 +47,11 @@ class MapTest extends AnyFunSuite with Matchers {
     (map -= 1) shouldEqual Map()
     (map ++= List(1 -> 1, 2 -> 2)) shouldEqual Map(1 -> 1, 2 -> 2)
     (map --= List(1, 2)) shouldEqual Map()
+  }
+
+  test("trie map") {
+    val map = concurrent.TrieMap(1 -> 1, 2 -> 2)
+    map.getOrElseUpdate(3, 3) shouldBe 3
+    map.remove(3) shouldBe Some(3)
   }
 }
