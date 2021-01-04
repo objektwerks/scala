@@ -27,6 +27,14 @@ class IndexedSeqTest extends AnyFunSuite with Matchers {
     Array(1) ++: Array(2) shouldEqual array
   }
 
+  test("array builder") {
+    val builder = Array.newBuilder[Int]
+    builder += 1
+    builder += 2
+    builder += 3
+    builder.result() shouldBe Array(1, 2, 3)
+  }
+
   test("array buffer") {
     val buffer = mutable.ArrayBuffer(1, 2)
     (buffer += 3) shouldEqual mutable.ArrayBuffer(1, 2, 3)
