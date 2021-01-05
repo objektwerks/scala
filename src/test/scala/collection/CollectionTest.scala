@@ -15,6 +15,7 @@ class CollectionTest extends AnyFunSuite with Matchers {
     Array.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe Array(1, 2, 3)
     Seq.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe Seq(1, 2, 3)
     IndexedSeq.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe IndexedSeq(1, 2, 3)
+    Set.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe Set(1, 2, 3)
   }
 
   test("list") {
