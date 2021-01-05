@@ -4,8 +4,8 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 import scala.collection.concurrent
-import scala.collection.immutable.ListMap
-import scala.collection.{SortedMap, SortedSet, mutable}
+import scala.collection.immutable._
+import scala.collection.mutable
 import scala.jdk.CollectionConverters._
 
 class CollectionTest extends AnyFunSuite with Matchers {
@@ -15,6 +15,7 @@ class CollectionTest extends AnyFunSuite with Matchers {
     Array.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe Array(1, 2, 3)
     Seq.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe Seq(1, 2, 3)
     IndexedSeq.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe IndexedSeq(1, 2, 3)
+    LinearSeq.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe LinearSeq(1, 2, 3)
     Set.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe Set(1, 2, 3)
     Map.newBuilder[Int, Int].addOne(1 -> 1).addOne(2 -> 2).addOne(3 -> 3).result() shouldBe Map(1 -> 1, 2 -> 2, 3 -> 3)
  }
