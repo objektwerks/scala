@@ -11,9 +11,10 @@ import scala.jdk.CollectionConverters._
 class CollectionTest extends AnyFunSuite with Matchers {
   def toList(i: Int): List[Int] = List(i - 1, i, i + 1)
 
-  test("builders") {
-    val builder = Array.newBuilder[Int].addOne(1).addOne(2).addOne(3)
-    builder.result() shouldBe Array(1, 2, 3)
+  test("newBuilder") {
+    Array.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe Array(1, 2, 3)
+    Seq.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe Array(1, 2, 3)
+    IndexedSeq.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe Array(1, 2, 3)
   }
 
   test("list") {
