@@ -18,7 +18,7 @@ class CollectionTest extends AnyFunSuite with Matchers {
     LinearSeq.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe LinearSeq(1, 2, 3)
     Set.newBuilder[Int].addOne(1).addOne(2).addOne(3).result() shouldBe Set(1, 2, 3)
     Map.newBuilder[Int, Int].addOne(1 -> 1).addOne(2 -> 2).addOne(3 -> 3).result() shouldBe Map(1 -> 1, 2 -> 2, 3 -> 3)
- }
+  }
 
   test("list") {
     val list = List(1, 2, 3)
