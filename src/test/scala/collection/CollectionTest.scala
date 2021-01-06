@@ -33,7 +33,7 @@ class CollectionTest extends AnyFunSuite with Matchers {
     list shouldBe List(1) ++ List(2, 3)
     list shouldBe List(1) ++: List(2, 3)
 
-    list(2) shouldBe 3 // select by index
+    list(2) shouldBe 3
 
     list shouldBe List(1, 1, 2, 2, 3, 3).distinct
     list shouldBe (List(1) concat List(2, 3))
@@ -337,6 +337,21 @@ class CollectionTest extends AnyFunSuite with Matchers {
     (set --= List(1, 2)) shouldBe Set()
   }
 
+  test("tuple") {
+    val (first, last, age) = ("fred", "flintstone", 99)
+    first shouldBe "fred"
+    last shouldBe "flintstone"
+    age shouldBe 99
+  }
+
+  test("tuple copy") {
+    case class KeyValue(key: Int, value: Int) {
+      def tupled: (Int, Int) = (key, value)
+    }
+    
+    (2, 2) shouldBe KeyValue(1, 1).tupled.copy(2, 2)
+  }
+
   test("tupled") {
     case class CityStateZip(city: String, state: String, zip: Int) {
       def tupled: (String, String, Int) = (city, state, zip)
@@ -346,21 +361,6 @@ class CollectionTest extends AnyFunSuite with Matchers {
     city shouldBe "placida"
     state shouldBe "florida"
     zip shouldBe 33946
-  }
-
-  test("tuple") {
-    val (first, last, age) = ("fred", "flintstone", 99)
-    first shouldBe "fred"
-    last shouldBe "flintstone"
-    age shouldBe 99
-  }
-
-  test("copy") {
-    case class KeyValue(key: Int, value: Int) {
-      def tupled: (Int, Int) = (key, value)
-    }
-    
-    (2, 2) shouldBe KeyValue(1, 1).tupled.copy(2, 2)
   }
 
   test("asJava") {
