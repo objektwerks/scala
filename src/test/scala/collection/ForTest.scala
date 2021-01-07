@@ -8,13 +8,13 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class ForTest extends AnyFunSuite with Matchers {
   test("foreach") {
-    val map = Map("a" -> 1, "b" -> 2, "c" -> 3)
-    map.foreach( t => t._2 should be > 0 )
+    val map = Map(1 -> 1, 2 -> 2, 3 -> 3)
+    map.foreach( keyValue => (keyValue._1 > 0) && (keyValue._2 > 0) shouldBe true )
   }
 
   test("forall") {
-    val map = Map(1 -> 1, 2 -> 2, 3 -> 3)
-    map.forall( _._2 > 0 ) shouldBe true
+    val list = List(1, 2, 3)
+    list.forall( _ > 0 ) shouldBe true
   }
 
   test("for") {
@@ -27,16 +27,10 @@ class ForTest extends AnyFunSuite with Matchers {
     for ((_, v) <- map) v shouldEqual v
   }
 
-  test("for > foreach > map") {
-    val xs = List(1, 2)
-    val forList = mutable.ListBuffer[Int]()
-    for (x <- xs) {
-      forList += (x * 2)
-    }
-    val mapList = mutable.ListBuffer[Int]()
-    xs map (_ * 2) foreach (x => mapList += x)
-    forList shouldEqual mutable.ListBuffer(2, 4)
-    mapList shouldEqual mutable.ListBuffer(2, 4)
+  test("map > foreach") {
+    val buffer = mutable.ListBuffer[Int]()
+    List(1, 2, 3) map (_ * 2) foreach (x => buffer += x)
+    buffer shouldEqual mutable.ListBuffer(2, 4, 6)
   }
 
   test("for comprehension") {
@@ -51,7 +45,7 @@ class ForTest extends AnyFunSuite with Matchers {
       sas <- as
       a <- sas
     } yield a * 2
-    bs shouldEqual as.flatMap(_.map( _ * 2))
+    bs shouldEqual as.flatMap(_.map( _ * 2 ))
   }
 
   test("nested for comprehensions") {
@@ -80,8 +74,18 @@ class ForTest extends AnyFunSuite with Matchers {
   test("for comprehension vs flatmap > map") {
     val xs = List(2, 4)
     val ys = List(3, 5)
-    val forList = for (x <- xs; y <- ys) yield x * y
-    val mapList = xs flatMap { e => ys map { o => e * o } }
+    
+    val forList = for {
+      x <- xs
+      y <- ys
+    } yield x * y
+
+    val mapList = xs flatMap { x =>
+      ys map { y =>
+        x * y 
+      } 
+    }
+
     forList shouldEqual List(2 * 3, 2 * 5, 4 * 3, 4 * 5)
     mapList shouldEqual List(2 * 3, 2 * 5, 4 * 3, 4 * 5)
   }
@@ -90,15 +94,36 @@ class ForTest extends AnyFunSuite with Matchers {
     val xs = List(2, 4)
     val ys = List(3, 5)
     val zs = List(1, 6)
-    val forList = for (x <- xs; y <- ys; z <- zs) yield x * y * z
-    val mapList = xs flatMap { x => ys flatMap { y => { zs map { z => x * y * z } } } }
+
+    val forList = for {
+      x <- xs
+      y <- ys
+      z <- zs
+     } yield x * y * z
+
+    val mapList = xs flatMap { x =>
+      ys flatMap { y =>
+        { zs map { z =>
+          x * y * z } 
+        } 
+      } 
+    }
+
     forList shouldEqual List(6, 36, 10, 60, 12, 72, 20, 120)
     mapList shouldEqual List(6, 36, 10, 60, 12, 72, 20, 120)
   }
 
   test("for comprehension > if guard filter") {
-    val filteredLetters = for (l <- List("A", "B", "C", "D", "F") if l == "A") yield l
-    val filteredNumbers = for (n <- List(-2, -1, 0, 1, 2) if n > 0) yield n
+    val ls = List("A", "B", "C", "D", "F")
+    val filteredLetters = for {
+      l <- ls if l == "A"
+    } yield l
+
+    val ns = List(-2, -1, 0, 1, 2)
+    val filteredNumbers = for {
+      n <- ns if n > 0
+    } yield n
+
     filteredLetters.head shouldEqual "A"
     filteredNumbers shouldEqual List(1, 2)
   }
@@ -113,7 +138,9 @@ class ForTest extends AnyFunSuite with Matchers {
   test("for comprehension with recover") {
     implicit val ec = ExecutionContext.global
     val future = Future(Integer.parseInt("one"))
-    val result = ( for { i <- future } yield i ).recover { case _: Throwable => -1 }
+    val result = ( for {
+      i <- future 
+    } yield i ).recover { case _: Throwable => -1 }
     result foreach { x => x shouldEqual -1 }
   }
 }
