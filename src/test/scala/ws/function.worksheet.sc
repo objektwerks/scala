@@ -94,6 +94,13 @@ def fibonacci(n: Long): Long = {
 }
 fibonacci(39)
 
+def fibonacci(ns: Array[String]): Map[Long, Long] = {
+  def toLong(s: String): Option[Long] = s.toLongOption
+  ns.flatMap( n => toLong(n) ).map( n => n -> fibonacci(n) ).toMap
+}
+
+fibonacci( Array("13", "26", "39", "four") )
+
 def isPrime(n: Int): Boolean = {
   @tailrec
   def loop(current: Int): Boolean = {
@@ -103,6 +110,13 @@ def isPrime(n: Int): Boolean = {
   if (n == -1 || n == 0 || n == 1) false else loop(2)
 }
 isPrime(11)
+
+def isPrime(ns: Array[String]): Map[Int, Boolean] = {
+  def toInt(s: String): Option[Int] = s.toIntOption
+  ns.flatMap( n => toInt(n) ).map( n => n -> isPrime(n) ).toMap
+}
+
+isPrime( Array("3", "5", "11", "21") )
 
 val incr = (n: Int) => n + 1
 val decr = (n: Int) => n - 1
