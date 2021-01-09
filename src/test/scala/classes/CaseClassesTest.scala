@@ -3,14 +3,28 @@ package classes
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-sealed trait Animal { def speak: String }
-case class Tiger(speach: String) extends Animal { override def speak: String = speach }
-case class Panther(speach: String) extends Animal { override def speak: String = speach }
-case class Bear(speach: String) extends Animal { override def speak: String = speach }
-case object ZooKeeper { def openCages: Set[Animal] = Set(Tiger("prrrr"), Panther("woosh"), Bear("grrrr")) }
+sealed trait Animal { 
+  def speak: String 
+}
+case class Tiger(speach: String) extends Animal { 
+  override def speak: String = speach 
+}
+case class Panther(speach: String) extends Animal { 
+  override def speak: String = speach 
+}
+case class Bear(speach: String) extends Animal { 
+  override def speak: String = speach 
+}
+case object ZooKeeper { 
+  def openCages: Set[Animal] = Set(Tiger("prrrr"), Panther("woosh"), Bear("grrrr")) 
+}
 
-case class Meter(value: Double) extends AnyVal { def toFeet: Foot = Foot(value * 0.3048) }
-case class Foot(value: Double) extends AnyVal { def toMeter: Meter = Meter(value / 0.3048) }
+case class Meter(value: Double) extends AnyVal { 
+  def toFeet: Foot = Foot(value * 0.3048) 
+}
+case class Foot(value: Double) extends AnyVal { 
+  def toMeter: Meter = Meter(value / 0.3048) 
+}
 
 class CaseClassesTest extends AnyFunSuite with Matchers {
   test("case classes") {
@@ -26,35 +40,31 @@ class CaseClassesTest extends AnyFunSuite with Matchers {
   }
 
   test("equality") {
-    val t1 = Tiger("roar")
-    val t2 = Tiger("roar")
-    val t3 = Tiger("prrrr")
-    t1 shouldEqual t1
-    t2 shouldEqual t2
-    t3 shouldEqual t3
-    t1 shouldEqual t2
-    t1 should not equal t3
-    t1.hashCode shouldEqual t2.hashCode
-    t1.hashCode should not equal t3.hashCode
+    val tiger1 = Tiger("roar")
+    val tiger2 = Tiger("roar")
+    val tiger3 = Tiger("prrrr")
+    tiger1 shouldEqual tiger2
+    tiger1 should not equal tiger3
+    tiger2 should not equal tiger3
   }
 
   test("copy") {
-    val p1 = Panther("prrrr")
-    val p2 = p1.copy(speach = "arrrgh")
-    p1 shouldEqual p1.copy()
-    p1 should not equal p2
+    val panther1 = Panther("prrrr")
+    val panther2 = panther1.copy(speach = "arrrgh")
+    panther1 shouldEqual panther1.copy()
+    panther1 should not equal panther2
   }
 
-  test("to string") {
-    val t1 = Tiger("roar")
-    val t2 = Tiger("roar")
-    t1.toString shouldEqual t2.toString
+  test("toString") {
+    val bear1 = Bear("grrrr")
+    val bear2 = Bear("grrrr")
+    bear1.toString shouldEqual bear2.toString
   }
 
   test("apply unapply") {
-    val t1 = Tiger("roar")
-    t1 shouldEqual Tiger.apply(t1.speak)
-    Tiger.unapply(t1).get shouldEqual "roar"
+    val tiger1 = Tiger("roar")
+    tiger1 shouldEqual Tiger.apply(tiger1.speak)
+    Tiger.unapply(tiger1) shouldEqual Some("roar")
   }
 
   test("value classes") {
