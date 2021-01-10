@@ -7,14 +7,16 @@ import org.scalatest.matchers.should.Matchers
 trait Relative
 class Parent extends Relative
 class Child extends Parent
+
 class Covariant[+R](val relative: R)
 class Contravariant[-R, +S](val relative: S)
 class Invariant[R](val relative: R)
+
 trait NotNullFilter[-V, +R] { def notNull(value: V): R }
 
 // Bounds
-object UpperBounds { def apply[U <: AnyVal](n: U): U = identity(n) }
-object LowerBounds { def apply[L >: AnyVal](n: L): L = identity(n) }
+object UpperBounds { def apply[U <: AnyVal](value: U): U = identity(value) }
+object LowerBounds { def apply[L >: AnyVal](value: L): L = identity(value) }
 
 // Compound Types
 trait Init { def init: Boolean = true }
@@ -51,6 +53,7 @@ class TypesTest extends AnyFunSuite with Matchers {
     val covariant: Covariant[Parent] = new Covariant[Child](new Child())
     val contravariant: Contravariant[Child, Parent] = new Contravariant[Child, Parent](new Parent())
     val invariant: Invariant[Child] = new Invariant[Child](new Child())
+
     covariant.relative.isInstanceOf[Child] shouldBe true
     contravariant.relative.isInstanceOf[Parent] shouldBe true
     invariant.relative.isInstanceOf[Child] shouldBe true
@@ -86,6 +89,7 @@ class TypesTest extends AnyFunSuite with Matchers {
     type User = String
     type Age = Int
     val users:  Map[User, Age] =  Map("john" -> 21, "jane" -> 19)
+
     users("john") shouldEqual 21
     users("jane") shouldEqual 19
   }
@@ -93,6 +97,7 @@ class TypesTest extends AnyFunSuite with Matchers {
   test("duck typing") {
     class Greeter { def greet = "Hi!" }
     def greet(greeter: { def greet: String } ): String = greeter.greet
+    
     greet(new Greeter) shouldEqual "Hi!"
   }
 
@@ -115,12 +120,14 @@ class TypesTest extends AnyFunSuite with Matchers {
   test("type instances") {
     val minOrdering: Ordering[Int] = Ordering.fromLessThan[Int](_ < _)
     val maxOrdering: Ordering[Int] = Ordering.fromLessThan[Int](_ > _)
+
     List(3, 4, 2).sorted(minOrdering) shouldEqual List( 2, 3, 4)
     List(3, 4, 2).sorted(maxOrdering) shouldEqual List(4, 3, 2)
   }
 
   test("implicit type instance") {
     implicit val ordering: Ordering[String] = Ordering.fromLessThan[String](_ < _)
+
     List("c", "b", "a").sorted shouldEqual List("a", "b", "c")
   }
 
