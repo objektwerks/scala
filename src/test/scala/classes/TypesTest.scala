@@ -7,10 +7,10 @@ import org.scalatest.matchers.should.Matchers
 trait Relative
 class Parent extends Relative
 class Child extends Parent
-class Covariant[+RR](val relative: RR)
-class Contravariant[-RR, +SS](val relative: SS)
-class Invariant[RR](val relative: RR)
-trait PositiveFilter[-AA, +BB] { def isPositive(n: Int): Boolean }
+class Covariant[+R](val relative: R)
+class Contravariant[-R, +S](val relative: S)
+class Invariant[R](val relative: R)
+trait NotNullFilter[-V, +R] { def notNull(value: V): R }
 
 // Bounds
 object UpperBounds { def apply[UB <: AnyVal](n: UB): UB = identity(n) }
@@ -27,12 +27,12 @@ trait Speach { def isSpeaking: Boolean = true }
 class Robot extends Runnable with Emotion with Speach
 
 // Self Type
-trait Greeting { def greeting: String }
-trait Hello extends Greeting { override def greeting = "hello" }
-trait Goodbye extends Greeting { override def greeting = "goodbye" }
+trait Speaking { def speaking: String }
+trait Hello extends Speaking { override def speaking = "hello" }
+trait Goodbye extends Speaking { override def speaking = "goodbye" }
 class Speaker {
-  self: Greeting =>
-  def greet: String = greeting
+  self: Speaking =>
+  def speak: String = speaking
 }
 
 // Path Dependent Types
@@ -59,12 +59,14 @@ class TypesTest extends AnyFunSuite with Matchers {
   }
 
   test("contravariant in, covariant out") {
-    val filter = new PositiveFilter[Int, Boolean] {
-      override def isPositive(n: Int): Boolean = n > 0
+    val filter = new NotNullFilter[String, Boolean] {
+      override def notNull(value: String): Boolean = value != null
     }
-    val numbers = List(-3, -2, -1, 0, 1, 2, 3)
-    val positives: List[Int] = numbers.filter(n => filter.isPositive(n))
-    positives shouldEqual List(1, 2, 3)
+
+    val values = List("a", "b", "c", null)
+    val notNulls = values.filter(v => filter.notNull(v))
+
+    notNulls shouldEqual List("a", "b", "c")
   }
 
   test("bounds") {
@@ -97,11 +99,11 @@ class TypesTest extends AnyFunSuite with Matchers {
   }
 
   test("self type") {
-    val hello = new Speaker() with Hello
-    hello.greet shouldEqual "hello"
+    val helloSpeaker = new Speaker() with Hello
+    helloSpeaker.speak shouldEqual "hello"
 
-    val goodbye = new Speaker() with Goodbye
-    goodbye.greet shouldEqual "goodbye"
+    val goodbyeSpeaker = new Speaker() with Goodbye
+    goodbyeSpeaker.speak shouldEqual "goodbye"
   }
 
   test("path dependent types") {
