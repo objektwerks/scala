@@ -13,15 +13,13 @@ class Invariant[R](val relative: R)
 trait NotNullFilter[-V, +R] { def notNull(value: V): R }
 
 // Bounds
-object UpperBounds { def apply[UB <: AnyVal](n: UB): UB = identity(n) }
-object LowerBounds { def apply[LB >: AnyVal](n: LB): LB = identity(n) }
+object UpperBounds { def apply[U <: AnyVal](n: U): U = identity(n) }
+object LowerBounds { def apply[L >: AnyVal](n: L): L = identity(n) }
 
 // Compound Types
 trait Init { def init: Boolean = true }
 trait Run extends Init { def run: Boolean = init }
-class Runnable extends Run {
-  def isRunning: Boolean = run
-}
+class Runnable extends Run { def isRunning: Boolean = run }
 trait Emotion { def isEmoting: Boolean = true }
 trait Speach { def isSpeaking: Boolean = true }
 class Robot extends Runnable with Emotion with Speach
