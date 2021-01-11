@@ -14,6 +14,9 @@ class Invariant[R](val relative: R)
 
 trait NotNullFilter[-V, +R] { def notNull(value: V): R }
 
+sealed trait Canine
+class Dog extends Canine
+
 // Bounds
 object UpperBounds { def apply[U <: AnyVal](value: U): U = identity(value) }
 object LowerBounds { def apply[L >: AnyVal](value: L): L = identity(value) }
@@ -58,6 +61,30 @@ class TypesTest extends AnyFunSuite with Matchers {
     contravariant.relative.isInstanceOf[Parent] shouldBe true
     invariant.relative.isInstanceOf[Child] shouldBe true
   }
+
+  test("invariant") {
+    class Vet[T](val canine: T)
+    val dog: Dog = new Dog()
+    val vet: Vet[Canine] = new Vet[Canine](dog)
+    vet.canine.isInstanceOf[Canine] shouldBe true
+    vet.canine.isInstanceOf[Dog] shouldBe true
+  }
+
+  test("covariant") {
+    class Vet[+T](val canine: T)
+    val dog: Dog = new Dog()
+    val vet: Vet[Canine] = new Vet[Dog](dog)
+    vet.canine.isInstanceOf[Canine] shouldBe true
+    vet.canine.isInstanceOf[Dog] shouldBe true
+  }
+
+  test("contravariant") {
+    class Vet[-T <: Canine](val canine: Canine)
+    val dog = new Dog()
+    val vet: Vet[Dog] = new Vet[Canine](dog)
+    vet.canine.isInstanceOf[Canine] shouldBe true
+    vet.canine.isInstanceOf[Dog] shouldBe true
+  }  
 
   test("contravariant in, covariant out") {
     val filter = new NotNullFilter[String, Boolean] {
