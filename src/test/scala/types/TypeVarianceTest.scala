@@ -7,7 +7,7 @@ sealed trait Canine
 class Dog extends Canine
 class Wolf extends Canine
 
-class VarianceTypeTest extends AnyFunSuite with Matchers {
+class TypeVarianceTest extends AnyFunSuite with Matchers {
   test("invariant") {
     class Vet[T] {
       def heal[U](canine: T): T = canine
