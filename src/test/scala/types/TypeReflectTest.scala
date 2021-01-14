@@ -1,4 +1,4 @@
-package reflect
+package types
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -7,7 +7,7 @@ final case class Glucose(datetime: Long, level: Int)
 
 final case class Med(datetime: Long, medtype: Int, dosage: Int)
 
-class ReflectTest extends AnyFunSuite with Matchers {
+class TypeReflectTest extends AnyFunSuite with Matchers {
   test("class tag") {
     import scala.reflect._
     def isTypeof[T: ClassTag](list: List[T]): ClassTag[T] = classTag[T] match {
