@@ -1,4 +1,4 @@
-package theory
+package types
 
 trait Semigroup[A] {
   def append(x: A, y: => A): A
@@ -23,7 +23,7 @@ trait Applicative[F[_]] extends Functor[F] {
   override def map[A, B](fa: F[A])(f: A => B): F[B] = apply(fa)(point(f))
 }
 
-object Theory {
+object CategoryTheory {
   val adderMonoid = new Monoid[Int] {
     override def zero: Int = 0
     override def append(x: Int, y: => Int): Int = x + y
@@ -66,8 +66,8 @@ object Theory {
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-class TheoryTest extends AnyFunSuite with Matchers {
-  import theory.Theory._
+class CategoryTheoryTest extends AnyFunSuite with Matchers {
+  import CategoryTheory._
 
   test("monoid") {
     assert(adderMonoid.zero == 0)
