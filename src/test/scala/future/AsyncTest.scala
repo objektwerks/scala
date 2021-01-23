@@ -14,7 +14,7 @@ class AsyncTest extends AnyFunSuite with Matchers {
       val futureTwo: Future[Int] = async { 2 }
       await(futureOne) + await(futureTwo)
     }
-    future foreach { i => i shouldEqual 3 }
+    future foreach { _ shouldEqual 3 }
   }
 
   test("parallel") {
@@ -23,6 +23,6 @@ class AsyncTest extends AnyFunSuite with Matchers {
     val futureThree: Future[Int] = async {
       await(futureOne) + await(futureTwo)
     }
-    futureThree foreach { i => i shouldEqual 3 }
+    futureThree foreach { _ shouldEqual 3 }
   }
 }
