@@ -53,7 +53,7 @@ class FutureTest extends AnyFunSuite with Matchers {
       z <- Future { Integer.parseInt("3") }
     } yield (x, y, z)
     future onComplete {
-      case Success(result) => throw new IllegalStateException(s"Fail fast failed: $result")
+      case Success(result) =>  fail(s"Fail fast failed: $result")
       case Failure(failure) => failure.isInstanceOf[NumberFormatException] shouldBe true
     }
   }
@@ -68,7 +68,7 @@ class FutureTest extends AnyFunSuite with Matchers {
       z <- futureThree
     } yield (x, y, z)
     future onComplete {
-      case Success(result) => throw new IllegalStateException(s"Fail fast failed: $result")
+      case Success(result) => fail(s"Fail fast failed: $result")
       case Failure(failure) => failure.isInstanceOf[NumberFormatException] shouldBe true
     }
   }
@@ -89,7 +89,7 @@ class FutureTest extends AnyFunSuite with Matchers {
     val futureOfListOfInt = Future.sequence(List(Future(Integer.parseInt("one")), Future(Integer.parseInt("2"))))
     val futureOfInt = futureOfListOfInt map(_.sum)
     futureOfInt onComplete {
-      case Success(result) => throw new IllegalStateException(s"Fail fast failed: $result")
+      case Success(result) => fail(s"Fail fast failed: $result")
       case Failure(failure) => failure.isInstanceOf[NumberFormatException] shouldBe true
     }
   }
@@ -98,7 +98,7 @@ class FutureTest extends AnyFunSuite with Matchers {
     val futureOfListOfInt = Future.traverse((1 to 2).toList) (i => Future(i / 0))
     val futureOfInt = futureOfListOfInt.map { i => println(s"Never executes: $i"); i.sum }
     futureOfInt onComplete {
-      case Success(result) => throw new IllegalStateException(s"Fail fast failed: $result")
+      case Success(result) => fail(s"Fail fast failed: $result")
       case Failure(failure) => failure.isInstanceOf[ArithmeticException] shouldBe true
     }
   }
