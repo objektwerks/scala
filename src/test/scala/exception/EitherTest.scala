@@ -17,7 +17,7 @@ class EitherTest extends AnyFunSuite with Matchers {
     divide(9, 3).map(_ * 3).getOrElse(-1) shouldEqual 9
     divide(9, 3).map(_ * 3).filterOrElse(_ == 9, -1).getOrElse(-1) shouldEqual 9
     divide(3, 0) match {
-      case Right(_) => throw new Exception("Should be divide by zero error.")
+      case Right(_) => fail("Should be divide by zero error.")
       case Left(error) => error.isInstanceOf[Throwable] shouldBe true
     }
   }
