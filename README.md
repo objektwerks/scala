@@ -24,7 +24,8 @@ in the Scala space.
 4. **Maven Repository:** SBT requires network access to the public Maven repository ( https://mvnrepository.com ) to obtain
  versioned libraries. A continually updated copy of the public Maven Repository can be set up and maintained internally via
  products like Nexus ( https://www.sonatype.com/nexus-repository-sonatype ) and JFrog Artifactory ( https://jfrog.com/artifactory/ ).
- Ideally, versioned apps and components would be published to an internal Maven repository for easy internal sharing.
+ Ideally, versioned apps and components would be published to an internal Maven repository for easy internal sharing. Additional
+ public repositories exist and may be required for development.
 5. **Scala REPL:** The Scala REPL allows Scala developers to write code in a Unix or Windows terminal. Some Scala developers
  use it a lot, while others never do. It’s a nice tool to use for quick prototypes. It requires the local installation of 
  Scala ( https://www.scala-lang.org/download/ ).
