@@ -37,8 +37,8 @@ or across the world.
 9. **Local Services:** It’s often convenient to build Scala prototypes and integration tests against local services, such as Kafka,
 Cassandra, Postgresql, etc.
 10. **CI/CD:** Continuous integration and deployment. Jenkins ( https://jenkins.io ) allows a team to set up a build project
-for each project housed in a Git repository. Scheduled Jenkins jobs will pull a Git repository, rebuild it, run tests, run
-integration tests and package it. Continuous deployment is an optional feature. Github, Gitlab and other companies provide CI/CD services.
+for each project housed in a Git repository. Scheduled Jenkins jobs pull a Git repository, rebuild it, run tests, run integration
+tests and package it. Continuous deployment is an optional feature. Github, Gitlab and other companies provide CI/CD services.
 11. **Agile:** Github provides a free Kanban Board for each repository, allowing developers to manage project tasks. Gitlab also
 provides a Kanban Board for each repository. Atlassian ( https://www.atlassian.com ) provides a popular ( yet overly robust ) set
 of agile tools.
