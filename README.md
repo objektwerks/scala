@@ -38,11 +38,10 @@ such as Kafka, Cassandra, Postgresql, etc. Homebrew services, for instance, is a
 for each project housed in a Git repository. Scheduled Jenkins jobs pull a Git repository, rebuild it, run tests, run integration
 tests and package it. Continuous deployment is an optional feature. Github, Gitlab and other companies provide CI/CD services.
 11. **Agile:** Github provides a free Kanban Board for each repository, allowing developers to manage project tasks. Gitlab also
-provides a Kanban Board for each repository. Atlassian ( https://www.atlassian.com ) provides a popular ( overly robust ) set of
-agile tools.
+provides a Kanban Board feature. Atlassian ( https://www.atlassian.com ) provides an ( overly ) robust set of agile tools.
 12. **Laptop:** Scala developers typically use a MacBook Pro, configured with a 15" screen, 16GB/32GB of RAM and **Admin** rights.
 Windows and Linux laptops are also available.
 13. **Homebrew:** The ultimate software package manager for Apple OSX ( https://brew.sh ).
 14. **Sdkman:** A lightweight complement to Homebrew ( https://sdkman.io ) that runs on Apple OSX, Windows and Linux.
 15. **Pathfinder:** The ultimate file system browser for Apple OSX ( https://cocoatech.com/#/ ).
-16. **Linux:** Access to a Linux development server is ideal.
+16. **Linux:** Providing developers with access to a Linux development server is ideal.
