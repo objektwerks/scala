@@ -33,7 +33,7 @@ Spark code in a Unix or Windows terminal. It requires the local installation of 
 7. **Slack:** A messaging-collaboration tool ( https://slack.com ) for development teams.
 8. **VPN:** VPN provides developers with secure access to public and private networks.
 9. **Local Services:** It’s pragmatic and cost-effective to build Scala prototypes and run integration tests against local services,
-such as Kafka, Cassandra, Postgresql, etc.
+such as Kafka, Cassandra, Postgresql, etc. Homebrew services, for instance, is a tool that simplifies the management of local services.
 10. **CI/CD:** Continuous integration and deployment. Jenkins ( https://jenkins.io ) allows a team to set up a build project
 for each project housed in a Git repository. Scheduled Jenkins jobs pull a Git repository, rebuild it, run tests, run integration
 tests and package it. Continuous deployment is an optional feature. Github, Gitlab and other companies provide CI/CD services.
