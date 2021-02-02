@@ -44,6 +44,6 @@ number of developers. Atlassian ( https://www.atlassian.com ) provides a popular
 12. **Laptop:** Scala developers typically use a MacBook Pro, configured with a 15" screen, 32GB of RAM and **Admin** rights. Today's
 developers must be mobile, capable of working anywhere at anytime. Windows and Linux laptops represent additional options.
 13. **Homebrew:** The ultimate software package manager for Apple OSX ( https://brew.sh ).
-14. **SdkMan:** A lightweight quasi-alternative to Homebrew ( https://sdkman.io ).
+14. **SdkMan:** A lightweight quasi-alternative to Homebrew ( https://sdkman.io ) that runs on Apple OSX, Windows and Linux.
 15. **Pathfinder:** The ultimate file system browser for Apple OSX ( https://cocoatech.com/#/ ).
 16. **Linux:** The world literally runs on Linux. So having access to a Linux development server is ideal.
