@@ -29,7 +29,7 @@ in the Scala space.
  use it a lot, while others never do. It’s a nice tool to use for quick prototypes. It requires the local installation of 
  Scala ( https://www.scala-lang.org/download/ ).
 6. **Spark REPL:** The Scala Spark REPL, is a specialized version of the Scala REPL that allows Scala-Spark developers to write
- Spark code in a Unix or Windows terminal. It requires the local installation of Spark ( https://spark.apache.org/releases/spark-release-2-4-7.html ).
+ Spark code in a Unix or Windows terminal. It requires the local installation of Spark ( https://spark.apache.org/downloads.html ).
 7. **Slack:** A messaging-collaboration tool ( https://slack.com ) that allows developers to communicate ( quietly ) in the same room
 or across the world.
 8. **VPN:** Secure VPN provides developers with external access to a private, or internal, development network(s).
@@ -41,8 +41,9 @@ and package it. Continuous deployment is an optional feature. Github, Gitlab and
 11. **Agile:** Github provides a free Kanban Board for each repository, allowing developers to manage project tasks.
 Gitlab also provides a Kanban Board for each repository. Other agile tools exist, but are considered overkill by a growing
 number of developers. Atlassian ( https://www.atlassian.com ) provides a popular ( yet overly robust ) set of agile tools.
-12. **Laptop:** Scala developers typically use a MacBook Pro, configured with a 15" screen, 32GB of RAM and **Admin** rights. Today's developers must be mobile, capable of working anywhere at anytime. Interestingly, Linux laptops are slowly gaining traction.
+12. **Laptop:** Scala developers typically use a MacBook Pro, configured with a 15" screen, 32GB of RAM and **Admin** rights. Today's
+developers must be mobile, capable of working anywhere at anytime. Windows and Linux laptops represent additional options.
 13. **Homebrew:** The ultimate software package manager for Apple OSX ( https://brew.sh ).
-14. **SdkMan:** A lightweight quasi-alternative to Homebrew ( https://sdkman.io )
+14. **SdkMan:** A lightweight quasi-alternative to Homebrew ( https://sdkman.io ).
 15. **Pathfinder:** The ultimate file system browser for Apple OSX ( https://cocoatech.com/#/ ).
-16. **Linux:** The world literally runs on Linux. So having access to a Linux server is ideal.
+16. **Linux:** The world literally runs on Linux. So having access to a Linux development server is ideal.
