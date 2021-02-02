@@ -14,8 +14,8 @@ Environment
 -----------
 > The following list details commonplace items found in productive Scala shops.
 
-1. **Git:** Establish a Github ( https://github.com/features ) or Gitlab ( https://about.gitlab.com ) account.
-Both Github and Gitlab can be installed on an internal network.
+1. **Git:** Git is the default version control software in the world. Popular providers include: Github ( https://github.com/features )
+and Gitlab ( https://about.gitlab.com ). Both Github and Gitlab can be installed on an internal network.
 2. **IDE:** Commonly used IDEs include: Jetbrains Intellij IDEA ( https://www.jetbrains.com/idea/ ) and 
 VS Code ( https://code.visualstudio.com ) with Metals ( https://scalameta.org/metals/ ).
 3. **SBT:** The Scala Build Tool ( https://www.scala-sbt.org/1.x/docs/index.html ) is a build and dependency
