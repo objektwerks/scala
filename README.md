@@ -19,7 +19,7 @@ and Gitlab ( https://about.gitlab.com ). Both can be installed on an internal ne
 2. **IDE:** Common Scala IDEs include: Jetbrains Intellij IDEA ( https://www.jetbrains.com/idea/ ) and 
 VS Code ( https://code.visualstudio.com ) with Metals ( https://scalameta.org/metals/ ).
 3. **SBT:** The Scala Build Tool ( https://www.scala-sbt.org ) is a build and dependency management tool, extensible via plugins.
-SBT, similar to Maven and Gradle, is Scala focused and dominant in the Scala space.
+SBT is dominant in the Scala space. Mill ( http://www.lihaoyi.com/mill/ ) is a viable option. Maven and Gradle are poor options.
 4. **Maven Repository:** SBT requires network access to the public Maven repository ( https://mvnrepository.com ) to obtain
 versioned libraries. A continually updated copy of the public Maven Repository can be set up and maintained internally via
 products like Nexus ( https://www.sonatype.com/nexus-repository-sonatype ) and JFrog Artifactory ( https://jfrog.com/artifactory/ ).
