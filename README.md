@@ -29,20 +29,18 @@ in the Scala space.
  use it a lot, while others never do. It’s a nice tool to use for quick prototypes. It requires the local installation of 
  Scala ( https://www.scala-lang.org/download/ ).
 6. **Spark REPL:** The Scala Spark REPL, is a specialized version of the Scala REPL that allows Scala-Spark developers to write
- Spark code in a Unix or Windows terminal. It requires the local installation of Spark ( https://spark.apache.org/releases/spark-release-2-4-3.html ).
+ Spark code in a Unix or Windows terminal. It requires the local installation of Spark ( https://spark.apache.org/releases/spark-release-2-4-7.html ).
 7. **Slack:** A messaging-collaboration tool ( https://slack.com ) that allows developers to communicate ( quietly ) in the same room
- or across the country.
-8. **VPN:** Secure VPN provides developers with external access to a private, or internal, development network.
+or across the world.
+8. **VPN:** Secure VPN provides developers with external access to a private, or internal, development network(s).
 9. **Local Services:** It’s often convenient to build Scala prototypes and integration tests against local services, such a Kafka,
- Cassandra or any other ( Big Data ) service. The same integration tests can be run in a properly configured CI/CD network environment.
-10. **CI/CD:** Known as continuous integration and deployment. Using a tool like Jenkins ( https://jenkins.io ), a team can
- set up a build project for each project housed in a Git repository. Based on a schedule, Jenkins will pull a Git repository,
- rebuild the project, run tests and package it using SBT. This is basic continuous integration. Using Jenkins components,
- pipelines and stages can be constructed as well. Continuous deployment is a controversial topic, but available. Github
- and Gitlab provide CI/CD services as well.
+Cassandra, Postgresql and/or other services. The same integration tests can be run in a properly configured CI/CD network environment.
+10. **CI/CD:** Continuous integration and deployment. Jenkins ( https://jenkins.io ) allows a team to set up a build project
+for each project housed in a Git repository. Based on a schedule, Jenkins will pull a Git repository, rebuild the project, run tests
+and package it. Continuous deployment is an optional feature. Github, Gitlab and other companies provide CI/CD services.
 11. **Agile:** Github provides a free Kanban Board for each repository, allowing developers to manage project tasks.
- Gitlab also provides a Kanban Board for each repository. Other agile tools exist, but are considered overkill by a growing
- number of developers. Atlassian ( https://www.atlassian.com ) provides a popular ( yet overly robust ) set of agile tools.
+Gitlab also provides a Kanban Board for each repository. Other agile tools exist, but are considered overkill by a growing
+number of developers. Atlassian ( https://www.atlassian.com ) provides a popular ( yet overly robust ) set of agile tools.
 12. **Laptop:** Scala developers typically use a MacBook Pro, configured with a 15" screen, 32GB of RAM and **Admin** rights. Today's developers must be mobile, capable of working anywhere at anytime. Interestingly, Linux laptops are slowly gaining traction.
 13. **Homebrew:** The ultimate software package manager for Apple OSX ( https://brew.sh ).
 14. **SdkMan:** A lightweight quasi-alternative to Homebrew ( https://sdkman.io )
