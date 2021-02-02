@@ -23,16 +23,15 @@ SBT is dominant in the Scala space. Mill ( http://www.lihaoyi.com/mill/ ) is a v
 4. **Maven Repository:** SBT requires network access to the public Maven repository ( https://mvnrepository.com ) to obtain
 versioned libraries. A continually updated copy of the public Maven Repository can be set up and maintained internally via
 products like Nexus ( https://www.sonatype.com/nexus-repository-sonatype ) and JFrog Artifactory ( https://jfrog.com/artifactory/ ).
-Ideally, internal versioned apps and components would be published to an internal Maven repository for easy internal sharing via
+Ideally, internal versioned apps and components would be published to an internal Maven repository for easy internal sharing by
 developers. Additional public repositories exist and may be required for development.
 5. **Scala REPL:** The Scala REPL allows Scala developers to write code in a Unix or Windows terminal. Some Scala developers
 use it a lot, while others never do. It’s a nice tool to use for quick prototypes. It requires the local installation of 
 Scala ( https://www.scala-lang.org/download/ ). Another popular option is the Ammonite REPL ( http://ammonite.io ).
 6. **Spark REPL:** The Scala Spark REPL is a specialized version of the Scala REPL that allows Scala-Spark developers to write
 Spark code in a Unix or Windows terminal. It requires the local installation of Spark ( https://spark.apache.org/downloads.html ).
-7. **Slack:** A messaging-collaboration tool ( https://slack.com ) that allows developers to communicate ( quietly ) in the same room
-or across the world.
-8. **VPN:** Secure VPN provides developers with external access to a private, or internal, development network(s).
+7. **Slack:** A messaging-collaboration tool ( https://slack.com ) for development teams.
+8. **VPN:** VPN provides developers with secure access to public and private networks.
 9. **Local Services:** It’s often convenient to build Scala prototypes and integration tests against local services, such as Kafka,
 Cassandra, Postgresql, etc.
 10. **CI/CD:** Continuous integration and deployment. Jenkins ( https://jenkins.io ) allows a team to set up a build project
