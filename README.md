@@ -28,8 +28,8 @@ in the Scala space.
  public repositories exist and may be required for development.
 5. **Scala REPL:** The Scala REPL allows Scala developers to write code in a Unix or Windows terminal. Some Scala developers
  use it a lot, while others never do. It’s a nice tool to use for quick prototypes. It requires the local installation of 
- Scala ( https://www.scala-lang.org/download/ ).
-6. **Spark REPL:** The Scala Spark REPL, is a specialized version of the Scala REPL that allows Scala-Spark developers to write
+ Scala ( https://www.scala-lang.org/download/ ). Another popular option is the Ammonite REPL ( http://ammonite.io ).
+6. **Spark REPL:** The Scala Spark REPL is a specialized version of the Scala REPL that allows Scala-Spark developers to write
  Spark code in a Unix or Windows terminal. It requires the local installation of Spark ( https://spark.apache.org/downloads.html ).
 7. **Slack:** A messaging-collaboration tool ( https://slack.com ) that allows developers to communicate ( quietly ) in the same room
 or across the world.
