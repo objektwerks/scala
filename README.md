@@ -44,4 +44,4 @@ Windows and Linux laptops are also available.
 13. **Homebrew:** The ultimate software package manager for Apple OSX ( https://brew.sh ).
 14. **Sdkman:** A lightweight complement to Homebrew ( https://sdkman.io ) that runs on Apple OSX, Windows and Linux.
 15. **Pathfinder:** The ultimate file system browser for Apple OSX ( https://cocoatech.com/#/ ).
-16. **Linux:** Providing developers with access to a Linux development server is ideal.
+16. **Linux Server:** Providing developers with access to a Linux development server is ideal.
