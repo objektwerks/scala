@@ -14,13 +14,13 @@ Environment
 -----------
 > The following list details commonplace items found in productive Scala shops.
 
-1. **Git:** Establish a Github ( https://github.com/features ) account. Gitlab ( https://about.gitlab.com ) is a
- nice alternative. Both Github and Gitlab can be installed on an internal network.
-2. **IDE:** Roughly 80% of developers in the Scala space use Jetbrains Intellij IDEA ( https://www.jetbrains.com/idea/ ).
- The community edition is free, while the ultimate edition is subscription based. The Scala Eclipse IDE ( http://scala-ide.org )
- is a distant alternative. VS Code with Metals is a young and upcoming lightweight option. To each his or her own.;)
-3. **SBT:** Also known as Scala Build Tool ( https://www.scala-sbt.org/1.x/docs/index.html ), SBT is a build and dependency
- management tool that can do so much more via plugins. It’s similar to Maven and Gradle, but Scala focused. It’s a must have!
+1. **Git:** Establish a Github ( https://github.com/features ) or Gitlab ( https://about.gitlab.com ) account.
+Both Github and Gitlab can be installed on an internal network.
+2. **IDE:** Commonly used IDEs include: Jetbrains Intellij IDEA ( https://www.jetbrains.com/idea/ ) and 
+VS Code ( https://code.visualstudio.com ) with Metals ( https://scalameta.org/metals/ ).
+3. **SBT:** The Scala Build Tool ( https://www.scala-sbt.org/1.x/docs/index.html ) is a build and dependency
+management tool that's extensible via plugins. It’s similar to Maven and Gradle, but Scala focused and dominant
+in the Scala space.
 4. **Maven Repository:** SBT requires network access to the public Maven repository ( https://mvnrepository.com ) to obtain
  versioned libraries. A continually updated copy of the public Maven Repository can be set up and maintained internally via
  products like Nexus ( https://www.sonatype.com/nexus-repository-sonatype ) and JFrog Artifactory ( https://jfrog.com/artifactory/ ).
