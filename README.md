@@ -1,6 +1,6 @@
 Scala
 -----
->This project contains Scala 2.13 feature tests.
+>This project contains Scala 2.13.4 feature tests.
 
 Test
 ----
@@ -8,29 +8,28 @@ Test
 
 Run
 ---
-* sbt clean compile run
+* sbt clean run
 
 Environment
 -----------
 > The following list details commonplace items found in productive Scala shops.
 
-1. **Git:** Git is the default version control software in the world. Popular providers include: Github ( https://github.com/features )
+1. **Git:** Git is the goto version control software in the world. Popular providers include: Github ( https://github.com/features )
 and Gitlab ( https://about.gitlab.com ). Both can be installed on an internal network.
-2. **IDE:** Commonly used IDEs include: Jetbrains Intellij IDEA ( https://www.jetbrains.com/idea/ ) and 
+2. **IDE:** Common Scala IDEs include: Jetbrains Intellij IDEA ( https://www.jetbrains.com/idea/ ) and 
 VS Code ( https://code.visualstudio.com ) with Metals ( https://scalameta.org/metals/ ).
-3. **SBT:** The Scala Build Tool ( https://www.scala-sbt.org/1.x/docs/index.html ) is a build and dependency
-management tool that's extensible via plugins. It’s similar to Maven and Gradle, but Scala focused and dominant
-in the Scala space.
+3. **SBT:** The Scala Build Tool ( https://www.scala-sbt.org ) is a build and dependency management tool, extensible via plugins.
+SBT, similar to Maven and Gradle, is Scala focused and dominant in the Scala space.
 4. **Maven Repository:** SBT requires network access to the public Maven repository ( https://mvnrepository.com ) to obtain
- versioned libraries. A continually updated copy of the public Maven Repository can be set up and maintained internally via
- products like Nexus ( https://www.sonatype.com/nexus-repository-sonatype ) and JFrog Artifactory ( https://jfrog.com/artifactory/ ).
- Ideally, versioned apps and components would be published to an internal Maven repository for easy internal sharing. Additional
- public repositories exist and may be required for development.
+versioned libraries. A continually updated copy of the public Maven Repository can be set up and maintained internally via
+products like Nexus ( https://www.sonatype.com/nexus-repository-sonatype ) and JFrog Artifactory ( https://jfrog.com/artifactory/ ).
+Ideally, versioned apps and components would be published to an internal Maven repository for easy internal sharing. Additional
+public repositories exist and may be required for development.
 5. **Scala REPL:** The Scala REPL allows Scala developers to write code in a Unix or Windows terminal. Some Scala developers
- use it a lot, while others never do. It’s a nice tool to use for quick prototypes. It requires the local installation of 
- Scala ( https://www.scala-lang.org/download/ ). Another popular option is the Ammonite REPL ( http://ammonite.io ).
+use it a lot, while others never do. It’s a nice tool to use for quick prototypes. It requires the local installation of 
+Scala ( https://www.scala-lang.org/download/ ). Another popular option is the Ammonite REPL ( http://ammonite.io ).
 6. **Spark REPL:** The Scala Spark REPL is a specialized version of the Scala REPL that allows Scala-Spark developers to write
- Spark code in a Unix or Windows terminal. It requires the local installation of Spark ( https://spark.apache.org/downloads.html ).
+Spark code in a Unix or Windows terminal. It requires the local installation of Spark ( https://spark.apache.org/downloads.html ).
 7. **Slack:** A messaging-collaboration tool ( https://slack.com ) that allows developers to communicate ( quietly ) in the same room
 or across the world.
 8. **VPN:** Secure VPN provides developers with external access to a private, or internal, development network(s).
