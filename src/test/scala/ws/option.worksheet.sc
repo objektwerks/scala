@@ -19,6 +19,7 @@ def toInt(s: String): Option[Int] = s.toIntOption
 val xs = List("1", "2", "3", "four")
 xs.map(toInt)
 xs.map(toInt).collect { case Some(i) => i }
+xs.map(toInt).flatten
 xs.flatMap(toInt)
 xs.flatMap(toInt).sum
 

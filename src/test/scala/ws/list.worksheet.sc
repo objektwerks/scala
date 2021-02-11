@@ -19,6 +19,8 @@ zs.sum
 def toInt(s: String): Option[Int] = s.toIntOption
 val ss = List("1", "2", "3", "four")
 ss.map(toInt)
+ss.map(toInt).collect { case Some(i) => i }
+ss.map(toInt).flatten
 ss.flatMap(toInt)
 ss.flatMap(toInt).sum
 
