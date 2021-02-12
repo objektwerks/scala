@@ -29,6 +29,15 @@ object Value {
   }
 }
 
+trait Box[T]{ def content: T }
+object Box {
+  def view[T: Box] = implicitly[Box[T]].content
+
+  implicit object IntBox extends Box[Int]{ def content = 123 }
+
+  implicit object StringBox extends Box[String]{ def content = "abc" }
+}
+
 class ImplicitTest extends AnyFunSuite with Matchers {
   test("implicit parameter") {
     implicit val item = "beers"
@@ -69,8 +78,8 @@ class ImplicitTest extends AnyFunSuite with Matchers {
   }
 
   test("implicitly") {
-    case class Name(name: String)
-    implicit val implicitName = Name("Fred Flintstone")
-    implicitly[Name] shouldEqual implicitName
+    import Box._
+    view[Int] shouldBe 123
+    view[String] shouldBe "abc"
   }
 }
