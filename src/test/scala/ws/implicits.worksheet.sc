@@ -20,6 +20,16 @@ import StringExtensions._
 val json = "json".toJson
 val xml = "xml".toXml
 
+// Implicitly
+trait Container[T]{ def content: T }
+def view[T: Container] = implicitly[Container[T]].content
+
+implicit object IntContainer extends Container[Int]{ def content = 123 }
+implicit object StringContainer extends Container[String]{def content = "abc"}
+
+view[Int]
+view[String]
+
 // Ordering
 case class Value(number: Int)
 object Value {
