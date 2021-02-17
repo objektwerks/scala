@@ -10,8 +10,8 @@ Run
 ---
 * sbt clean run
 
-Development Environment
------------------------
+Environment
+-----------
 > The following list details commonplace technologies and practices found in productive Scala shops.
 
 1. **Git:** Git is the goto version control software in the world. Popular providers include: Github ( https://github.com/features )
