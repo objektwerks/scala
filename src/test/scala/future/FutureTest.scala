@@ -7,6 +7,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future, Promise}
 import scala.util.{Failure, Success, Try}
+import scala.language.postfixOps
 
 class FutureTest extends AnyFunSuite with Matchers {
   test("blocking") {

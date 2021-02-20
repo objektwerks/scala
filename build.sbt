@@ -11,10 +11,3 @@ libraryDependencies ++= {
     "org.scalatest" %% "scalatest" % "3.2.5" % Test
   )
 }
-scalacOptions ++= Seq(
-  "-language:postfixOps",
-  "-language:reflectiveCalls",
-  "-language:implicitConversions",
-  "-language:higherKinds",
-  "-Xasync"
-)

@@ -4,6 +4,7 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 import scala.util.Random.nextInt
+import scala.language.postfixOps
 
 class ParallelSortingTest extends AnyFunSuite with Matchers {
   val randomArray = Array.fill(10000)(nextInt())

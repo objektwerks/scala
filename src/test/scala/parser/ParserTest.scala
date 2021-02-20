@@ -4,6 +4,7 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 import scala.util.parsing.combinator.RegexParsers
+import scala.language.postfixOps
 
 class ExprParser extends RegexParsers {
   val number = "[1-9]+".r

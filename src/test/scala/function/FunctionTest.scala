@@ -6,6 +6,7 @@ import org.scalatest.matchers.should.Matchers
 import scala.annotation.tailrec
 import scala.util.Random
 import scala.util.chaining._
+import scala.language.postfixOps
 
 class FunctionTest extends AnyFunSuite with Matchers {
   test("literal") {
