@@ -8,7 +8,7 @@ trait Joiner[T] {
 }
 
 object Joiner {
-  def joinElements[T](list: List[T])(implicit joiner: Joiner[T]): T = joiner.join(list)
+  def joinAll[T](list: List[T])(implicit joiner: Joiner[T]): T = joiner.join(list)
 
   implicit object IntJoiner extends Joiner[Int] {
     def join(list: List[Int]): Int = list.mkString.toInt
@@ -22,7 +22,7 @@ object Joiner {
 class TypeClassTest extends AnyFunSuite with Matchers {
   test("type class") {
     import Joiner._
-    joinElements(List(1, 2, 3)) shouldBe 123
-    joinElements(List("Scala ", "is ", "awesome!")) shouldBe "Scala is awesome!"
+    joinAll(List(1, 2, 3)) shouldBe 123
+    joinAll(List("Scala ", "is ", "awesome!")) shouldBe "Scala is awesome!"
   }
 }
