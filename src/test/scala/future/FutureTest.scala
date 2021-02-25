@@ -10,8 +10,12 @@ class FutureTest extends AsyncFunSuite with Matchers {
   test("promise") {
     def send(message: String): Future[String] = {
       val promise = Promise[String] ()
-      val fn = new Thread(() => promise.success(message))
-      executionContext.execute(fn)
+      val runnable = new Runnable {
+        override def run(): Unit = {
+          promise.success(message)
+        }
+      }
+      executionContext.execute(runnable)
       promise.future
     }
     send("Hello world!").map { _ shouldBe "Hello world!" }
