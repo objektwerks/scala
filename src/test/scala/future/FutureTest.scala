@@ -3,13 +3,15 @@ package future
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future, Promise}
 import scala.util.{Failure, Success, Try}
 import scala.language.postfixOps
 
 class FutureTest extends AnyFunSuite with Matchers {
+  implicit val ec = ExecutionContext.Implicits.global
+
   test("blocking") {
     Await.result(Future(1), 1 second) shouldEqual 1
   }
@@ -22,7 +24,7 @@ class FutureTest extends AnyFunSuite with Matchers {
     def send(message: String): Future[String] = {
       val promise = Promise[String] ()
       val fn = new Thread(() => promise.success(message))
-      global.execute(fn)
+      ec.execute(fn)
       promise.future
     }
     val future = send("Hello world!")
