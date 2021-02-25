@@ -1,34 +1,20 @@
 package future
 
-import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future, Promise}
 import scala.util.{Failure, Success, Try}
-import scala.language.postfixOps
+import scala.concurrent.{Future, Promise}
 
-class FutureTest extends AnyFunSuite with Matchers {
-  implicit val ec = ExecutionContext.Implicits.global
-
-  test("blocking") {
-    Await.result(Future(1), 1 second) shouldEqual 1
-  }
-
-  test("non-blocking") {
-    Future(1) foreach { _ shouldEqual 1 }
-  }
-
+class FutureTest extends AsyncFunSuite with Matchers {
   test("promise") {
     def send(message: String): Future[String] = {
       val promise = Promise[String] ()
       val fn = new Thread(() => promise.success(message))
-      ec.execute(fn)
+      executionContext.execute(fn)
       promise.future
     }
-    val future = send("Hello world!")
-    future foreach { s => s shouldEqual "Hello world!" }
+    send("Hello world!").map { _ shouldBe "Hello world!" }
   }
 
   test("sequential") {
@@ -36,7 +22,7 @@ class FutureTest extends AnyFunSuite with Matchers {
       one <-  Future(1)
       two <- Future(2)
     } yield one + two
-    future foreach { _ shouldEqual 3 }
+    future.map { _ shouldBe 3 }
   }
 
   test("parallel") {
@@ -46,63 +32,55 @@ class FutureTest extends AnyFunSuite with Matchers {
       one <- futureOne
       two <- futureTwo
     } yield one + two
-    futureThree foreach { _ shouldEqual 3 }
+    futureThree.map { _ shouldBe 3 }
   }
 
   test("sequential fail fast") {
-    val future = for {
-      x <- Future { Integer.parseInt("one") }
-      y <- Future { Integer.parseInt("2") }
-      z <- Future { Integer.parseInt("3") }
-    } yield (x, y, z)
-    future onComplete {
-      case Success(result) =>  fail(s"Fail fast failed: $result")
-      case Failure(failure) => failure.isInstanceOf[NumberFormatException] shouldBe true
+    recoverToSucceededIf[NumberFormatException] {
+      for {
+        x <- Future { Integer.parseInt("one") }
+        y <- Future { Integer.parseInt("2") }
+        z <- Future { Integer.parseInt("3") }
+      } yield (x, y, z)
     }
   }
 
   test("parallel fail fast") {
-    val futureOne = Future { Integer.parseInt("one") }
-    val futureTwo = Future { Integer.parseInt("2") }
-    val futureThree = Future { Integer.parseInt("3") }
-    val future = for {
-      x <- futureOne
-      y <- futureTwo
-      z <- futureThree
-    } yield (x, y, z)
-    future onComplete {
-      case Success(result) => fail(s"Fail fast failed: $result")
-      case Failure(failure) => failure.isInstanceOf[NumberFormatException] shouldBe true
+    recoverToSucceededIf[NumberFormatException] {
+      val futureOne = Future { Integer.parseInt("one") }
+      val futureTwo = Future { Integer.parseInt("2") }
+      val futureThree = Future { Integer.parseInt("3") }
+      for {
+        x <- futureOne
+        y <- futureTwo
+        z <- futureThree
+      } yield (x, y, z)
     }
   }
 
   test("sequence") {
     val futureOfListOfInt = Future.sequence(List(Future(1), Future(2)))
     val futureOfInt = futureOfListOfInt.map(_.sum)
-    futureOfInt foreach { _ shouldEqual 3 }
+    futureOfInt.map { _ shouldBe 3 }
   }
 
   test("traverse") {
     val futureOfListOfInt = Future.traverse((1 to 2).toList) (i => Future(i * 1))
     val futureOfInt = futureOfListOfInt.map(_.sum)
-    futureOfInt foreach { _ shouldEqual 3 }
+    futureOfInt.map { _ shouldBe 3 }
   }
 
   test("sequence fail fast ") {
-    val futureOfListOfInt = Future.sequence(List(Future(Integer.parseInt("one")), Future(Integer.parseInt("2"))))
-    val futureOfInt = futureOfListOfInt map(_.sum)
-    futureOfInt onComplete {
-      case Success(result) => fail(s"Fail fast failed: $result")
-      case Failure(failure) => failure.isInstanceOf[NumberFormatException] shouldBe true
+    recoverToSucceededIf[NumberFormatException] {
+      val futureOfListOfInt = Future.sequence(List(Future(Integer.parseInt("one")), Future(Integer.parseInt("2"))))
+      futureOfListOfInt.map(_.sum)
     }
   }
 
   test("traverse fail fast") {
-    val futureOfListOfInt = Future.traverse((1 to 2).toList) (i => Future(i / 0))
-    val futureOfInt = futureOfListOfInt.map { i => println(s"Never executes: $i"); i.sum }
-    futureOfInt onComplete {
-      case Success(result) => fail(s"Fail fast failed: $result")
-      case Failure(failure) => failure.isInstanceOf[ArithmeticException] shouldBe true
+    recoverToSucceededIf[ArithmeticException] {
+      val futureOfListOfInt = Future.traverse((1 to 2).toList) (i => Future(i / 0))
+      futureOfListOfInt.map(_.sum)
     }
   }
 
@@ -111,96 +89,95 @@ class FutureTest extends AnyFunSuite with Matchers {
   }
 
   test("filter") {
-    Future(3) filter { _ == 3 } foreach { _ shouldEqual 3 }
+    Future(3) filter { _ == 3 } map { _ shouldBe 3 }
   }
 
   test("foldLeft") {
     val ListFutureOfInt = List(Future(1), Future(2))
     val futureOfInt = Future.foldLeft(ListFutureOfInt)(0){ (acc, num) => acc + num }
-    futureOfInt foreach { _ shouldEqual 3 }
+    futureOfInt.map { _ shouldBe 3 }
   }
 
   test("reduceLeft") {
     val ListFutureOfInt = List(Future(1), Future(2))
     val futureOfInt = Future.reduceLeft(ListFutureOfInt){ (acc, num) => acc + num }
-    futureOfInt foreach { _ shouldEqual 3 }
-  }
-
-  test("foreach") {
-    Future(3) foreach { _ shouldEqual 3 }
+    futureOfInt.map { _ shouldBe 3 }
   }
 
   test("fallbackTo") {
-    Future(Integer.parseInt("one")) fallbackTo Future(1) foreach { _ shouldEqual 1 }
+    val future = Future(Integer.parseInt("three")) fallbackTo Future(3)
+    future.map { _ shouldBe 3 }
   }
 
   test("fromTry") {
-    Future.fromTry(Try(Integer.parseInt("3"))) foreach { _ shouldEqual 3 }
+    val future = Future.fromTry(Try(Integer.parseInt("3")))
+    future.map { _ shouldBe 3 }
   }
 
   test("andThen") {
-    Future(Integer.parseInt("1")) andThen { case Success(_) => println("Execute 'andThen' side-effecting code!") } foreach { _ shouldEqual 1 }
-  }
-
-  test("failed") {
-    Future.failed[Exception](new Exception("failed")).foreach { e => e.getMessage shouldEqual "failed" }
-  }
-
-  test("successful") {
-    Future.successful[Int](3).foreach { _ shouldEqual 3 }
+    val future = Future(Integer.parseInt("3")) andThen { case Success(_) => println("Execute 'andThen' side-effecting code!") }
+    future.map { _ shouldBe 3 }
   }
 
   test("zip > map") {
-    Future(1) zip Future(2) map { case (x, y) => x + y } foreach { _ shouldEqual 3 }
+    val future = Future(1) zip Future(2) map { case (x, y) => x + y }
+    future.map { _ shouldBe 3 }
   }
 
   test("recover") {
-    Future(Integer.parseInt("one")) recover { case _ => 1 } foreach { _ shouldEqual 1 }
+    val future = Future(Integer.parseInt("three")) recover { case _ => 3 }
+    future.map { _ shouldBe 3 }
   }
 
   test("recover > map > recover") {
-    Future(Integer.parseInt("one")).map{ _ * 3 }.recover{ case _ => -1 }.foreach{ _ shouldEqual -1 }
-    Future(Integer.parseInt("1")).map{ _ * 3 }.recover{ case _ => -1 }.foreach{ _ shouldEqual 3 }
+    val future = Future(Integer.parseInt("one")).map{ _ * 3 }.recover{ case _ => -1 }
+    future.map { _ shouldBe -1 }
  }
 
   test("recoverWith") {
-    Future(Integer.parseInt("one")) recoverWith { case _ => Future(1) } foreach { _ shouldEqual 1 }
+    val future = Future(Integer.parseInt("three")) recoverWith { case _ => Future(3) }
+    future.map { _ shouldBe 3 }
   }
 
-  test("recover for") {
-    val future = Future(Integer.parseInt("one"))
+  test("recover > for") {
+    val future = Future(Integer.parseInt("three"))
     val result = (
       for {
         i <- future
       } yield i
     ).recover { case _: Throwable => -1 }
-    result foreach { _ shouldEqual -1 }
+    result.map { _ shouldBe -1 }
   }
 
   test("transform") {
-    Future(Integer.parseInt("1")).transform(_ + 2, failure => new Exception("failure", failure)) foreach { _ shouldEqual 3 }
-    Future(Integer.parseInt("one")).transform(_ + 2, failure => new Exception("failure", failure)) foreach { _ should not equal 3 }
+    val future = Future(Integer.parseInt("1")).transform(_ + 2, failure => failure)
+    future.map { _ shouldBe 3 }
+
+    recoverToSucceededIf[NumberFormatException] {
+      Future(Integer.parseInt("one")).transform(_ + 2, failure => failure)
+    }
   }
 
   test("transformWith") {
-    Future { Integer.parseInt("1") } transformWith {
+    val futureOne = Future { Integer.parseInt("1") } transformWith {
       case Success(i) => Future(i)
       case Failure(_) => Future(-1)
-    } foreach { _ shouldEqual 1 }
+    }
+    futureOne.map { _ shouldBe 1 }
 
-    Future { Integer.parseInt("one") } transformWith {
+    val futureNegativeOne = Future { Integer.parseInt("one") } transformWith {
       case Success(i) => Future(i)
       case Failure(_) => Future(-1)
-    } foreach { _ shouldEqual -1  }
+    }
+    futureNegativeOne.map { _ shouldBe -1 }
   }
 
   test("flatten") {
-    Future { Future(1) }.flatten foreach { _ shouldEqual 1 }
+    Future{ Future(1) }.flatten.map { _ shouldBe 1 }
   }
 
   test("zipWith") {
-    Future("My average is:")
-      .zipWith(Future(100.0)) { case (label, average) => s"$label $average" }
-      .foreach { s => s shouldEqual "My average is: 100.0" }
+    val future = Future("My average is:").zipWith(Future(100.0)) { case (label, average) => s"$label $average" }
+    future.map { _ shouldBe "My average is: 100.0" }
   }
 }
