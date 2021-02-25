@@ -64,27 +64,27 @@ class FutureTest extends AsyncFunSuite with Matchers {
 
   test("sequence") {
     val futureOfListOfInt = Future.sequence(List(Future(1), Future(2)))
-    val futureOfInt = futureOfListOfInt map(_.sum)
+    val futureOfInt = futureOfListOfInt map { _.sum }
     futureOfInt map { _ shouldBe 3 }
   }
 
   test("traverse") {
     val futureOfListOfInt = Future.traverse((1 to 2).toList) (i => Future(i * 1))
-    val futureOfInt = futureOfListOfInt map(_.sum)
+    val futureOfInt = futureOfListOfInt map { _.sum }
     futureOfInt map { _ shouldBe 3 }
   }
 
   test("sequence fail fast ") {
     recoverToSucceededIf[NumberFormatException] {
       val futureOfListOfInt = Future.sequence(List(Future(Integer.parseInt("one")), Future(Integer.parseInt("2"))))
-      futureOfListOfInt map(_.sum)
+      futureOfListOfInt map { _.sum }
     }
   }
 
   test("traverse fail fast") {
     recoverToSucceededIf[ArithmeticException] {
       val futureOfListOfInt = Future.traverse((1 to 2).toList) (i => Future(i / 0))
-      futureOfListOfInt map(_.sum)
+      futureOfListOfInt map { _.sum }
     }
   }
 
