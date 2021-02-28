@@ -8,7 +8,7 @@ Test
 
 Run
 ---
-* sbt run
+* sbt clean compile run
 
 Environment
 -----------
