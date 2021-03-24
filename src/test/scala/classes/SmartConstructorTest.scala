@@ -17,13 +17,25 @@ object Email {
       else None
 }
 
+sealed abstract case class Xmail private (address: String)
+object Xmail {
+  def validate(newAddress: String): Option[Xmail] =
+    if (newAddress.nonEmpty) Some( new Xmail(newAddress){} )
+    else None
+}
+
 /**
   * See: https://tuleism.github.io/blog/2020/scala-smart-constructors/
   *
   */
 class SmartConstructorTest extends AnyFunSuite with Matchers {
-  test("smart constructor") {
+  test("trait") {
     Email.validate("test@test.com").nonEmpty shouldBe true
     Email.validate("").isEmpty shouldBe true
+  }
+
+  test("abstract case class private") {
+    Xmail.validate("test@test.com").nonEmpty shouldBe true
+    Xmail.validate("").isEmpty shouldBe true
   }
 }
