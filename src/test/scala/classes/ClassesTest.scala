@@ -3,17 +3,17 @@ package classes
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-abstract class Car {
+sealed abstract class Car {
   def drive: String = "driving"
   def sound: String
 }
-class Porsche extends Car {
+final class Porsche extends Car {
   override def sound: String = "prrrr"
 }
-class Corvette extends Car {
+final class Corvette extends Car {
   override def sound: String = "woosh" 
 }
-class Maserati extends Car { 
+final class Maserati extends Car { 
   override def sound: String = "grrrr" 
 }
 object Owner { 

@@ -41,6 +41,7 @@ class ParserTest extends AnyFunSuite with Matchers {
         year.toInt shouldEqual 2015
         month.toInt shouldEqual 9
         day.toInt shouldEqual 9
+      case _ => fail("pattern match test failed!")
     }
   }
 

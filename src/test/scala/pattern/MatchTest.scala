@@ -25,6 +25,7 @@ class MatchTest extends AnyFunSuite with Matchers {
       case i: Int => s"integer: $i"
       case d: Double => s"double: $d"
       case s: String => s"string: $s"
+      case _ => fail("type test failed!")
     }
 
     byType(1) shouldEqual "integer: 1"
@@ -114,6 +115,7 @@ class MatchTest extends AnyFunSuite with Matchers {
 
     def byRegex(address: String): (Int, Int, Int, Int) = address match {
       case ipAddress(a, b, c, d) => (a.toInt, b.toInt, c.toInt, d.toInt)
+      case _ => fail("regex test failed!")
     }
 
     (10, 10, 0, 1) shouldEqual byRegex("10.10.0.1")
