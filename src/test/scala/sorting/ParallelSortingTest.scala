@@ -41,7 +41,8 @@ class ParallelSortingTest extends AnyFunSuite with Matchers {
 
   def javaParallelSort(array: Array[Int]): Array[Int] = {
     import java.util
-    util.Arrays.parallelSort(array)
+
+    util.Arrays.parallelSort(array) // sorted in place
     array
   }
 }
