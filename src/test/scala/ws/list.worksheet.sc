@@ -1,4 +1,5 @@
 import scala.annotation.tailrec
+import scala.language.postfixOps
 import scala.util.Try
 
 List() == Nil
