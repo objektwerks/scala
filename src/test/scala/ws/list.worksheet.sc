@@ -98,7 +98,6 @@ final def intersectLists[A](listA: List[A],
         intersectLists(tail, listB, acc)
       }
   }
-
 val listA = (1 to 10).toList
 val listB = (5 to 15).toList
 val intersectListsResult = intersectLists(listA, listB)
