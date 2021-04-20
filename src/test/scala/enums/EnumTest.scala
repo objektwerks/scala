@@ -33,8 +33,8 @@ object Month extends Enumeration {
   val map = SortedMap[Int, Value](Jan.id -> Jan, Feb.id -> Feb, Mar.id -> Mar, Apr.id -> Apr, May.id -> May, Jun.id -> Jun,
                                   Jul.id -> Jul, Aug.id -> Aug, Sep.id -> Sep, Oct.id -> Oct, Nov.id -> Nov, Dec.id -> Dec)
   def validate(month: Month.Value): Boolean = values.contains(month)
-
 }
+
 class EnumTest extends AnyFunSuite with Matchers {
   test("scala enum") {
     Weekday.values.foreach(weekday => Weekday.validate(weekday) shouldBe true)
