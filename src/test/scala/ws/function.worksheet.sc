@@ -98,7 +98,6 @@ def fibonacci(ns: Array[String]): Map[Long, Long] = {
   def toLong(s: String): Option[Long] = s.toLongOption
   ns.flatMap( n => toLong(n) ).map( n => n -> fibonacci(n) ).toMap
 }
-
 fibonacci( Array("13", "26", "39", "four") )
 
 def isPrime(n: Int): Boolean = {
@@ -115,7 +114,6 @@ def isPrime(ns: Array[String]): Map[Int, Boolean] = {
   def toInt(s: String): Option[Int] = s.toIntOption
   ns.flatMap( n => toInt(n) ).map( n => n -> isPrime(n) ).toMap
 }
-
 isPrime( Array("3", "5", "11", "21") )
 
 val incr = (n: Int) => n + 1
@@ -130,7 +128,7 @@ xs map incrComposeDecr
 xs map incrAndThenDecr
 xs map incrComposeDecr map incrAndThenDecr
 
-2.pipe(square) == 4
+2.pipe(square)
 
 def timer[A](codeblock: => A): (A, Double) = {
   val startTime = System.nanoTime
@@ -156,7 +154,6 @@ def diffAsPercentage(previous: Double, current: Double): Int = {
   val delta = Math.abs( dividend / divisor ) * 100
   delta.round.toInt
 }
-
 diffAsPercentage(70.0, 75.0)
 diffAsPercentage(75.0, 70.0)
 diffAsPercentage(75.0, 80.0)
