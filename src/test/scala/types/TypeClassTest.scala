@@ -22,6 +22,7 @@ object Joiner {
 class TypeClassTest extends AnyFunSuite with Matchers {
   test("type class") {
     import Joiner._
+    
     joinAll(List(1, 2, 3)) shouldBe 123
     joinAll(List("Scala ", "is ", "awesome!")) shouldBe "Scala is awesome!"
   }
