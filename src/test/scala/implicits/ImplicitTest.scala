@@ -29,7 +29,9 @@ object Value {
   }
 }
 
-trait Box[T]{ def content: T }
+trait Box[T]{ 
+  def content: T 
+}
 object Box {
   def view[T: Box] = implicitly[Box[T]].content
 
@@ -41,26 +43,31 @@ object Box {
 class ImplicitTest extends AnyFunSuite with Matchers {
   test("implicit parameter") {
     implicit val item = "beers"
+
     def order(number: Int) (implicit item: String): String = {
       s"$number $item"
     }
+
     order(2) shouldEqual "2 beers"
   }
 
   test("implicit conversion") {
     implicit def intToString(i: Int): String = i.toString
+
     val three: String = 3
     three shouldEqual "3"
   }
 
   test("implicit class") {
     import StringConverters._
+
     "json".toJson shouldEqual "{json}"
     "xml".toXml shouldEqual "<xml>"
   }
 
   test("implicit anyval class") {
     import IntGraphics._
+
     3.stars shouldEqual "***"
     3.waves shouldEqual "~~~"
   }
@@ -72,6 +79,7 @@ class ImplicitTest extends AnyFunSuite with Matchers {
 
   test("implicit folding") {
     import Value._
+
     val values = List(1, 2, 3).map(n => Value(n))
     val combinedValue = values.foldLeft(Value(0))(_ + _)
     combinedValue.n shouldEqual 6
@@ -79,6 +87,7 @@ class ImplicitTest extends AnyFunSuite with Matchers {
 
   test("implicitly") {
     import Box._
+
     view[Int] shouldBe 123
     view[String] shouldBe "abc"
   }
