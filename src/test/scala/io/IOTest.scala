@@ -12,41 +12,55 @@ class IOTest extends AnyFunSuite with Matchers {
   val quote = "You can avoid reality, but you cannot avoid the consequences of avoiding reality."
 
   test("from url") {
-    val jokes = Using( Source.fromURL("http://api.icndb.com/jokes/random/", utf8) ) { source => source.mkString.split("\\W+") }
-    jokes.get.nonEmpty shouldBe true
+    val jokes = Using( Source.fromURL("http://api.icndb.com/jokes/random/", utf8) ) { 
+      source => source.mkString.split("\\W+") 
+    }.getOrElse( Array.empty[String] )
+    jokes.nonEmpty shouldBe true
   }
 
   test("from file") {
-    val words = Using( Source.fromFile("./LICENSE", utf8) ) { source => source.mkString.split("\\W+") }
-    words.get.length shouldEqual 1427
+    val words = Using( Source.fromFile("./LICENSE", utf8) ) { 
+      source => source.mkString.split("\\W+") 
+    }.getOrElse( Array.empty[String] )
+    words.length shouldEqual 1427
   }
 
   test("from input stream") {
-    val words = Source.fromInputStream(getClass.getResourceAsStream("/license.mit"), utf8).mkString.split("\\W+")
+    val words = Using( Source.fromInputStream(getClass.getResourceAsStream("/license.mit"), utf8) ) { 
+      source => source.mkString.split("\\W+")
+    }.getOrElse( Array.empty[String] )
     words.length shouldEqual 169
     toWordCountMap(words).size shouldEqual 96
   }
 
   test("from string") {
-    val words = Source.fromString(quote).mkString.split("\\W+")
+    val words = Using( Source.fromString(quote) ) { 
+      source => source.mkString.split("\\W+") 
+    }.getOrElse( Array.empty[String] )
     words.length shouldEqual 13
   }
 
   test("from chars") {
-    val words = Source.fromChars(quote.toCharArray).mkString.split("\\W+")
+    val words = Using( Source.fromChars(quote.toCharArray) ) {
+      source => source.mkString.split("\\W+") 
+    }.getOrElse( Array.empty[String] )
     words.length shouldEqual 13
   }
 
   test("from bytes") {
-    val words = Source.fromBytes(quote.getBytes(utf8), utf8).mkString.split("\\W+")
+    val words = Using( Source.fromBytes(quote.getBytes(utf8), utf8) ) {
+      source => source.mkString.split("\\W+") 
+    }.getOrElse( Array.empty[String] )
     words.length shouldEqual 13
   }
 
   test("grouped") {
-    val list = Source.fromInputStream(getClass.getResourceAsStream("/license.mit"), utf8).mkString.split("\\W+").toList
-    list.length shouldEqual 169
+    val array = Using( Source.fromInputStream(getClass.getResourceAsStream("/license.mit"), utf8) ) {
+      source => source.mkString.split("\\W+") 
+    }.getOrElse( Array.empty[String] )
+    array.length shouldEqual 169
 
-    val words = list.grouped(list.length / 8).toList
+    val words = array.grouped(array.length / 8).toList
     words.length shouldEqual 9
   }
 
@@ -55,9 +69,11 @@ class IOTest extends AnyFunSuite with Matchers {
     fileToLines("sbt.sbt").isFailure shouldBe true
   }
 
-  def toWordCountMap(words: Array[String]): MapView[String, Int] = {
+  def toWordCountMap(words: Array[String]): MapView[String, Int] =
     words.groupBy((word: String) => word.toLowerCase).view.mapValues(_.length)
-  }
 
-  def fileToLines(file: String): Try[Seq[String]] = Using( Source.fromFile(file, utf8) ) { source => source.getLines().toSeq }
+  def fileToLines(file: String): Try[Seq[String]] = 
+    Using( Source.fromFile(file, utf8) ) { 
+      source => source.getLines().toSeq 
+    }
 }
