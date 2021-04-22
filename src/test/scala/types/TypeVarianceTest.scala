@@ -13,9 +13,9 @@ class TypeVarianceTest extends AnyFunSuite with Matchers {
       def heal[U](canine: T): T = canine
     }
 
-    val vet = new Vet[Canine]
-    vet.heal[Canine]( new Dog() ).isInstanceOf[Dog] shouldBe true
-    vet.heal[Canine]( new Wolf() ).isInstanceOf[Wolf] shouldBe true
+    val canineVet = new Vet[Canine]
+    canineVet.heal[Canine]( new Dog() ).isInstanceOf[Dog] shouldBe true
+    canineVet.heal[Canine]( new Wolf() ).isInstanceOf[Wolf] shouldBe true
 
     val dogVet: Vet[Dog] = new Vet[Dog]
     dogVet.heal[Dog]( new Dog() ).isInstanceOf[Dog] shouldBe true
@@ -29,9 +29,9 @@ class TypeVarianceTest extends AnyFunSuite with Matchers {
       def heal[S >: T](canine: S): S = canine
     }
 
-    val vet = new Vet[Canine]
-    vet.heal[Canine]( new Dog() ).isInstanceOf[Dog] shouldBe true
-    vet.heal[Canine]( new Wolf() ).isInstanceOf[Wolf] shouldBe true
+    val canineVet = new Vet[Canine]
+    canineVet.heal[Canine]( new Dog() ).isInstanceOf[Dog] shouldBe true
+    canineVet.heal[Canine]( new Wolf() ).isInstanceOf[Wolf] shouldBe true
 
     val dogVet: Vet[Dog] = new Vet[Dog]
     dogVet.heal[Dog]( new Dog() ).isInstanceOf[Dog] shouldBe true
@@ -45,9 +45,9 @@ class TypeVarianceTest extends AnyFunSuite with Matchers {
       def heal[S <: T](canine: S): S = canine
     }
 
-    val vet = new Vet[Canine]
-    vet.heal[Canine]( new Dog() ).isInstanceOf[Dog] shouldBe true
-    vet.heal[Canine]( new Wolf() ).isInstanceOf[Wolf] shouldBe true
+    val canineVet = new Vet[Canine]
+    canineVet.heal[Canine]( new Dog() ).isInstanceOf[Dog] shouldBe true
+    canineVet.heal[Canine]( new Wolf() ).isInstanceOf[Wolf] shouldBe true
 
     val dogVet: Vet[Dog] = new Vet[Canine]
     dogVet.heal[Dog]( new Dog() ).isInstanceOf[Dog] shouldBe true
