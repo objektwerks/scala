@@ -4,9 +4,9 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 import scala.collection.MapView
+import scala.collection.mutable
 import scala.io.{Codec, Source}
 import scala.util.{Try, Using}
-
 
 object IOTest {
   val utf8 = Codec.UTF8.name
@@ -96,34 +96,28 @@ class IOTest extends AnyFunSuite with Matchers {
       Csv data is: 1 row corresponds to 1 line, all fields do not contain ','
       Csv schema is: date(0), host(1), store_id(2), postal_code(3), upc(4), price(5)
     */
-    import scala.collection.mutable
-
     case class Pricing(date: String, host: String, store: String, upc: String, price: String)
 
-    val lines = Using( Source.fromInputStream(getClass.getResourceAsStream("/pricing.csv"), utf8) ) { 
-      source => source.getLines().toArray
-    }.getOrElse( Array.empty[String] )
-
-    val delimitter = ","
-    val pricings = mutable.ArrayBuffer[Pricing]()
-    for (line <- lines) {
-      val columns = line.split(delimitter).map(_.trim)
-      if ( columns.size == 6 ) {
-        val date = columns(0)
-        val host = columns(1)
-        val store = columns(2)
-        val upc = columns(4)
-        val price = columns(5)
-
-        val pricing = Pricing(date, host, store, upc, price)
-        pricings += pricing
+    Using( Source.fromInputStream(getClass.getResourceAsStream("/pricing.csv"), utf8) ) { source => 
+      val pricings = mutable.ArrayBuffer[Pricing]()
+      for (line <- source.getLines()) {
+        val columns = line.split(",").map(_.trim)
+        if ( columns.size == 6 ) {
+          val date = columns(0)
+          val host = columns(1)
+          val store = columns(2)
+          val upc = columns(4)
+          val price = columns(5)
+          val pricing = Pricing(date, host, store, upc, price)
+          pricings += pricing
+        }
       }
-    }
-    val pricingsByDate = pricings.groupBy(_.date)
-    for ( (key, value) <- pricingsByDate) {
-      println()
-      println(s"*** key: $key value: ${value.toString()}")
-      println()
+      val pricingsByDate = pricings.groupBy(_.date)
+      for ( (key, value) <- pricingsByDate) {
+        println()
+        println(s"*** key: $key value: ${value.toString()}")
+        println()
+      }
     }
   }
 }
