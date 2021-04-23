@@ -64,5 +64,5 @@ def buildPricingMap(file: String): SortedMap[PricingKey, List[Pricing]] =
     pricingsByPriorityWeekday
   }.getOrElse( SortedMap.empty[PricingKey, List[Pricing]] )
 
-// In worksheet, hover over buildPriorityWeekdayPricingMap method to see output.
+// In worksheet, hover over buildPricingMap method to see output.
 buildPricingMap("/pricing.csv")
