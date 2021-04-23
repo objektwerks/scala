@@ -31,13 +31,13 @@ val weekdaysByPriority = Map[String, Int](
     DayOfWeek.SUNDAY.toString -> 7
   )
 
-def buildKey(date: String): String = {
+def buildPriorityWeekdayKey(date: String): String = {
   val weekday = LocalDate.parse(date).getDayOfWeek().toString()
   val priority = weekdaysByPriority(weekday)
   s"$priority - $weekday"
 }
 
-def buildPricingMap(file: String): SortedMap[String, Map[String, List[Pricing]]] =
+def buildPriorityWeekdayPricingMap(file: String): SortedMap[String, Map[String, List[Pricing]]] =
   Using( Source.fromInputStream(getClass.getResourceAsStream(file), Codec.UTF8.name) ) { source => 
     val pricings = mutable.ArrayBuffer[Pricing]()
     for (line <- source.getLines()) {
@@ -55,10 +55,10 @@ def buildPricingMap(file: String): SortedMap[String, Map[String, List[Pricing]]]
     val pricingsByDate = pricings.toList.groupBy(_.date)
     val pricingsByDateByWeekday = mutable.SortedMap[String, Map[String, List[Pricing]]]()
     for ( (key, value) <- pricingsByDate ) {
-        pricingsByDateByWeekday += buildKey(key) -> Map(key -> value)
+        pricingsByDateByWeekday += buildPriorityWeekdayKey(key) -> Map(key -> value)
     }
     pricingsByDateByWeekday
   }.getOrElse( SortedMap.empty[String, Map[String, List[Pricing]]] )
 
-// In worksheet, hover over buildPricingMap method to see output.
-buildPricingMap("/pricing.csv")
+// In worksheet, hover over buildPriorityWeekdayPricingMap method to see output.
+buildPriorityWeekdayPricingMap("/pricing.csv")
