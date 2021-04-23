@@ -10,7 +10,7 @@
 
   Output: Weekday -> Date -> Pricings
   Type: mutable.Map[String, Map[String, List[Pricing]]]()
-  Note: Weekday keys are not ordered at this time.
+  Note: Weekday keys are not ordered by priority at this time.
 */
 import java.time.LocalDate
 
