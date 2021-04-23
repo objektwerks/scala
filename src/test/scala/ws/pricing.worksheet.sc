@@ -18,9 +18,10 @@ import scala.io.{Codec, Source}
 import scala.util.Using
 
 case class Pricing(date: String, host: String, store: String, upc: String, price: String)
+
 case class PricingKey(priority: Int, weekday: String, date: String)
 object PricingKey {
-  implicit def ordering: Ordering[PricingKey] = Ordering.by(_.priority)
+  implicit def ordering = Ordering.by[PricingKey, Int](_.priority)
 }
 
 val weekdaysByPriority = Map[String, Int](
