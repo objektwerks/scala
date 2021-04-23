@@ -5,7 +5,7 @@
   
   Priority: Wednesday(1), Thursday(2), Friday(3), Saturday(4), Tuesday(5), Monday(6), Sunday(7)
   Schema: date(0), host(1), store_id(2), postal_code(3), upc(4), price(5)
-  Result: SortedMap[String, List[Pricing]]
+  Result: SortedMap[PricingKey, List[Pricing]]
   Sorted: priority - weekday - date
 
   Issue: date, host and store are repeated in List[Pricing]
@@ -18,6 +18,10 @@ import scala.io.{Codec, Source}
 import scala.util.Using
 
 case class Pricing(date: String, host: String, store: String, upc: String, price: String)
+case class PricingKey(priority: Int, weekday: String, date: String)
+object PricingKey {
+  implicit def ordering: Ordering[PricingKey] = Ordering.by(_.priority)
+}
 
 val weekdaysByPriority = Map[String, Int](
   DayOfWeek.WEDNESDAY.toString -> 1,
@@ -29,13 +33,13 @@ val weekdaysByPriority = Map[String, Int](
   DayOfWeek.SUNDAY.toString -> 7
 )
 
-def buildPricingKey(date: String): String = {
+def buildPricingKey(date: String): PricingKey = {
   val weekday = LocalDate.parse(date).getDayOfWeek().toString()
   val priority = weekdaysByPriority(weekday)
-  s"$priority - $weekday - $date"
+  PricingKey(priority, weekday, date)
 }
 
-def buildPricingMap(file: String): SortedMap[String, List[Pricing]] =
+def buildPricingMap(file: String): SortedMap[PricingKey, List[Pricing]] =
   Using( Source.fromInputStream(getClass.getResourceAsStream(file), Codec.UTF8.name) ) { source => 
     val pricings = mutable.ArrayBuffer[Pricing]()
     for (line <- source.getLines()) {
@@ -51,14 +55,14 @@ def buildPricingMap(file: String): SortedMap[String, List[Pricing]] =
       }
     }
     val pricingsByDate = pricings.toList.groupBy(_.date)
-    val pricingsByPriorityWeekday = mutable.SortedMap[String, List[Pricing]]()
+    val pricingsByPriorityWeekday = mutable.SortedMap[PricingKey, List[Pricing]]()
     for ( (key, value) <- pricingsByDate ) {
       println(buildPricingKey(key))
       println(value)
       pricingsByPriorityWeekday += buildPricingKey(key) -> value
     }
     pricingsByPriorityWeekday
-  }.getOrElse( SortedMap.empty[String, List[Pricing]] )
+  }.getOrElse( SortedMap.empty[PricingKey, List[Pricing]] )
 
 // In worksheet, hover over buildPriorityWeekdayPricingMap method to see output.
 buildPricingMap("/pricing.csv")
