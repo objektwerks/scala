@@ -33,19 +33,18 @@ object Ymail {
 
 /**
   * See: https://tuleism.github.io/blog/2020/scala-smart-constructors/
-  *
   */
 class SmartConstructorTest extends AnyFunSuite with Matchers {
   test("trait") {
     Email.validate("test@test.com").nonEmpty shouldBe true
     Email.validate("").isEmpty shouldBe true
-    // no copy method
+    // no copy method!
   }
 
   test("abstract case class private") {
     Xmail.validate("test@test.com").nonEmpty shouldBe true
     Xmail.validate("").isEmpty shouldBe true
-    // no copy method
+    // no copy method!
   }
 
   test("final case class private") {
