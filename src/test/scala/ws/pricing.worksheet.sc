@@ -8,15 +8,31 @@
   Csv data is: 1 row corresponds to 1 line, all fields do not contain ','
   Csv schema is: date(0), host(1), store_id(2), postal_code(3), upc(4), price(5)
 
-  Output: Weekday -> Date -> Pricings
+  Output: ( Priority - Weekday ) -> ( Date -> Pricings )
   Type: mutable.Map[String, Map[String, List[Pricing]]]()
-  Note: Weekday keys are not ordered by priority at this time.
+  Sorted: Sorted as: priority - weekday.
 */
-import java.time.LocalDate
+import java.time._
 
 import scala.collection.mutable
 import scala.io.{Codec, Source}
 import scala.util.Using
+
+val weekdaysByPriority = Map[String, Int](
+    DayOfWeek.WEDNESDAY.toString -> 1,
+    DayOfWeek.THURSDAY.toString -> 2, 
+    DayOfWeek.FRIDAY.toString -> 3, 
+    DayOfWeek.SATURDAY.toString -> 4, 
+    DayOfWeek.TUESDAY.toString -> 5, 
+    DayOfWeek.MONDAY.toString -> 6, 
+    DayOfWeek.SUNDAY.toString -> 7
+  )
+
+def toKey(date: String): String = {
+  val weekday = LocalDate.parse(date).getDayOfWeek().toString()
+  val priority = weekdaysByPriority(weekday)
+  s"$priority - $weekday"
+}
 
 case class Pricing(date: String, host: String, store: String, upc: String, price: String)
 
@@ -35,10 +51,9 @@ Using( Source.fromInputStream(getClass.getResourceAsStream("/pricing.csv"), Code
     }
   }
   val pricingsByDate = pricings.toList.groupBy(_.date)
-  val pricingsByDateByWeekday = mutable.Map[String, Map[String, List[Pricing]]]()
+  val pricingsByDateByWeekday = mutable.SortedMap[String, Map[String, List[Pricing]]]()
   for ( (key, value) <- pricingsByDate ) {
-      val weekday = LocalDate.parse(key).getDayOfWeek().toString()
-      pricingsByDateByWeekday += weekday -> Map(key -> value)
+      pricingsByDateByWeekday += toKey(key) -> Map(key -> value)
   }
   for ( (key, value) <- pricingsByDateByWeekday) {
     // In worksheet, hover over println to see output.
