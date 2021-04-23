@@ -23,17 +23,15 @@ class IOTest extends AnyFunSuite with Matchers {
     }
 
   test("from url") {
-    val jokes = Using( Source.fromURL("http://api.icndb.com/jokes/random/", utf8) ) { 
-      source => source.mkString.split("\\W+") 
-    }.getOrElse( Array.empty[String] )
-    jokes.nonEmpty shouldBe true
+    Using( Source.fromURL("http://api.icndb.com/jokes/random/", utf8) ) { 
+      source => source.mkString.split("\\W+").nonEmpty shouldBe true
+    }
   }
 
   test("from file") {
-    val words = Using( Source.fromFile("./LICENSE", utf8) ) { 
-      source => source.mkString.split("\\W+") 
-    }.getOrElse( Array.empty[String] )
-    words.length shouldEqual 1427
+    Using( Source.fromFile("./LICENSE", utf8) ) { 
+      source => source.mkString.split("\\W+").length shouldBe 1427
+    }
   }
 
   test("from input stream") {
@@ -45,24 +43,21 @@ class IOTest extends AnyFunSuite with Matchers {
   }
 
   test("from string") {
-    val words = Using( Source.fromString(quote) ) { 
-      source => source.mkString.split("\\W+") 
-    }.getOrElse( Array.empty[String] )
-    words.length shouldEqual 13
+    Using( Source.fromString(quote) ) { 
+      source => source.mkString.split("\\W+").length shouldBe 13
+    }
   }
 
   test("from chars") {
-    val words = Using( Source.fromChars(quote.toCharArray) ) {
-      source => source.mkString.split("\\W+") 
-    }.getOrElse( Array.empty[String] )
-    words.length shouldEqual 13
+    Using( Source.fromChars(quote.toCharArray) ) {
+      source => source.mkString.split("\\W+").length shouldBe 13
+    }
   }
 
   test("from bytes") {
-    val words = Using( Source.fromBytes(quote.getBytes(utf8), utf8) ) {
-      source => source.mkString.split("\\W+") 
-    }.getOrElse( Array.empty[String] )
-    words.length shouldEqual 13
+    Using( Source.fromBytes(quote.getBytes(utf8), utf8) ) {
+      source => source.mkString.split("\\W+").length shouldBe 13
+    }
   }
 
   test("grouped") {
