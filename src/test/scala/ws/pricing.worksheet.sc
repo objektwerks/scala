@@ -5,10 +5,10 @@
   
   Priority: Wednesday(1), Thursday(2), Friday(3), Saturday(4), Tuesday(5), Monday(6), Sunday(7)
   Schema: date(0), host(1), store_id(2), postal_code(3), upc(4), price(5)
-  Result: SortedMap[PricingKey, List[Pricing]]
+  Result: SortedMap[PricingKey, Set[Pricing]]
   Sorted: priority - weekday - date
 
-  Issue: date, host and store are repeated in List[Pricing]
+  Issue: date, host and store are repeated in Set[Pricing]
 */
 import java.time._
 
@@ -40,9 +40,9 @@ def buildPricingKey(date: String): PricingKey = {
   PricingKey(priority, weekday, date)
 }
 
-def buildPricingMap(file: String): SortedMap[PricingKey, List[Pricing]] =
+def buildPricingMap(file: String): SortedMap[PricingKey, Set[Pricing]] =
   Using( Source.fromInputStream(getClass.getResourceAsStream(file), Codec.UTF8.name) ) { source => 
-    val pricings = mutable.ArrayBuffer[Pricing]()
+    val pricings = mutable.Set[Pricing]()
     for (line <- source.getLines()) {
       val columns = line.split(",").map(_.trim)
       if ( columns.size == 6 ) {
@@ -55,13 +55,13 @@ def buildPricingMap(file: String): SortedMap[PricingKey, List[Pricing]] =
         pricings += pricing
       }
     }
-    val pricingsByDate = pricings.toList.groupBy(_.date)
-    val pricingsByKey = mutable.SortedMap[PricingKey, List[Pricing]]()
+    val pricingsByDate = pricings.groupBy(_.date)
+    val pricingsByKey = mutable.SortedMap[PricingKey, Set[Pricing]]()
     for ( (key, value) <- pricingsByDate ) {
-      pricingsByKey += buildPricingKey(key) -> value
+      pricingsByKey += buildPricingKey(key) -> value.toSet // require immutable Set
     }
     pricingsByKey
-  }.getOrElse( SortedMap.empty[PricingKey, List[Pricing]] )
+  }.getOrElse( SortedMap.empty[PricingKey, Set[Pricing]] )
 
 // In worksheet, hover over buildPricingMap method to see output.
 val pricingMap = buildPricingMap("/pricing.csv")
