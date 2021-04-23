@@ -42,7 +42,7 @@ def buildPricingKey(date: String): PricingKey = {
 
 def buildPricingMap(file: String): SortedMap[PricingKey, Set[Pricing]] =
   Using( Source.fromInputStream(getClass.getResourceAsStream(file), Codec.UTF8.name) ) { source => 
-    val pricings = mutable.Set[Pricing]()
+    val pricings = mutable.Set[Pricing]() // eliminate duplicates
     for (line <- source.getLines()) {
       val columns = line.split(",").map(_.trim)
       if ( columns.size == 6 ) { // ignore malformed lines
