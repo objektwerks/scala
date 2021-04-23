@@ -7,9 +7,25 @@ import scala.collection.MapView
 import scala.io.{Codec, Source}
 import scala.util.{Try, Using}
 
-class IOTest extends AnyFunSuite with Matchers {
+
+object IOTest {
   val utf8 = Codec.UTF8.name
   val quote = "You can avoid reality, but you cannot avoid the consequences of avoiding reality."
+
+  def toWordCountMap(words: Array[String]): MapView[String, Int] =
+    words
+      .groupBy((word: String) => word.toLowerCase)
+      .view
+      .mapValues(_.length)
+
+  def fileToLines(file: String): Try[Seq[String]] = 
+    Using( Source.fromFile(file, utf8) ) { 
+      source => source.getLines().toSeq 
+    }
+}
+
+class IOTest extends AnyFunSuite with Matchers {
+  import IOTest._
 
   test("from url") {
     val jokes = Using( Source.fromURL("http://api.icndb.com/jokes/random/", utf8) ) { 
@@ -110,12 +126,4 @@ class IOTest extends AnyFunSuite with Matchers {
       println()
     }
   }
-
-  def toWordCountMap(words: Array[String]): MapView[String, Int] =
-    words.groupBy((word: String) => word.toLowerCase).view.mapValues(_.length)
-
-  def fileToLines(file: String): Try[Seq[String]] = 
-    Using( Source.fromFile(file, utf8) ) { 
-      source => source.getLines().toSeq 
-    }
 }
