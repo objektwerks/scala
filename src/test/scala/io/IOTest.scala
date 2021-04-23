@@ -69,6 +69,33 @@ class IOTest extends AnyFunSuite with Matchers {
     fileToLines("sbt.sbt").isFailure shouldBe true
   }
 
+  test("pricing") {
+    import scala.collection.mutable
+
+    case class DateKey(date: String)
+    case class Pricing(host: String, store: String, upc: String, price: String)
+
+
+    val lines = Using( Source.fromInputStream(getClass.getResourceAsStream("/pricing.csv"), utf8) ) { 
+      source => source.getLines()
+    }.getOrElse( List.empty[String] )
+
+    val delimitter = ","
+    val datePricingMap = mutable.Map[DateKey, Pricing]()
+    for (line <- lines) {
+      val columns = line.split(delimitter).map(_.trim)
+      val date = columns(0)
+      val host = columns(1)
+      val store = columns(2)
+      val upc = columns(4)
+      val price = columns(5)
+
+      val dateKey = DateKey(date)
+      val pricing = Pricing(host, store, upc, price)
+      datePricingMap += (dateKey -> pricing)
+    }
+  }
+
   def toWordCountMap(words: Array[String]): MapView[String, Int] =
     words.groupBy((word: String) => word.toLowerCase).view.mapValues(_.length)
 
