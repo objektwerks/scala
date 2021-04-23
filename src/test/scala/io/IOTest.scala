@@ -82,26 +82,32 @@ class IOTest extends AnyFunSuite with Matchers {
     */
     import scala.collection.mutable
 
-    case class DateKey(date: String)
-    case class Pricing(host: String, store: String, upc: String, price: String)
+    case class Pricing(date: String, host: String, store: String, upc: String, price: String)
 
     val lines = Using( Source.fromInputStream(getClass.getResourceAsStream("/pricing.csv"), utf8) ) { 
       source => source.getLines().toArray
     }.getOrElse( Array.empty[String] )
 
     val delimitter = ","
-    val datePricingMap = mutable.Map[DateKey, Pricing]()
-    for (line <- lines if line.length() == 6) {
+    val pricings = mutable.ArrayBuffer[Pricing]()
+    for (line <- lines) {
       val columns = line.split(delimitter).map(_.trim)
-      val date = columns(0)
-      val host = columns(1)
-      val store = columns(2)
-      val upc = columns(4)
-      val price = columns(5)
+      if ( columns.size == 6 ) {
+        val date = columns(0)
+        val host = columns(1)
+        val store = columns(2)
+        val upc = columns(4)
+        val price = columns(5)
 
-      val dateKey = DateKey(date)
-      val pricing = Pricing(host, store, upc, price)
-      datePricingMap += (dateKey -> pricing)
+        val pricing = Pricing(date, host, store, upc, price)
+        pricings += pricing
+      }
+    }
+    val pricingsByDate = pricings.groupBy(_.date)
+    for ( (key, value) <- pricingsByDate) {
+      println()
+      println(s"*** key: $key value: ${value.toString()}")
+      println()
     }
   }
 
