@@ -7,6 +7,8 @@
   Schema: date(0), host(1), store_id(2), postal_code(3), upc(4), price(5)
   Result: mutable.Map[String, Map[String, List[Pricing]]]()
   Sorted: priority - weekday
+
+  Issue: date, host and store are repeated in List[Pricing]
 */
 import java.time._
 
@@ -18,14 +20,14 @@ import scala.util.Using
 case class Pricing(date: String, host: String, store: String, upc: String, price: String)
 
 val weekdaysByPriority = Map[String, Int](
-    DayOfWeek.WEDNESDAY.toString -> 1,
-    DayOfWeek.THURSDAY.toString -> 2, 
-    DayOfWeek.FRIDAY.toString -> 3, 
-    DayOfWeek.SATURDAY.toString -> 4, 
-    DayOfWeek.TUESDAY.toString -> 5, 
-    DayOfWeek.MONDAY.toString -> 6, 
-    DayOfWeek.SUNDAY.toString -> 7
-  )
+  DayOfWeek.WEDNESDAY.toString -> 1,
+  DayOfWeek.THURSDAY.toString -> 2, 
+  DayOfWeek.FRIDAY.toString -> 3, 
+  DayOfWeek.SATURDAY.toString -> 4, 
+  DayOfWeek.TUESDAY.toString -> 5, 
+  DayOfWeek.MONDAY.toString -> 6, 
+  DayOfWeek.SUNDAY.toString -> 7
+)
 
 def buildPriorityWeekdayKey(date: String): String = {
   val weekday = LocalDate.parse(date).getDayOfWeek().toString()
@@ -51,7 +53,10 @@ def buildPriorityWeekdayPricingMap(file: String): SortedMap[String, Map[String, 
     val pricingsByDate = pricings.toList.groupBy(_.date)
     val pricingsByPriorityWeekday = mutable.SortedMap[String, Map[String, List[Pricing]]]()
     for ( (key, value) <- pricingsByDate ) {
-        pricingsByPriorityWeekday += buildPriorityWeekdayKey(key) -> Map(key -> value)
+      println(buildPriorityWeekdayKey(key))
+      println(key)
+      println(value)
+      pricingsByPriorityWeekday += buildPriorityWeekdayKey(key) -> Map(key -> value)
     }
     pricingsByPriorityWeekday
   }.getOrElse( SortedMap.empty[String, Map[String, List[Pricing]]] )
