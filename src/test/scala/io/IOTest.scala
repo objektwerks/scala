@@ -100,6 +100,7 @@ class IOTest extends AnyFunSuite with Matchers {
 
       Output: Weekday -> Date -> Pricings
       Type: mutable.Map[String, Map[String, List[Pricing]]]()
+      Note: Weekday keys are not ordered at this time.
     */
     case class Pricing(date: String, host: String, store: String, upc: String, price: String)
 
