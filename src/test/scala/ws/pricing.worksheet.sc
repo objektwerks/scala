@@ -9,4 +9,12 @@
   Csv schema: date,host,store_id,postal_code,upc,price
 */
 
-// TODO!
+import scala.io.{Codec, Source}
+import scala.util.Using
+
+val utf8 = Codec.UTF8.name
+
+val lines = Using( Source.fromInputStream(getClass.getResourceAsStream("/pricing.csv"), utf8) ) { 
+  source => source.mkString
+}.getOrElse( Array.empty[String] )
+
