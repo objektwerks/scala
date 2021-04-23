@@ -57,12 +57,16 @@ def buildPricingMap(file: String): SortedMap[PricingKey, List[Pricing]] =
     val pricingsByDate = pricings.toList.groupBy(_.date)
     val pricingsByKey = mutable.SortedMap[PricingKey, List[Pricing]]()
     for ( (key, value) <- pricingsByDate ) {
-      println(buildPricingKey(key))
-      println(value)
       pricingsByKey += buildPricingKey(key) -> value
     }
     pricingsByKey
   }.getOrElse( SortedMap.empty[PricingKey, List[Pricing]] )
 
 // In worksheet, hover over buildPricingMap method to see output.
-buildPricingMap("/pricing.csv")
+val pricingMap = buildPricingMap("/pricing.csv")
+
+// In worksheet, hover over this block to see output.
+for ( (key, value) <- pricingMap ) {
+  println(s"*** key: $key")
+  println(s"*** value(${value.size}): $value")
+}
