@@ -40,8 +40,8 @@ def buildPricingKey(date: String): PricingKey = {
   PricingKey(priority, weekday, date)
 }
 
-def buildPricingMap(file: String): SortedMap[PricingKey, Set[Pricing]] =
-  Using( Source.fromInputStream(getClass.getResourceAsStream(file), Codec.UTF8.name) ) { source => 
+def buildPricingMap(classpathFile: String): SortedMap[PricingKey, Set[Pricing]] =
+  Using( Source.fromInputStream(getClass.getResourceAsStream(classpathFile), Codec.UTF8.name) ) { source => 
     val pricings = mutable.Set[Pricing]() // eliminate duplicates
     for (line <- source.getLines()) {
       val columns = line.split(",").map(_.trim)
@@ -64,7 +64,7 @@ def buildPricingMap(file: String): SortedMap[PricingKey, Set[Pricing]] =
   }.getOrElse( SortedMap.empty[PricingKey, Set[Pricing]] )
 
 // In worksheet, hover over buildPricingMap method to see output.
-val pricingMap = buildPricingMap("/pricing.csv")
+val pricingMap = buildPricingMap(classpathFile = "/pricing.csv")
 
 // In worksheet, hover over this block to see output.
 for ( (key, value) <- pricingMap ) {
