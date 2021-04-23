@@ -49,11 +49,11 @@ def buildPriorityWeekdayPricingMap(file: String): SortedMap[String, Map[String, 
       }
     }
     val pricingsByDate = pricings.toList.groupBy(_.date)
-    val pricingsByDateByWeekday = mutable.SortedMap[String, Map[String, List[Pricing]]]()
+    val pricingsByPriorityWeekday = mutable.SortedMap[String, Map[String, List[Pricing]]]()
     for ( (key, value) <- pricingsByDate ) {
-        pricingsByDateByWeekday += buildPriorityWeekdayKey(key) -> Map(key -> value)
+        pricingsByPriorityWeekday += buildPriorityWeekdayKey(key) -> Map(key -> value)
     }
-    pricingsByDateByWeekday
+    pricingsByPriorityWeekday
   }.getOrElse( SortedMap.empty[String, Map[String, List[Pricing]]] )
 
 // In worksheet, hover over buildPriorityWeekdayPricingMap method to see output.
