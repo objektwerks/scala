@@ -45,7 +45,7 @@ def buildPricingMap(file: String): SortedMap[PricingKey, Set[Pricing]] =
     val pricings = mutable.Set[Pricing]()
     for (line <- source.getLines()) {
       val columns = line.split(",").map(_.trim)
-      if ( columns.size == 6 ) {
+      if ( columns.size == 6 ) { // ignore malformed lines
         val date = columns(0)
         val host = columns(1)
         val store = columns(2)
@@ -58,7 +58,7 @@ def buildPricingMap(file: String): SortedMap[PricingKey, Set[Pricing]] =
     val pricingsByDate = pricings.groupBy(_.date)
     val pricingsByKey = mutable.SortedMap[PricingKey, Set[Pricing]]()
     for ( (key, value) <- pricingsByDate ) {
-      pricingsByKey += buildPricingKey(key) -> value.toSet // require immutable Set
+      pricingsByKey += buildPricingKey(key) -> value.toSet // requires immutable Set
     }
     pricingsByKey
   }.getOrElse( SortedMap.empty[PricingKey, Set[Pricing]] )
