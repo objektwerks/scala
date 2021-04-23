@@ -41,7 +41,7 @@ Using( Source.fromInputStream(getClass.getResourceAsStream("/pricing.csv"), Code
       pricingsByDateByWeekday += weekday -> Map(key -> value)
   }
   for ( (key, value) <- pricingsByDateByWeekday) {
-    // In worksheet, scroll over println to see output.
+    // In worksheet, hover over println to see output.
     println(s"*** key: $key value: ${value.toString()}")
   }
 }
