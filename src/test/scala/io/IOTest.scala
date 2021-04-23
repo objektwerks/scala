@@ -91,19 +91,17 @@ class IOTest extends AnyFunSuite with Matchers {
 
     val delimitter = ","
     val datePricingMap = mutable.Map[DateKey, Pricing]()
-    for (line <- lines) {
-      if ( line.length() == 6 ) {
-        val columns = line.split(delimitter).map(_.trim)
-        val date = columns(0)
-        val host = columns(1)
-        val store = columns(2)
-        val upc = columns(4)
-        val price = columns(5)
+    for (line <- lines if line.length() == 6) {
+      val columns = line.split(delimitter).map(_.trim)
+      val date = columns(0)
+      val host = columns(1)
+      val store = columns(2)
+      val upc = columns(4)
+      val price = columns(5)
 
-        val dateKey = DateKey(date)
-        val pricing = Pricing(host, store, upc, price)
-        datePricingMap += (dateKey -> pricing)
-      }
+      val dateKey = DateKey(date)
+      val pricing = Pricing(host, store, upc, price)
+      datePricingMap += (dateKey -> pricing)
     }
   }
 
