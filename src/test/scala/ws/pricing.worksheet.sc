@@ -1,12 +1,12 @@
 /*
-  Given the following csv data, select a single price for every store, host,
-  and UPC combination. The price selected should be based on the day of the
-  week that the price was collected, where the days are ranked by priority.
+  Given the following csv data, select a single price for every store, host, and UPC combination.
+  The price selected should be based on the day of the week that the price was collected, where the
+  days are ranked by priority.
 
-  Day of week priority (high to low): Wednesday, Thursday, Friday, Saturday, Tuesday, Monday, Sunday
+  Weekday priority (high to low): Wednesday(1), Thursday(2), Friday(3), Saturday(4), Tuesday(5), Monday(6), Sunday(7)
 
-  Assume csv data is very simple: 1 row corresponds to 1 line, all fields do not contain ','
-  Csv schema: date,host,store_id,postal_code,upc,price
+  Csv data is: 1 row corresponds to 1 line, all fields do not contain ','
+  Csv schema is: date(0), host(1), store_id(2), postal_code(3), upc(4), price(5)
 */
 
 import scala.io.{Codec, Source}
