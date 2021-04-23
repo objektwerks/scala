@@ -5,8 +5,8 @@
   
   Priority: Wednesday(1), Thursday(2), Friday(3), Saturday(4), Tuesday(5), Monday(6), Sunday(7)
   Schema: date(0), host(1), store_id(2), postal_code(3), upc(4), price(5)
-  Result: mutable.Map[String, Map[String, List[Pricing]]]()
-  Sorted: priority - weekday
+  Result: SortedMap[String, List[Pricing]]
+  Sorted: priority - weekday - date
 
   Issue: date, host and store are repeated in List[Pricing]
 */
@@ -29,13 +29,13 @@ val weekdaysByPriority = Map[String, Int](
   DayOfWeek.SUNDAY.toString -> 7
 )
 
-def buildPriorityWeekdayKey(date: String): String = {
+def buildPricingKey(date: String): String = {
   val weekday = LocalDate.parse(date).getDayOfWeek().toString()
   val priority = weekdaysByPriority(weekday)
-  s"$priority - $weekday"
+  s"$priority - $weekday - $date"
 }
 
-def buildPriorityWeekdayPricingMap(file: String): SortedMap[String, Map[String, List[Pricing]]] =
+def buildPricingMap(file: String): SortedMap[String, List[Pricing]] =
   Using( Source.fromInputStream(getClass.getResourceAsStream(file), Codec.UTF8.name) ) { source => 
     val pricings = mutable.ArrayBuffer[Pricing]()
     for (line <- source.getLines()) {
@@ -51,15 +51,14 @@ def buildPriorityWeekdayPricingMap(file: String): SortedMap[String, Map[String, 
       }
     }
     val pricingsByDate = pricings.toList.groupBy(_.date)
-    val pricingsByPriorityWeekday = mutable.SortedMap[String, Map[String, List[Pricing]]]()
+    val pricingsByPriorityWeekday = mutable.SortedMap[String, List[Pricing]]()
     for ( (key, value) <- pricingsByDate ) {
-      println(buildPriorityWeekdayKey(key))
-      println(key)
+      println(buildPricingKey(key))
       println(value)
-      pricingsByPriorityWeekday += buildPriorityWeekdayKey(key) -> Map(key -> value)
+      pricingsByPriorityWeekday += buildPricingKey(key) -> value
     }
     pricingsByPriorityWeekday
-  }.getOrElse( SortedMap.empty[String, Map[String, List[Pricing]]] )
+  }.getOrElse( SortedMap.empty[String, List[Pricing]] )
 
 // In worksheet, hover over buildPriorityWeekdayPricingMap method to see output.
-buildPriorityWeekdayPricingMap("/pricing.csv")
+buildPricingMap("/pricing.csv")
