@@ -34,11 +34,12 @@ val weekdaysByPriority = Map[String, Int](
   DayOfWeek.SUNDAY.toString -> 7
 )
 
-def buildPricingKey(date: String): Either[Throwable, PricingKey] = Try {
-  val weekday = LocalDate.parse(date).getDayOfWeek().toString()
-  val priority = weekdaysByPriority(weekday)
-  PricingKey(priority, weekday, date)
-}.toEither
+def buildPricingKey(date: String): Either[Throwable, PricingKey] =
+  Try {
+    val weekday = LocalDate.parse(date).getDayOfWeek().toString()
+    val priority = weekdaysByPriority(weekday)
+    PricingKey(priority, weekday, date)
+  }.toEither
 
 def buildPricingMap(classpathFile: String): Try[SortedMap[PricingKey, Set[Pricing]]] =
   Using( Source.fromInputStream(getClass.getResourceAsStream(classpathFile), Codec.UTF8.name) ) { source => 
