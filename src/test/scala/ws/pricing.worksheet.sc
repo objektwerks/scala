@@ -1,10 +1,11 @@
 /* 
-  Given the following csv data, select a single price for every host, store, and upc combination. The
-  price selected should be based on the day of the week that the price was collected, where the days
-  are ranked by priority.
+  Problem:
+  1. From /pricing.csv select a price for each date, host, store, and upc combination.
+  2. Each weekday is ranked, as detailed below. Group pricing by priority, weekday and date.
   
   Priority: Wednesday(1), Thursday(2), Friday(3), Saturday(4), Tuesday(5), Monday(6), Sunday(7)
   Schema: date(0), host(1), store_id(2), postal_code(3), upc(4), price(5)
+  
   Result: SortedMap[PricingKey, Set[Pricing]]
   Sorted: priority - weekday - date
 
