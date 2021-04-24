@@ -46,7 +46,7 @@ def buildPricingMap(classpathFile: String): Try[SortedMap[PricingKey, Set[Pricin
     val pricings = mutable.Set[Pricing]() // eliminate duplicates
     for (line <- source.getLines()) {
       val columns = line.split(",").map(_.trim)
-      if ( columns.size == 6 ) { // ignore malformed lines
+      if ( columns.size == 6 ) { // ignore malformed lines, and skip standard validation
         val date = columns(0)
         val host = columns(1)
         val store = columns(2)
@@ -54,13 +54,13 @@ def buildPricingMap(classpathFile: String): Try[SortedMap[PricingKey, Set[Pricin
         val price = columns(5)
         val pricing = Pricing(date, host, store, upc, price)
         pricings += pricing
-      } else println(s"*** invalid line: $line")
+      } else println(s"*** invalid line: $line") // don't return invalid lines, as found in healthcharts project
     }
     val pricingsByDate = pricings.groupBy(_.date)
     val pricingsByKey = mutable.SortedMap[PricingKey, Set[Pricing]]()
-    for ( (key, value) <- pricingsByDate ) {
-      buildPricingKey(key) match {
-        case Right(pricingKey) => pricingsByKey += pricingKey -> value.toSet // requires immutable Set
+    for ( (date, pricings) <- pricingsByDate ) {
+      buildPricingKey(date) match {
+        case Right(pricingKey) => pricingsByKey += pricingKey -> pricings.toSet // requires immutable Set
         case Left(invalid) => println(s"*** invalid pricing key: $invalid")
       }
       
@@ -68,7 +68,7 @@ def buildPricingMap(classpathFile: String): Try[SortedMap[PricingKey, Set[Pricin
     pricingsByKey
   }
 
-// In worksheet, hover over this block to see invalid and valid pricing data.
+// In worksheet, hover over this block to see invalid lines and key and value pairs.
 buildPricingMap(classpathFile = "/pricing.csv") match {
   case Success(pricingMap) =>
     for ( (key, value) <- pricingMap ) {
