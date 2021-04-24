@@ -5,7 +5,7 @@
   
   Priority: Wednesday(1), Thursday(2), Friday(3), Saturday(4), Tuesday(5), Monday(6), Sunday(7)
   Schema: date(0), host(1), store_id(2), postal_code(3), upc(4), price(5)
-  
+
   Result: SortedMap[PricingKey, Set[Pricing]]
   Sorted: priority - weekday - date
 
@@ -47,7 +47,7 @@ def buildPricingMap(classpathFile: String): Try[SortedMap[PricingKey, Set[Pricin
     val pricings = mutable.Set[Pricing]() // eliminate duplicates
     for (line <- source.getLines()) {
       val columns = line.split(",").map(_.trim)
-      if ( columns.size == 6 ) { // skip invalid lines and standard validation
+      if ( columns.size == 6 ) { // skip invalid lines, standard validation and conversions
         val date = columns(0)
         val host = columns(1)
         val store = columns(2)
@@ -69,12 +69,12 @@ def buildPricingMap(classpathFile: String): Try[SortedMap[PricingKey, Set[Pricin
     pricingsByKey
   }
 
-// In worksheet, hover over this code block to see invalid lines and key and value pairs.
+// In worksheet, hover over this code block to see invalid lines and pricing key and pricings.
 buildPricingMap(classpathFile = "/pricing.csv") match {
   case Success(pricingMap) =>
-    for ( (key, value) <- pricingMap ) {
-      println(s"*** key: $key")
-      println(s"*** value(${value.size}): $value")
+    for ( (pricingKey, pricings) <- pricingMap ) {
+      println(s"*** pricing key: $pricingKey")
+      println(s"*** pricings(${pricings.size}): $pricings")
     }
   case Failure(failure) => println(s"*** failure: $failure")
 }
