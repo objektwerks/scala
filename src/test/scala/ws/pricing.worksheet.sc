@@ -15,7 +15,7 @@ import java.time._
 import scala.collection.SortedMap
 import scala.collection.mutable
 import scala.io.{Codec, Source}
-import scala.util.Using
+import scala.util.{Failure, Success, Try, Using}
 
 case class Pricing(date: String, host: String, store: String, upc: String, price: String)
 
@@ -40,7 +40,7 @@ def buildPricingKey(date: String): PricingKey = {
   PricingKey(priority, weekday, date)
 }
 
-def buildPricingMap(classpathFile: String): SortedMap[PricingKey, Set[Pricing]] =
+def buildPricingMap(classpathFile: String): Try[SortedMap[PricingKey, Set[Pricing]]] =
   Using( Source.fromInputStream(getClass.getResourceAsStream(classpathFile), Codec.UTF8.name) ) { source => 
     val pricings = mutable.Set[Pricing]() // eliminate duplicates
     for (line <- source.getLines()) {
@@ -53,7 +53,7 @@ def buildPricingMap(classpathFile: String): SortedMap[PricingKey, Set[Pricing]] 
         val price = columns(5)
         val pricing = Pricing(date, host, store, upc, price)
         pricings += pricing
-      }
+      } else println(s"*** invalid line: $line")
     }
     val pricingsByDate = pricings.groupBy(_.date)
     val pricingsByKey = mutable.SortedMap[PricingKey, Set[Pricing]]()
@@ -61,13 +61,14 @@ def buildPricingMap(classpathFile: String): SortedMap[PricingKey, Set[Pricing]] 
       pricingsByKey += buildPricingKey(key) -> value.toSet // requires immutable Set
     }
     pricingsByKey
-  }.getOrElse( SortedMap.empty[PricingKey, Set[Pricing]] )
+  }
 
-// In worksheet, hover over buildPricingMap method to see output.
-val pricingMap = buildPricingMap(classpathFile = "/pricing.csv")
-
-// In worksheet, hover over this block to see output.
-for ( (key, value) <- pricingMap ) {
-  println(s"*** key: $key")
-  println(s"*** value(${value.size}): $value")
+// In worksheet, hover over this block to see invalid and valid pricing data.
+buildPricingMap(classpathFile = "/pricing.csv") match {
+  case Success(pricingMap) =>
+    for ( (key, value) <- pricingMap ) {
+      println(s"*** key: $key")
+      println(s"*** value(${value.size}): $value")
+    }
+  case Failure(failure) => println(s"*** failure: $failure")
 }
