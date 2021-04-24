@@ -34,11 +34,11 @@ val weekdaysByPriority = Map[String, Int](
   DayOfWeek.SUNDAY.toString -> 7
 )
 
-def buildPricingKey(date: String): PricingKey = {
+def buildPricingKey(date: String): Either[Throwable, PricingKey] = Try {
   val weekday = LocalDate.parse(date).getDayOfWeek().toString()
   val priority = weekdaysByPriority(weekday)
   PricingKey(priority, weekday, date)
-}
+}.toEither
 
 def buildPricingMap(classpathFile: String): Try[SortedMap[PricingKey, Set[Pricing]]] =
   Using( Source.fromInputStream(getClass.getResourceAsStream(classpathFile), Codec.UTF8.name) ) { source => 
@@ -58,7 +58,11 @@ def buildPricingMap(classpathFile: String): Try[SortedMap[PricingKey, Set[Pricin
     val pricingsByDate = pricings.groupBy(_.date)
     val pricingsByKey = mutable.SortedMap[PricingKey, Set[Pricing]]()
     for ( (key, value) <- pricingsByDate ) {
-      pricingsByKey += buildPricingKey(key) -> value.toSet // requires immutable Set
+      buildPricingKey(key) match {
+        case Right(pricingKey) => pricingsByKey += pricingKey -> value.toSet // requires immutable Set
+        case Left(invalid) => println(s"*** invalid pricing key: $invalid")
+      }
+      
     }
     pricingsByKey
   }
