@@ -8,6 +8,6 @@ libraryDependencies ++= {
     "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
     "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.2",
     "org.scala-lang" % "scala-reflect" % "2.13.5",
-    "org.scalatest" %% "scalatest" % "3.2.8" % Test
+    "org.scalatest" %% "scalatest" % "3.2.9" % Test
   )
 }
