@@ -63,8 +63,9 @@ partialFunction(2)
 partialFunction.isDefinedAt(42)
 partialFunction.isDefinedAt(0)
 List(0, 1, 2) map partialFunction
+List(0, 1, 2) filter(_ != 0) map partialFunction
 List(0, 1, 2) collect partialFunction
-List(42, "cat") collect { case i: Int => partialFunction(i) }
+List(7, "cat") collect { case i: Int => partialFunction(i) }
 
 def higherOrderFunction(f: (Int, Int) => Int,
                         g: (Int, Int) => Int)
