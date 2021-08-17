@@ -48,7 +48,7 @@ case class Green(money: $500) extends Chip
 case class Black(money: $1000) extends Chip
 
 // Dealer
-case class Dealter(name: String)
+case class Dealer(name: String)
 
 // Player
 case class Player(name : String)
