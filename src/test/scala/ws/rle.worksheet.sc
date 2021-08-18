@@ -18,7 +18,27 @@ object Encoding {
     }
     encodedValues.mkString
   }
+
+  def decode(value: String): String = {
+    var decoded: String = ""
+    var count: Int = 0
+    val result = new StringBuilder()
+    value.toCharArray.toList.foreach { char =>
+      if ( char.isDigit ) {
+        count = char.asDigit
+        result.append( decoded * count )
+      } else {
+        decoded = char.toString
+      }
+    }
+    result.mkString
+  }  
 }
 
-// "aaaabbcccaeeeee" should encode to "a4b2c3ae5"
+// Encoding for single letter occurences includes a 1 so that decode works correctly.
+
+// "aaaabbcccaeeeee" should encode to "a4b2c3a1e5"
 println( s" *** Run Length Encoding: ${ Encoding.encode("aaaabbcccaeeeee") }" )
+
+// "a4b2c3a1e5" should decode to "aaaabbcccaeeeee"
+println( s" *** Run Length Decoding: ${ Encoding.decode("a4b2c3a1e5") }" )
