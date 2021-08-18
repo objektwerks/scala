@@ -25,9 +25,8 @@ object Encoding {
 }
 
 class RLETest extends AnyFunSuite with Matchers {
-  import Encoding._
   test("encode") {
-    println( s" *** Run Length Encoding: ${ encode("aaaabbcccaeeeee") }" )
-    encode("aaaabbcccaeeeee") shouldBe "a4b2c3ae5"
+    println( s" *** Run Length Encoding: ${ Encoding.encode("aaaabbcccaeeeee") }" )
+    Encoding.encode("aaaabbcccaeeeee") shouldBe "a4b2c3ae5"
   }
 }
