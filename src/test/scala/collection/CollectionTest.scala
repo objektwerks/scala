@@ -274,6 +274,7 @@ class CollectionTest extends AnyFunSuite with Matchers {
     list(0) shouldBe 3
     list(1) shouldBe 2
     list(2) shouldBe 1
+    map + ( 4 -> 4 )
   }
 
   test("sorted map") {
