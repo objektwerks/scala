@@ -4,7 +4,7 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 sealed trait ELR extends Product with Serializable
-final case object Empty extends ELR
+case object Empty extends ELR
 final case class Encoding(character: Char, count: Int) extends ELR
 
 object Encoding {
