@@ -3,35 +3,31 @@ package encoding
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-sealed trait ELR extends Product with Serializable
-case object Empty extends ELR
-final case class Encoding(character: Char, count: Int) extends ELR
+final case class Encoding(char: Char, count: Int) extends Product with Serializable
 
 object Encoding {
-  def encode(value: String): String = value match {
-    case value if value.isEmpty => ""
-    case _ =>
-      val chars = value.toCharArray.map(char => Encoding(char, 1))
-      val iterator = chars.iterator
-      val encodings = List.empty[Encoding]
-      do {
-        val current = iterator.next()
-        val encoding = encodings.find( encoding => encoding.character == current.character )
-        if ( encoding.nonEmpty ) encoding.get.copy(current.character, current.count + 1)
-        else encodings :+ Encoding( current.character, current.count )
-      } while ( iterator.nonEmpty )
-      val result = new StringBuilder()
-      encodings.foreach { encoding => 
-        result.append( encoding.character + encoding.count )
+  def encode(value: String): String = {
+    def group(chars: List[Char]): List[List[Char]] = {
+      if (chars.isEmpty) List(List())
+      else {
+        val (grouped, next) = chars span { char => char == chars.head }
+        if (next == Nil) List(grouped)
+        else grouped :: group(next)
       }
-      result.toString
+    }
+    val valueAsChars = value.toCharArray.toList
+    val encodings = group(valueAsChars) map { chars => Encoding(chars.head, chars.length) }
+    val encodedValues = encodings map { group =>
+      group.char.toString + ( if (group.count == 1) "" else group.count.toString )
+    }
+    encodedValues.mkString
   }
 }
 
-// RLE: aaaabbcccaeeeee => a4b2c3ae5
 class RLETest extends AnyFunSuite with Matchers {
   import Encoding._
-  test("encoding") {
-    println( s" *** ENCODING: ${ encode("aaaabbcccaeeeee") }" )
+  test("encode") {
+    println( s" *** Run Length Encoding: ${ encode("aaaabbcccaeeeee") }" )
+    encode("aaaabbcccaeeeee") shouldBe "a4b2c3ae5"
   }
 }
