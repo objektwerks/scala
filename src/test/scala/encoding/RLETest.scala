@@ -41,6 +41,7 @@ object Encoding {
 
 /**
  * Encoding for single letter occurences includes a 1 so that decode works correctly.
+ * Decoding won't likely work for char counts beyond 9.
  */
 class RLETest extends AnyFunSuite with Matchers {
   test("encode") {
