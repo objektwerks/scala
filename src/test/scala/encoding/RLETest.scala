@@ -3,9 +3,9 @@ package encoding
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-final case class Encoding(char: Char, count: Int) extends Product with Serializable
+object RLE {
+  final case class Encoding(char: Char, count: Int) extends Product with Serializable
 
-object Encoding {
   def encode(value: String): String = {
     def group(chars: List[Char]): List[List[Char]] = {
       if (chars.isEmpty) List(List())
@@ -40,17 +40,17 @@ object Encoding {
 }
 
 /**
- * Encoding for single letter occurences includes a 1 so that decode works correctly.
- * Decoding won't likely work for char counts beyond 9.
+ * Encoding for single letter occurences includes a 1 so that decode works consistently.
+ * Decoding won't work for char counts beyond 9.
  */
 class RLETest extends AnyFunSuite with Matchers {
   test("encode") {
-    println( s" *** Run Length Encoding: ${ Encoding.encode("aaaabbcccaeeeee") }" )
-    Encoding.encode("aaaabbcccaeeeee") shouldBe "a4b2c3a1e5"
+    println( s" *** Run Length Encoding: ${ RLE.encode("aaaabbcccaeeeee") }" )
+    RLE.encode("aaaabbcccaeeeee") shouldBe "a4b2c3a1e5"
   }
 
   test("decode") {
-    println( s" *** Run Length Decoding: ${ Encoding.decode("a4b2c3a1e5") }" )
-    Encoding.decode("a4b2c3a1e5") shouldBe "aaaabbcccaeeeee"
+    println( s" *** Run Length Decoding: ${ RLE.decode("a4b2c3a1e5") }" )
+    RLE.decode("a4b2c3a1e5") shouldBe "aaaabbcccaeeeee"
   }
 }
