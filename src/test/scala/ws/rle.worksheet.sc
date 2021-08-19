@@ -1,5 +1,5 @@
 
-object Encoding {
+object RLE {
   case class Encoding(char: Char, count: Int) extends Product with Serializable
 
   def encode(value: String): String = {
@@ -35,11 +35,11 @@ object Encoding {
   }  
 }
 
-// Encoding for single letter occurences includes a 1 so that decode works correctly.
-// Decoding won't likely work for char counts beyond 9.
+// Encoding for single letter occurences includes a 1 so that decode works consistently.
+// Decoding won't work for char counts beyond 9.
 
 // "aaaabbcccaeeeee" should encode to "a4b2c3a1e5"
-println( s" *** Run Length Encoding: ${ Encoding.encode("aaaabbcccaeeeee") }" )
+println( s" *** Run Length Encoding: ${ RLE.encode("aaaabbcccaeeeee") }" )
 
 // "a4b2c3a1e5" should decode to "aaaabbcccaeeeee"
-println( s" *** Run Length Decoding: ${ Encoding.decode("a4b2c3a1e5") }" )
+println( s" *** Run Length Decoding: ${ RLE.decode("a4b2c3a1e5") }" )
