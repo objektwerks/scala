@@ -50,7 +50,6 @@ class RLETest extends AnyFunSuite with Matchers {
     println( s"*** Run Length Encoding: ${ RLE.encode("aaaabbcccaeeeee") }" )
     RLE.encode("aaaabbcccaeeeee") shouldBe "a4b2c3a1e5"
     RLE.encode("") shouldBe ""
-
   }
 
   test("decode") {
