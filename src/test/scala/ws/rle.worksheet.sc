@@ -58,13 +58,13 @@ object RLE {
 }
 
 // "aaaabbcccaeeeee" should encode to "a4b2c3a1e5"
-println( s"*** Run Length Encoding: ${ RLE.encode("aaaabbcccaeeeee") }" )
-println( s"*** Run Length Encoding: ${ RLE.encode("") }" )
+println( s"*** RLE of aaaabbcccaeeeee : ${ RLE.encode("aaaabbcccaeeeee") }" )
+println( s"*** RLE of empty : ${ RLE.encode("") }" )
 
 // "a4b2c3a1e5" should decode to "aaaabbcccaeeeee"
-println( s"*** Run Length Decoding: ${ RLE.decode("a4b2c3a1e5") }" )
-println( s"*** Run Length Decoding: ${ RLE.decode("") }" )
+println( s"*** RLE of a4b2c3a1e5 : ${ RLE.decode("a4b2c3a1e5") }" )
+println( s"*** RLE of empty : ${ RLE.decode("") }" )
 
 // "a17" should decode to "a" * 17
-println( s"*** Run Length Decoding: ${ RLE.decodex("a17") }" )
+println( s"*** RLE of a17 : ${ RLE.decodex("a17") }" )
 RLE.decodex("a17").length == 17
