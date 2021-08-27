@@ -12,11 +12,15 @@ object RLE {
       }
     }
     val valueAsChars = value.toCharArray.toList
-    val encodings = group(valueAsChars) map { chars => Encoding(chars.head, chars.length) }
-    val encodedValues = encodings map { group =>
-      group.char.toString + ( if (group.count == 1) "" else group.count.toString )
+    valueAsChars match {
+      case Nil => ""
+      case _ =>
+        val encodings = group(valueAsChars) map { chars => Encoding(chars.head, chars.length) }
+        val encodedValues = encodings map { group =>
+          group.char.toString + group.count.toString
+        }
+        encodedValues.mkString
     }
-    encodedValues.mkString
   }
 
   def decode(value: String): String = {
@@ -39,7 +43,9 @@ object RLE {
 // Decoding won't work for char counts beyond 9.
 
 // "aaaabbcccaeeeee" should encode to "a4b2c3a1e5"
-println( s" *** Run Length Encoding: ${ RLE.encode("aaaabbcccaeeeee") }" )
+println( s"*** Run Length Encoding: ${ RLE.encode("aaaabbcccaeeeee") }" )
+println( s"*** Run Length Encoding: ${ RLE.encode("") }" )
 
 // "a4b2c3a1e5" should decode to "aaaabbcccaeeeee"
-println( s" *** Run Length Decoding: ${ RLE.decode("a4b2c3a1e5") }" )
+println( s"*** Run Length Decoding: ${ RLE.decode("a4b2c3a1e5") }" )
+println( s"*** Run Length Decoding: ${ RLE.decode("") }" )

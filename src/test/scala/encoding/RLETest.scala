@@ -16,11 +16,15 @@ object RLE {
       }
     }
     val valueAsChars = value.toCharArray.toList
-    val encodings = group(valueAsChars) map { chars => Encoding(chars.head, chars.length) }
-    val encodedValues = encodings map { group =>
-      group.char.toString + group.count.toString
+    valueAsChars match {
+      case Nil => ""
+      case _ =>
+        val encodings = group(valueAsChars) map { chars => Encoding(chars.head, chars.length) }
+        val encodedValues = encodings map { group =>
+          group.char.toString + group.count.toString
+        }
+        encodedValues.mkString
     }
-    encodedValues.mkString
   }
 
   def decode(value: String): String = {
@@ -39,18 +43,19 @@ object RLE {
   }
 }
 
-/**
- * Encoding for single letter occurences includes a 1 so that decode works consistently.
- * Decoding won't work for char counts beyond 9.
- */
+// Encoding for single letter occurences includes a 1 so that decode works consistently.
+// Decoding won't work for char counts beyond 9.
 class RLETest extends AnyFunSuite with Matchers {
   test("encode") {
-    println( s" *** Run Length Encoding: ${ RLE.encode("aaaabbcccaeeeee") }" )
+    println( s"*** Run Length Encoding: ${ RLE.encode("aaaabbcccaeeeee") }" )
     RLE.encode("aaaabbcccaeeeee") shouldBe "a4b2c3a1e5"
+    RLE.encode("") shouldBe ""
+
   }
 
   test("decode") {
-    println( s" *** Run Length Decoding: ${ RLE.decode("a4b2c3a1e5") }" )
+    println( s"*** Run Length Decoding: ${ RLE.decode("a4b2c3a1e5") }" )
     RLE.decode("a4b2c3a1e5") shouldBe "aaaabbcccaeeeee"
+    RLE.decode("") shouldBe ""
   }
 }
