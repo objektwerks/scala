@@ -1,3 +1,4 @@
+import scala.annotation.tailrec
 
 object RLE {
   case class Encoding(char: Char, count: Int) extends Product with Serializable
@@ -36,7 +37,24 @@ object RLE {
       }
     }
     result.mkString
-  }  
+  }
+
+  def decodex(value: String): String = {
+    @tailrec
+    def loop(chars: List[Char], acc: StringBuilder ): String = {
+      chars match {
+        case Nil => acc.mkString
+        case head :: tail =>
+          if (head.isDigit) {
+            if (tail.head.isDigit) {
+              val times = head.asDigit.toString + tail.head.asDigit.toString
+              loop(tail.tail, acc.append( acc.last.toString * ( times.toInt - 1) ) )
+            } else loop(tail, acc.append(head.asDigit))
+          } else loop(tail, acc.append(head))
+      }
+    }
+    loop(value.toCharArray.toList, new StringBuilder())
+  }
 }
 
 // Encoding for single letter occurences includes a 1 so that decode works consistently.
@@ -49,3 +67,5 @@ println( s"*** Run Length Encoding: ${ RLE.encode("") }" )
 // "a4b2c3a1e5" should decode to "aaaabbcccaeeeee"
 println( s"*** Run Length Decoding: ${ RLE.decode("a4b2c3a1e5") }" )
 println( s"*** Run Length Decoding: ${ RLE.decode("") }" )
+println( s"*** Run Length Decoding: ${ RLE.decodex("a17") }" )
+RLE.decodex("a17").length == 17
