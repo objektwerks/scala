@@ -57,9 +57,6 @@ object RLE {
   }
 }
 
-// Encoding for single letter occurences includes a 1 so that decode works consistently.
-// Decoding won't work for char counts beyond 9.
-
 // "aaaabbcccaeeeee" should encode to "a4b2c3a1e5"
 println( s"*** Run Length Encoding: ${ RLE.encode("aaaabbcccaeeeee") }" )
 println( s"*** Run Length Encoding: ${ RLE.encode("") }" )
@@ -67,5 +64,7 @@ println( s"*** Run Length Encoding: ${ RLE.encode("") }" )
 // "a4b2c3a1e5" should decode to "aaaabbcccaeeeee"
 println( s"*** Run Length Decoding: ${ RLE.decode("a4b2c3a1e5") }" )
 println( s"*** Run Length Decoding: ${ RLE.decode("") }" )
+
+// "a17" should decode to "a" * 17
 println( s"*** Run Length Decoding: ${ RLE.decodex("a17") }" )
 RLE.decodex("a17").length == 17
