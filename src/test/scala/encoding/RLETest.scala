@@ -72,10 +72,10 @@ class RLETest extends AnyFunSuite with Matchers {
   }
 
   test("decode") {
-    println( s"*** RLE of a4b2c3a1e5 : ${ RLE.decode("a4b2c3a1e5") }" )
+    println( s"*** RLD of a4b2c3a1e5 : ${ RLE.decode("a4b2c3a1e5") }" )
     RLE.decode("a4b2c3a1e5") shouldBe "aaaabbcccaeeeee"
     RLE.decode("") shouldBe ""
-    println( s"*** RRLE of a17 : ${ RLE.decodex("a17") }" )
+    println( s"*** RLD of a17 : ${ RLE.decodex("a17") }" )
     RLE.decodex("a17").length shouldBe 17
   }
 }
