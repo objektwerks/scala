@@ -3,6 +3,8 @@ package encoding
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
+import scala.annotation.tailrec
+
 object RLE {
   final case class Encoding(char: Char, count: Int) extends Product with Serializable
 
@@ -41,22 +43,39 @@ object RLE {
     }
     result.mkString
   }
+
+  def decodex(value: String): String = {
+    @tailrec
+    def loop(chars: List[Char], acc: StringBuilder ): String = {
+      chars match {
+        case Nil => acc.mkString
+        case head :: tail =>
+          if (head.isDigit) {
+            if (tail.head.isDigit) {
+              val times = head.asDigit.toString + tail.head.asDigit.toString
+              loop(tail.tail, acc.append( acc.last.toString * ( times.toInt - 1) ) )
+            } else loop(tail, acc.append(head.asDigit))
+          } else loop(tail, acc.append(head))
+      }
+    }
+    loop(value.toCharArray.toList, new StringBuilder())
+  }
 }
 
-// Encoding for single letter occurences includes a 1 so that decode works consistently.
-// Decoding won't work for char counts beyond 9.
 class RLETest extends AnyFunSuite with Matchers {
   test("encode") {
-    println( s"*** Run Length Encoding: ${ RLE.encode("aaaabbcccaeeeee") }" )
+    println( s"*** RLE of aaaabbcccaeeeee : ${ RLE.encode("aaaabbcccaeeeee") }" )
     RLE.encode("aaaabbcccaeeeee") shouldBe "a4b2c3a1e5"
     RLE.encode("") shouldBe ""
-    println( s"*** Run Length Encoding: ${ RLE.encode("aaaaaaaaaaaaa") }" )
+    println( s"*** RLE of aaaaaaaaaaaaaaaaa : ${ RLE.encode("aaaaaaaaaaaaaaaaa") }" )
+    RLE.encode("aaaaaaaaaaaaaaaaa") shouldBe "a17"
   }
 
   test("decode") {
-    println( s"*** Run Length Decoding: ${ RLE.decode("a4b2c3a1e5") }" )
+    println( s"*** RLE of a4b2c3a1e5 : ${ RLE.decode("a4b2c3a1e5") }" )
     RLE.decode("a4b2c3a1e5") shouldBe "aaaabbcccaeeeee"
     RLE.decode("") shouldBe ""
-    println( s"*** Run Length Decoding: ${ RLE.encode("a17") }" )
+    println( s"*** RRLE of a17 : ${ RLE.decodex("a17") }" )
+    RLE.decodex("a17").length shouldBe 17
   }
 }
