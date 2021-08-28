@@ -52,18 +52,28 @@ class RLETest extends AnyFunSuite with Matchers {
   test("encode") {
     println( s"*** RLE of aaaabbcccaeeeee : ${ RLE.encode("aaaabbcccaeeeee") }" )
     RLE.encode("aaaabbcccaeeeee") shouldBe "a4b2c3a1e5"
+
+    println( s"*** RLE of empty string : ${ RLE.encode("") }" )
     RLE.encode("") shouldBe ""
+
     println( s"*** RLE of aaaaaaaaaaaaaaaaa : ${ RLE.encode("aaaaaaaaaaaaaaaaa") }" )
     RLE.encode("aaaaaaaaaaaaaaaaa") shouldBe "a17"
+
     println( s"*** RLE of 123 : ${ RLE.encode("123") }" )
+    RLE.encode("123") shouldBe "112131"
   }
 
   test("decode") {
     println( s"*** RLD of a4b2c3a1e5 : ${ RLE.decode("a4b2c3a1e5") }" )
     RLE.decode("a4b2c3a1e5") shouldBe "aaaabbcccaeeeee"
+
+    println( s"*** RLD of empty string : ${ RLE.decode("") }" )
     RLE.decode("") shouldBe ""
+
     println( s"*** RLD of a17 : ${ RLE.decode("a17") }" )
     RLE.decode("a17").length shouldBe 17
+
     println( s"*** RLD of 112131 : ${ RLE.decode("112131") }" )
+    RLE.decode("112131") shouldBe ""
   }
 }
