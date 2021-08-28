@@ -34,8 +34,8 @@ object RLE {
           if (head.isDigit) {
             if (tail.headOption.nonEmpty && tail.head.isDigit) {
               val times = head.asDigit.toString + tail.head.asDigit.toString
-              loop(tail.tail, acc.append( acc.last.toString * ( times.toInt - 1) ) )
-            } else loop(tail, acc.append( acc.last.toString * ( head.asDigit - 1 ) ) )
+              loop(tail.tail, acc.append( acc.lastOption.getOrElse("").toString * ( times.toInt - 1 ) ) )
+            } else loop(tail, acc.append( acc.lastOption.getOrElse("").toString * ( head.asDigit - 1 ) ) )
           } else loop(tail, acc.append(head))
       }
     }
@@ -54,3 +54,7 @@ println( s"*** RLD of empty : ${ RLE.decode("") }" )
 // "a17" should decode to "a" * 17
 println( s"*** RLD of a17 : ${ RLE.decode("a17") }" )
 RLE.decode("a17").length == 17
+
+// 123 should encode to 112131. 112131 should decode to ""
+println( s"*** RLE of 123 : ${ RLE.encode("123") }" )
+println( s"*** RLD of 112131 : ${ RLE.decode("112131") }" )
