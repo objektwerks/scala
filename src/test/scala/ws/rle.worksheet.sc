@@ -24,6 +24,7 @@ object RLE {
     }
   }
 
+  // Only works to 99 digits. What's a while loop? :)
   def decode(value: String): String = {
     @tailrec
     def loop(chars: List[Char], acc: StringBuilder ): String = {
