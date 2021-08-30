@@ -42,9 +42,14 @@ object RLE {
   }
 }
 
+// Piping RLE.encode to RLE.decode, with input equalling output.
+import scala.util.chaining._
+"aaaabbcccaeeeee".pipe(RLE.encode).pipe(RLE.decode)
+
 // "aaaabbcccaeeeee" should encode to "a4b2c3a1e5"
 println( s"*** RLE of aaaabbcccaeeeee : ${ RLE.encode("aaaabbcccaeeeee") }" )
 println( s"*** RLE of empty : ${ RLE.encode("") }" )
+
 
 // "a4b2c3a1e5" should decode to "aaaabbcccaeeeee"
 println( s"*** RLD of a4b2c3a1e5 : ${ RLE.decode("a4b2c3a1e5") }" )
