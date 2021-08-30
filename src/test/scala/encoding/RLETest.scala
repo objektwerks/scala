@@ -14,9 +14,9 @@ object RLE {
     def group(chars: List[Char]): List[List[Char]] = {
       if (chars.isEmpty) List(List())
       else {
-        val (firstChars, secondChars) = chars span { char => char == chars.head }
-        if (secondChars == Nil) List(firstChars)
-        else firstChars :: group(secondChars) // not tail-recursive
+        val (matchingChars, remainingChars) = chars span { char => char == chars.head }
+        if (remainingChars == Nil) List(matchingChars)
+        else matchingChars :: group(remainingChars) // not tail-recursive
       }
     }
     val letters = string.toCharArray.toList.filter(char => char.isLetter )
