@@ -7,34 +7,32 @@ import scala.annotation.tailrec
 import scala.util.Random
 
 object RLE {
-  final case class Encoding(char: Char, count: Int) extends Product with Serializable
+  case class Encoding(char: Char, count: Int) extends Product with Serializable
 
   // Only encodes letters.
-  def encode(value: String): String = {
+  def encode(string: String): String = {
     def group(chars: List[Char]): List[List[Char]] = {
       if (chars.isEmpty) List(List())
       else {
-        val (grouped, next) = chars span { char => char == chars.head }
-        if (next == Nil) List(grouped)
-        else grouped :: group(next)
+        val (firstChars, secondChars) = chars span { char => char == chars.head }
+        if (secondChars == Nil) List(firstChars)
+        else firstChars :: group(secondChars) // not tail-recursive
       }
     }
-    val letters = value.toCharArray.toList.filter( char => char.isLetter )
+    val letters = string.toCharArray.toList.filter(char => char.isLetter )
     letters match {
       case Nil => ""
       case _ =>
         val encodings = group(letters) map { chars => Encoding(chars.head, chars.length) }
-        val encodedValues = encodings map { group =>
-          group.char.toString + group.count.toString
-        }
-        encodedValues.mkString
+        val encodedStrings = encodings map { encoding => encoding.char.toString + encoding.count.toString }
+        encodedStrings.mkString
     }
   }
 
-  // Only decodes letter-number pairs, expanding letters up to 2 digit places ( 1 - 99 ).
-  def decode(value: String): String = {
+  // Only decodes letter-number pairs, multiplying letters by 1-2 digit numbers ( 1 - 99 ).
+  def decode(string: String): String = {
     @tailrec
-    def loop(chars: List[Char], acc: StringBuilder ): String = {
+    def loop(chars: List[Char], acc: StringBuilder): String = {
       chars match {
         case Nil => acc.mkString
         case head :: tail =>
@@ -46,7 +44,7 @@ object RLE {
           } else loop(tail, acc.append(head))
       }
     }
-    loop(value.toCharArray.toList, new StringBuilder())
+    loop(string.toCharArray.toList, new StringBuilder())
   }
 }
 
