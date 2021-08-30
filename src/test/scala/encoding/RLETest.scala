@@ -97,4 +97,12 @@ class RLETest extends AnyFunSuite with Matchers {
       decoded shouldBe ""
     }
   }
+
+  test("pipe > tap > pipe") {
+    import scala.util.chaining._
+    "aaaabbcccaeeeee"
+      .pipe(RLE.encode)
+      .tap(e => println(s"piped encoded: $e"))
+      .pipe(RLE.decode)
+  }
 }
