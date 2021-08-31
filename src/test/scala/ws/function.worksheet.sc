@@ -129,7 +129,7 @@ xs map incrComposeDecr
 xs map incrAndThenDecr
 xs map incrComposeDecr map incrAndThenDecr
 
-2.pipe(square)
+2.pipe(square).tap(i => assert(i == 4)).pipe(square).tap(i => assert(i == 16))
 
 def timer[A](codeblock: => A): (A, Double) = {
   val startTime = System.nanoTime
