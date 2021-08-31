@@ -42,9 +42,13 @@ object RLE {
   }
 }
 
-// Piping RLE.encode to RLE.decode, with input equalling output.
+// Piping RLE.encode to RLE.decode with asserts.
 import scala.util.chaining._
-"aaaabbcccaeeeee".pipe(RLE.encode).tap(e => println(s"encoded: $e")).pipe(RLE.decode)
+"aaaabbcccaeeeee"
+  .pipe(RLE.encode)
+  .tap(e => assert(e == "a4b2c3a1e5"))
+  .pipe(RLE.decode)
+  .tap(e => assert(e == "aaaabbcccaeeeee"))
 
 // "aaaabbcccaeeeee" should encode to "a4b2c3a1e5"
 println( s"*** RLE of aaaabbcccaeeeee : ${ RLE.encode("aaaabbcccaeeeee") }" )
