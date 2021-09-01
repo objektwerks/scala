@@ -46,9 +46,9 @@ object RLE {
 import scala.util.chaining._
 "aaaabbcccaeeeee"
   .pipe(RLE.encode)
-  .tap(e => assert(e == "a4b2c3a1e5"))
+  .tap(encoded => assert(encoded == "a4b2c3a1e5"))
   .pipe(RLE.decode)
-  .tap(e => assert(e == "aaaabbcccaeeeee"))
+  .tap(decoded => assert(decoded == "aaaabbcccaeeeee"))
 
 // "aaaabbcccaeeeee" should encode to "a4b2c3a1e5"
 println( s"*** RLE of aaaabbcccaeeeee : ${ RLE.encode("aaaabbcccaeeeee") }" )
