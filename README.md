@@ -1,6 +1,6 @@
 Scala
 -----
->This project contains Scala 2.13.4 feature tests.
+>This project contains Scala 2.13.6 feature tests.
 
 Test
 ----
