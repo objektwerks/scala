@@ -1,14 +1,14 @@
 Scala
 -----
->This project contains Scala 2.13.6 feature tests.
+>Scala 2.13.6 feature tests.
 
 Test
 ----
-* sbt clean test
+1. sbt clean test
 
 Run
 ---
-* sbt clean compile run
+1. sbt clean compile run
 
 Environment
 -----------
