@@ -14,7 +14,7 @@ def newPin: String = Random.shuffle(
     .mkString
     .prepended(newSpecialChar)
     .appended(newSpecialChar)
-).mkString
+  ).mkString
 
 def newSpecialChar: Char = specialChars(random.nextInt(specialChars.length))
 
