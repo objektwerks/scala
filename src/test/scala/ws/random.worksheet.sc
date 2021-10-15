@@ -4,7 +4,7 @@ Random.alphanumeric.take(9).mkString
 Random.alphanumeric.take(9).mkString
 Random.alphanumeric.take(9).mkString
 
-val specialChars = "~!@#$%^&*(){}-+<>?/:;".toList
+val specialChars = "~!@#$%^&*{}-+<>?/:;".toList
 val random = new Random
 
 def newPin: String = Random.shuffle(
