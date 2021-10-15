@@ -8,7 +8,8 @@ Random.shuffle( Random.alphanumeric.take(7).mkString.prepended("@").appended("!"
 Random.shuffle( Random.alphanumeric.take(7).mkString.prepended("@").appended("!") ).mkString
 Random.shuffle( Random.alphanumeric.take(7).mkString.prepended("@").appended("!") ).mkString
 
-val specialChars = "!@#$%^&*+".toList
+val specialChars = "~!@#$%^&*()-+<>?".toList
+val random = new Random
 
 def newPin: String = Random.shuffle(
   Random
@@ -20,8 +21,8 @@ def newPin: String = Random.shuffle(
 ).mkString
 
 def newSpecialChar: Char = {
-  val list = Random.shuffle(specialChars)
-  list(Random.nextInt(list.length))
+  val list = random.shuffle(specialChars)
+  list(random.nextInt(list.length))
 }
 
 newPin
