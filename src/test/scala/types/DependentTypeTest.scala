@@ -9,9 +9,9 @@ trait Box {
 }
 
 object Box {
-  def deriveValue(box: Box): box.Value = box.value
+  def unbox(box: Box): box.Value = box.value
 
-  def valueOf[T](t: T) = new Box {
+  def box[T](t: T) = new Box {
     type Value = T
     val value: T = t
   }
@@ -21,10 +21,10 @@ class DependentTypeTest extends AnyFunSuite with Matchers {
   test("dependent") {
     import Box._
 
-    val intValue    = valueOf(1)
-    val stringValue = valueOf("one")
+    val intValue = box(1)
+    val stringValue = box("one")
 
-    deriveValue(intValue) shouldBe 1
-    deriveValue(stringValue) shouldBe "one"
+    unbox(intValue) shouldBe 1
+    unbox(stringValue) shouldBe "one"
   }
 }
