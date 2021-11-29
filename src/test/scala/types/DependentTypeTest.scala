@@ -22,9 +22,9 @@ class DependentTypeTest extends AnyFunSuite with Matchers {
     }
 
     val intValue    = valueOf(1)
-    val stringValue = valueOf("One")
+    val stringValue = valueOf("one")
 
     assert(deriveValue(intValue) == 1)
-    assert(deriveValue(stringValue) == "One")
+    assert(deriveValue(stringValue) == "one")
   }
 }
