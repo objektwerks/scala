@@ -1,6 +1,6 @@
 Scala
 -----
->Scala 2.13.6 feature tests.
+>Scala 2.13.7 feature tests.
 
 Test
 ----
