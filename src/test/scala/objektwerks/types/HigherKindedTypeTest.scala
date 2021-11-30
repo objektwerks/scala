@@ -3,7 +3,7 @@ package objektwerks.types
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-class HigerKindedTypeTest extends AnyFunSuite with Matchers {
+class HigherKindedTypeTest extends AnyFunSuite with Matchers {
   trait Functor[F[_]] {
     def map[A, B](fa: F[A])(f: A => B): F[B]
   }
