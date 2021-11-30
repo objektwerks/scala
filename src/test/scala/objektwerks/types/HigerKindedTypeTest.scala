@@ -13,9 +13,8 @@ class HigerKindedTypeTest extends AnyFunSuite with Matchers {
   }
 
   test("higher kinded") {
-    val listOfNumbers = List(1, 2, 3)
-    val listOfStrings = listFunctor.map(listOfNumbers)(_.toString)
-    val expectedMorphism = List("1", "2", "3")
-    assert(listOfStrings == expectedMorphism)
+    val numbers = List(1, 2, 3)
+    val strings = listFunctor.map(numbers)(_.toString)
+    strings shouldBe List("1", "2", "3")
   }
 }
