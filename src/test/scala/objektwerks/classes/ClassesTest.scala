@@ -1,4 +1,4 @@
-package classes
+package objektwerks.classes
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -42,7 +42,7 @@ object Timestamp {
 }
 
 class ClassesTest extends AnyFunSuite with Matchers {
-  test("classes with inheritence") {
+  test("objektwerks.classes with inheritence") {
     val cars = Owner.startEngines
     for (car <- cars) {
       car.sound.nonEmpty shouldBe true

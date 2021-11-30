@@ -1,4 +1,4 @@
-package classes
+package objektwerks.classes
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
@@ -27,7 +27,7 @@ case class Foot(value: Double) extends AnyVal {
 }
 
 class CaseClassesTest extends AnyFunSuite with Matchers {
-  test("case classes") {
+  test("case objektwerks.classes") {
     val animals = ZooKeeper.openCages
     for(animal <- animals) {
       animal.speak.nonEmpty shouldBe true
@@ -67,7 +67,7 @@ class CaseClassesTest extends AnyFunSuite with Matchers {
     Tiger.unapply(tiger1) shouldEqual Some("roar")
   }
 
-  test("value classes") {
+  test("value objektwerks.classes") {
     Meter(3.0).toFeet shouldEqual Foot(0.9144000000000001)
     Foot(3.0).toMeter shouldEqual Meter(9.84251968503937)
   }

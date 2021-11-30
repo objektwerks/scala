@@ -1,4 +1,4 @@
-package classes
+package objektwerks.classes
 
 // Cards
 sealed trait Suit
