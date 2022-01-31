@@ -1,3 +1,5 @@
+import scala.util.{Failure, Success, Try}
+
 def retry[T](n: Int)(fn: => T): T =
     Try { fn } match {
       case Success(result) => result
