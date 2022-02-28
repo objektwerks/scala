@@ -14,7 +14,7 @@ Environment
 -----------
 >The following list details **common** technologies and practices found in Scala shops.
 
-1. **Git:** Git is the defacto standard version control software. Popular providers include: Github ( https://github.com/features ) and Gitlab ( https://about.gitlab.com ). Both can be installed on an internal network.
+1. **Git:** Git is the defacto standard version control software. Popular providers include: Github ( https://github.com/features ) and Gitlab ( https://about.gitlab.com ). Both can be installed on a private network.
 2. **IDE:** Scala IDEs include Jetbrains Intellij IDEA ( https://www.jetbrains.com/idea/ ) and VS Code ( https://code.visualstudio.com ) with Metals ( https://scalameta.org/metals/ ).
 3. **SBT:** The Scala Build Tool ( https://www.scala-sbt.org ) is a build and dependency management tool, extensible via plugins. SBT is dominant in the Scala space. Mill is a viable option. Maven and Gradle are secondary options.
 4. **Maven Repository:** SBT requires network access to the public Maven repository ( https://mvnrepository.com ) to obtain versioned libraries. A continually updated copy of the public Maven Repository can be set up and maintained internally via products like Nexus ( https://www.sonatype.com/nexus-repository-sonatype ) and JFrog Artifactory ( https://jfrog.com/artifactory/ ). Ideally, internal versioned apps and components would be published to an internal Maven repository for easy internal sharing by developers and users. Additional public repositories exist and may be required for development.
