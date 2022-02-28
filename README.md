@@ -26,7 +26,7 @@ Environment
 10. **CI/CD:** Continuous integration and deployment is standard. Jenkins ( https://jenkins.io ) allows a team to set up a build project for each project housed in a Git repository. Scheduled Jenkins jobs pull a Git repository, rebuild it, run tests, run integration tests and package it. Continuous deployment is an optional feature. Github, Gitlab and other companies provide CI/CD services.
 11. **Agile:** Github provides a free Kanban Board for each repository, allowing developers to manage project tasks. Gitlab also provides a Kanban Board feature. Atlassian ( https://www.atlassian.com ) provides a robust set of commercial agile tools.
 12. **Laptop:** Scala developers typically develop on a MacBook Pro, configured with a 13-16" screen, 16GB/32GB of RAM and **Admin** rights. Windows and Linux laptops are viable alternatives.
-13. **Homebrew:** The ultimate software package manager for Apple OSX ( https://brew.sh ).
-14. **Sdkman:** A lightweight complement to Homebrew ( https://sdkman.io ) that runs on Apple OSX, Windows and Linux.
-15. **Pathfinder:** The ultimate file system browser for Apple OSX ( https://cocoatech.com/#/ ).
+13. **Homebrew:** The ultimate software package manager for OSX ( https://brew.sh ).
+14. **Sdkman:** A lightweight complement to Homebrew ( https://sdkman.io ) that runs on OSX, Windows and Linux.
+15. **Pathfinder:** The ultimate file system browser for OSX ( https://cocoatech.com/#/ ).
 16. **Linux Server:** Providing developers with access to a remote Linux development server is ideal and cost-effective ( given the limitations of laptops ).
