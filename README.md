@@ -12,7 +12,7 @@ Run
 
 Environment
 -----------
->The following list details **common** technologies and practices found in Scala shops.
+>The following list details ***common*** technologies and practices found in Scala shops.
 
 1. **Git:** Git is the defacto standard version control software. Popular providers include: Github ( https://github.com/features ) and Gitlab ( https://about.gitlab.com ). Both can be installed on a private network.
 2. **IDE:** Scala IDEs include Jetbrains Intellij IDEA ( https://www.jetbrains.com/idea/ ) and VS Code ( https://code.visualstudio.com ) with Metals ( https://scalameta.org/metals/ ).
