@@ -25,7 +25,7 @@ Environment
 9. **Local Services:** It’s pragmatic and cost-effective to build Scala prototypes and run integration tests against local services, such as Kafka, Cassandra, Postgresql, etc. Homebrew, for instance, simplifies the management of local OSX services. Docker is an alternative.
 10. **CI/CD:** Continuous integration and deployment is standard. Jenkins ( https://jenkins.io ) allows a team to set up a build project for each project housed in a Git repository. Scheduled Jenkins jobs pull a Git repository, rebuild it, run tests, run integration tests and package it. Continuous deployment is an optional feature. Github, Gitlab and other companies provide CI/CD services.
 11. **Agile:** Github provides a free Kanban Board for each repository, allowing developers to manage project tasks. Gitlab also provides a Kanban Board feature. Atlassian ( https://www.atlassian.com ) provides a robust set of commercial agile tools.
-12. **Laptop:** Scala developers typically develop on a MacBook Pro, configured with a 13-16" screen, 16GB/32GB of RAM and **Admin** rights. Windows and Linux laptops are viable alternatives.
+12. **Laptop:** Scala developers typically develop on a MacBook, configured with a 13-16" screen, 16GB/32GB of RAM and **Admin** rights. Windows and Linux laptops are viable alternatives.
 13. **Homebrew:** The ultimate software package manager for OSX ( https://brew.sh ).
 14. **Sdkman:** A lightweight complement to Homebrew ( https://sdkman.io ) that runs on OSX, Windows and Linux.
 15. **Pathfinder:** The ultimate file system browser for OSX ( https://cocoatech.com/#/ ).
