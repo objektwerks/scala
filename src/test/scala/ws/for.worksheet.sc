@@ -1,12 +1,12 @@
-val as = List(1, 2, 3)
+val xs = List(1, 2, 3)
 
-as.filter(_ > 2)
-
-for {
-  a <- as
-} yield a * 2
+xs.filter(_ > 2)
 
 for {
-  a <- as
-  if a > 2
-} yield a * 3
+  x <- xs
+} yield x * 2
+
+for {
+  x <- xs
+  if x > 2
+} yield x * 3
