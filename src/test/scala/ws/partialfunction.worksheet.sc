@@ -1,12 +1,12 @@
 import scala.util.Try
 
-val multiplyByOne: PartialFunction[Int, Int] = {
+val multiplyByTwo: PartialFunction[Int, Int] = {
   case i: Int if i != 0 => i * 2
 }
 
-Try { List(0, 1, 2) map multiplyByOne }
-List(0, 1, 2) collect multiplyByOne
-List(7, "cat") collect { case i: Int => multiplyByOne(i) }
+Try { List(0, 1, 2) map multiplyByTwo } // map fails on match error!
+List(0, 1, 2) collect multiplyByTwo
+List(7, "cat") collect { case i: Int => multiplyByTwo(i) }
 
 val divideByOne = new PartialFunction[Int, Int] {
   def apply(i: Int): Int = i / 1
