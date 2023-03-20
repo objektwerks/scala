@@ -15,14 +15,14 @@ def retry[T](n: Int)(fn: => T): T =
     }
 
 val utf8 = Codec.UTF8.name
-val url = "http://api.icndb.com/jokes/random/"
+val url = "https://api.chucknorris.io/jokes/random"
 val badUrl = "http://api.icndb.org/"
 val retries = 3
 
 def joke(jokeSite: String): String =
-  Using( Source.fromURL(jokeSite, utf8) ) { 
+  Using( Source.fromURL(jokeSite, utf8) ) {
     source => source.mkString
   }.get
 
 // Substitute url with badUrl to see retries
-val result = retry[String](retries)(joke(url))
+retry[String](retries)(joke(url))
