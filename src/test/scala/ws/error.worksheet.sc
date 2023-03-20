@@ -37,10 +37,10 @@ Try("a".toInt).getOrElse(0)
 
 val leftEither: Either[String, String] = Left("error")
 for {
-  value <- leftEither
+  value <- leftEither // right bias, value NOT capitalized!
 } yield value.toUpperCase()
 
 val rightEither: Either[String, String] = Right("success")
 for {
-  value <- rightEither
+  value <- rightEither // right bias, value capitalized!
 } yield value.toUpperCase()
