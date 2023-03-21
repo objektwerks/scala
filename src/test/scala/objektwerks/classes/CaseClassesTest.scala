@@ -67,7 +67,7 @@ class CaseClassesTest extends AnyFunSuite with Matchers {
     Tiger.unapply(tiger1) shouldEqual Some("roar")
   }
 
-  test("value objektwerks.classes") {
+  test("value class") {
     Meter(3.0).toFeet shouldEqual Foot(0.9144000000000001)
     Foot(3.0).toMeter shouldEqual Meter(9.84251968503937)
   }
