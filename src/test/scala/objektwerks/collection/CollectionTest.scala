@@ -348,11 +348,8 @@ class CollectionTest extends AnyFunSuite with Matchers {
   }
 
   test("tuple copy") {
-    case class KeyValue(key: Int, value: Int) {
-      def tupled: (Int, Int) = (key, value)
-    }
-    
-    (2, 2) shouldBe KeyValue(1, 1).tupled.copy(2, 2)
+    val tuple = (3, 6, 9)
+    tuple.copy(13, 15, 18) shouldBe (13, 15, 18)
   }
 
   test("tupled") {
