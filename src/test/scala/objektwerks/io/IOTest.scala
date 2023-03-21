@@ -23,15 +23,19 @@ class IOTest extends AnyFunSuite with Matchers {
     }
 
   test("from url") {
-    Using( Source.fromURL("https://api.chucknorris.io/jokes/random", utf8) ) {
-      source => source.mkString.split("\\W+").nonEmpty shouldBe true
-    }
+    assert(
+      Using( Source.fromURL("https://api.chucknorris.io/jokes/random", utf8) ) {
+        source => source.mkString.split("\\W+").nonEmpty shouldBe true
+      }.isSuccess
+    )
   }
 
   test("from file") {
-    Using( Source.fromFile("./LICENSE", utf8) ) { 
-      source => source.mkString.split("\\W+").length shouldBe 1427
-    }
+    assert(
+      Using( Source.fromFile("./LICENSE", utf8) ) { 
+        source => source.mkString.split("\\W+").length shouldBe 1427
+      }.isSuccess
+    )
   }
 
   test("from input stream") {
@@ -43,21 +47,27 @@ class IOTest extends AnyFunSuite with Matchers {
   }
 
   test("from string") {
-    Using( Source.fromString(quote) ) { 
-      source => source.mkString.split("\\W+").length shouldBe 13
-    }
+    assert(
+      Using( Source.fromString(quote) ) { 
+        source => source.mkString.split("\\W+").length shouldBe 13
+      }.isSuccess
+    )
   }
 
   test("from chars") {
-    Using( Source.fromChars(quote.toCharArray) ) {
-      source => source.mkString.split("\\W+").length shouldBe 13
-    }
+    assert(
+      Using( Source.fromChars(quote.toCharArray) ) {
+        source => source.mkString.split("\\W+").length shouldBe 13
+      }.isSuccess
+    )
   }
 
   test("from bytes") {
-    Using( Source.fromBytes(quote.getBytes(utf8), utf8) ) {
-      source => source.mkString.split("\\W+").length shouldBe 13
-    }
+    assert(
+      Using( Source.fromBytes(quote.getBytes(utf8), utf8) ) {
+        source => source.mkString.split("\\W+").length shouldBe 13
+      }.isSuccess
+    )
   }
 
   test("grouped") {
