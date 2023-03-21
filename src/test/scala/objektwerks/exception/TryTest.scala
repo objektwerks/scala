@@ -16,9 +16,9 @@ class TryTest extends AnyFunSuite with Matchers {
     } yield x / y
   }
 
-  def fileToLines(file: String): Try[Seq[String]] = Using( Source.fromFile(file, Codec.UTF8.name) ) { source => source.getLines().toSeq }
-
   def parseInt(s: String): Option[Int] = s.toIntOption
+
+  def fileToLines(file: String): Try[Seq[String]] = Using( Source.fromFile(file, Codec.UTF8.name) ) { source => source.getLines().toSeq }
 
   test("try catch handler") {
     val handler: PartialFunction[Throwable, Unit] = {
@@ -27,34 +27,29 @@ class TryTest extends AnyFunSuite with Matchers {
     try "abc".toInt catch handler
   }
 
-  test("try") {
+  test("option") {
     divide("9", "3").nonEmpty shouldBe true
     divide("9", "3").contains(3) shouldBe true
     divide("9", "3").get shouldEqual 3
     divide("a", "b").isEmpty shouldBe true
     divide("a", "b").isEmpty shouldBe true
     divide("a", "b").getOrElse(-1) shouldEqual -1
-  }
 
-  test("try option") {
     parseInt("a").isEmpty shouldBe true
     parseInt("1").isDefined shouldBe true
   }
 
-  test("try using") {
+  test("option all catch") {
+    allCatch.opt("1".toInt).nonEmpty shouldBe true
+    allCatch.opt("one".toInt).isEmpty shouldBe true
+  }
+
+  test("try") {
     fileToLines("build.sbt").isSuccess shouldBe true
     fileToLines("sbt.sbt").isFailure shouldBe true
   }
 
   test("try recover") {
-    val i = for {
-      i <- Try("one".toInt).recover { case _ => 0 }
-    } yield i
-    i shouldEqual Success(0)
-  }
-
-  test("all catch") {
-    allCatch.opt("1".toInt).nonEmpty shouldBe true
-    allCatch.opt("one".toInt).isEmpty shouldBe true
+    Try("one".toInt).recover { case _ => 0 } shouldEqual Success(0)
   }
 }
