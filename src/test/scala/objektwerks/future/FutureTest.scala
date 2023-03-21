@@ -96,15 +96,9 @@ class FutureTest extends AsyncFunSuite with Matchers {
     Future(3) filter { _ == 3 } map { _ shouldBe 3 }
   }
 
-  test("foldLeft") {
+  test("fold") {
     val ListFutureOfInt = List(Future(1), Future(2))
-    val futureOfInt = Future.foldLeft(ListFutureOfInt)(0){ (acc, num) => acc + num }
-    futureOfInt map { _ shouldBe 3 }
-  }
-
-  test("reduceLeft") {
-    val ListFutureOfInt = List(Future(1), Future(2))
-    val futureOfInt = Future.reduceLeft(ListFutureOfInt){ (acc, num) => acc + num }
+    val futureOfInt = Future.fold(ListFutureOfInt)(0){ (acc, num) => acc + num }
     futureOfInt map { _ shouldBe 3 }
   }
 
