@@ -92,8 +92,8 @@ class FunctionTest extends AnyFunSuite with Matchers {
 
   test("partial function") {
     val fraction = new PartialFunction[Int, Int] {
-      def apply(d: Int) = 2 / d
-      def isDefinedAt(d: Int): Boolean = d <= 0
+      def apply(i: Int) = 2 / i
+      def isDefinedAt(i: Int): Boolean = i <= 0
     }
     fraction(2) shouldEqual 1
     fraction.isDefinedAt(-42) shouldBe true
