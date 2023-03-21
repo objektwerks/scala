@@ -20,13 +20,6 @@ class TryTest extends AnyFunSuite with Matchers {
 
   def fileToLines(file: String): Try[Seq[String]] = Using( Source.fromFile(file, Codec.UTF8.name) ) { source => source.getLines().toSeq }
 
-  test("try catch handler") {
-    val handler: PartialFunction[Throwable, Unit] = {
-      case NonFatal(error) => error.getMessage.nonEmpty shouldBe true; ()
-    }
-    try "abc".toInt catch handler
-  }
-
   test("option") {
     divide("9", "3").nonEmpty shouldBe true
     divide("9", "3").contains(3) shouldBe true
@@ -51,5 +44,12 @@ class TryTest extends AnyFunSuite with Matchers {
 
   test("try recover") {
     Try("one".toInt).recover { case _ => 0 } shouldEqual Success(0)
+  }
+
+  test("try catch handler") {
+    val handler: PartialFunction[Throwable, Unit] = {
+      case NonFatal(error) => error.getMessage.nonEmpty shouldBe true; ()
+    }
+    try "abc".toInt catch handler
   }
 }
