@@ -341,10 +341,10 @@ class CollectionTest extends AnyFunSuite with Matchers {
   }
 
   test("tuple") {
-    val (first, last, age) = ("fred", "flintstone", 99)
+    val (first, last, age) = ("fred", "flintstone", 39)
     first shouldBe "fred"
     last shouldBe "flintstone"
-    age shouldBe 99
+    age shouldBe 39
   }
 
   test("tuple copy") {
