@@ -172,9 +172,9 @@ class FunctionTest extends AnyFunSuite with Matchers {
     us shouldEqual gs
   }
 
-  test("pipe") {
+  test("pipe > tap") {
     val square = (n: Int) => n * n
-    assert( 2.pipe(square) == 4 )
+    2.pipe(square).tap(i => i shouldBe 4)
   } 
 
   test("select by index") {
