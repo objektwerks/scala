@@ -77,7 +77,7 @@ class ImplicitTest extends AnyFunSuite with Matchers {
     unsorted.sorted.min shouldEqual Worker("a", "x")
   }
 
-  test("implicit folding") {
+  test("implicit method") {
     import Value._
 
     val values = List(1, 2, 3).map(n => Value(n))
