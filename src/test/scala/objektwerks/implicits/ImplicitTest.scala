@@ -81,11 +81,11 @@ class ImplicitTest extends AnyFunSuite with Matchers {
     import Value._
 
     val values = List(1, 2, 3).map(n => Value(n))
-    val combinedValue = values.foldLeft(Value(0))(_ + _)
+    val combinedValue = values.fold(Value(0))(_ + _)
     combinedValue.n shouldEqual 6
   }
 
-  test("implicitly") {
+  test("type class implicits") {
     import Box._
 
     view[Int] shouldBe 123
