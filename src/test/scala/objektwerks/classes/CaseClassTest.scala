@@ -4,18 +4,29 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 // Algebraic Data Types ( ADTs )
+sealed abstract class Command extends Product with Serializable // Sum Type, Move and Rotate is a Command
+object Command {
+  final case class Move(meters: Int) extends Command // Product Type, Move contains meters
+  final case class Rotate(degrees: Int) extends Command // Product Type, Rotate contains degrees
 
-// Sum Type Pattern - Is-A, Inheritence
+  def handle(command: Command): String = command match {
+    case Move(meters)    => s"Moving by ${meters} meter(s)."
+    case Rotate(degrees) => s"Rotating by ${degrees} degree(s)."
+  }
+}
+
+// ADT Sum Type Pattern - Is-A, Inheritence - Tiger, Panther and Bear is an Animal
 sealed trait Animal extends Product with Serializable {
   def speak: String 
 }
-final case class Tiger(speach: String) extends Animal {
+// ADT Product Type Pattern - Has-A, Composition
+final case class Tiger(speach: String) extends Animal { // Tiger is an Animal
   override def speak: String = speach 
 }
-final case class Panther(speach: String) extends Animal {
+final case class Panther(speach: String) extends Animal { // Panther is an Animal
   override def speak: String = speach 
 }
-final case class Bear(speach: String) extends Animal {
+final case class Bear(speach: String) extends Animal { // Bear is an Animal
   override def speak: String = speach 
 }
 
@@ -23,7 +34,6 @@ final case object ZooKeeper {
   def openCages: Set[Animal] = Set(Tiger("prrrr"), Panther("woosh"), Bear("grrrr")) 
 }
 
-// Product Type Pattern - Has-A, Composition
 final case class Meter(value: Double) extends AnyVal {
   def toFeet: Foot = Foot(value * 0.3048) 
 }
@@ -32,7 +42,14 @@ final case class Foot(value: Double) extends AnyVal {
 }
 
 class CaseClassTest extends AnyFunSuite with Matchers {
-  test("case objektwerks.classes") {
+  test("adt") {
+    import Command._
+
+    handle( Move(1) ) shouldBe "Moving by 1 meter(s)."
+    handle( Rotate(2)) shouldBe "Rotating by 2 degree(s)."
+  }
+
+  test("case classes") {
     val animals = ZooKeeper.openCages
     for(animal <- animals) {
       animal.speak.nonEmpty shouldBe true
