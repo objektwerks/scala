@@ -3,9 +3,11 @@ package objektwerks.classes
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
+// Sum Type
 sealed trait Animal { 
   def speak: String 
 }
+// Product Types
 case class Tiger(speach: String) extends Animal { 
   override def speak: String = speach 
 }
@@ -15,6 +17,7 @@ case class Panther(speach: String) extends Animal {
 case class Bear(speach: String) extends Animal { 
   override def speak: String = speach 
 }
+
 case object ZooKeeper { 
   def openCages: Set[Animal] = Set(Tiger("prrrr"), Panther("woosh"), Bear("grrrr")) 
 }
