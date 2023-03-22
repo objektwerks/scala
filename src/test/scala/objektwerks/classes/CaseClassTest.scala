@@ -34,11 +34,25 @@ final case object ZooKeeper {
   def openCages: Set[Animal] = Set(Tiger("prrrr"), Panther("woosh"), Bear("grrrr")) 
 }
 
+// Value Classes
 final case class Meter(value: Double) extends AnyVal {
   def toFeet: Foot = Foot(value * 0.3048) 
 }
 final case class Foot(value: Double) extends AnyVal {
   def toMeter: Meter = Meter(value / 0.3048) 
+}
+
+// Enum Alternative
+sealed trait Color extends Product with Serializable
+final case object AppleRed extends Color
+final case object ArticWhite extends Color
+final case object IceBlue extends Color
+object Color {
+  def rgb(color: Color): (Int, Int, Int) = color match {
+    case AppleRed => (1, 1, 1)
+    case ArticWhite => (2, 2, 2)
+    case IceBlue => (3, 3, 3)
+  }
 }
 
 class CaseClassTest extends AnyFunSuite with Matchers {
@@ -92,5 +106,13 @@ class CaseClassTest extends AnyFunSuite with Matchers {
   test("value class") {
     Meter(3.0).toFeet shouldEqual Foot(0.9144000000000001)
     Foot(3.0).toMeter shouldEqual Meter(9.84251968503937)
+  }
+
+  test("enum") {
+    import Color._
+
+    rgb(AppleRed) shouldBe (1, 1, 1)
+    rgb(ArticWhite) shouldBe (2, 2, 2)
+    rgb(IceBlue) shouldBe (3, 3, 3)
   }
 }
