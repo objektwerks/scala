@@ -3,7 +3,7 @@ package objektwerks.classes
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-// Sum Type Pattern
+// Sum Type Pattern - Is-A, Inheritence
 sealed trait Animal extends Product with Serializable {
   def speak: String 
 }
@@ -21,7 +21,7 @@ case object ZooKeeper {
   def openCages: Set[Animal] = Set(Tiger("prrrr"), Panther("woosh"), Bear("grrrr")) 
 }
 
-// Product Type Pattern
+// Product Type Pattern - Has-A, Composition
 final case class Meter(value: Double) extends AnyVal {
   def toFeet: Foot = Foot(value * 0.3048) 
 }
