@@ -73,6 +73,8 @@ class ImplicitTest extends AnyFunSuite with Matchers {
   }
 
   test("implicit ordering") {
+    import Worker._
+    
     val unsorted = List(Worker("c", "zspace"), Worker("b", "y"), Worker("a", "x"))
     unsorted.sorted.min shouldEqual Worker("a", "x")
   }
