@@ -26,22 +26,20 @@ class Human(val first: String, val last: String, val initial: String) {
   }
 }
 
-class Square { 
-  def apply(n: Int): Int = n * n 
+class Square(n: Int) {
+  def calc: Int = n * n
 }
-
-object Cube { 
-  def apply(n: Int): Int = n * n * n 
+object Square {
+  def apply(n: Int) = new Square(n)
 }
 
 class Timestamp(val seconds: Int)
 object Timestamp {
-  def apply(hours: Int, minutes: Int, seconds: Int): Timestamp = {
+  def apply(hours: Int, minutes: Int, seconds: Int): Timestamp =
     new Timestamp( (hours * 60 * 60) + (minutes * 60) + seconds )
-  }
 }
 
-class ClassesTest extends AnyFunSuite with Matchers {
+class ClassTest extends AnyFunSuite with Matchers {
   test("objektwerks.classes with inheritence") {
     val cars = Owner.startEngines
     for (car <- cars) {
@@ -67,15 +65,9 @@ class ClassesTest extends AnyFunSuite with Matchers {
     secondary.initial.isEmpty shouldBe true
   }
 
-  test("class apply") {
-    val square = new Square()
-    square(2) shouldEqual 4
-    square.apply(3) shouldEqual 9
-  }
-
   test("object apply") {
-    Cube(2) shouldEqual 8
-    Cube.apply(3) shouldEqual 27
+    val square = Square(2)
+    square.calc shouldEqual 4
   }
 
   test("companion object") {
