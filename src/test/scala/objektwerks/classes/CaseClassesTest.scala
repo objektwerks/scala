@@ -17,7 +17,7 @@ final case class Bear(speach: String) extends Animal {
   override def speak: String = speach 
 }
 
-case object ZooKeeper {
+final case object ZooKeeper {
   def openCages: Set[Animal] = Set(Tiger("prrrr"), Panther("woosh"), Bear("grrrr")) 
 }
 
