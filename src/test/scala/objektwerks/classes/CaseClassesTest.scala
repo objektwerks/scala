@@ -3,29 +3,29 @@ package objektwerks.classes
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-// Sum Type
-sealed trait Animal { 
+// Sum Type Pattern
+sealed trait Animal extends Product with Serializable {
   def speak: String 
 }
-// Product Types
-case class Tiger(speach: String) extends Animal { 
+final case class Tiger(speach: String) extends Animal {
   override def speak: String = speach 
 }
-case class Panther(speach: String) extends Animal { 
+final case class Panther(speach: String) extends Animal {
   override def speak: String = speach 
 }
-case class Bear(speach: String) extends Animal { 
+final case class Bear(speach: String) extends Animal {
   override def speak: String = speach 
 }
 
-case object ZooKeeper { 
+case object ZooKeeper {
   def openCages: Set[Animal] = Set(Tiger("prrrr"), Panther("woosh"), Bear("grrrr")) 
 }
 
-case class Meter(value: Double) extends AnyVal { 
+// Product Type Pattern
+final case class Meter(value: Double) extends AnyVal {
   def toFeet: Foot = Foot(value * 0.3048) 
 }
-case class Foot(value: Double) extends AnyVal { 
+final case class Foot(value: Double) extends AnyVal {
   def toMeter: Meter = Meter(value / 0.3048) 
 }
 
