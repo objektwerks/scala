@@ -3,6 +3,8 @@ package objektwerks.classes
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
+// Algebraic Data Types ( ADTs )
+
 // Sum Type Pattern - Is-A, Inheritence
 sealed trait Animal extends Product with Serializable {
   def speak: String 
