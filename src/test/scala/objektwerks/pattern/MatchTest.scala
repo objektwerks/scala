@@ -8,14 +8,14 @@ import scala.collection.mutable.ArrayBuffer
 import scala.util.matching.Regex
 
 class MatchTest extends AnyFunSuite with Matchers {
-  test("variable") {
+  test("case class") {
     case class Order(product: String, quantity: Int)
 
-    def byVariable(order: Order): (String, Int) = order match {
+    def byCaseClass(order: Order): (String, Int) = order match {
       case Order(p, q) => (p, q)
     }
     
-    val (product, quanity) = byVariable(Order("beer", 6))
+    val (product, quanity) = byCaseClass(Order("beer", 6))
     product shouldEqual "beer"
     quanity shouldEqual 6
   }
