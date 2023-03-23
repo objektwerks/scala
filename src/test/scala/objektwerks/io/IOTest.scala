@@ -23,11 +23,9 @@ class IOTest extends AnyFunSuite with Matchers {
     }
 
   test("from url") {
-    assert(
-      Using( Source.fromURL("https://api.chucknorris.io/jokes/random", utf8) ) {
-        source => source.mkString.split("\\W+").nonEmpty shouldBe true
-      }.isSuccess
-    )
+    Using( Source.fromURL("https://api.chucknorris.io/jokes/random", utf8) ) {
+      source => source.mkString.split("\\W+").nonEmpty shouldBe true
+    }.isSuccess shouldBe true
   }
 
   test("from file") {
