@@ -29,11 +29,9 @@ class IOTest extends AnyFunSuite with Matchers {
   }
 
   test("from file") {
-    assert(
-      Using( Source.fromFile("./LICENSE", utf8) ) { 
-        source => source.mkString.split("\\W+").length shouldBe 1427
-      }.isSuccess
-    )
+    Using( Source.fromFile("./LICENSE", utf8) ) { 
+      source => source.mkString.split("\\W+").length shouldBe 1427
+    }.isSuccess shouldBe true
   }
 
   test("from input stream") {
