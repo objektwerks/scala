@@ -78,8 +78,8 @@ class FunctionTest extends AnyFunSuite with Matchers {
   }
 
   test("higher order") {
-    def square(f: Int => Int, i: Int) = f(i)
-    square((x: Int) => x * x, 2) shouldEqual 4
+    def applyFunction(f: Int => Int, i: Int) = f(i)
+    applyFunction((x: Int) => x * x, 2) shouldEqual 4
 
     def cube(n: Int): Int = n * n * n
     List(1, 2, 3).map(cube) shouldBe List(1, 8, 27)
