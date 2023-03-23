@@ -6,8 +6,8 @@ import org.scalatest.matchers.should.Matchers
 // Algebraic Data Types ( ADTs )
 sealed abstract class Command extends Product with Serializable // Sum Type, Move and Rotate is a Command
 object Command {
-  final case class Move(meters: Int) extends Command // Product Type, Move contains meters
-  final case class Rotate(degrees: Int) extends Command // Product Type, Rotate contains degrees
+  final case class Move(meters: Int) extends Command // Product Type, Move has meters
+  final case class Rotate(degrees: Int) extends Command // Product Type, Rotate has degrees
 
   def handle(command: Command): String = command match {
     case Move(meters)    => s"Moving by ${meters} meter(s)."
