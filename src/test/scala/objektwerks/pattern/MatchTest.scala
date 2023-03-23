@@ -10,14 +10,24 @@ import scala.util.matching.Regex
 class MatchTest extends AnyFunSuite with Matchers {
   test("case class") {
     case class Order(product: String, quantity: Int)
-
-    def byCaseClass(order: Order): (String, Int) = order match {
+    def byOrder(order: Order): (String, Int) = order match {
       case Order(p, q) => (p, q)
     }
     
-    val (product, quanity) = byCaseClass(Order("beer", 6))
+    val (product, quanity) = byOrder(Order("beer", 6))
     product shouldEqual "beer"
     quanity shouldEqual 6
+
+    final case class Person(name: String)
+    def byPerson(person: Person): String = person match {
+      case p @ Person("John") => "Mr. " + p.name
+      case p @ Person("Jane") => "Ms. " + p.name
+      case Person(name) => s"Mr. $name"
+    }
+
+    byPerson(Person("John")) shouldBe "Mr. John"
+    byPerson(Person("Jane")) shouldBe "Ms. Jane"
+    byPerson(Person("Jake")) shouldBe "Mr. Jake"
   }
 
   test("type") {
@@ -50,20 +60,6 @@ class MatchTest extends AnyFunSuite with Matchers {
     isTrue(1) shouldBe true
     isTrue(0) shouldBe false
     isTrue("") shouldBe false
-  }
-
-  test("case class") {
-    case class Person(name: String)
-
-    def byPerson(p: Person): String = p match {
-      case Person("John") => "Mr. " + p.name
-      case Person("Jane") => "Ms. " + p.name
-      case Person(name) => s"Mr. $name"
-    }
-
-    byPerson(Person("John")) shouldEqual "Mr. John"
-    byPerson(Person("Jane")) shouldEqual "Ms. Jane"
-    byPerson(Person("Jake")) shouldEqual "Mr. Jake"
   }
 
   test("tailrec sum") {
