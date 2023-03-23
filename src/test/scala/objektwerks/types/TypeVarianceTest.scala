@@ -61,12 +61,12 @@ class TypeVarianceTest extends AnyFunSuite with Matchers {
       def apply(value: V): R
     }
 
-    val function = new Function[String, Option[Int]] {
+    val toIntOption = new Function[String, Option[Int]] {
       def apply(value: String): Option[Int] = value.toIntOption
     }
 
     val values = List("1", "2", "3", "four")
-    values.flatMap(value => function(value)) shouldEqual List(1, 2, 3)
-    values.flatMap(value => function(value)).sum shouldEqual 6
+    values.flatMap(value => toIntOption(value)) shouldEqual List(1, 2, 3)
+    values.flatMap(value => toIntOption(value)).sum shouldEqual 6
   }
 }
