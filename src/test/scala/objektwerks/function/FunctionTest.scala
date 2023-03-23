@@ -33,9 +33,10 @@ class FunctionTest extends AnyFunSuite with Matchers {
   }
 
   test("def match") {
-    def sum(xs: List[Int]): Int = xs match {
-      case Nil => 0
-      case head :: tail => head + sum(tail)
+    @tailrec
+    def sum(numbers: List[Int], acc: Int = 0): Int = numbers match {
+      case Nil => acc
+      case head :: tail => sum(tail, acc + head)
     }
     sum(List(1, 2, 3)) shouldEqual 6
   }
