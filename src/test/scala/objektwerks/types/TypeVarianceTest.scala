@@ -10,7 +10,7 @@ class Wolf extends Canine
 class TypeVarianceTest extends AnyFunSuite with Matchers {
   test("invariant") {
     class Vet[T] {
-      def heal[U](canine: T): T = canine
+      def heal[T](canine: T): T = canine
     }
 
     val canineVet = new Vet[Canine]
