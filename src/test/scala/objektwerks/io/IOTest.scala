@@ -43,11 +43,9 @@ class IOTest extends AnyFunSuite with Matchers {
   }
 
   test("from string") {
-    assert(
-      Using( Source.fromString(quote) ) { 
-        source => source.mkString.split("\\W+").length shouldBe 13
-      }.isSuccess
-    )
+    Using( Source.fromString(quote) ) { 
+      source => source.mkString.split("\\W+").length shouldBe 13
+    }.isSuccess shouldBe true
   }
 
   test("from chars") {
