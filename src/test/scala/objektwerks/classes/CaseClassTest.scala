@@ -20,13 +20,13 @@ sealed trait Animal extends Product with Serializable {
   def speak: String 
 }
 // ADT Product Type Pattern - Has-A, Composition
-final case class Tiger(speach: String) extends Animal { // Tiger is an Animal
+final case class Tiger(speach: String) extends Animal { // Tiger is an Animal, Tiger has speech
   override def speak: String = speach 
 }
-final case class Panther(speach: String) extends Animal { // Panther is an Animal
+final case class Panther(speach: String) extends Animal { // Panther is an Animal, Panther has speech
   override def speak: String = speach 
 }
-final case class Bear(speach: String) extends Animal { // Bear is an Animal
+final case class Bear(speach: String) extends Animal { // Bear is an Animal, Bear has speach
   override def speak: String = speach 
 }
 
