@@ -20,14 +20,14 @@ sealed trait Animal extends Product with Serializable {
   def speak: String 
 }
 // ADT Product Type Pattern - Has-A, Composition
-final case class Tiger(speach: String) extends Animal { // Tiger is an Animal, Tiger has speech
-  override def speak: String = speach 
+final case class Tiger(speech: String) extends Animal { // Tiger is an Animal, Tiger has speech
+  override def speak: String = speech 
 }
-final case class Panther(speach: String) extends Animal { // Panther is an Animal, Panther has speech
-  override def speak: String = speach 
+final case class Panther(speech: String) extends Animal { // Panther is an Animal, Panther has speech
+  override def speak: String = speech 
 }
-final case class Bear(speach: String) extends Animal { // Bear is an Animal, Bear has speach
-  override def speak: String = speach 
+final case class Bear(speech: String) extends Animal { // Bear is an Animal, Bear has speech
+  override def speak: String = speech 
 }
 
 final case object ZooKeeper {
@@ -86,7 +86,7 @@ class CaseClassTest extends AnyFunSuite with Matchers {
 
   test("copy") {
     val panther1 = Panther("prrrr")
-    val panther2 = panther1.copy(speach = "arrrgh")
+    val panther2 = panther1.copy(speech = "arrrgh")
     panther1 shouldEqual panther1.copy()
     panther1 should not equal panther2
   }
