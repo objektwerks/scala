@@ -7,7 +7,7 @@ libraryDependencies ++= {
     "org.scala-lang.modules" %% "scala-async" % "1.0.1",
     "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1",
     "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4",
-    "org.scala-lang" % "scala-reflect" % "2.13.10",
+    "org.scala-lang" % "scala-reflect" % "2.13.12",
     "org.scalatest" %% "scalatest" % "3.2.17" % Test
   )
 }
