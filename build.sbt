@@ -8,7 +8,7 @@ libraryDependencies ++= {
     "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1",
     "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4",
     "org.scala-lang" % "scala-reflect" % "2.13.10",
-    "org.scalatest" %% "scalatest" % "3.2.16" % Test
+    "org.scalatest" %% "scalatest" % "3.2.17" % Test
   )
 }
 scalacOptions ++= Seq(
