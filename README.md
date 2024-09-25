@@ -1,6 +1,6 @@
 Scala
 -----
->Scala 2.13.12 feature tests and worksheets.
+>Scala 2.13.15 feature tests and worksheets.
 
 Test
 ----
