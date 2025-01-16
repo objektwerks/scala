@@ -1,7 +1,7 @@
 name := "scala"
 organization := "objektwerks"
 version := "0.1-SNAPSHOT"
-scalaVersion := "2.13.15"
+scalaVersion := "2.13.16"
 libraryDependencies ++= {
   Seq(
     "org.scala-lang.modules" %% "scala-async" % "1.0.1",
